@@ -6,7 +6,7 @@ using UnityEngine;
 /*For this whole code to work IDamage and gameManager scripts must both be functional.
  After completing scripts please uncomment ONLY that part of the script!!!
  Each one will be labeled as //IDamage or //gameManager at the end of each line of code or function.*/
-public class playerMovement : MonoBehaviour//, IDamage //Uncomment this first when IDamage is implemented!!
+public class playerMovement : MonoBehaviour, IDamage 
 {
     //-----MODIFIABLE VARIABLES-----
     //Unity object fields
@@ -20,6 +20,7 @@ public class playerMovement : MonoBehaviour//, IDamage //Uncomment this first wh
     [SerializeField] int maxJumps;
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
+    [SerializeField] float dmgFlashTimer;
 
     //Player default weapon mods
     [SerializeField] int damage;
@@ -78,7 +79,7 @@ public class playerMovement : MonoBehaviour//, IDamage //Uncomment this first wh
         playerVel.y -= gravity * Time.deltaTime;
 
         //Shoot Controller
-        if(Input.GetButtonDown("Fire1") && !isShooting)//&& !isPaused) /*Uncomment and remove the second ")" after impementing gameManager script*/
+        if(Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus()) //WHY DO WE NEED THE !isPaused here?
         {
             StartCoroutine(shoot());
         }
@@ -104,7 +105,7 @@ public class playerMovement : MonoBehaviour//, IDamage //Uncomment this first wh
     {
         //Set bool true at timer begin
         isShooting = true;
-        Debug.Log("Bang!!");
+        //Debug.Log("Bang!!");
         //Create Raycast
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, bulletDistance, ~ignoreLayer))
@@ -133,16 +134,16 @@ public class playerMovement : MonoBehaviour//, IDamage //Uncomment this first wh
         //On Player Death
         if(HP <= 0)
         {
-            Debug.Log("I Died :(");
-            //gameManager.instance.youLose(); //gameManager
+            //Debug.Log("I Died :(");
+            gameManager.instance.youLose(); //gameManager
         }
     }
 
     //Damage Flash Timer
     IEnumerator damageFlash()
     {
-        //gameManager.instance.damagePanel.SetActive(true); //gameManager
-        yield return new WaitForSeconds(0.1f);
-        //gameManager.instance.damagePanel.SetActive(false); //gameManager
+        gameManager.instance.getDmgFlash().SetActive(true); //gameManager
+        yield return new WaitForSeconds(dmgFlashTimer);
+        gameManager.instance.getDmgFlash().SetActive(false); //gameManager
     }
 }

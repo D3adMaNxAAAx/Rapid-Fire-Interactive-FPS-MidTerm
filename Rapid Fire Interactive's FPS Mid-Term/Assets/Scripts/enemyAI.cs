@@ -22,7 +22,7 @@ public class enemyAI : MonoBehaviour
     [SerializeField] int HP;
 
     //Bullet Object Tracker and Communication Field For Designer
-    [SerializeField] GameObject bullet;
+    [SerializeField] GameObject rangedAttack;
 
     //Enemy Fire Rate Modifier Field For Designer
     [SerializeField] float shootRate;
@@ -43,18 +43,14 @@ public class enemyAI : MonoBehaviour
         colorOrig = model.material.color;
 
         //Tell gameManager To update game goal that an enemy has been added to gameGoal
-        //
-        //TODO:  Delete this line and uncomment below line on gameManager completion
-        //gameManager.instance.updateGameGoal(1);
+        gameManager.instance.updateGameGoal(1);
     }
 
     // Update is called once per frame
     void Update()
     {
         //Telling our ai to go to the location of the Player's position until game ends or enemy destroyed
-
-        //TODO:  Delete this line and uncomment below line on gameManager completion
-        //agent.SetDestination(gameManager.GetInstance().GetPlayer().transform.position);
+        agent.SetDestination(gameManager.instance.getPlayer().transform.position);
 
         //Checking if Enemy is shooting 
         if (!isShooting)
@@ -70,7 +66,7 @@ public class enemyAI : MonoBehaviour
         isShooting = true;
 
         //Create our bullet and fire from the shootPos of Enemy 
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        Instantiate(rangedAttack, shootPos.position, transform.rotation);
 
         //Timer setting shootRate time
         yield return new WaitForSeconds(shootRate);
@@ -92,9 +88,7 @@ public class enemyAI : MonoBehaviour
         if (HP <= 0)
         {
             //Tells Game manager to take 1 enemy out of game goal enemy total
-
-            //TODO:  Delete this line and uncomment below line on gameManager completion
-            //gameManager.instance.updateGameGoal(-1);
+            gameManager.instance.updateGameGoal(-1);
 
             //Since No HP Delete Enemy Object
             Destroy(gameObject);
