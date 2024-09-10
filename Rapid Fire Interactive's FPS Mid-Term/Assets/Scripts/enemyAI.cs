@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class enemyAI : MonoBehaviour
+public class enemyAI : MonoBehaviour , IDamage
 {
 
     //Allows Designer Communication to Model's Renderer
@@ -40,7 +40,7 @@ public class enemyAI : MonoBehaviour
     void Start()
     {
         //Sets our Models original color on scene start
-        colorOrig = model.material.color;
+        colorOrig = model.material.color ;
 
         //Tell gameManager To update game goal that an enemy has been added to gameGoal
         gameManager.instance.updateGameGoal(1);

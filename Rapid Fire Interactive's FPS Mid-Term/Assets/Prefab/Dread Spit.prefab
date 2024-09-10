@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8796806919602617418}
   - component: {fileID: 2482374105805426821}
   - component: {fileID: 480077600912443003}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Dread Spit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,8 +50,8 @@ MonoBehaviour:
   type: 0
   rb: {fileID: 480077600912443003}
   damageAmount: 1
-  attackSpeed: 0
-  destroyTime: 3
+  attackSpeed: 25
+  destroyTime: 2
 --- !u!135 &8796806919602617418
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -147,7 +147,7 @@ TrailRenderer:
     colorGradient:
       serializedVersion: 2
       key0: {r: 0, g: 0.34591186, b: 0.009267605, a: 1}
-      key1: {r: 0.30817598, g: 0.23161653, b: 0.23161653, a: 0.88235295}
+      key1: {r: 0.30817598, g: 0.23161653, b: 0.23161653, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0.8235294}
       key3: {r: 0, g: 0, b: 0, a: 1}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -163,7 +163,7 @@ TrailRenderer:
       ctime6: 0
       ctime7: 0
       atime0: 0
-      atime1: 37265
+      atime1: 65535
       atime2: 65535
       atime3: 65535
       atime4: 0
@@ -173,7 +173,7 @@ TrailRenderer:
       m_Mode: 0
       m_ColorSpace: 0
       m_NumColorKeys: 2
-      m_NumAlphaKeys: 3
+      m_NumAlphaKeys: 2
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
@@ -212,4 +212,4 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 1
