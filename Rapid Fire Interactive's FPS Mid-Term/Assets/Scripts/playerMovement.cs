@@ -109,13 +109,13 @@ public class playerMovement : MonoBehaviour//, IDamage //Uncomment this first wh
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, bulletDistance, ~ignoreLayer))
         {
-            Debug.Log("Hit");
-            /*IDamage dmg = hit.collider.GetComponent<IDamage>();
+            //Debug.Log("Hit");
+            IDamage dmg = hit.collider.GetComponent<IDamage>();
 
             if(dmg != null)             //IDamage
             {
                 dmg.takeDamage(damage);
-            }*/
+            }
         }
 
         //Time Between Shots
