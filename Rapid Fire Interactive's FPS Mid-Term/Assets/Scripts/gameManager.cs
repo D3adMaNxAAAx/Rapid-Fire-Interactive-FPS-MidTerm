@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+//using UnityEngine.UI;
+//using TMPro; // for using textmesh pro
 
 public class gameManager : MonoBehaviour {
 
-    /// to do: hp bar, enemy counter, xp thing, boss count for boss tracker (Have boss tracker show when bossCount = 1) and boss progress  fill bar boss = boss hp 
+    /// to do: hp bar, stam bar, enemy counter, xp thing, boss count for boss tracker (Have boss tracker show when bossCount = 1) and boss progress  fill bar boss = boss hp 
 
     public static gameManager instance; // singleton
 
@@ -12,7 +14,9 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    //[SerializeField] TMP_Text enemiesRemaningUI;
     [SerializeField] GameObject damagePanelFlash;
+    //public Image HPBar; /// make private with getters and setters
 
     [SerializeField] GameObject player; //Tracks player object
     [SerializeField] playerMovement playerScript; // Tracks playerController field
