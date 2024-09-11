@@ -4,22 +4,25 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    [SerializeField] int sens;
-    [SerializeField] int lockVertMin, lockVertMax;
-    [SerializeField] bool invertY;
-  
-    public float normalFOV = 70f;
-    public float aimingFOV = 40f;
-    public float zoomSpeed = 60f;
+    
+    [SerializeField] private int sens;
+    [SerializeField] private int lockVertMin, lockVertMax;
+    [SerializeField] private bool invertY;
 
-    public float leanAngle = 45f;
-    public float leanSpeed = 10f;
-    private float currentLeanAngle = 0f;
+    //zoom settings
+    [SerializeField] private float normalFOV = 70f;
+    [SerializeField] private float aimingFOV = 40f;
+    [SerializeField] private float zoomSpeed = 60f;
+
+    //leaning settings
+    [SerializeField] private float leanAngel = 45f;
+    [SerializeField] private float leanSpeed = 10f;
+    private float currentLeanAngel = 0f;
+
 
     private bool isAiming;
     private Camera cam;
-
-    float rotX;
+    private float rotX;
 
     public int GetSens()
     {
@@ -45,13 +48,13 @@ public class CameraMovement : MonoBehaviour
     {
         lockVertMax = Mathf.Clamp(value, -90, 90);
     }
-    public float GetLeanAngle()
+    public float GetLeanAngel()
     {
-        return leanAngle;
+        return leanAngel;
     }
     public void SetLeanAngel(float value)
     {
-        leanAngle = Mathf.Clamp(value, 0, 90);
+        leanAngel = Mathf.Clamp(value, 0, 90);
     }
     public float GetLeanSpeed()
     {
@@ -90,7 +93,7 @@ public class CameraMovement : MonoBehaviour
         if (!invertY)
             rotX -= mouseY;
         else 
-            rotX += mouseX;
+            rotX += mouseY;
 
         rotX = Mathf.Clamp(rotX, lockVertMin, lockVertMax);
 
@@ -117,19 +120,19 @@ public class CameraMovement : MonoBehaviour
 
     void HandelLeaning()
     {
-        float targetLeanAngle = 0f;
+        float targetLeanAngel = 0f;
 
         if (Input.GetKey(KeyCode.Q))
         {
-            targetLeanAngle = leanAngle;
+            targetLeanAngel = leanAngle;
         }
         else if (Input.GetKey(KeyCode.E))
         {
-            targetLeanAngle = -leanAngle;
+            targetLeanAngel = -leanAngle;
         }
 
-        currentLeanAngle = Mathf.LerpAngle(currentLeanAngle, targetLeanAngle, Time.deltaTime * leanSpeed);
+        currentLeanAngel = Mathf.LerpAngle(currentLeanAngel, targetLeanAngel, Time.deltaTime * leanSpeed);
 
-        transform.localRotation = Quaternion.Euler(rotX, transform.localEulerAngles.y, currentLeanAngle);
+        transform.localRotation = Quaternion.Euler(rotX, transform.localEulerAngles.y, currentLeanAngel);
     }
 }
