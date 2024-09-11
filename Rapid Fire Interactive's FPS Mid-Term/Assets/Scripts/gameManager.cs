@@ -111,4 +111,10 @@ public class gameManager : MonoBehaviour {
         menuActive = menuLose; // set active menu to lose menu
         menuActive.SetActive(true); // Show active menu
     }
+
+    // Change reticle when aiming at an enemy
+    void changeReticle()
+    {
+
+    }
 }

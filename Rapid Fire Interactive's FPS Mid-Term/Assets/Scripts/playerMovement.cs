@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 //------------NOTES-------------
 /*For this whole code to work IDamage and gameManager scripts must both be functional.
