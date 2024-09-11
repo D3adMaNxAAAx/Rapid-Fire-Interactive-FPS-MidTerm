@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3480168367745676313}
   - component: {fileID: 5763660152256336185}
   - component: {fileID: 6708546639438992614}
+  - component: {fileID: 6358494713053823837}
   m_Layer: 0
   m_Name: Forklift w_Crate
   m_TagString: Untagged
@@ -84,6 +85,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &6358494713053823837
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8891312097708485725}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 221b2ed885a94fd4295d078e3bab9299, type: 3}
 --- !u!1001 &4740587510247848624
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -57,7 +57,7 @@ MonoBehaviour:
   speed: 3
   speedMod: 2
   maxJumps: 2
-  jumpSpeed: 1
+  jumpSpeed: 15
   gravity: 32
   dmgFlashTimer: 0.05
   damage: 1
@@ -212,6 +212,11 @@ MonoBehaviour:
   lockVertMin: -90
   lockVertMax: 90
   invertY: 0
+  normalFOV: 70
+  aimingFOV: 40
+  zoomSpeed: 60
+  leanAngle: 45
+  leanSpeed: 10
 --- !u!20 &5548763961163230911
 Camera:
   m_ObjectHideFlags: 0
