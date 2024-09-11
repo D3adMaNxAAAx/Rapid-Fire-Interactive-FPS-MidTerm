@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //------------NOTES-------------
 /*For this whole code to work IDamage and gameManager scripts must both be functional.
@@ -36,6 +37,9 @@ public class playerMovement : MonoBehaviour, IDamage
     //Count number of jumps
     int jumpCounter;
 
+    //HP Tracker
+    int HPOrig;
+
     //Checks
     bool isSprinting;
     bool isShooting;
@@ -43,7 +47,8 @@ public class playerMovement : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
-        
+        HPOrig = HP;
+        updatePlayerUI();
     }
 
     // Update is called once per frame
@@ -79,7 +84,7 @@ public class playerMovement : MonoBehaviour, IDamage
         playerVel.y -= gravity * Time.deltaTime;
 
         //Shoot Controller
-        if(Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus()) //WHY DO WE NEED THE !isPaused here?
+        if(Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus())
         {
             StartCoroutine(shoot());
         }
@@ -129,6 +134,7 @@ public class playerMovement : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        updatePlayerUI();
         StartCoroutine(damageFlash());
 
         //On Player Death
@@ -145,5 +151,11 @@ public class playerMovement : MonoBehaviour, IDamage
         gameManager.instance.getDmgFlash().SetActive(true); //gameManager
         yield return new WaitForSeconds(dmgFlashTimer);
         gameManager.instance.getDmgFlash().SetActive(false); //gameManager
+    }
+
+    //Update UI HPBar
+    public void updatePlayerUI()
+    {
+        //gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
     }
 }
