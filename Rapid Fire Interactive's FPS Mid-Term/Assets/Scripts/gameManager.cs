@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class gameManager : MonoBehaviour {
 
-    /// to do: hp bar, enemy counter, xp thing
+    /// to do: hp bar, enemy counter, xp thing, boss count for boss tracker (Have boss tracker show when bossCount = 1) and boss progress  fill bar boss = boss hp 
 
     public static gameManager instance; // singleton
 

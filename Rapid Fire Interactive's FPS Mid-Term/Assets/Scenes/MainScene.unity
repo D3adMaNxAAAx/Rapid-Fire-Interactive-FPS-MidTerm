@@ -150,7 +150,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.70440245, g: 0.578255, b: 0.22372524, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -1267,6 +1267,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45c954643f482ff40a6e01076f8500b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   model: {fileID: 407899206753486670}
   agent: {fileID: 407899206757742992}
   headPos: {fileID: 407899206748182120}
@@ -1275,6 +1276,8 @@ MonoBehaviour:
   rangedAttack: {fileID: 1026084026005163015, guid: 17def77748eb48e4fbb847c6e03563f6, type: 3}
   shootRate: 0.5
   damageFlashTimer: 0.1
+  faceTargetSpeed: 0
+  dropXP: 0
 --- !u!1001 &718024994461960158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1401,6 +1404,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2433610387942309241, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5823421247959698043, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
       propertyPath: m_Pivot.x
       value: 0
