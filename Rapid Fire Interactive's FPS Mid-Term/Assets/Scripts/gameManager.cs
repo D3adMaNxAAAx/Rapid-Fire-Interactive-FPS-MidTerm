@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class gameManager : MonoBehaviour {
 
-    /// to do: SerializeField recticle size, hp bar, enemy counter, xp thing
+    /// to do: hp bar, enemy counter, xp thing
 
     public static gameManager instance; // singleton
 
