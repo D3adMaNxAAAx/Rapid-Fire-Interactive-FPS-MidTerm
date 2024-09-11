@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //using UnityEngine.UI;
-//using TMPro; // for using textmesh pro
+using TMPro; // for using textmesh pro
 
 public class gameManager : MonoBehaviour {
 
