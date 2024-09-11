@@ -2,196 +2,109 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class gameManager : MonoBehaviour
-{
-    //Tracks game instance 
-    public static gameManager instance;
+public class gameManager : MonoBehaviour {
 
-    
+    /// to do: SerializeField recticle size, hp bar, enemy counter, xp thing
 
-    //UI Active menu tracker 
-    [SerializeField] GameObject menuActive;
+    public static gameManager instance; // singleton
 
-    //UI Pause menu tracker 
+    [SerializeField] GameObject menuActive; // this will change depending on what menu is showing in the game
     [SerializeField] GameObject menuPause;
-
-    //UI Win menu tracker 
     [SerializeField] GameObject menuWin;
-
-    //UI Lose menu tracker 
     [SerializeField] GameObject menuLose;
-
-    //UI damage Panel tracker
     [SerializeField] GameObject damagePanelFlash;
 
-    public GameObject getDmgFlash()
-    { return damagePanelFlash; }
+    [SerializeField] GameObject player; //Tracks player object
+    [SerializeField] playerMovement playerScript; // Tracks playerController field
 
-    public void setDmgFlash(GameObject _dmgPanel)
-    { damagePanelFlash = _dmgPanel; }
-
-    //Tracks playerController field
-    [SerializeField]  playerMovement playerScript;
-
-    public playerMovement getPlayerScript() 
-    { return playerScript; }
-
-    public void setPlayerScript(playerMovement _script)
-    { playerScript = _script; }
-
-    //Tracks player object
-    [SerializeField] GameObject player;
-
-    public GameObject getPlayer()
-    { return player; }
-
-    public void setPlayer(GameObject _player)
-    { player = _player; }
-
-    //Tracks game pause status
+    int enemyCount;
+    int bossCount; // For when we make boss monster
+    float timeScaleOrig; // Tracks & stores original game time scale
     bool isPaused;
 
+    public GameObject getDmgFlash()
+        { return damagePanelFlash; }
+
+    public void setDmgFlash(GameObject _dmgPanel)
+        { damagePanelFlash = _dmgPanel; }
+
+    public playerMovement getPlayerScript() 
+        { return playerScript; }
+
+    public GameObject getPlayer() 
+        { return player; }
+
+    public void setPlayer(GameObject _player) 
+        { player = _player; }
+
+    public void setPlayerScript(playerMovement _script)
+        { playerScript = _script; }
+
     public bool getPauseStatus()
-    { return isPaused; }
+        { return isPaused; }
 
     public void setPauseStatus(bool _status)
-    { isPaused = _status; }
+        { isPaused = _status; }
 
-    //Tracks all enemies in game 
-    int enemyCount;
-
-    //For when we make boss monster
-    int bossCount;
-
-    public int getBossCount()
+    /*public int getBossCount()
     { return bossCount; }
-
     public void setBossCount(int _amount)
-        { bossCount = _amount; }
+        { bossCount = _amount; }*/
 
-    //Tracks & stores original game time scale 
-    float timeScaleOrig; 
+    // Start is called before the first frame update, awake is before start
+    void Awake() {
 
-
-
-
-    // Start is called before the first frame update
-    void Awake()
-    {
-        //set's game instance to this instance 
-        instance = this;
-
-        //Setting time scale on game awake to set scale 
-        timeScaleOrig = Time.timeScale;
-
-        //Setting player tracker to player object in engine by tag name set on player object
-        setPlayer(GameObject.FindWithTag("Player"));
-
-        //setting the player script from the above player tracker script component 
-        setPlayerScript(getPlayer().GetComponent<playerMovement>());
-
-
+        instance = this; // making instance of this class (singleton)
+        timeScaleOrig = Time.timeScale; // Setting time scale on game awake to set scale 
+        setPlayer(GameObject.FindWithTag("Player")); // Setting player tracker to player object in engine by tag name set on player object
+        setPlayerScript(getPlayer().GetComponent<playerMovement>()); // setting the player script from the above player tracker script component 
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        //When ESC clicked
-        if (Input.GetButtonDown("Cancel"))
-        {
-            //if no menu is active
-            if (menuActive == null)
-            {
-                //pause game time 
+    void Update() {
+
+        if (Input.GetButtonDown("Cancel")) { // When ESC clicked
+            if (menuActive == null) {
+
                 statePause();
-
-                //Set the pause menu as active menu
-                menuActive = menuPause;
-
-                //Show active menu(pause menu)
-                menuActive.SetActive(getPauseStatus());
-
+                menuActive = menuPause; // Set the pause menu as active menu
+                menuActive.SetActive(getPauseStatus()); // Show active menu
             }
-
-            //if we are on pause menu
-            else if (menuActive == menuPause)
-            {
-                //Tell game to unpause and close menus 
+            else if (menuActive == menuPause) {
                 stateUnpause();
             }
         }
     }
-    public void statePause()
-    {
-        //toggle switch for pause status (Set pause to opposite of what it is )
-        setPauseStatus(!getPauseStatus());
 
-        //set time scale back to original
-        Time.timeScale = 0;
-
-        //Hide cursor
+    public void statePause() {
+        isPaused = !isPaused; // toggles bool
+        Time.timeScale = 0; // pauses everything except UI
         Cursor.visible = true;
-
-        //Locks out cursor
-        Cursor.lockState = CursorLockMode.Confined;
-
+        Cursor.lockState = CursorLockMode.Confined; // unlocks cursor but keeps it confined to game window
     }
 
-    public void stateUnpause()
-    {
-        //toggle switch for pause status (Set pause to opposite of what it is )
-        setPauseStatus(!getPauseStatus());
-
-        //set time scale back to original
-        Time.timeScale = timeScaleOrig;
-
-        //Hide cursor
+    public void stateUnpause() {
+        isPaused = !isPaused; // toggles bool
+        Time.timeScale = timeScaleOrig; //set time scale back to original
         Cursor.visible = false;
-
-        //Locks out cursor
-        Cursor.lockState = CursorLockMode.Locked;
-
-        //sets active menu to pause based off Pause Status
-        menuActive.SetActive(getPauseStatus());
-
-        //Saftey Hard cade to make sure active menu is now empty
+        Cursor.lockState = CursorLockMode.Locked; // locks cursor position
+        menuActive.SetActive(getPauseStatus()); // Show active menu
         menuActive = null;
-
     }
 
-    public void updateGameGoal(int _enemyCount, int _bossCount = 0)
-    {
-        //Set enemy count to passed in count 
-        enemyCount = _enemyCount;
-
-        //Set boss count to passed in count default 0 till basic enemies defeated
-        setBossCount(_bossCount);
-        if (enemyCount <= 0 && getBossCount() <= 0)
-        {
-            //pause game time 
+    public void updateGameGoal(int _enemyCount, int _bossCount = 0) {
+        enemyCount += _enemyCount;
+        bossCount += _bossCount;
+        if (enemyCount <= 0 && bossCount <= 0) {
             statePause();
-
-            //set active menu to win menu
-            menuActive = menuWin;
-
-            //tell it to show based off pause status
-            menuActive.SetActive(getPauseStatus());
+            menuActive = menuWin; // set active menu to win menu
+            menuActive.SetActive(true); // Show active menu
         }
-    
     }
 
-    //Show lose menu on player death
-    public void youLose()
-    {
-        //pause game time
+    public void youLose() {
         statePause();
-
-        //set active menu to lose menu
-        menuActive = menuLose;
-
-        //Show lose menu 
-        //Hard code to true avoid glitch where menu won't show sometimes
-        menuActive.SetActive(true);
-    
+        menuActive = menuLose; // set active menu to lose menu
+        menuActive.SetActive(true); // Show active menu
     }
 }
