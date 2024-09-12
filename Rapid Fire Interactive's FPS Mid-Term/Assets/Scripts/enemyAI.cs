@@ -50,6 +50,14 @@ public class enemyAI : MonoBehaviour , IDamage
     public void setEnemyXP(int _xp)
     { dropXP = _xp; }
 
+    // Getter for Enemy HP
+    public int getEnemyHP()
+    { return HP; }
+
+    //Setter for Enemy HP from other classes
+    public void setEnemyHP(int _hp)
+    { HP = _hp; }
+
     //Enemy Model Original Color Private Tracker
     Color colorOrig;
 
@@ -175,11 +183,7 @@ public class enemyAI : MonoBehaviour , IDamage
             gameManager.instance.updateGameGoal(-1);
 
             //On enemy death add enemy dropped xp to player xp
-            
-            //TODO Uncomment below
-
-             
-            //gameManager.instance.getPlayerScript().xp += getEnemyXP();
+            gameManager.instance.getPlayerScript().setXP(getEnemyXP()); // setXP will ADD the amount given.
 
             //Since No HP Delete Enemy Object
             Destroy(gameObject);

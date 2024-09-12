@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Android;
 
 //------------NOTES-------------
 /*For this whole code to work IDamage and gameManager scripts must both be functional.
@@ -27,6 +28,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] int damage;
     [SerializeField] float fireRate;
     [SerializeField] float bulletDistance;
+    [SerializeField] int ammo;
     //[SerializeField] float bulletSpeed; //Is here if we wanna change to use bullets
 
     //-----PRIVATE VARIABLES-----
@@ -37,11 +39,11 @@ public class playerMovement : MonoBehaviour, IDamage
     //Count number of jumps
     int jumpCounter;
 
-    //HP Tracker
-    int HPOrig;
-
-    //XP Tracker
-    int playerXP;
+    // Trackers
+    int HPOrig; // HP
+    int playerXP; // XP
+    int staminaOrig; // Stamina
+    int ammoOrig; // Ammo
 
     //Checks
     bool isSprinting;
@@ -51,6 +53,8 @@ public class playerMovement : MonoBehaviour, IDamage
     void Start()
     {
         HPOrig = HP;
+        staminaOrig = stamina;
+        ammoOrig = ammo;
         updatePlayerUI();
     }
 
@@ -89,7 +93,12 @@ public class playerMovement : MonoBehaviour, IDamage
         //Shoot Controller
         if(Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus())
         {
-            StartCoroutine(shoot());
+            if (ammo > 0) {
+                StartCoroutine(shoot());
+            } else
+            {
+                //TODO: NO AMMO FLASH.
+            }
         }
     }
 
@@ -114,6 +123,10 @@ public class playerMovement : MonoBehaviour, IDamage
         //Set bool true at timer begin
         isShooting = true;
         //Debug.Log("Bang!!");
+
+        // Decrement ammo count
+        ammo--;
+
         //Create Raycast
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, bulletDistance, ~ignoreLayer))
@@ -127,10 +140,14 @@ public class playerMovement : MonoBehaviour, IDamage
             }
         }
 
+        // Update the UI
+        updatePlayerUI();
+
         //Time Between Shots
         yield return new WaitForSeconds(fireRate);
+
         //Set bool false at timer end
-        isShooting = false;
+        isShooting = false;        
     }
 
     //Player Damage Controller
@@ -160,6 +177,8 @@ public class playerMovement : MonoBehaviour, IDamage
     public void updatePlayerUI() 
     {
         gameManager.instance.getHPBar().fillAmount = (float)HP / HPOrig;
+        gameManager.instance.getStamBar().fillAmount = (float)stamina / staminaOrig;
+        gameManager.instance.getAmmoBar().fillAmount = (float)ammo / ammoOrig;
     }
 
     public int getXP()
