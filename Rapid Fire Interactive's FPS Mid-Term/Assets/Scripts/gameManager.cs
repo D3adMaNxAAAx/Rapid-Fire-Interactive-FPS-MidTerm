@@ -196,6 +196,7 @@ public class gameManager : MonoBehaviour {
         enemyCount += _enemyCount;
 
 
+
         //EnemiesRemainingBar.fillAmount = (float)enemyCount / totalEnemies; TODO: Implement something for totalEnemies.
         EnemiesRemainingBar.text = enemyCount.ToString();
 

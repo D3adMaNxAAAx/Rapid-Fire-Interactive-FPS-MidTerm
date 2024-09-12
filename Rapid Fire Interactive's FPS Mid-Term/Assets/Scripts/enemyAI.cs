@@ -128,6 +128,9 @@ public class enemyAI : MonoBehaviour , IDamage
         {
             gameManager.instance.displayBossBar(false);
         }
+        else {
+            //gameManager.instance.displayBossBar(true);
+        }
     }
 
     IEnumerator shoot()
@@ -177,14 +180,15 @@ public class enemyAI : MonoBehaviour , IDamage
     {    
         // Deduct HP on damage recieved
         HP -= _amount;
-
+        if (type == enemyType.boss) {
+            bossHP -= _amount;
+        }
         
-
         // Flash Enemy Red To Indicate Damage Taken
         StartCoroutine(flashColor());
 
         // Decrement their health bar & update the UI
-        gameManager.instance.getBossHPBar().fillAmount = (float)bossHP / _amount;
+        gameManager.instance.getBossHPBar().fillAmount = (float)bossHP / HPOrig;
 
         if (HP <= 0)
         {
