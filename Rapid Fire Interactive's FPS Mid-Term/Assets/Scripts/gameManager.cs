@@ -6,26 +6,36 @@ using TMPro;
 using JetBrains.Annotations; // for using textmesh pro
 
 public class gameManager : MonoBehaviour { 
-
     public static gameManager instance; // singleton
 
+    // -- Menus --
     [SerializeField] GameObject menuActive; // this will change depending on what menu is showing in the game
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+
+    // -- UI Elements --
+
+    // --- Player ---
+    [SerializeField] Image HPBar;
+    [SerializeField] Image stamBar;
+    [SerializeField] Image XPBar;
+    [SerializeField] Image playerReticle;
+    [SerializeField] Image ammoTrackerBar;
+
+    // --- Game ---
+    [SerializeField] TMP_Text levelTracker;
+    [SerializeField] Image bossHP;
+    [SerializeField] Image EnemiesRemainingBar;
+    [SerializeField] GameObject menuSettings;
+
+    // -- Warnings --
     [SerializeField] GameObject damagePanelFlash;
     [SerializeField] GameObject ammoWarning;
-    [SerializeField] Image playerReticle;
-    [SerializeField] TMP_Text levelTracker;
+
+    // -- Objects --
     [SerializeField] GameObject player; // Tracks player object
     [SerializeField] playerMovement playerScript; // Tracks playerController field
-    [SerializeField] Image HPBar;
-    [SerializeField] Image XPBar;
-    [SerializeField] Image bossHP;
-    [SerializeField] Image stamBar;
-    [SerializeField] Image EnemiesRemainingBar;
-    [SerializeField] Image ammoTrackerBar;
-    [SerializeField] GameObject menuSettings;
 
     // Reticle Variables
     Vector2 reticleSize; // so the player can adjust reticle size through settings & also to change it to and from.
