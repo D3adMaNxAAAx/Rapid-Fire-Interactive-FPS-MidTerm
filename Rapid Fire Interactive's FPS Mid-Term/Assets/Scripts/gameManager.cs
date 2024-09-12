@@ -226,7 +226,7 @@ public class gameManager : MonoBehaviour {
         }
     }
     public void displayBossBar(bool state) {
-        gameManager.instance.getBossHP().SetActive(state);
+        getBossHP().SetActive(state);
     }
 
     public void settingsMenu() {

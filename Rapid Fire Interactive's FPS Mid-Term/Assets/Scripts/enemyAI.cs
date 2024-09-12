@@ -99,14 +99,17 @@ public class enemyAI : MonoBehaviour , IDamage
         if (playerInRange)
         {
             // Check if the enemy is a boss -- this will be to display the health bar when the player is in range.
-            if (type == enemyType.boss)
-            {
-                gameManager.instance.displayBossBar(true);
-            }
+            //if (type == enemyType.boss)
+            //{
+            //    gameManager.instance.displayBossBar(true);
+            //    Debug.Log("ON");
+            //}
+
+           
 
             // Setting direction of where player is in relation to enemy location when within detection range
             playerDir = gameManager.instance.getPlayer().transform.position - headPos.position;
-            
+
             // Telling our ai to go to the location of the Player's position until game ends or enemy destroyed
             agent.SetDestination(gameManager.instance.getPlayer().transform.position);
 
@@ -123,14 +126,20 @@ public class enemyAI : MonoBehaviour , IDamage
             }
         }
 
-        // If player isn't in range or has defeated the boss, hide the bar.
-        if (gameManager.instance.getBossHP().activeSelf && !playerInRange)
+        if (type == enemyType.boss)
         {
-            gameManager.instance.displayBossBar(false);
+            // If player isn't in range or has defeated the boss, hide the bar.
+            if (!gameManager.instance.getBossHP().activeSelf && !playerInRange)
+            {
+                gameManager.instance.displayBossBar(false);
+            }
+            if (!gameManager.instance.getBossHP().activeSelf && playerInRange)
+            {
+                gameManager.instance.displayBossBar(true);
+            }
         }
-        else {
-            //gameManager.instance.displayBossBar(true);
-        }
+       
+
     }
 
     IEnumerator shoot()
