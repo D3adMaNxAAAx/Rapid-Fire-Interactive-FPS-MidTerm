@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Android;
 
@@ -19,7 +20,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] int HP;
     [SerializeField] int speed;
     [SerializeField] int stamina;
-    [SerializeField] int xpMax;
+    [SerializeField] int playerXPMax;
 
     // -- Movement --
     [SerializeField] int speedMod;
@@ -52,6 +53,7 @@ public class playerMovement : MonoBehaviour, IDamage
     int HPOrig; // HP
     int playerXP; // XP
     int staminaOrig; // Stamina
+    int playerLevel; // Level
     int ammoOrig; // Ammo
 
     // Checks
@@ -116,8 +118,13 @@ public class playerMovement : MonoBehaviour, IDamage
 
             if (dmg != null)
             {
-                //gameManager.instance.changeReticle();
-            }
+                Vector2 dangerSize = new Vector2(15, 15);
+                gameManager.instance.changeReticle(true);
+            } 
+        }
+        else
+        {
+            gameManager.instance.changeReticle(false);
         }
 
         // Shoot Controller
@@ -160,7 +167,6 @@ public class playerMovement : MonoBehaviour, IDamage
     {
         //Set bool true at timer begin
         isShooting = true;
-        //Debug.Log("Bang!!");
 
         // Decrement ammo count
         ammo--;
@@ -169,10 +175,9 @@ public class playerMovement : MonoBehaviour, IDamage
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, bulletDistance, ~ignoreLayer))
         {
-            //Debug.Log("Hit");
             IDamage dmg = hit.collider.GetComponent<IDamage>();
 
-            if(dmg != null) // IDamage
+            if (dmg != null)
             {
                 dmg.takeDamage(damage);
             }
@@ -198,8 +203,7 @@ public class playerMovement : MonoBehaviour, IDamage
         //On Player Death
         if(HP <= 0)
         {
-            //Debug.Log("I Died :(");
-            gameManager.instance.youLose(); //gameManager
+            gameManager.instance.youLose();
         }
     }
 
@@ -245,6 +249,7 @@ public class playerMovement : MonoBehaviour, IDamage
         gameManager.instance.getHPBar().fillAmount = (float)HP / HPOrig;
         gameManager.instance.getStamBar().fillAmount = (float)stamina / staminaOrig;
         gameManager.instance.getAmmoBar().fillAmount = (float)ammo / ammoOrig;
+        gameManager.instance.getXPBar().fillAmount = (float)playerXP / playerXPMax;
     }
 
     public int getXP()
@@ -255,5 +260,31 @@ public class playerMovement : MonoBehaviour, IDamage
     public void setXP(int amount)
     {
         playerXP += amount;
+        levelTracker(); // Check if the player can level up
+    }
+    
+    // Tracks the player's xp and levels them up
+    public void levelTracker()
+    {
+        // Check if player XP meets requirement to level up (XP Max)
+        if (playerXP >= playerXPMax && playerLevel < 999)
+        {
+            playerLevel++;
+            playerXP = 0; // Reset XP back to zero
+            gameManager.instance.getLevelTracker().text = playerLevel.ToString("F0");
+            // TODO: HAVE TRAILING ZEROS FOR THE LEVELS
+        }
+    }
+
+    // Getters
+    public int getPlayerLevel()
+    {
+        return playerLevel;
+    }
+
+    // Setters
+    public void setPlayerLevel(int _playerLevel)
+    {
+        _playerLevel = playerLevel;
     }
 }
