@@ -102,14 +102,11 @@ public class enemyAI : MonoBehaviour , IDamage
             //if (type == enemyType.boss)
             //{
             //    gameManager.instance.displayBossBar(true);
-            //    Debug.Log("ON");
             //}
-
-           
 
             // Setting direction of where player is in relation to enemy location when within detection range
             playerDir = gameManager.instance.getPlayer().transform.position - headPos.position;
-
+            
             // Telling our ai to go to the location of the Player's position until game ends or enemy destroyed
             agent.SetDestination(gameManager.instance.getPlayer().transform.position);
 
@@ -126,19 +123,17 @@ public class enemyAI : MonoBehaviour , IDamage
             }
         }
 
-        if (type == enemyType.boss)
-        {
-            // If player isn't in range or has defeated the boss, hide the bar.
-            if (!gameManager.instance.getBossHP().activeSelf && !playerInRange)
-            {
-                gameManager.instance.displayBossBar(false);
-            }
-            if (!gameManager.instance.getBossHP().activeSelf && playerInRange)
-            {
-                gameManager.instance.displayBossBar(true);
-            }
-        }
-       
+
+        //Something like this but based off a key count each enemy killed adds key and keys required are equal to 
+        //if (gameManager.instance.getEnemyCount() == 1 && gameManager.instance.getBossCount() == 1)
+        //    gameManager.instance.displayBossBar(true);
+        //else { gameManager.instance.displayBossBar(false); }
+
+        // If player isn't in range or has defeated the boss, hide the bar.
+        //if (gameManager.instance.getBossHP().activeSelf && !playerInRange)
+        //{
+        //    gameManager.instance.displayBossBar(false);
+        //}
 
     }
 

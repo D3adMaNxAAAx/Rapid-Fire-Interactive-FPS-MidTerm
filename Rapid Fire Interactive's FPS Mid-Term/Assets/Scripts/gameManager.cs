@@ -129,6 +129,11 @@ public class gameManager : MonoBehaviour {
     public Image getStamBar() 
         { return stamBar; }
 
+    public int getEnemyCount()
+    { return enemyCount;}
+    public void setEnemyCount(int _count)
+    { enemyCount = _count; }
+
 
     /*public void setEnemyBar(Image newEnemyBar) 
         { EnemiesRemainingBar = newEnemyBar; }
@@ -193,7 +198,8 @@ public class gameManager : MonoBehaviour {
     }
 
     public void updateGameGoal(int _enemyCount, int _bossCount = 0) {
-        enemyCount += _enemyCount;
+        enemyCount += _enemyCount ;
+
 
 
 
