@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.UI;
-//using TMPro; // for using textmesh pro
+using UnityEngine.UI;
+using TMPro; // for using textmesh pro
 
 public class gameManager : MonoBehaviour {
 
@@ -14,9 +14,9 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-    //[SerializeField] TMP_Text enemiesRemaningUI;
+    [SerializeField] TMP_Text enemiesRemaningUI;
     [SerializeField] GameObject damagePanelFlash;
-    //public Image HPBar; /// make private with getters and setters
+    public Image HPBar; /// make private with getters and setters
 
     [SerializeField] GameObject player; //Tracks player object
     [SerializeField] playerMovement playerScript; // Tracks playerController field
