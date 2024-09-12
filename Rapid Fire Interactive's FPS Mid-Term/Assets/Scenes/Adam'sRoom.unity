@@ -1720,6 +1720,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b0ba9c3fe5b9ce341ba39bd02d0658d4, type: 3}
+--- !u!1 &722608620 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2833441024610858014, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+  m_PrefabInstance: {fileID: 1238581930}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &753360110 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4402813911426253493, guid: 0ff655e862b123d4ab31d94532f8a4f8, type: 3}
@@ -2412,6 +2417,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 7846602057115120480, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+      propertyPath: ammoWarning
+      value: 
+      objectReference: {fileID: 722608620}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
