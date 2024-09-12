@@ -14,10 +14,16 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject damagePanelFlash;
+    [SerializeField] GameObject ammoWarning;
     [SerializeField] Image playerReticle;
-
+    [SerializeField] TMP_Text levelTracker; /// make private with getters and setters.
     [SerializeField] GameObject player; //Tracks player object
     [SerializeField] playerMovement playerScript; // Tracks playerController field
+    [SerializeField] Image HPBar; /// make private with getters and setters
+    [SerializeField] Image bossHP; /// make private with getters and setters
+    [SerializeField] Image stamBar; /// make private with getters and setters
+    [SerializeField] Image EnemiesRemainingBar; /// make private with getters and setters
+    [SerializeField] Image ammoTrackerBar; /// make private with getters and setters
 
     Vector2 reticleSize; // so the player can adjust reticle size through settings & also to change it to and from.
     int enemyCount;
@@ -30,6 +36,12 @@ public class gameManager : MonoBehaviour {
 
     public void setDmgFlash(GameObject _dmgPanel)
         { damagePanelFlash = _dmgPanel; }
+
+    public GameObject getAmmoWarning()
+    { return ammoWarning; }
+
+    public void setAmmoWarning(GameObject _ammoWarning)
+    { ammoWarning = _ammoWarning; }
 
     public playerMovement getPlayerScript() 
         { return playerScript; }
@@ -59,13 +71,6 @@ public class gameManager : MonoBehaviour {
         { return bossCount; }
     public void setBossCount(int _amount) 
         { bossCount = _amount; }
-
-    [SerializeField] TMP_Text levelTracker; /// make private with getters and setters
-    public Image HPBar; /// make private with getters and setters
-    public Image bossHP; /// make private with getters and setters
-    public Image stamBar; /// make private with getters and setters
-    public Image EnemiesRemainingBar; /// make private with getters and setters
-    public Image ammoTrackerBar; /// make private with getters and setters
 
     public void setLevelTracker(TMP_Text newLevel) 
         { levelTracker = newLevel; }

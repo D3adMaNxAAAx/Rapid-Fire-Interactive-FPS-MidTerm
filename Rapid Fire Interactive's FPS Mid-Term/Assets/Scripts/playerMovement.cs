@@ -22,6 +22,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
     [SerializeField] float dmgFlashTimer;
+    [SerializeField] float ammoWarningTimer;
     [SerializeField] int stamina;
     [SerializeField] float drainMod; // How quickly stamina points drain
     [SerializeField] float recoveryMod; // How quickly stamina points recovers
@@ -109,7 +110,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 StartCoroutine(shoot());
             } else
             {
-                //TODO: NO AMMO FLASH.
+                StartCoroutine(AmmoWarningFlash());
             }
         }
     }
@@ -154,7 +155,7 @@ public class playerMovement : MonoBehaviour, IDamage
             //Debug.Log("Hit");
             IDamage dmg = hit.collider.GetComponent<IDamage>();
 
-            if(dmg != null)             //IDamage
+            if(dmg != null) // IDamage
             {
                 dmg.takeDamage(damage);
             }
@@ -193,6 +194,14 @@ public class playerMovement : MonoBehaviour, IDamage
         gameManager.instance.getDmgFlash().SetActive(false); //gameManager
     }
 
+    // Flash No Ammo
+    IEnumerator AmmoWarningFlash()
+    {
+        gameManager.instance.getAmmoWarning().SetActive(true); //gameManager
+        yield return new WaitForSeconds(ammoWarningTimer);
+        gameManager.instance.getAmmoWarning().SetActive(false); //gameManager
+    }
+
     // Drain stamina as player runs
     IEnumerator staminaDrain()
     {
@@ -202,6 +211,8 @@ public class playerMovement : MonoBehaviour, IDamage
         yield return new WaitForSeconds(drainMod);
         isDraining = false;
     }
+
+    // Recover stamina as player walks
     IEnumerator staminaRecover()
     {
         isRecovering = true;
