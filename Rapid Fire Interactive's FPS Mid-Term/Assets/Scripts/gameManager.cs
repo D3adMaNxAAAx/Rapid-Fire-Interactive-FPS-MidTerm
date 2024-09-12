@@ -27,7 +27,10 @@ public class gameManager : MonoBehaviour {
     [SerializeField] TMP_Text levelTracker;
     [SerializeField] GameObject bossHP;
     [SerializeField] Image bossHPBar;
-    [SerializeField] Image EnemiesRemainingBar;
+
+    //[SerializeField] Image EnemiesRemainingBar;
+    [SerializeField] TMP_Text EnemiesRemainingBar;
+
     [SerializeField] GameObject menuSettings;
 
     // -- Warnings --
@@ -126,11 +129,19 @@ public class gameManager : MonoBehaviour {
     public Image getStamBar() 
         { return stamBar; }
 
-    public void setEnemyBar(Image newEnemyBar) 
+
+    /*public void setEnemyBar(Image newEnemyBar) 
         { EnemiesRemainingBar = newEnemyBar; }
 
     public Image getEnemyBar() 
+        { return EnemiesRemainingBar; }*/
+
+    public void setEnemyBar(TMP_Text newEnemyBar) 
+        { EnemiesRemainingBar = newEnemyBar; }
+
+    public TMP_Text getEnemyBar() 
         { return EnemiesRemainingBar; }
+
 
     public void setAmmoBar(Image newAmmoBar) 
         { ammoTrackerBar = newAmmoBar; }
@@ -183,7 +194,11 @@ public class gameManager : MonoBehaviour {
 
     public void updateGameGoal(int _enemyCount, int _bossCount = 0) {
         enemyCount += _enemyCount;
+
+
         //EnemiesRemainingBar.fillAmount = (float)enemyCount / totalEnemies; TODO: Implement something for totalEnemies.
+        EnemiesRemainingBar.text = enemyCount.ToString();
+
         bossCount += _bossCount;
         if (enemyCount <= 0 && bossCount <= 0) {
             statePause();
@@ -200,31 +215,26 @@ public class gameManager : MonoBehaviour {
 
     // Change reticle when aiming at an enemy
     public void changeReticle(bool hasIDamage) {
-        if (hasIDamage)
-        {
+        if (hasIDamage) {
             playerReticle.color = Color.red;
             playerReticle.rectTransform.sizeDelta = 
                 new Vector2(reticleSizeOrig.x * 2, reticleSizeOrig.y * 2);
-        } else
-        {
+        } else {
             playerReticle.color = Color.green;
             playerReticle.rectTransform.sizeDelta = reticleSizeOrig;
         }
     }
-    public void displayBossBar(bool state)
-    {
+    public void displayBossBar(bool state) {
         gameManager.instance.getBossHP().SetActive(state);
     }
 
-    public void settingsMenu()
-    {
+    public void settingsMenu() {
         menuActive.SetActive(false);
         menuActive = menuSettings;
         menuActive.SetActive(true);
     }
 
-    public void backButton()
-    {
+    public void backButton() {
         menuActive.SetActive(false);
         menuActive = menuPause;
         menuActive.SetActive(true);
