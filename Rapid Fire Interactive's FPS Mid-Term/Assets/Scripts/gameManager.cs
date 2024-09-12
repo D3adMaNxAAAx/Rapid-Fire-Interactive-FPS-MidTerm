@@ -16,11 +16,13 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuLose;
     [SerializeField] TMP_Text enemiesRemaningUI;
     [SerializeField] GameObject damagePanelFlash;
+    [SerializeField] Image playerReticle;
     public Image HPBar; /// make private with getters and setters
 
     [SerializeField] GameObject player; //Tracks player object
     [SerializeField] playerMovement playerScript; // Tracks playerController field
 
+    Vector2 reticleSize; // so the player can adjust reticle size through settings & also to change it to and from.
     int enemyCount;
     int bossCount; // For when we make boss monster
     float timeScaleOrig; // Tracks & stores original game time scale
@@ -49,6 +51,12 @@ public class gameManager : MonoBehaviour {
 
     public void setPauseStatus(bool _status)
         { isPaused = _status; }
+
+    public Image getPlayerReticle()
+        { return playerReticle; }
+
+    public void setPlayerReticle(Image newReticle)
+        { playerReticle = newReticle; }
 
     /*public int getBossCount()
     { return bossCount; }
@@ -113,8 +121,9 @@ public class gameManager : MonoBehaviour {
     }
 
     // Change reticle when aiming at an enemy
-    void changeReticle()
+    void changeReticle(Vector2 reticleSize)
     {
-
+        playerReticle.color = Color.red;
+        playerReticle.rectTransform.sizeDelta = reticleSize;
     }
 }
