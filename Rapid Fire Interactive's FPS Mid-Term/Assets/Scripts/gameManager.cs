@@ -25,7 +25,8 @@ public class gameManager : MonoBehaviour {
 
     // --- Game ---
     [SerializeField] TMP_Text levelTracker;
-    [SerializeField] Image bossHP;
+    [SerializeField] GameObject bossHP;
+    [SerializeField] Image bossHPBar;
     [SerializeField] Image EnemiesRemainingBar;
     [SerializeField] GameObject menuSettings;
 
@@ -107,11 +108,17 @@ public class gameManager : MonoBehaviour {
     public Image getXPBar()
     { return XPBar; }
 
-    public void setBossHP(Image newBossHP) 
+    public void setBossHP(GameObject newBossHP) 
         { bossHP = newBossHP; }
 
-    public Image getBossHP() 
+    public GameObject getBossHP() 
         { return bossHP; }
+
+    public void setBossHPBar(Image newBossHPBar)
+    { bossHPBar = newBossHPBar; }
+
+    public Image getBossHPBar()
+    { return bossHPBar; }
 
     public void setStamBar(Image newStamBar) 
         { stamBar = newStamBar; }
@@ -176,6 +183,7 @@ public class gameManager : MonoBehaviour {
 
     public void updateGameGoal(int _enemyCount, int _bossCount = 0) {
         enemyCount += _enemyCount;
+        //EnemiesRemainingBar.fillAmount = (float)enemyCount / totalEnemies; TODO: Implement something for totalEnemies.
         bossCount += _bossCount;
         if (enemyCount <= 0 && bossCount <= 0) {
             statePause();
@@ -203,7 +211,10 @@ public class gameManager : MonoBehaviour {
             playerReticle.rectTransform.sizeDelta = reticleSizeOrig;
         }
     }
-
+    public void displayBossBar(bool state)
+    {
+        gameManager.instance.getBossHP().SetActive(state);
+    }
 
     public void settingsMenu()
     {

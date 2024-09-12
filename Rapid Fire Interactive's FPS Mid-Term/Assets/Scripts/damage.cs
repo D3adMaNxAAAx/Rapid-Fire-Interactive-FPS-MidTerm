@@ -30,13 +30,13 @@ public class damage : MonoBehaviour
 
     void Start()
     {
-        //Check if ranged attack and give velocity
+        // Check if ranged attack and give velocity
         if (type == damageType.ranged)
         {
-            //Give velocity to ranged attack 
+            // Give velocity to ranged attack 
             rb.velocity = transform.forward * attackSpeed;
-
-            //after so long of no hit we delete range attack object
+            
+            // after so long of no hit we delete range attack object
             Destroy(gameObject, destroyTime);
         }
 
@@ -45,18 +45,22 @@ public class damage : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Object tracker and checker to see if object takes damage
+        // Ignore if it collides with another trigger
+        if (other.isTrigger)
+            return;
+
+        // Object tracker and checker to see if object takes damage
         IDamage dmgObject = other.GetComponent<IDamage>();
 
-        //if it is an object that takes damage we apply damage
+        // if it is an object that takes damage we apply damage
         if (dmgObject != null)
         {
-            //if object can take damage apply damage amount 
+            // if object can take damage apply damage amount 
             dmgObject.takeDamage(damageAmount);
 
         }
 
-        //if it isnt an object that takes damage and damageType was ranged destroy damage inflicting object
+        // if it isnt an object that takes damage and damageType was ranged destroy damage inflicting object
         if (type == damageType.ranged)
         {
             Destroy(gameObject);

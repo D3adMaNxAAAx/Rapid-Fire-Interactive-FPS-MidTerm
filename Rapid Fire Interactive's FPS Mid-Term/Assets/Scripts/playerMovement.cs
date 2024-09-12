@@ -243,7 +243,7 @@ public class playerMovement : MonoBehaviour, IDamage
         isRecovering = false;
     }
 
-    // Update UI HPBar
+    // Update information on the UI
     public void updatePlayerUI() 
     {
         gameManager.instance.getHPBar().fillAmount = (float)HP / HPOrig;
