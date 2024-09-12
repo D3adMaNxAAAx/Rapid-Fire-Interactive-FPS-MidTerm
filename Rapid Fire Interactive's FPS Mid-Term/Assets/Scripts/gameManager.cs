@@ -14,12 +14,25 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject damagePanelFlash;
+    [SerializeField] GameObject ammoWarning;
     [SerializeField] Image playerReticle;
-
-    [SerializeField] GameObject player; //Tracks player object
+    [SerializeField] TMP_Text levelTracker;
+    [SerializeField] GameObject player; // Tracks player object
     [SerializeField] playerMovement playerScript; // Tracks playerController field
+    [SerializeField] Image HPBar;
+    [SerializeField] Image XPBar;
+    [SerializeField] Image bossHP;
+    [SerializeField] Image stamBar;
+    [SerializeField] Image EnemiesRemainingBar;
+    [SerializeField] Image ammoTrackerBar;
+    [SerializeField] GameObject menuSettings;
 
+    // Reticle Variables
     Vector2 reticleSize; // so the player can adjust reticle size through settings & also to change it to and from.
+    Vector2 reticleSizeOrig;
+    Color reticleColorOrig;
+
+    // Dynamic Values
     int enemyCount;
     int bossCount; // For when we make boss monster
     float timeScaleOrig; // Tracks & stores original game time scale
@@ -30,6 +43,12 @@ public class gameManager : MonoBehaviour {
 
     public void setDmgFlash(GameObject _dmgPanel)
         { damagePanelFlash = _dmgPanel; }
+
+    public GameObject getAmmoWarning()
+    { return ammoWarning; }
+
+    public void setAmmoWarning(GameObject _ammoWarning)
+    { ammoWarning = _ammoWarning; }
 
     public playerMovement getPlayerScript() 
         { return playerScript; }
@@ -60,13 +79,6 @@ public class gameManager : MonoBehaviour {
     public void setBossCount(int _amount) 
         { bossCount = _amount; }
 
-    [SerializeField] TMP_Text levelTracker; /// make private with getters and setters
-    public Image HPBar; /// make private with getters and setters
-    public Image bossHP; /// make private with getters and setters
-    public Image stamBar; /// make private with getters and setters
-    public Image EnemiesRemainingBar; /// make private with getters and setters
-    public Image ammoTrackerBar; /// make private with getters and setters
-
     public void setLevelTracker(TMP_Text newLevel) 
         { levelTracker = newLevel; }
 
@@ -78,6 +90,12 @@ public class gameManager : MonoBehaviour {
 
     public Image getHPBar() 
         { return HPBar; }
+
+    public void setXPBar(Image newXPBar)
+    { XPBar = newXPBar; }
+
+    public Image getXPBar()
+    { return XPBar; }
 
     public void setBossHP(Image newBossHP) 
         { bossHP = newBossHP; }
@@ -108,6 +126,8 @@ public class gameManager : MonoBehaviour {
 
         instance = this; // making instance of this class (singleton)
         timeScaleOrig = Time.timeScale; // Setting time scale on game awake to set scale 
+        reticleColorOrig = playerReticle.color;
+        reticleSizeOrig = playerReticle.rectTransform.sizeDelta;
         setPlayer(GameObject.FindWithTag("Player")); // Setting player tracker to player object in engine by tag name set on player object
         setPlayerScript(getPlayer().GetComponent<playerMovement>()); // setting the player script from the above player tracker script component 
     }
@@ -161,8 +181,32 @@ public class gameManager : MonoBehaviour {
     }
 
     // Change reticle when aiming at an enemy
-    void changeReticle(Vector2 reticleSize) {
-        playerReticle.color = Color.red;
-        playerReticle.rectTransform.sizeDelta = reticleSize;
+    public void changeReticle(bool hasIDamage) {
+        if (hasIDamage)
+        {
+            playerReticle.color = Color.red;
+            playerReticle.rectTransform.sizeDelta = 
+                new Vector2(reticleSizeOrig.x * 2, reticleSizeOrig.y * 2);
+        } else
+        {
+            playerReticle.color = Color.green;
+            playerReticle.rectTransform.sizeDelta = reticleSizeOrig;
+        }
     }
+
+
+    public void settingsMenu()
+    {
+        menuActive.SetActive(false);
+        menuActive = menuSettings;
+        menuActive.SetActive(true);
+    }
+
+    public void backButton()
+    {
+        menuActive.SetActive(false);
+        menuActive = menuPause;
+        menuActive.SetActive(true);
+    }
+
 }

@@ -187,6 +187,9 @@ public class enemyAI : MonoBehaviour , IDamage
             //On enemy death add enemy dropped xp to player xp
             gameManager.instance.getPlayerScript().setXP(getEnemyXP()); // setXP will ADD the amount given.
 
+            // Update UI
+            gameManager.instance.getPlayerScript().updatePlayerUI();
+
             //Since No HP Delete Enemy Object
             Destroy(gameObject);
         }

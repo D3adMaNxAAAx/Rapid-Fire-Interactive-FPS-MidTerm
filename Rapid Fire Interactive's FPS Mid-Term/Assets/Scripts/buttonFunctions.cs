@@ -19,6 +19,12 @@ public class buttonFunctions : MonoBehaviour
     }
 
 
+    public void settings()
+    {
+        gameManager.instance.settingsMenu();
+    }
+
+
     public void quit()
     {
         #if UNITY_EDITOR
@@ -29,4 +35,18 @@ public class buttonFunctions : MonoBehaviour
 
         #endif
     }
+
+    public void invertY()
+    {
+        CameraMovement.state.invert();
+
+    }
+
+
+    public void back()
+    {
+        gameManager.instance.backButton();
+    }
+
+
 }
