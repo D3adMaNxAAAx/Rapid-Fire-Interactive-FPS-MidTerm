@@ -124,11 +124,11 @@ public class CameraMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Q))
         {
-            targetLeanAngel = leanAngle;
+            targetLeanAngel = GetLeanAngel();
         }
         else if (Input.GetKey(KeyCode.E))
         {
-            targetLeanAngel = -leanAngle;
+            targetLeanAngel = -GetLeanAngel();
         }
 
         currentLeanAngel = Mathf.LerpAngle(currentLeanAngel, targetLeanAngel, Time.deltaTime * leanSpeed);
