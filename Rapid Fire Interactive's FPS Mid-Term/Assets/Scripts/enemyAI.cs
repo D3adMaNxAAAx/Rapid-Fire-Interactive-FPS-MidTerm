@@ -178,11 +178,13 @@ public class enemyAI : MonoBehaviour , IDamage
         // Deduct HP on damage recieved
         HP -= _amount;
 
+        
+
         // Flash Enemy Red To Indicate Damage Taken
         StartCoroutine(flashColor());
 
         // Decrement their health bar & update the UI
-        gameManager.instance.getBossHPBar().fillAmount = (float)bossHP / HPOrig;
+        gameManager.instance.getBossHPBar().fillAmount = (float)bossHP / _amount;
 
         if (HP <= 0)
         {
@@ -197,6 +199,7 @@ public class enemyAI : MonoBehaviour , IDamage
 
             // Since No HP Delete Enemy Object
             Destroy(gameObject);
+            gameManager.instance.getPlayerScript().updatePlayerUI();
         }
     }
 
