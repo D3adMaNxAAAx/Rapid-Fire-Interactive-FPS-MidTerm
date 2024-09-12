@@ -19,7 +19,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] int HP;
     [SerializeField] int speed;
     [SerializeField] int stamina;
-    [SerializeField] int xpMax;
+    [SerializeField] int playerXPMax;
 
     // -- Movement --
     [SerializeField] int speedMod;
@@ -247,6 +247,7 @@ public class playerMovement : MonoBehaviour, IDamage
         gameManager.instance.getHPBar().fillAmount = (float)HP / HPOrig;
         gameManager.instance.getStamBar().fillAmount = (float)stamina / staminaOrig;
         gameManager.instance.getAmmoBar().fillAmount = (float)ammo / ammoOrig;
+        gameManager.instance.getXPBar().fillAmount = (float)playerXP / playerXPMax;
     }
 
     public int getXP()

@@ -1220,6 +1220,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4033077103410525867, guid: f7acce9bb88d6114a89addac04ee2dc4, type: 3}
+      propertyPath: dropXP
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5182394281705510491, guid: f7acce9bb88d6114a89addac04ee2dc4, type: 3}
       propertyPath: m_Name
       value: Basic Enemy 1
@@ -1297,6 +1301,14 @@ PrefabInstance:
     - target: {fileID: 745863159438391413, guid: b0ba9c3fe5b9ce341ba39bd02d0658d4, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698244836736258489, guid: b0ba9c3fe5b9ce341ba39bd02d0658d4, type: 3}
+      propertyPath: xpMax
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698244836736258489, guid: b0ba9c3fe5b9ce341ba39bd02d0658d4, type: 3}
+      propertyPath: playerXPMax
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1698244836736258489, guid: b0ba9c3fe5b9ce341ba39bd02d0658d4, type: 3}
       propertyPath: ammoWarningTimer
@@ -1965,6 +1977,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e59efcac670e1bc4da8175a125c71d0b, type: 3}
+--- !u!114 &1083197632 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6519315420267137081, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+  m_PrefabInstance: {fileID: 2079839528}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1222973423
 GameObject:
   m_ObjectHideFlags: 0
@@ -4232,6 +4255,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 7846602057115120480, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+      propertyPath: XPBar
+      value: 
+      objectReference: {fileID: 1083197632}
     - target: {fileID: 7846602057115120480, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
       propertyPath: ammoWarning
       value: 

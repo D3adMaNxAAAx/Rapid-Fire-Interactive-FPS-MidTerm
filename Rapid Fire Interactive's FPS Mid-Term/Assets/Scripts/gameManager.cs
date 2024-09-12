@@ -16,14 +16,15 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject damagePanelFlash;
     [SerializeField] GameObject ammoWarning;
     [SerializeField] Image playerReticle;
-    [SerializeField] TMP_Text levelTracker; /// make private with getters and setters.
-    [SerializeField] GameObject player; //Tracks player object
+    [SerializeField] TMP_Text levelTracker;
+    [SerializeField] GameObject player; // Tracks player object
     [SerializeField] playerMovement playerScript; // Tracks playerController field
-    [SerializeField] Image HPBar; /// make private with getters and setters
-    [SerializeField] Image bossHP; /// make private with getters and setters
-    [SerializeField] Image stamBar; /// make private with getters and setters
-    [SerializeField] Image EnemiesRemainingBar; /// make private with getters and setters
-    [SerializeField] Image ammoTrackerBar; /// make private with getters and setters
+    [SerializeField] Image HPBar;
+    [SerializeField] Image XPBar;
+    [SerializeField] Image bossHP;
+    [SerializeField] Image stamBar;
+    [SerializeField] Image EnemiesRemainingBar;
+    [SerializeField] Image ammoTrackerBar;
     [SerializeField] GameObject menuSettings;
 
     // Reticle Variables
@@ -89,6 +90,12 @@ public class gameManager : MonoBehaviour {
 
     public Image getHPBar() 
         { return HPBar; }
+
+    public void setXPBar(Image newXPBar)
+    { XPBar = newXPBar; }
+
+    public Image getXPBar()
+    { return XPBar; }
 
     public void setBossHP(Image newBossHP) 
         { bossHP = newBossHP; }
