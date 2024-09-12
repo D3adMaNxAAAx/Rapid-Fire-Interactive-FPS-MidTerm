@@ -39,6 +39,9 @@ public class playerMovement : MonoBehaviour, IDamage
     //HP Tracker
     int HPOrig;
 
+    //XP Tracker
+    int playerXP;
+
     //Checks
     bool isSprinting;
     bool isShooting;
@@ -153,8 +156,18 @@ public class playerMovement : MonoBehaviour, IDamage
     }
 
     //Update UI HPBar
-    public void updatePlayerUI()
+    public void updatePlayerUI() 
     {
         //gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+    }
+
+    public int getXP()
+    {
+        return playerXP;
+    }
+
+    public void setXP(int amount)
+    {
+        playerXP += amount;
     }
 }
