@@ -158,7 +158,7 @@ public class playerMovement : MonoBehaviour, IDamage
     //Update UI HPBar
     public void updatePlayerUI() 
     {
-        //gameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+        gameManager.instance.getHPBar().fillAmount = (float)HP / HPOrig;
     }
 
     public int getXP()
