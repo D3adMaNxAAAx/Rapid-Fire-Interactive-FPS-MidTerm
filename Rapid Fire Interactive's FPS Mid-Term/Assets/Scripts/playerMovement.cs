@@ -21,6 +21,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
     [SerializeField] float dmgFlashTimer;
+    [SerializeField] int stamina;
 
     //Player default weapon mods
     [SerializeField] int damage;
