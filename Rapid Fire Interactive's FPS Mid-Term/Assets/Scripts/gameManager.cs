@@ -24,6 +24,8 @@ public class gameManager : MonoBehaviour {
     [SerializeField] Image stamBar; /// make private with getters and setters
     [SerializeField] Image EnemiesRemainingBar; /// make private with getters and setters
     [SerializeField] Image ammoTrackerBar; /// make private with getters and setters
+    [SerializeField] GameObject menuSettings;
+
 
     Vector2 reticleSize; // so the player can adjust reticle size through settings & also to change it to and from.
     int enemyCount;
@@ -170,4 +172,20 @@ public class gameManager : MonoBehaviour {
         playerReticle.color = Color.red;
         playerReticle.rectTransform.sizeDelta = reticleSize;
     }
+
+
+    public void settingsMenu()
+    {
+        menuActive.SetActive(false);
+        menuActive = menuSettings;
+        menuActive.SetActive(true);
+    }
+
+    public void backButton()
+    {
+        menuActive.SetActive(false);
+        menuActive = menuPause;
+        menuActive.SetActive(true);
+    }
+
 }

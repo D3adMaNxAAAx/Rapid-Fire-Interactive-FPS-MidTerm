@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    
+    public static CameraMovement state;
+
     [SerializeField] private int sens;
     [SerializeField] private int lockVertMin, lockVertMax;
     [SerializeField] private bool invertY;
@@ -77,6 +78,8 @@ public class CameraMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        state = this;
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -135,4 +138,12 @@ public class CameraMovement : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(rotX, transform.localEulerAngles.y, currentLeanAngle);
     }
+
+
+    public void invert()
+    {
+        invertY = true;
+
+    }
+
 }
