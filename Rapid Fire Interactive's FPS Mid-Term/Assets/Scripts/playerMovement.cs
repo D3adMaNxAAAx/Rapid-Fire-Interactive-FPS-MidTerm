@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Android;
 
@@ -52,6 +53,7 @@ public class playerMovement : MonoBehaviour, IDamage
     int HPOrig; // HP
     int playerXP; // XP
     int staminaOrig; // Stamina
+    int playerLevel; // Level
     int ammoOrig; // Ammo
 
     // Checks
@@ -258,5 +260,31 @@ public class playerMovement : MonoBehaviour, IDamage
     public void setXP(int amount)
     {
         playerXP += amount;
+        levelTracker(); // Check if the player can level up
+    }
+    
+    // Tracks the player's xp and levels them up
+    public void levelTracker()
+    {
+        // Check if player XP meets requirement to level up (XP Max)
+        if (playerXP >= playerXPMax && playerLevel < 999)
+        {
+            playerLevel++;
+            playerXP = 0; // Reset XP back to zero
+            gameManager.instance.getLevelTracker().text = playerLevel.ToString("F0");
+            // TODO: HAVE TRAILING ZEROS FOR THE LEVELS
+        }
+    }
+
+    // Getters
+    public int getPlayerLevel()
+    {
+        return playerLevel;
+    }
+
+    // Setters
+    public void setPlayerLevel(int _playerLevel)
+    {
+        _playerLevel = playerLevel;
     }
 }
