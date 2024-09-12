@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // for using textmesh pro
+using TMPro;
+using JetBrains.Annotations; // for using textmesh pro
 
-public class gameManager : MonoBehaviour {
-
-    /// to do: hp bar, stam bar, enemy counter, xp thing, boss count for boss tracker (Have boss tracker show when bossCount = 1) and boss progress  fill bar boss = boss hp 
+public class gameManager : MonoBehaviour { 
 
     public static gameManager instance; // singleton
 
@@ -14,10 +13,8 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-    [SerializeField] TMP_Text enemiesRemaningUI;
     [SerializeField] GameObject damagePanelFlash;
     [SerializeField] Image playerReticle;
-    public Image HPBar; /// make private with getters and setters
 
     [SerializeField] GameObject player; //Tracks player object
     [SerializeField] playerMovement playerScript; // Tracks playerController field
@@ -58,10 +55,53 @@ public class gameManager : MonoBehaviour {
     public void setPlayerReticle(Image newReticle)
         { playerReticle = newReticle; }
 
-    /*public int getBossCount()
-    { return bossCount; }
-    public void setBossCount(int _amount)
-        { bossCount = _amount; }*/
+    public int getBossCount() 
+        { return bossCount; }
+    public void setBossCount(int _amount) 
+        { bossCount = _amount; }
+
+    [SerializeField] TMP_Text levelTracker; /// make private with getters and setters
+    public Image HPBar; /// make private with getters and setters
+    public Image bossHP; /// make private with getters and setters
+    public Image stamBar; /// make private with getters and setters
+    public Image EnemiesRemainingBar; /// make private with getters and setters
+    public Image ammoTrackerBar; /// make private with getters and setters
+
+    public void setLevelTracker(TMP_Text newLevel) 
+        { levelTracker = newLevel; }
+
+    public TMP_Text getLevelTracker() 
+        { return levelTracker; }
+    
+    public void setHPBar(Image newHPBar) 
+        { HPBar = newHPBar; }
+
+    public Image getHPBar() 
+        { return HPBar; }
+
+    public void setBossHP(Image newBossHP) 
+        { bossHP = newBossHP; }
+
+    public Image getBossHP() 
+        { return bossHP; }
+
+    public void setStamBar(Image newStamBar) 
+        { stamBar = newStamBar; }
+
+    public Image getStamBar() 
+        { return stamBar; }
+
+    public void setEnemyBar(Image newEnemyBar) 
+        { EnemiesRemainingBar = newEnemyBar; }
+
+    public Image getEnemyBar() 
+        { return EnemiesRemainingBar; }
+
+    public void setAmmoBar(Image newAmmoBar) 
+        { ammoTrackerBar = newAmmoBar; }
+
+    public Image getAmmoBar() 
+        { return ammoTrackerBar; }
 
     // Start is called before the first frame update, awake is before start
     void Awake() {
@@ -121,8 +161,7 @@ public class gameManager : MonoBehaviour {
     }
 
     // Change reticle when aiming at an enemy
-    void changeReticle(Vector2 reticleSize)
-    {
+    void changeReticle(Vector2 reticleSize) {
         playerReticle.color = Color.red;
         playerReticle.rectTransform.sizeDelta = reticleSize;
     }
