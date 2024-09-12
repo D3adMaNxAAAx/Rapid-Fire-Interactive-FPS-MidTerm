@@ -178,7 +178,7 @@ public class enemyAI : MonoBehaviour , IDamage
             
             //TODO Uncomment below
 
-            //Uncomment below line when xp modifier in place for manager and delete this comment Please and Thank You 
+             
             //gameManager.instance.getPlayerScript().xp += getEnemyXP();
 
             //Since No HP Delete Enemy Object
