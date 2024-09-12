@@ -161,11 +161,13 @@ public class enemyAI : MonoBehaviour , IDamage
     //Quaterions used becasue we must rotate enemy velocity direction to always face current target
     void faceTarget()
     {
+
+        transform.rotation = Quaternion.LookRotation(playerDir);
         //Create a rotation object to store direction to face (Direction of player)
-        Quaternion rot = Quaternion.LookRotation(playerDir);
+       // Quaternion rot = Quaternion.LookRotation(playerDir);
 
         //Telling AI to transform(Move) in rotation direaction of set destions position in time and rotate at the desired speed set to be frame rate INDEPENDENT
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+       // transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
 
     //Calling our takeDamage method from interface class IDamage

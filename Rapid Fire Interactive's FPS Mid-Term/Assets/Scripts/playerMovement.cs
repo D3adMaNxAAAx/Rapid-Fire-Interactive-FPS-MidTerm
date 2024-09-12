@@ -10,11 +10,11 @@ using UnityEngine.Android;
 public class playerMovement : MonoBehaviour, IDamage 
 {
     //-----MODIFIABLE VARIABLES-----
-    //Unity object fields
+    // Unity object fields
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
 
-    //Player modiffiers
+    // Player modifiers
     [SerializeField] int HP;
     [SerializeField] int speed;
     [SerializeField] int speedMod;
@@ -22,17 +22,20 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
     [SerializeField] float dmgFlashTimer;
+    [SerializeField] float ammoWarningTimer;
     [SerializeField] int stamina;
+    [SerializeField] float drainMod; // How quickly stamina points drain
+    [SerializeField] float recoveryMod; // How quickly stamina points recovers
 
-    //Player default weapon mods
+    // Player default weapon mods
     [SerializeField] int damage;
     [SerializeField] float fireRate;
     [SerializeField] float bulletDistance;
     [SerializeField] int ammo;
     //[SerializeField] float bulletSpeed; //Is here if we wanna change to use bullets
 
-    //-----PRIVATE VARIABLES-----
-    //Player movement variables
+    // -----PRIVATE VARIABLES-----
+    // Player movement variables
     Vector3 moveDir;
     Vector3 playerVel;
 
@@ -45,9 +48,11 @@ public class playerMovement : MonoBehaviour, IDamage
     int staminaOrig; // Stamina
     int ammoOrig; // Ammo
 
-    //Checks
+    // Checks
     bool isSprinting;
     bool isShooting;
+    bool isDraining; // To check if the player is currently losing stamina
+    bool isRecovering; // To check if the player is currently recovering stamina
 
     // Start is called before the first frame update
     void Start()
@@ -63,61 +68,77 @@ public class playerMovement : MonoBehaviour, IDamage
     {
         movement();
         sprint();
+        // Check if sprinting -- Drain stamina as the player runs
+        if (isSprinting && !isDraining)
+            StartCoroutine(staminaDrain());
+
     }
 
-    //Player Movement Controlls
+    // Player Movement Controls
     void movement()
     {
-        //Check to see if the player is on the ground to zero out y velocity and zero out the jump counter
+        // Check to see if the player is on the ground to zero out y velocity and zero out the jump counter
         if (controller.isGrounded)
         {
             playerVel = Vector3.zero;
             jumpCounter = 0;
         }
 
-        //Movement Controller
+        // Movement Controller
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
         controller.Move(moveDir * speed * Time.deltaTime);
 
-        //Jump Controller
+        // Stamina Recovery
+        if (stamina < staminaOrig && !isSprinting && !isRecovering)
+            StartCoroutine(staminaRecover());
+
+        // Jump Controller
         if (Input.GetButtonDown("Jump") && jumpCounter < maxJumps)
         {
             jumpCounter++;
             playerVel.y = jumpSpeed;
         }
 
-        //Gravity Controller
+        // Gravity Controller
         controller.Move(playerVel * Time.deltaTime);
         playerVel.y -= gravity * Time.deltaTime;
 
-        //Shoot Controller
+        // Shoot Controller
         if(Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus())
         {
             if (ammo > 0) {
                 StartCoroutine(shoot());
             } else
             {
-                //TODO: NO AMMO FLASH.
+                StartCoroutine(AmmoWarningFlash());
             }
         }
     }
 
-    //Sprint Movement Func
+    // Sprint Movement Func
     void sprint()
     {
-        if(Input.GetButtonDown("Sprint"))
+        // Check if the player has stamina to sprint
+        if(Input.GetButtonDown("Sprint") && stamina > 0)
         {
             speed *= speedMod;
             isSprinting = true;
-        }
-        else if (Input.GetButtonUp("Sprint"))
+        } else if (stamina <= 0 && isSprinting)
         {
+            // Stop sprinting if shift is up or player doesn't have stamina.
+            speed /= speedMod;
+            isSprinting = false;
+        } 
+        else if (Input.GetButtonUp("Sprint") && isSprinting)
+        {
+            // This is a preventative measure for a bug that permanently decreases the player speed if
+            // they run out of stamina while running and let go of shift.
             speed /= speedMod;
             isSprinting = false;
         }
     }
 
-    //Shoot Timer
+    // Shoot Timer
     IEnumerator shoot()
     {
         //Set bool true at timer begin
@@ -134,7 +155,7 @@ public class playerMovement : MonoBehaviour, IDamage
             //Debug.Log("Hit");
             IDamage dmg = hit.collider.GetComponent<IDamage>();
 
-            if(dmg != null)             //IDamage
+            if(dmg != null) // IDamage
             {
                 dmg.takeDamage(damage);
             }
@@ -143,14 +164,14 @@ public class playerMovement : MonoBehaviour, IDamage
         // Update the UI
         updatePlayerUI();
 
-        //Time Between Shots
+        // Time Between Shots
         yield return new WaitForSeconds(fireRate);
 
-        //Set bool false at timer end
+        // Set bool false at timer end
         isShooting = false;        
     }
 
-    //Player Damage Controller
+    // Player Damage Controller
     public void takeDamage(int amount)
     {
         HP -= amount;
@@ -165,7 +186,7 @@ public class playerMovement : MonoBehaviour, IDamage
         }
     }
 
-    //Damage Flash Timer
+    // Damage Flash Timer
     IEnumerator damageFlash()
     {
         gameManager.instance.getDmgFlash().SetActive(true); //gameManager
@@ -173,7 +194,35 @@ public class playerMovement : MonoBehaviour, IDamage
         gameManager.instance.getDmgFlash().SetActive(false); //gameManager
     }
 
-    //Update UI HPBar
+    // Flash No Ammo
+    IEnumerator AmmoWarningFlash()
+    {
+        gameManager.instance.getAmmoWarning().SetActive(true); //gameManager
+        yield return new WaitForSeconds(ammoWarningTimer);
+        gameManager.instance.getAmmoWarning().SetActive(false); //gameManager
+    }
+
+    // Drain stamina as player runs
+    IEnumerator staminaDrain()
+    {
+        isDraining = true;
+        stamina--;
+        updatePlayerUI();
+        yield return new WaitForSeconds(drainMod);
+        isDraining = false;
+    }
+
+    // Recover stamina as player walks
+    IEnumerator staminaRecover()
+    {
+        isRecovering = true;
+        stamina++;
+        updatePlayerUI();
+        yield return new WaitForSeconds(recoveryMod);
+        isRecovering = false;
+    }
+
+    // Update UI HPBar
     public void updatePlayerUI() 
     {
         gameManager.instance.getHPBar().fillAmount = (float)HP / HPOrig;
