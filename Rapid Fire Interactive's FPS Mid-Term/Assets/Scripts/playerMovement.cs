@@ -9,25 +9,31 @@ using UnityEngine.Android;
  Each one will be labeled as //IDamage or //gameManager at the end of each line of code or function.*/
 public class playerMovement : MonoBehaviour, IDamage 
 {
-    //-----MODIFIABLE VARIABLES-----
+    // -----MODIFIABLE VARIABLES-----
     // Unity object fields
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
 
     // Player modifiers
+    // -- Attributes --
     [SerializeField] int HP;
     [SerializeField] int speed;
+    [SerializeField] int stamina;
+    [SerializeField] int xpMax;
+
+    // -- Movement --
     [SerializeField] int speedMod;
     [SerializeField] int maxJumps;
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
-    [SerializeField] float dmgFlashTimer;
-    [SerializeField] float ammoWarningTimer;
-    [SerializeField] int stamina;
     [SerializeField] float drainMod; // How quickly stamina points drain
     [SerializeField] float recoveryMod; // How quickly stamina points recovers
 
-    // Player default weapon mods
+    // -- Timer --
+    [SerializeField] float dmgFlashTimer;
+    [SerializeField] float ammoWarningTimer;
+    
+    // Player Default Weapon Mods
     [SerializeField] int damage;
     [SerializeField] float fireRate;
     [SerializeField] float bulletDistance;
@@ -39,7 +45,7 @@ public class playerMovement : MonoBehaviour, IDamage
     Vector3 moveDir;
     Vector3 playerVel;
 
-    //Count number of jumps
+    // Count number of jumps
     int jumpCounter;
 
     // Trackers
@@ -71,7 +77,6 @@ public class playerMovement : MonoBehaviour, IDamage
         // Check if sprinting -- Drain stamina as the player runs
         if (isSprinting && !isDraining)
             StartCoroutine(staminaDrain());
-
     }
 
     // Player Movement Controls
@@ -103,8 +108,20 @@ public class playerMovement : MonoBehaviour, IDamage
         controller.Move(playerVel * Time.deltaTime);
         playerVel.y -= gravity * Time.deltaTime;
 
+        // Check for Enemy (Reticle)
+        RaycastHit hit;
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, bulletDistance, ~ignoreLayer))
+        {
+            IDamage dmg = hit.collider.GetComponent<IDamage>();
+
+            if (dmg != null)
+            {
+                //gameManager.instance.changeReticle();
+            }
+        }
+
         // Shoot Controller
-        if(Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus())
+        if (Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus())
         {
             if (ammo > 0) {
                 StartCoroutine(shoot());
