@@ -14,7 +14,7 @@ public class damage : MonoBehaviour
 
     //RigidBody component Field tracker for designer 
     //Allows to add velocity to range attacks
-    [SerializeField]Rigidbody rb;
+    [SerializeField] Rigidbody rb;
 
     //Modifier for damageAmount by object for designer
     [SerializeField] int damageAmount;
