@@ -116,8 +116,13 @@ public class playerMovement : MonoBehaviour, IDamage
 
             if (dmg != null)
             {
-                //gameManager.instance.changeReticle();
-            }
+                Vector2 dangerSize = new Vector2(15, 15);
+                gameManager.instance.changeReticle(true);
+            } 
+        }
+        else
+        {
+            gameManager.instance.changeReticle(false);
         }
 
         // Shoot Controller
@@ -160,7 +165,6 @@ public class playerMovement : MonoBehaviour, IDamage
     {
         //Set bool true at timer begin
         isShooting = true;
-        //Debug.Log("Bang!!");
 
         // Decrement ammo count
         ammo--;
@@ -169,10 +173,9 @@ public class playerMovement : MonoBehaviour, IDamage
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, bulletDistance, ~ignoreLayer))
         {
-            //Debug.Log("Hit");
             IDamage dmg = hit.collider.GetComponent<IDamage>();
 
-            if(dmg != null) // IDamage
+            if (dmg != null)
             {
                 dmg.takeDamage(damage);
             }
@@ -198,8 +201,7 @@ public class playerMovement : MonoBehaviour, IDamage
         //On Player Death
         if(HP <= 0)
         {
-            //Debug.Log("I Died :(");
-            gameManager.instance.youLose(); //gameManager
+            gameManager.instance.youLose();
         }
     }
 

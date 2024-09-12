@@ -26,8 +26,12 @@ public class gameManager : MonoBehaviour {
     [SerializeField] Image ammoTrackerBar; /// make private with getters and setters
     [SerializeField] GameObject menuSettings;
 
-
+    // Reticle Variables
     Vector2 reticleSize; // so the player can adjust reticle size through settings & also to change it to and from.
+    Vector2 reticleSizeOrig;
+    Color reticleColorOrig;
+
+    // Dynamic Values
     int enemyCount;
     int bossCount; // For when we make boss monster
     float timeScaleOrig; // Tracks & stores original game time scale
@@ -115,6 +119,8 @@ public class gameManager : MonoBehaviour {
 
         instance = this; // making instance of this class (singleton)
         timeScaleOrig = Time.timeScale; // Setting time scale on game awake to set scale 
+        reticleColorOrig = playerReticle.color;
+        reticleSizeOrig = playerReticle.rectTransform.sizeDelta;
         setPlayer(GameObject.FindWithTag("Player")); // Setting player tracker to player object in engine by tag name set on player object
         setPlayerScript(getPlayer().GetComponent<playerMovement>()); // setting the player script from the above player tracker script component 
     }
@@ -168,9 +174,17 @@ public class gameManager : MonoBehaviour {
     }
 
     // Change reticle when aiming at an enemy
-    void changeReticle(Vector2 reticleSize) {
-        playerReticle.color = Color.red;
-        playerReticle.rectTransform.sizeDelta = reticleSize;
+    public void changeReticle(bool hasIDamage) {
+        if (hasIDamage)
+        {
+            playerReticle.color = Color.red;
+            playerReticle.rectTransform.sizeDelta = 
+                new Vector2(reticleSizeOrig.x * 2, reticleSizeOrig.y * 2);
+        } else
+        {
+            playerReticle.color = Color.green;
+            playerReticle.rectTransform.sizeDelta = reticleSizeOrig;
+        }
     }
 
 
