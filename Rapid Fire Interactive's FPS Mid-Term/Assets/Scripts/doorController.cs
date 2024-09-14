@@ -8,6 +8,7 @@ public class doorController : MonoBehaviour
     [SerializeField] float x;
     [SerializeField] float y;
     [SerializeField] float z;
+    [SerializeField] float doorSpeed;
 
     Vector3 doorPosClose;
     Vector3 doorPosOpen;
@@ -25,7 +26,7 @@ public class doorController : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        aDoor.transform.position = doorPosOpen;
+        aDoor.transform.position = Vector3.MoveTowards(transform.position, doorPosOpen, doorSpeed * Time.deltaTime);
     }
     private void OnTriggerExit(Collider other)
     {
