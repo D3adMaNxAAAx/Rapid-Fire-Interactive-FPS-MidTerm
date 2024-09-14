@@ -88,6 +88,14 @@ public class bossEvent : MonoBehaviour, IDamage
     //boss door switch object tracker 
     [SerializeField] GameObject bossSwitch;
 
+    [SerializeField] GameObject bossDoor;
+
+    public GameObject getBossDoor()
+    { return bossDoor; }
+
+    public void setBossDoor(GameObject _door)
+    { bossDoor = _door; }
+
     public GameObject getBossSwitch()
         { return bossSwitch; }
 
