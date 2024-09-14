@@ -72,30 +72,34 @@ public class nextRoom : MonoBehaviour
 
     void clickDoorButton()
     {
-        if (Input.GetButton("Fire1"))
-        {
+
+        //button is clicked on 
+       // if ()
+      //  {
             //hide enemy counter 
 
 
             //pause game 
-            gameManager.instance.statePause();
+      //      gameManager.instance.statePause();
 
             //show menu do you want to continue to next room 
-                //yes or no button
-                    //yes click show upgrade menu
+                //differnt upgrade and buy menus buttons
+                    //click show upgrade menu
                         //upgrade menu spend xp to upgrade max hp / max dmg / max stamina / max ammo
-                            //after apply all on upgrade menu open store menu
+                            //after apply all on upgrade menu
+                            //open store menu
                                 //store menu spend money to buy hp / ammo
                                     //after confirm on store menu
+                                    //continue button
                                         //close menus and unpause game
                                             //open door
                                                 //player walks through door
                                                     //on trigger exit close door
                                                         //spawn enemies / show updated enemy counter
 
-                    //no click close menu and unpause game
+                    //backclick close currnt menu and unpause game if on room complete menu
 
             
-        }
+      //  }
     }
 }

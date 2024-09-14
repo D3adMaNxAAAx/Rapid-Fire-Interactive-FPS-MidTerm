@@ -24,6 +24,20 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.settingsMenu();
     }
 
+    public void upgradeMenu()
+    {
+        gameManager.instance.upgradeMenu();
+    }
+
+    public void continueMenu()
+    {
+        gameManager.instance.completeMenu();
+    }
+
+    public void storeMenu()
+    {
+        gameManager.instance.storeMenu();
+    }
 
     public void quit()
     {
