@@ -2,8 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class nextRoomSwitch : MonoBehaviour
+public class nextRoom : MonoBehaviour
 {
+
+    public static nextRoom instance;
     //tracks door button
     [SerializeField] GameObject doorButton;
 
@@ -34,6 +36,7 @@ public class nextRoomSwitch : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
         closePos = activeDoor.transform.position;
         openPos = new Vector3(closePos.x + doorMoveX, closePos.y + doorMoveY, closePos.z + doorMoveZ);
 
@@ -48,7 +51,7 @@ public class nextRoomSwitch : MonoBehaviour
     }
 
     //Move on to next room
-    void nextRoom()
+    void startNextRoom()
     {
         clickDoorButton();
         

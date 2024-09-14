@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class bossEvent : MonoBehaviour, IDamage
 {
+    public static bossEvent instance;
 
     [SerializeField] Transform bossHeadPos;
 
@@ -112,6 +113,8 @@ public class bossEvent : MonoBehaviour, IDamage
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;    
+
         bossHPOrig = bossHP;
 
         bossSpeedOrig = bossSpeed;
@@ -150,7 +153,8 @@ public class bossEvent : MonoBehaviour, IDamage
 
     void openBossDoor()
     {
-        //when switch clicked on 
+        //possibly use next Room class
+        //
         
 
 
