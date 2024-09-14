@@ -45,6 +45,8 @@ public class bossEvent : MonoBehaviour, IDamage
 
     [SerializeField] NavMeshAgent agent;
 
+
+    //switch out with paricle effect??
     [SerializeField] float dmgFlashTimer;
    
 
@@ -209,6 +211,8 @@ public class bossEvent : MonoBehaviour, IDamage
 
     void spawnBoss()
     {
+
+        //spawn room
         //set boss spawn in boss room 
 
         

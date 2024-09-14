@@ -13,6 +13,9 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject menuComplete;
+    [SerializeField] GameObject menuUpgrade;
+    [SerializeField] GameObject menuStore;
 
     // -- UI Elements --
 
@@ -200,9 +203,6 @@ public class gameManager : MonoBehaviour {
     public void updateGameGoal(int _enemyCount, int _bossCount = 0) {
         enemyCount += _enemyCount ;
 
-
-
-
         //EnemiesRemainingBar.fillAmount = (float)enemyCount / totalEnemies; TODO: Implement something for totalEnemies.
         EnemiesRemainingBar.text = enemyCount.ToString();
 
@@ -241,10 +241,50 @@ public class gameManager : MonoBehaviour {
         menuActive.SetActive(true);
     }
 
-    public void backButton() {
+    public void completeMenu()
+    {
         menuActive.SetActive(false);
-        menuActive = menuPause;
+        menuActive = menuComplete;
         menuActive.SetActive(true);
+    }
+
+    public void upgradeMenu()
+    {
+        menuActive.SetActive(false);
+        menuActive = menuUpgrade;
+        menuActive.SetActive(true);
+    }
+    public void storeMenu()
+    {
+        menuActive.SetActive(false);
+        menuActive = menuStore;
+        menuActive.SetActive(true);
+    }
+
+
+    public void backButton() {
+        if (menuActive == menuSettings)
+        {
+            menuActive.SetActive(false);
+            menuActive = menuPause;
+            menuActive.SetActive(true);
+        }
+        if (menuActive == menuUpgrade)
+        {
+            menuActive.SetActive(false);
+            menuActive = menuComplete;
+            menuActive.SetActive(false);
+        }
+        if (menuActive == menuStore)
+        {
+            menuActive.SetActive(false);
+            menuActive = menuComplete;
+            menuActive.SetActive(false);
+        }
+        if (menuActive == menuComplete)
+        {
+            //close all menus resume gameplay
+        }
     }
 
 }
