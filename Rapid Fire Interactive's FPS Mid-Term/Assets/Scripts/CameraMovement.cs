@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
+//using UnityEditorInternal;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
@@ -88,7 +88,7 @@ public class CameraMovement : MonoBehaviour
 
         cam = GetComponent<Camera>();
         cam.fieldOfView = normalFOV;
-        OrigCameraPos = transform.position;
+        OrigCameraPos = transform.localPosition;
     }
 
     // Update is called once per frame
