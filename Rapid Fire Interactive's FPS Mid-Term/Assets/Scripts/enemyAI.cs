@@ -6,84 +6,38 @@ using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour , IDamage
 {
-    // Allows selection of enemy type
-    [SerializeField] enum enemyType { basic, challenge, boss}
+    // -- Enemy Information --
+    [SerializeField] enum enemyType { basic, challenge, boss } // Allows selection of enemy type
+    [SerializeField] enemyType type; // Tracks which type of enemy in play
+    [SerializeField] Renderer model; // Allows Designer Communication to Model's Renderer
+    [SerializeField] NavMeshAgent agent; // Allows Designer Communication To NavMeshAgent Component 
+    [SerializeField] Transform headPos; // Enemy Head Position Tracker(Line Of Sight) For Designer
+    [SerializeField] Transform shootPos; // Enemy SHoot Point Origin Tracker For Designer
 
-    // Tracks which type of enemy in play
-    [SerializeField] enemyType type;
-
-    // Allows Designer Communication to Model's Renderer
-    [SerializeField] Renderer model;
-
-    // Allows Designer Communication To NavMeshAgent Component 
-    [SerializeField] NavMeshAgent agent;
-
-    // Enemy Head Position Tracker(Line Of Sight) For Designer
-    [SerializeField] Transform headPos;
-
-    // Enemy SHoot Point Origin Tracker For Designer
-    [SerializeField] Transform shootPos;
-
-    // Health Points Tracker and Modifier Field For Designer
-    [SerializeField] int HP;
-
-    // Bullet Object Tracker and Communication Field For Designer
-    [SerializeField] GameObject rangedAttack;
-
-    // Enemy Fire Rate Modifier Field For Designer
-    [SerializeField] float shootRate;
-
-    // Allows Designer To Set Damage Flash Timer 
-    [SerializeField] float damageFlashTimer;
-
-    // Sets enemy rotation look speed for turning towards enemy look direction
-    [SerializeField] int faceTargetSpeed;
-
-    // How much XP enemy drops 
-    [SerializeField] int dropXP;
-
-    // Gives other classes access to enemy xp value
-    public int getEnemyXP()
-    { return dropXP; }
-
-    // Setter for enemy xp from other classes
-    public void setEnemyXP(int _xp)
-    { dropXP = _xp; }
-
-    // Getter for Enemy HP
-    public int getEnemyHP()
-    { return HP; }
-
-    // Setter for Enemy HP from other classes
-    public void setEnemyHP(int _hp)
-    { HP = _hp; }
-
-    // Enemy Model Original Color Private Tracker
-    Color colorOrig;
-
-    // Private Tracker For If Enemy Is Shooting 
-    bool isShooting;
-
-    // Private Tracker for enemy original HP
-    int HPOrig;
-
-    // Tracker of if player is in range of enemy detection radius
-    bool playerInRange;
-
-    // Tracks player Direction for AI rotation and player in range 
-    Vector3 playerDir;
-
-    // tracks boss hp for boss fight progress bar 
-    int bossHP;
+    // -- Extra Checks --
+    bool isShooting; // Private Tracker For If Enemy Is Shooting 
+    bool playerInRange; // Tracker of if player is in range of enemy detection radius
+    // bool seenPlayer; // Checks if the enemy has seen the player
+    Vector3 playerDir; // Tracks player Direction for AI rotation and player in range
+    // Vector3 playerLastPos; // Tracks where the player was last
+    
+    // -- Attributes --
+    [SerializeField] int HP; // Health Points Tracker and Modifier Field For Designer
+    [SerializeField] GameObject rangedAttack; // Bullet Object Tracker and Communication Field For Designer
+    [SerializeField] float shootRate; // Enemy Fire Rate Modifier Field For Designer
+    [SerializeField] float damageFlashTimer; // Allows Designer To Set Damage Flash Timer 
+    [SerializeField] int faceTargetSpeed; // Sets enemy rotation look speed for turning towards enemy look direction
+    [SerializeField] int dropXP; // How much XP enemy drops
+    int HPOrig; // Private Tracker for enemy original HP
+    Color colorOrig; // Enemy Model Original Color Private Tracker
+    int bossHP; // tracks boss hp for boss fight progress bar
 
     // Start is called before the first frame update
     void Start()
     {
-        // Sets our Models original color on scene start
-        colorOrig = model.material.color ;
-
-        // Set orginal hp value on scene open for enemy
-        HPOrig = HP;
+        // Assign variables that need to be set at enemy creation
+        colorOrig = model.material.color; // Sets our Models original color on scene start
+        HPOrig = HP; // Set orginal hp value on scene open for enemy
 
         // if enemy is boss original = enemy hp used for boss health progress bar
         if (type == enemyType.boss)
@@ -98,11 +52,7 @@ public class enemyAI : MonoBehaviour , IDamage
     {
         if (playerInRange)
         {
-            // Check if the enemy is a boss -- this will be to display the health bar when the player is in range.
-            //if (type == enemyType.boss)
-            //{
-            //    gameManager.instance.displayBossBar(true);
-            //}
+            // seenPlayer = true; // Enemy has now seen the player -- this will be used for a check later in the Update method
 
             // Setting direction of where player is in relation to enemy location when within detection range
             playerDir = gameManager.instance.getPlayer().transform.position - headPos.position;
@@ -118,12 +68,31 @@ public class enemyAI : MonoBehaviour , IDamage
             // Checking if Enemy is shooting 
             if (!isShooting)
             {
-                //Tell enemy to start shooting
+                // Tell enemy to start shooting
                 StartCoroutine(shoot());
             }
+
+            // -- meant to be at the start of the method.
+            // Check if the enemy is a boss -- this will be to display the health bar when the player is in range.
+            //if (type == enemyType.boss)
+            //{
+            //    gameManager.instance.displayBossBar(true);
+            //}
+
+
         }
 
+        // TO-DO: Implement Enemy Memory for player position (maybe move to a Chase method and call it?)
+        // If the player moves out of range, move the enemy to where it last saw the player.
+        //if (seenPlayer && !playerInRange)
+        //{
+        //    // Move the enemy towards their last position
+        //    agent.SetDestination(gameManager.instance.getPlayer().transform.position);
 
+        //    // The enemy has no longer seen the player so mark it as false.
+        //    seenPlayer = false;
+        //}
+        
         //Something like this but based off a key count each enemy killed adds key and keys required are equal to 
         //if (gameManager.instance.getEnemyCount() == 1 && gameManager.instance.getBossCount() == 1)
         //    gameManager.instance.displayBossBar(true);
@@ -136,7 +105,6 @@ public class enemyAI : MonoBehaviour , IDamage
         //}
 
     }
-
     IEnumerator shoot()
     {
         // Set shooting to true
@@ -222,4 +190,20 @@ public class enemyAI : MonoBehaviour , IDamage
         //Sets color back to original after timer elapse
         model.material.color = colorOrig;
     }
+
+    // Gives other classes access to enemy xp value
+    public int getEnemyXP()
+    { return dropXP; }
+
+    // Setter for enemy xp from other classes
+    public void setEnemyXP(int _xp)
+    { dropXP = _xp; }
+
+    // Getter for Enemy HP
+    public int getEnemyHP()
+    { return HP; }
+
+    // Setter for Enemy HP from other classes
+    public void setEnemyHP(int _hp)
+    { HP = _hp; }
 }
