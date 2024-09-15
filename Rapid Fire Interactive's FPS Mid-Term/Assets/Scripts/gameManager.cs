@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
-using JetBrains.Annotations; // for using textmesh pro
+using TMPro; // for using textmesh pro
 
 public class gameManager : MonoBehaviour { 
     public static gameManager instance; // singleton
@@ -16,8 +15,6 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuComplete;
     [SerializeField] GameObject menuUpgrade;
     [SerializeField] GameObject menuStore;
-
-    // -- UI Elements --
 
     // --- Player ---
     [SerializeField] Image HPBar;
@@ -32,8 +29,8 @@ public class gameManager : MonoBehaviour {
     [SerializeField] Image bossHPBar;
 
     //[SerializeField] Image EnemiesRemainingBar;
-    [SerializeField] TMP_Text EnemiesRemainingBarCount;
-    [SerializeField] TMP_Text EnemiesRemainingBarLabel;
+    [SerializeField] TMP_Text EnemiesRemainingCount;
+    [SerializeField] TMP_Text EnemiesRemainingLabel;
 
     [SerializeField] GameObject menuSettings;
 
@@ -145,17 +142,17 @@ public class gameManager : MonoBehaviour {
     public Image getEnemyBar() 
         { return EnemiesRemainingBar; }*/
 
-    public void setEnemyRemainCount(TMP_Text newEnemyBarCount) 
-        { EnemiesRemainingBarCount = newEnemyBarCount; }
+    public void setEnemyRemainCount(TMP_Text newEnemyCount) 
+        { EnemiesRemainingCount = newEnemyCount; }
 
     public TMP_Text getEnemyRemainCount() 
-        { return EnemiesRemainingBarCount; }
+        { return EnemiesRemainingCount; }
 
-    public void setEnemyRemainLabel(TMP_Text newEnemyBarLabel)
-    { EnemiesRemainingBarLabel = newEnemyBarLabel; }
+    public void setEnemyRemainLabel(TMP_Text newEnemyLabel)
+    { EnemiesRemainingLabel = newEnemyLabel; }
 
     public TMP_Text getEnemyRemainLabel()
-    { return EnemiesRemainingBarLabel; }
+    { return EnemiesRemainingLabel; }
 
 
     public void setAmmoBar(Image newAmmoBar) 
@@ -218,7 +215,7 @@ public class gameManager : MonoBehaviour {
         enemyCount += _enemyCount ;
 
         //EnemiesRemainingBar.fillAmount = (float)enemyCount / totalEnemies; TODO: Implement something for totalEnemies.
-        EnemiesRemainingBarCount.text = enemyCount.ToString();
+        EnemiesRemainingCount.text = enemyCount.ToString();
 
         bossCount += _bossCount;
         if (enemyCount <= 0 && bossCount <= 0) {
@@ -255,35 +252,27 @@ public class gameManager : MonoBehaviour {
         menuActive.SetActive(true);
     }
 
-    public void completeMenu()
-    {
-        EnemiesRemainingBarCount.maxVisibleWords = 0;
-        EnemiesRemainingBarLabel.maxVisibleWords = 0;
+    public void completeMenu() {
+        EnemiesRemainingCount.maxVisibleWords = 0;
+        EnemiesRemainingLabel.maxVisibleWords = 0;
         statePause();
         menuActive = menuComplete;
         menuActive.SetActive(true);
-        
     }
 
-    public void nextRoomContinue()
-    {
+    public void nextRoomContinue() {
         
         stateUnpause();
         menuActive = null;
         nextRoom.instance.openDoor();
-        
-
-        
     }
 
-    public void upgradeMenu()
-    {
+    public void upgradeMenu() {
         menuActive.SetActive(false);
         menuActive = menuUpgrade;
         menuActive.SetActive(true);
     }
-    public void storeMenu()
-    {
+    public void storeMenu() {
         menuActive.SetActive(false);
         menuActive = menuStore;
         menuActive.SetActive(true);
@@ -315,5 +304,4 @@ public class gameManager : MonoBehaviour {
             menuActive = null;
         }
     }
-
 }

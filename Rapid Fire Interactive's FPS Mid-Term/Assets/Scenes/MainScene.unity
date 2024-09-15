@@ -216,11 +216,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &1105493325 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4635550184921598484, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+  m_PrefabInstance: {fileID: 5134236695207255473}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1178556566 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 312314880329837941, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
   m_PrefabInstance: {fileID: 5134236695207255473}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1681128335 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 304217664025071362, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+  m_PrefabInstance: {fileID: 5134236695207255473}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &718024994461960158
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -271,7 +293,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1698244836736258489, guid: b0ba9c3fe5b9ce341ba39bd02d0658d4, type: 3}
       propertyPath: bulletDistance
-      value: 7
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 1698244836736258489, guid: b0ba9c3fe5b9ce341ba39bd02d0658d4, type: 3}
       propertyPath: ammoWarningTimer
@@ -403,6 +425,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4734614130769479271, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 20.300049
+      objectReference: {fileID: 0}
     - target: {fileID: 5823421247959698043, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -491,6 +517,14 @@ PrefabInstance:
       propertyPath: bossHP
       value: 
       objectReference: {fileID: 1178556566}
+    - target: {fileID: 7846602057115120480, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+      propertyPath: EnemiesRemainingCount
+      value: 
+      objectReference: {fileID: 1681128335}
+    - target: {fileID: 7846602057115120480, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+      propertyPath: EnemiesRemainingLabel
+      value: 
+      objectReference: {fileID: 1105493325}
     - target: {fileID: 8290534140114250923, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 7.8100586
