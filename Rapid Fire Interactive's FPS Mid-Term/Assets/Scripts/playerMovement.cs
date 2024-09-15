@@ -169,7 +169,7 @@ public class playerMovement : MonoBehaviour, IDamage
         isShooting = true;
 
         // Decrement ammo count
-        ammo--;
+        //ammo--;
 
         //Create Raycast
         RaycastHit hit;
@@ -180,13 +180,14 @@ public class playerMovement : MonoBehaviour, IDamage
             if (dmg != null)
             {
                 dmg.takeDamage(damage);
-
+                --ammo;
             }
             else if (hit.collider.GetComponent<nextRoom>() == true)
             {
-
+                Debug.Log("Button Hit");
                 gameManager.instance.completeMenu();
             }
+            else { --ammo; }
         }
 
         // Update the UI

@@ -185,19 +185,26 @@ public class gameManager : MonoBehaviour {
     }
 
     public void statePause() {
-        isPaused = !isPaused; // toggles bool
-        Time.timeScale = 0; // pauses everything except UI
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.Confined; // unlocks cursor but keeps it confined to game window
+        if(!isPaused)
+        {
+            isPaused = !isPaused; // toggles bool
+            Time.timeScale = 0; // pauses everything except UI
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Confined; // unlocks cursor but keeps it confined to game window
+        }
     }
 
     public void stateUnpause() {
-        isPaused = !isPaused; // toggles bool
-        Time.timeScale = timeScaleOrig; //set time scale back to original
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked; // locks cursor position
-        menuActive.SetActive(getPauseStatus()); // Show active menu
-        menuActive = null;
+
+        if (isPaused)
+        {
+            isPaused = !isPaused; // toggles bool
+            Time.timeScale = timeScaleOrig; //set time scale back to original
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked; // locks cursor position
+            menuActive.SetActive(getPauseStatus()); // Show active menu
+            menuActive = null;
+        }
     }
 
     public void updateGameGoal(int _enemyCount, int _bossCount = 0) {
@@ -243,9 +250,11 @@ public class gameManager : MonoBehaviour {
 
     public void completeMenu()
     {
-        menuActive.SetActive(false);
-        menuActive = menuComplete;
-        menuActive.SetActive(true);
+        
+            statePause();
+            menuActive = menuComplete;
+            menuActive.SetActive(true);
+        
     }
 
     public void upgradeMenu()
@@ -269,21 +278,22 @@ public class gameManager : MonoBehaviour {
             menuActive = menuPause;
             menuActive.SetActive(true);
         }
-        if (menuActive == menuUpgrade)
+        else if (menuActive == menuUpgrade)
+        {
+            menuActive.SetActive(false);
+            completeMenu();
+        }
+        else if (menuActive == menuStore)
         {
             menuActive.SetActive(false);
             menuActive = menuComplete;
-            menuActive.SetActive(false);
+            menuActive.SetActive(true);
         }
-        if (menuActive == menuStore)
+        else if (menuActive == menuComplete)
         {
             menuActive.SetActive(false);
-            menuActive = menuComplete;
-            menuActive.SetActive(false);
-        }
-        if (menuActive == menuComplete)
-        {
-            //close all menus resume gameplay
+            stateUnpause();
+            menuActive = null;
         }
     }
 
