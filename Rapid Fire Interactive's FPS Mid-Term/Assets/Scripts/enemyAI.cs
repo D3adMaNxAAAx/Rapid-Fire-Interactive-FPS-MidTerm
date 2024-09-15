@@ -14,20 +14,23 @@ public class enemyAI : MonoBehaviour , IDamage
     [SerializeField] Transform headPos; // Enemy Head Position Tracker(Line Of Sight) For Designer
     [SerializeField] Transform shootPos; // Enemy SHoot Point Origin Tracker For Designer
 
+    // -- Extra Checks --
+    bool isShooting; // Private Tracker For If Enemy Is Shooting 
+    bool playerInRange; // Tracker of if player is in range of enemy detection radius
+    // bool seenPlayer; // Checks if the enemy has seen the player
+    Vector3 playerDir; // Tracks player Direction for AI rotation and player in range
+    // Vector3 playerLastPos; // Tracks where the player was last
+    
     // -- Attributes --
     [SerializeField] int HP; // Health Points Tracker and Modifier Field For Designer
     [SerializeField] GameObject rangedAttack; // Bullet Object Tracker and Communication Field For Designer
     [SerializeField] float shootRate; // Enemy Fire Rate Modifier Field For Designer
     [SerializeField] float damageFlashTimer; // Allows Designer To Set Damage Flash Timer 
     [SerializeField] int faceTargetSpeed; // Sets enemy rotation look speed for turning towards enemy look direction
-    [SerializeField] int dropXP; // How much XP enemy drops 
-
+    [SerializeField] int dropXP; // How much XP enemy drops
     int HPOrig; // Private Tracker for enemy original HP
     Color colorOrig; // Enemy Model Original Color Private Tracker
-    bool isShooting; // Private Tracker For If Enemy Is Shooting 
-    bool playerInRange; // Tracker of if player is in range of enemy detection radius
-    Vector3 playerDir; // Tracks player Direction for AI rotation and player in range 
-    int bossHP; // tracks boss hp for boss fight progress bar 
+    int bossHP; // tracks boss hp for boss fight progress bar
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +52,8 @@ public class enemyAI : MonoBehaviour , IDamage
     {
         if (playerInRange)
         {
+            // seenPlayer = true; // Enemy has now seen the player -- this will be used for a check later in the Update method
+
             // Setting direction of where player is in relation to enemy location when within detection range
             playerDir = gameManager.instance.getPlayer().transform.position - headPos.position;
             
@@ -73,8 +78,21 @@ public class enemyAI : MonoBehaviour , IDamage
             //{
             //    gameManager.instance.displayBossBar(true);
             //}
+
+
         }
 
+        // TO-DO: Implement Enemy Memory for player position (maybe move to a Chase method and call it?)
+        // If the player moves out of range, move the enemy to where it last saw the player.
+        //if (seenPlayer && !playerInRange)
+        //{
+        //    // Move the enemy towards their last position
+        //    agent.SetDestination(gameManager.instance.getPlayer().transform.position);
+
+        //    // The enemy has no longer seen the player so mark it as false.
+        //    seenPlayer = false;
+        //}
+        
         //Something like this but based off a key count each enemy killed adds key and keys required are equal to 
         //if (gameManager.instance.getEnemyCount() == 1 && gameManager.instance.getBossCount() == 1)
         //    gameManager.instance.displayBossBar(true);
