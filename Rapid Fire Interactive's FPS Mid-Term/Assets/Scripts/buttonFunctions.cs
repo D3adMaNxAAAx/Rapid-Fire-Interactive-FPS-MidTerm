@@ -29,6 +29,11 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.upgradeMenu();
     }
 
+    public void continueGame()
+    {
+        gameManager.instance.nextRoomContinue();
+
+    }
 
     public void storeMenu()
     {

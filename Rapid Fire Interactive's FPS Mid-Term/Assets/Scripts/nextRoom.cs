@@ -58,15 +58,20 @@ public class nextRoom : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        closeDoor();
+        if (other.CompareTag("NextRoomEnter"))
+        {
+            closeDoor();
+            gameManager.instance.getEnemyRemainLabel().maxVisibleWords += 3;
+            gameManager.instance.getEnemyRemainCount().maxVisibleWords += 3;
+        }
     }
 
     //Tell door to open
-    void openDoor()
+    public void openDoor()
     { activeDoor.transform.position = openPos; }
 
     //tell door to close
-    void closeDoor()
+    public void closeDoor()
     { activeDoor.transform.position = closePos; }
 
     void clickDoorButton()
@@ -79,19 +84,19 @@ public class nextRoom : MonoBehaviour
 
 
             //pause game 
-      //      gameManager.instance.statePause();
+      
 
-            //show menu do you want to room complete
-                //differnt upgrade and buy menus buttons
-                    //click show upgrade menu
+           //menu options work once ty has store made 
+                   
                         //upgrade menu spend xp to upgrade max hp / max dmg / max stamina / max ammo
-                            //after apply all on upgrade menu
+                            
                             //open store menu
                                 //store menu spend money to buy hp / ammo
-                                    //after confirm on store menu
+                                   
                                         //continue button
                                          //close menus and unpause game
                                             //open door
+
                                                 //player walks through door
                                                     //on trigger exit close door
                                                         //spawn enemies / show updated enemy counter

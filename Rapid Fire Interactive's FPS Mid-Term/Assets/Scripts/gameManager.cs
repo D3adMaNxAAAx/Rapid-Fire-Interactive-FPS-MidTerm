@@ -32,7 +32,8 @@ public class gameManager : MonoBehaviour {
     [SerializeField] Image bossHPBar;
 
     //[SerializeField] Image EnemiesRemainingBar;
-    [SerializeField] TMP_Text EnemiesRemainingBar;
+    [SerializeField] TMP_Text EnemiesRemainingBarCount;
+    [SerializeField] TMP_Text EnemiesRemainingBarLabel;
 
     [SerializeField] GameObject menuSettings;
 
@@ -144,11 +145,17 @@ public class gameManager : MonoBehaviour {
     public Image getEnemyBar() 
         { return EnemiesRemainingBar; }*/
 
-    public void setEnemyBar(TMP_Text newEnemyBar) 
-        { EnemiesRemainingBar = newEnemyBar; }
+    public void setEnemyRemainCount(TMP_Text newEnemyBarCount) 
+        { EnemiesRemainingBarCount = newEnemyBarCount; }
 
-    public TMP_Text getEnemyBar() 
-        { return EnemiesRemainingBar; }
+    public TMP_Text getEnemyRemainCount() 
+        { return EnemiesRemainingBarCount; }
+
+    public void setEnemyRemainLabel(TMP_Text newEnemyBarLabel)
+    { EnemiesRemainingBarLabel = newEnemyBarLabel; }
+
+    public TMP_Text getEnemyRemainLabel()
+    { return EnemiesRemainingBarLabel; }
 
 
     public void setAmmoBar(Image newAmmoBar) 
@@ -211,7 +218,7 @@ public class gameManager : MonoBehaviour {
         enemyCount += _enemyCount ;
 
         //EnemiesRemainingBar.fillAmount = (float)enemyCount / totalEnemies; TODO: Implement something for totalEnemies.
-        EnemiesRemainingBar.text = enemyCount.ToString();
+        EnemiesRemainingBarCount.text = enemyCount.ToString();
 
         bossCount += _bossCount;
         if (enemyCount <= 0 && bossCount <= 0) {
@@ -250,10 +257,22 @@ public class gameManager : MonoBehaviour {
 
     public void completeMenu()
     {
+        EnemiesRemainingBarCount.maxVisibleWords = 0;
+        EnemiesRemainingBarLabel.maxVisibleWords = 0;
+        statePause();
+        menuActive = menuComplete;
+        menuActive.SetActive(true);
         
-            statePause();
-            menuActive = menuComplete;
-            menuActive.SetActive(true);
+    }
+
+    public void nextRoomContinue()
+    {
+        
+        stateUnpause();
+        menuActive = null;
+        nextRoom.instance.openDoor();
+        
+
         
     }
 
