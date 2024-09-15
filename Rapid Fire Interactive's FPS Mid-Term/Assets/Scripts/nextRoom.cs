@@ -18,8 +18,7 @@ public class nextRoom : MonoBehaviour
     [SerializeField] float doorMoveZ;
 
 
-    //menu that shows upgrade purchases before next room
-    [SerializeField] GameObject menuNextRoom;
+  
 
     //add ui element to gameManager to tell player to click button to move on to next room when all enemies are killed in current room
 
@@ -82,7 +81,7 @@ public class nextRoom : MonoBehaviour
             //pause game 
       //      gameManager.instance.statePause();
 
-            //show menu do you want to continue to next room 
+            //show menu do you want to room complete
                 //differnt upgrade and buy menus buttons
                     //click show upgrade menu
                         //upgrade menu spend xp to upgrade max hp / max dmg / max stamina / max ammo
@@ -90,14 +89,14 @@ public class nextRoom : MonoBehaviour
                             //open store menu
                                 //store menu spend money to buy hp / ammo
                                     //after confirm on store menu
-                                    //continue button
-                                        //close menus and unpause game
+                                        //continue button
+                                         //close menus and unpause game
                                             //open door
                                                 //player walks through door
                                                     //on trigger exit close door
                                                         //spawn enemies / show updated enemy counter
 
-                    //backclick close currnt menu and unpause game if on room complete menu
+                    //back click close currnt menu and unpause game if on room complete menu
 
             
       //  }

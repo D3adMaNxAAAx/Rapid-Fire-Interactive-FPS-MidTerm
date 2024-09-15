@@ -180,6 +180,12 @@ public class playerMovement : MonoBehaviour, IDamage
             if (dmg != null)
             {
                 dmg.takeDamage(damage);
+
+            }
+            else if (hit.collider.GetComponent<nextRoom>() == true)
+            {
+
+                gameManager.instance.completeMenu();
             }
         }
 
