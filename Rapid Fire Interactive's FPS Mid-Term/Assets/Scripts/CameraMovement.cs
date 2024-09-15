@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
@@ -18,7 +19,9 @@ public class CameraMovement : MonoBehaviour
     //leaning settings
     [SerializeField] private float leanAngle = 45f;
     [SerializeField] private float leanSpeed = 10f;
+    [SerializeField] private float LeanOffSet = 0.8f;
     private float currentLeanAngle = 0f;
+    private Vector3 OrigCameraPos;
 
 
     private bool isAiming;
@@ -85,6 +88,7 @@ public class CameraMovement : MonoBehaviour
 
         cam = GetComponent<Camera>();
         cam.fieldOfView = normalFOV;
+        OrigCameraPos = transform.position;
     }
 
     // Update is called once per frame
@@ -124,19 +128,25 @@ public class CameraMovement : MonoBehaviour
     void HandleLeaning()
     {
         float targetLeanAngle = 0f;
+        Vector3 targetOffSet = OrigCameraPos; //orig camera start
 
         if (Input.GetKey(KeyCode.Q))
         {
-            targetLeanAngle = GetLeanAngle();
+            targetLeanAngle = GetLeanAngle(); //lean left
+            targetOffSet += Vector3.left * LeanOffSet; //off set camera lean left
+            
         }
         else if (Input.GetKey(KeyCode.E))
         {
-            targetLeanAngle = -GetLeanAngle();
+            targetLeanAngle = -GetLeanAngle(); // lean right
+            targetOffSet += Vector3.right * LeanOffSet; //off set camera lean right
         }
 
-        currentLeanAngle = Mathf.LerpAngle(currentLeanAngle, targetLeanAngle, Time.deltaTime * leanSpeed);
+        currentLeanAngle = Mathf.LerpAngle(currentLeanAngle, targetLeanAngle, Time.deltaTime * leanSpeed); //smooth transition to lean
 
-        transform.localRotation = Quaternion.Euler(rotX, transform.localEulerAngles.y, currentLeanAngle);
+        transform.localRotation = Quaternion.Euler(rotX, transform.localEulerAngles.y, currentLeanAngle); //applies lean 
+
+        transform.localPosition = Vector3.Lerp(transform.localPosition, targetOffSet, Time.deltaTime * leanSpeed); // smooth lean offset
     }
 
 
