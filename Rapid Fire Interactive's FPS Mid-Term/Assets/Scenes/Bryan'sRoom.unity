@@ -122,11 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 304b36bb8c70be24fba358d69e51ef24, type: 2}
---- !u!1 &560805782 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 312314880329837941, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
-  m_PrefabInstance: {fileID: 2079839528}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &580756715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -358,17 +353,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f7acce9bb88d6114a89addac04ee2dc4, type: 3}
---- !u!114 &769230344 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5502419556936992492, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
-  m_PrefabInstance: {fileID: 2079839528}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1183513160
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -650,9 +634,13 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 312314880329837941, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+    - target: {fileID: 1753293082127950765, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+      propertyPath: m_text
+      value: 00 / 00
+      objectReference: {fileID: 0}
+    - target: {fileID: 3189835182878330764, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 122.1
       objectReference: {fileID: 0}
     - target: {fileID: 5823421247959698043, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
       propertyPath: m_Pivot.x
@@ -738,14 +726,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
-    - target: {fileID: 7846602057115120480, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
-      propertyPath: bossHP
-      value: 
-      objectReference: {fileID: 560805782}
-    - target: {fileID: 7846602057115120480, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
-      propertyPath: bossHPBar
-      value: 
-      objectReference: {fileID: 769230344}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
