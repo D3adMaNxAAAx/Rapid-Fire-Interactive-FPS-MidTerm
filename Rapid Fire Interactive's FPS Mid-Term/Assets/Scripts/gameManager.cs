@@ -37,6 +37,7 @@ public class gameManager : MonoBehaviour {
     // -- Warnings --
     [SerializeField] GameObject damagePanelFlash;
     [SerializeField] GameObject ammoWarning;
+    [SerializeField] GameObject lowHealthWarning;
 
     // -- Objects --
     [SerializeField] GameObject player; // Tracks player object
@@ -65,6 +66,12 @@ public class gameManager : MonoBehaviour {
     public void setAmmoWarning(GameObject _ammoWarning)
     { ammoWarning = _ammoWarning; }
 
+    public GameObject getHealthWarning() 
+        { return lowHealthWarning; }
+
+    public void setHealthWarning(GameObject _lowHealthWarning) 
+        { lowHealthWarning = _lowHealthWarning; }
+
     public playerMovement getPlayerScript() 
         { return playerScript; }
 
@@ -91,6 +98,7 @@ public class gameManager : MonoBehaviour {
 
     public int getBossCount() 
         { return bossCount; }
+
     public void setBossCount(int _amount) 
         { bossCount = _amount; }
 

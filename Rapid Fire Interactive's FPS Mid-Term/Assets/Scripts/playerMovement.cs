@@ -61,6 +61,7 @@ public class playerMovement : MonoBehaviour, IDamage
     bool isShooting;
     bool isDraining; // To check if the player is currently losing stamina
     bool isRecovering; // To check if the player is currently recovering stamina
+    bool lowHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -208,9 +209,12 @@ public class playerMovement : MonoBehaviour, IDamage
         StartCoroutine(damageFlash());
 
         //On Player Death
-        if(HP <= 0)
-        {
+        if(HP <= 0) {
             gameManager.instance.youLose();
+        }
+        else if (((float)HP / HPOrig) <= .25) { // float to divsion returns decimal
+            lowHealth = true;
+            gameManager.instance.getHealthWarning().SetActive(true);
         }
     }
 
