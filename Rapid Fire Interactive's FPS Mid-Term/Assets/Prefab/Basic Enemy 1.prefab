@@ -534,7 +534,7 @@ MonoBehaviour:
   rangedAttack: {fileID: 1026084026005163015, guid: 17def77748eb48e4fbb847c6e03563f6, type: 3}
   shootRate: 0.5
   damageFlashTimer: 0.1
-  faceTargetSpeed: 2
+  faceTargetSpeed: 3
   dropXP: 1
 --- !u!195 &1414102423487399615
 NavMeshAgent:
@@ -621,7 +621,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6036015974384669538
 GameObject:
