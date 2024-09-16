@@ -10,6 +10,9 @@ using UnityEngine.Android;
  Each one will be labeled as //IDamage or //gameManager at the end of each line of code or function.*/
 public class playerMovement : MonoBehaviour, IDamage 
 {
+
+    /// maybe add something to UI to indicate healing
+
     // -----MODIFIABLE VARIABLES-----
     // Unity object fields
     [SerializeField] CharacterController controller;
@@ -56,13 +59,16 @@ public class playerMovement : MonoBehaviour, IDamage
     int staminaOrig; // Stamina
     int playerLevel; // Level
     int ammoOrig; // Ammo
+    int update = 0;
 
     // Checks
     bool isSprinting;
     bool isShooting;
     bool isDraining; // To check if the player is currently losing stamina
     bool isRecovering; // To check if the player is currently recovering stamina
-    bool lowHealth;
+    bool lowHealth = false;
+    bool readyToHeal = false;
+    bool stopHealing = false; // was the player damaged while healing?
 
     // Start is called before the first frame update
     void Start()
@@ -81,6 +87,17 @@ public class playerMovement : MonoBehaviour, IDamage
         // Check if sprinting -- Drain stamina as the player runs
         if (isSprinting && !isDraining)
             StartCoroutine(staminaDrain());
+
+        update++;
+        if (update == 60) { // slowing down constant checks
+            update = 0;
+            if (((float)HP / HPOrig) < .5) { // HEALING STARTS HERE, READY TO HEAL DETERMINATION STARTS IN TAKEDAMAGE()
+                if (readyToHeal) {
+                    StartCoroutine(healing()); // recursive method
+                    readyToHeal = false; // stop healing
+                }
+            }
+        }
     }
 
     // Player Movement Controls
@@ -129,13 +146,16 @@ public class playerMovement : MonoBehaviour, IDamage
             gameManager.instance.changeReticle(false);
         }
 
-        // Shoot Controller
-        if (Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus())
-        {
+        shootGun();
+    }
+
+    void shootGun() {
+        if (Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus()) {
             if (ammo > 0) {
-                StartCoroutine(shoot()); 
+                StartCoroutine(shoot());
                 Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation);
-            } else {
+            }
+            else {
                 StartCoroutine(AmmoWarningFlash());
             }
         }
@@ -172,6 +192,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
         // Decrement ammo count
         //ammo--;
+        /// ^ why is this here?
 
         //Create Raycast
         RaycastHit hit;
@@ -186,7 +207,7 @@ public class playerMovement : MonoBehaviour, IDamage
             }
             else if (hit.collider.GetComponent<nextRoom>() == true)
             {
-                Debug.Log("Button Hit");
+                // Debug.Log("Button Hit");
                 gameManager.instance.completeMenu();
             }
             else { --ammo; }
@@ -206,6 +227,7 @@ public class playerMovement : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        stopHealing = true; // STOP HEALING IF DAMAGED
         updatePlayerUI();
         StartCoroutine(damageFlash());
 
@@ -213,9 +235,49 @@ public class playerMovement : MonoBehaviour, IDamage
         if(HP <= 0) {
             gameManager.instance.youLose();
         }
-        else if (((float)HP / HPOrig) <= .25) { // float to divsion returns decimal
+        else if (((float)HP / HPOrig) <= .25) { 
             lowHealth = true;
             gameManager.instance.getHealthWarning().SetActive(true);
+        }
+        if (((float)HP / HPOrig) < .5) { 
+            StartCoroutine(noDamageTime()); // TIMER FOR WHEN PLAYER CAN START TO HEAL
+        }
+    }
+
+    public void Heal() {
+        HP += 3; // HEAL THE PLAYER
+        if (lowHealth == true) {
+            if (((float)HP / HPOrig) > .25) { 
+                lowHealth = false;
+                gameManager.instance.getHealthWarning().SetActive(false); // getting rid of low health state if not low anymore
+            }
+        }
+        if (((float)HP / HPOrig) > .5) { // only heals to half HP
+            HP = (HPOrig / 2); // if HP goes over half, reset to half
+            readyToHeal = false; // HEALING OVER
+        }
+        else {
+            StartCoroutine(healing()); // KEEP HEALING IF NOT AT HALF HP (RECURSION)
+        }
+    }
+
+    IEnumerator healing() {
+        if (stopHealing == false) { // stopping healing if interupted
+            yield return new WaitForSeconds(1);
+            Heal();
+            updatePlayerUI(); // updating health bar
+        }
+    }
+
+    IEnumerator noDamageTime() { // time till healing (if no damage was taken)
+        int currentHP = HP;
+        yield return new WaitForSeconds(3);
+        if (currentHP == HP) { // PLAYER CAN START HEALING (SEE UPDATE())
+            stopHealing = false;
+            readyToHeal = true;
+        }
+        else { // player did not go 3 seconds without taking damage, do not heal
+            readyToHeal = false;
         }
     }
 
