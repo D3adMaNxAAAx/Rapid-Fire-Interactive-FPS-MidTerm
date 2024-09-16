@@ -14,6 +14,7 @@ public class playerMovement : MonoBehaviour, IDamage
     // Unity object fields
     [SerializeField] CharacterController controller;
     [SerializeField] LayerMask ignoreLayer;
+    [SerializeField] GameObject playerShot;
 
     // Player modifiers
     // -- Attributes --
@@ -132,9 +133,9 @@ public class playerMovement : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus())
         {
             if (ammo > 0) {
-                StartCoroutine(shoot());
-            } else
-            {
+                StartCoroutine(shoot()); 
+                Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation);
+            } else {
                 StartCoroutine(AmmoWarningFlash());
             }
         }
