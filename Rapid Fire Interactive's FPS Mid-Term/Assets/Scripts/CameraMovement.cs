@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TreeEditor;
+
 //using UnityEditorInternal;
 using UnityEngine;
 
@@ -15,6 +17,7 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] private float normalFOV = 70f;
     [SerializeField] private float aimingFOV = 40f;
     [SerializeField] private float zoomSpeed = 60f;
+    [SerializeField] private bool snapZoom = false;
 
     //leaning settings
     [SerializeField] private float leanAngle = 45f;
@@ -114,14 +117,28 @@ public class CameraMovement : MonoBehaviour
         if (Input.GetMouseButton(1))
         {
             isAiming = true;
-            cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, aimingFOV, zoomSpeed * Time.deltaTime);
-
+            if (snapZoom)
+            {
+                cam.fieldOfView = aimingFOV; //if snap Zoom Enabled zoom instantly
+            }
+            else
+            {
+                //if snap zoom not enabled, smooth zoom;
+                cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, aimingFOV, zoomSpeed * Time.deltaTime);
+            }          
         }
         else
         {
             isAiming = false;
-            cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, normalFOV, zoomSpeed * Time.deltaTime);
-
+            if (snapZoom)
+            {
+                cam.fieldOfView = normalFOV; //snap back to normal Fov
+            }
+            else
+            {
+                //smooth transition back to normal FoV
+                cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, normalFOV, zoomSpeed * Time.deltaTime);
+            }
         }
     }
 
