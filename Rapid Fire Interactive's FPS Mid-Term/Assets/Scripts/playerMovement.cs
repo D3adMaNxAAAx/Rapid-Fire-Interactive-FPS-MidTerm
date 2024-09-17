@@ -70,6 +70,7 @@ public class playerMovement : MonoBehaviour, IDamage
     bool lowHealth = false;
     bool readyToHeal = false;
     bool stopHealing = false; // was the player damaged while healing?
+    bool onDashCooldown = false;
 
     // Start is called before the first frame update
     void Start()
@@ -85,6 +86,8 @@ public class playerMovement : MonoBehaviour, IDamage
     {
         movement();
         sprint();
+        Dash();
+
         // Check if sprinting -- Drain stamina as the player runs
         if (isSprinting && !isDraining)
             StartCoroutine(staminaDrain());
@@ -183,6 +186,21 @@ public class playerMovement : MonoBehaviour, IDamage
             speed /= speedMod;
             isSprinting = false;
         }
+    }
+
+    void Dash() {
+        if (onDashCooldown == false) {
+            if (Input.GetKey(KeyCode.F)) {
+                controller.Move(transform.forward * 5);
+                StartCoroutine(dashCooldown()); // can't dash again for 3 seconds
+            }
+        }
+    }
+
+    IEnumerator dashCooldown() {
+        onDashCooldown = true;
+        yield return new WaitForSeconds(3);
+        onDashCooldown = false;
     }
 
     // Shoot Timer
