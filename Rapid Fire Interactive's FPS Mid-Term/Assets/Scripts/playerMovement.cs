@@ -60,7 +60,6 @@ public class playerMovement : MonoBehaviour, IDamage
     int staminaOrig; // Stamina
     int playerLevel; // Level
     int ammoOrig; // Ammo
-    int update = 0;
 
     // Checks
     bool isSprinting;
@@ -92,15 +91,9 @@ public class playerMovement : MonoBehaviour, IDamage
         if (isSprinting && !isDraining)
             StartCoroutine(staminaDrain());
 
-        update++;
-        if (update == 60) { // slowing down constant checks
-            update = 0;
-            if (((float)HP / HPOrig) < .5) { // HEALING STARTS HERE, READY TO HEAL DETERMINATION STARTS IN TAKEDAMAGE()
-                if (readyToHeal) {
-                    StartCoroutine(healing()); // recursive method
-                    readyToHeal = false; // stop healing
-                }
-            }
+        if (readyToHeal) { // HEALING STARTS HERE, READY TO HEAL DETERMINATION STARTS IN TAKEDAMAGE()
+            StartCoroutine(healing()); // recursive method
+            readyToHeal = false; // stop healing
         }
     }
 
