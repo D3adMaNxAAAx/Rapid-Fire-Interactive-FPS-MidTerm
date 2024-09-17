@@ -33,6 +33,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] int gravity;
     [SerializeField] float drainMod; // How quickly stamina points drain
     [SerializeField] float recoveryMod; // How quickly stamina points recovers
+    [SerializeField] bool toggleSprint;  //Turns sprint on or off
 
     // -- Timer --
     [SerializeField] float dmgFlashTimer;
