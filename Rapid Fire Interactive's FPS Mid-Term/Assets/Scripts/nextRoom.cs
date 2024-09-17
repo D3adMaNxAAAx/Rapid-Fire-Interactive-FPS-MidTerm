@@ -16,7 +16,8 @@ public class nextRoom : MonoBehaviour
     [SerializeField] float doorMoveX;
     [SerializeField] float doorMoveY;
     [SerializeField] float doorMoveZ;
-
+    [SerializeField] float timeToOpen;
+    [SerializeField] LayerMask target;
 
   
 
@@ -29,7 +30,9 @@ public class nextRoom : MonoBehaviour
     Vector3 openPos;
     Vector3 closePos;
 
-  
+    float a; //This will be used as our door's timer that links to real time
+
+    bool isOpen;
 
 
     // Start is called before the first frame update
@@ -46,33 +49,55 @@ public class nextRoom : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isOpen)
+        {
+            StartCoroutine(openDoor());
+        }
+        else
+        {
+            StartCoroutine(closeDoor());
+        }
     }
 
     //Move on to next room
-    void startNextRoom()
+    public void startNextRoom()
     {
-        clickDoorButton();
-        
+        //clickDoorButton();
+        isOpen = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("NextRoomEnter"))
-        {
-            closeDoor();
-            gameManager.instance.getEnemyRemainLabel().maxVisibleWords += 3;
-            gameManager.instance.getEnemyRemainCount().maxVisibleWords += 3;
-        }
+        //LayerMask a = other.gameObject.layer;
+        //if (other.gameObject.layer == target) //still trying to figure this out
+        //{
+            isOpen = false;
+        //}
     }
 
     //Tell door to open
-    public void openDoor()
-    { activeDoor.transform.position = openPos; }
+    IEnumerator openDoor()
+    { 
+        //activeDoor.transform.position = openPos;
+        if (activeDoor.transform.position != openPos)
+        {
+            a = Time.deltaTime * timeToOpen;
+            activeDoor.transform.position = Vector3.Lerp(activeDoor.transform.position, openPos, a);
+        }
+        yield return null;
+    }
 
     //tell door to close
-    public void closeDoor()
-    { activeDoor.transform.position = closePos; }
+    IEnumerator closeDoor()
+    { 
+        //activeDoor.transform.position = closePos;
+        if (activeDoor.transform.position != closePos)
+        {
+            a = Time.deltaTime * timeToOpen;
+            activeDoor.transform.position = Vector3.Lerp(activeDoor.transform.position, closePos, a);
+        }
+        yield return null;
+    }
 
     void clickDoorButton()
     {
