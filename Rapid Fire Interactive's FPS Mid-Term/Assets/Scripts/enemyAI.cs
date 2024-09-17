@@ -57,6 +57,7 @@ public class enemyAI : MonoBehaviour , IDamage
     // Update is called once per frame
     void Update()
     {
+        dropRNG = Random.Range(0, 100);
         if (playerInRange)
         {
             // seenPlayer = true; // Enemy has now seen the player -- this will be used for a check later in the Update method
@@ -184,7 +185,6 @@ public class enemyAI : MonoBehaviour , IDamage
             {
                 Quaternion rot = Quaternion.LookRotation(ammoSpawn.forward);
                 spawnPos = ammoSpawn.position;
-                dropRNG = Random.Range(0, 100);
                 if (dropRNG <= rngDropRate)
                 {
                     Instantiate<GameObject>(ammoDrop, spawnPos, rot);

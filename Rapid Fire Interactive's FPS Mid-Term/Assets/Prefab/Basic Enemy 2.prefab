@@ -324,6 +324,7 @@ Transform:
   m_Children:
   - {fileID: 406218352219494587}
   - {fileID: 981294568987711046}
+  - {fileID: 7132621881209873422}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8063771307790770835
@@ -343,12 +344,15 @@ MonoBehaviour:
   agent: {fileID: 610795673313672738}
   headPos: {fileID: 3009421273607728476}
   shootPos: {fileID: 2169147276710222545}
+  ammoSpawn: {fileID: 7132621881209873422}
+  ammoDrop: {fileID: 6904497920734926788, guid: 4237d6ffeea48944596bf777dda61238, type: 3}
   HP: 5
   rangedAttack: {fileID: 1026084026005163015, guid: 17def77748eb48e4fbb847c6e03563f6, type: 3}
   shootRate: 1
   damageFlashTimer: 0.1
   faceTargetSpeed: 2
   dropXP: 2
+  rngDropRate: 30
 --- !u!195 &610795673313672738
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -533,6 +537,37 @@ Transform:
   - {fileID: 5974108924978750855}
   - {fileID: 6163761545069137175}
   m_Father: {fileID: 4261459167633757215}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3954517188698920247
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7132621881209873422}
+  m_Layer: 7
+  m_Name: SpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7132621881209873422
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3954517188698920247}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6269061890301336515}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4157922475548021768
 GameObject:
