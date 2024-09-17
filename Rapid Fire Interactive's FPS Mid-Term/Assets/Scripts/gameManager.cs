@@ -272,7 +272,7 @@ public class gameManager : MonoBehaviour {
         
         stateUnpause();
         menuActive = null;
-        nextRoom.instance.startNextRoom();
+        //nextRoom.instance.startNextRoom();
     }
 
     public void upgradeMenu() {

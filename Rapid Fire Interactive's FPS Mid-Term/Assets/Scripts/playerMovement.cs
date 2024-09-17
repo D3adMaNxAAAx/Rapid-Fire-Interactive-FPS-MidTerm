@@ -190,6 +190,9 @@ public class playerMovement : MonoBehaviour, IDamage
 
     void Dash() {
         if (onDashCooldown == false) {
+            //The below input needs to be changed, this is really bad coding practice to force a specific key, we want a designer to be able to change the keybind in unity, and if a player was givin the ability to
+            //change keybinds, they would not be able to change this because it is hard coded in. Suggestion, create a keybind in the input manager labeled "Dash", and use "if (Input.GetButtonDown("Dash"))" This will
+            //solve this issue, and be great practice for the real world.
             if (Input.GetKey(KeyCode.F)) {
                 controller.Move(transform.forward * 5);
                 StartCoroutine(dashCooldown()); // can't dash again for 3 seconds
@@ -210,8 +213,10 @@ public class playerMovement : MonoBehaviour, IDamage
         isShooting = true;
 
         // Decrement ammo count
-        //ammo--;
-        /// ^ why is this here?
+        //ammo--; //We completely understand this doesn't need to be here now, but before it did, because when you shot you would want to decriment the amount of bullets when you shoot wether or not you hit something
+        //but now it's not necessary because we also need to check wether or not we are clicking a button with our raycast, although I would like to see if we can change that to an "interact" button. 
+        //from now on instead of leaving comments on code like "why is this here", ask the group, we can give you an answer.
+        ///Reminder: remove this in a couple of days.
 
         //Create Raycast
         RaycastHit hit;
