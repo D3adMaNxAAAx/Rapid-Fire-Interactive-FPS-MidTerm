@@ -49,7 +49,7 @@ MonoBehaviour:
   type: 0
   rb: {fileID: 480077600912443003}
   damageAmount: 0
-  attackSpeed: 50
+  attackSpeed: 320
   destroyTime: 5
 --- !u!96 &2482374105805426821
 TrailRenderer:
@@ -93,7 +93,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.005
+  m_Time: 0.1
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
@@ -177,8 +177,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
