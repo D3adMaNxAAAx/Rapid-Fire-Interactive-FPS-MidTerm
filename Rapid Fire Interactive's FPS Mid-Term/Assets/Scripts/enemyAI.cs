@@ -13,6 +13,8 @@ public class enemyAI : MonoBehaviour , IDamage
     [SerializeField] NavMeshAgent agent; // Allows Designer Communication To NavMeshAgent Component 
     [SerializeField] Transform headPos; // Enemy Head Position Tracker(Line Of Sight) For Designer
     [SerializeField] Transform shootPos; // Enemy SHoot Point Origin Tracker For Designer
+    [SerializeField] Transform ammoSpawn;
+    [SerializeField] GameObject ammoDrop; //Ammo Drop prefab
 
     // -- Extra Checks --
     bool isShooting; // Private Tracker For If Enemy Is Shooting 
@@ -20,6 +22,7 @@ public class enemyAI : MonoBehaviour , IDamage
     // bool seenPlayer; // Checks if the enemy has seen the player
     Vector3 playerDir; // Tracks player Direction for AI rotation and player in range
     // Vector3 playerLastPos; // Tracks where the player was last
+    Vector3 spawnPos;
     
     // -- Attributes --
     [SerializeField] int HP; // Health Points Tracker and Modifier Field For Designer
@@ -28,9 +31,13 @@ public class enemyAI : MonoBehaviour , IDamage
     [SerializeField] float damageFlashTimer; // Allows Designer To Set Damage Flash Timer 
     [SerializeField] int faceTargetSpeed; // Sets enemy rotation look speed for turning towards enemy look direction
     [SerializeField] int dropXP; // How much XP enemy drops
+    [Range(0,100)]
+    [SerializeField] int rngDropRate;
     int HPOrig; // Private Tracker for enemy original HP
     Color colorOrig; // Enemy Model Original Color Private Tracker
     int bossHP; // tracks boss hp for boss fight progress bar
+
+    int dropRNG;
 
     // Start is called before the first frame update
     void Start()
@@ -172,6 +179,17 @@ public class enemyAI : MonoBehaviour , IDamage
 
             // Update UI
             gameManager.instance.getPlayerScript().updatePlayerUI();
+
+            if (rngDropRate > 0)
+            {
+                Quaternion rot = Quaternion.LookRotation(ammoSpawn.forward);
+                spawnPos = ammoSpawn.position;
+                dropRNG = Random.Range(0, 100);
+                if (dropRNG <= rngDropRate)
+                {
+                    Instantiate<GameObject>(ammoDrop, spawnPos, rot);
+                }
+            }
 
             // Since No HP Delete Enemy Object
             Destroy(gameObject);

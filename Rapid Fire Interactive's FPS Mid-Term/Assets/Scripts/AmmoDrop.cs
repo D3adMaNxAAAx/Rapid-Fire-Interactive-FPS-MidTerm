@@ -5,15 +5,17 @@ using UnityEngine;
 public class AmmoDrop : MonoBehaviour
 {
     [SerializeField] GameObject ammoDrop;
+    [Range(0,100)]
+    [SerializeField] int ammoRefilPercent;
     [SerializeField] float rotateSpeed;
     [SerializeField] bool rotateClockwise;
 
+    GameObject player;
     Vector3 rotDirection;
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        ammoDrop = this.gameObject;
     }
 
     // Update is called once per frame
@@ -23,5 +25,18 @@ public class AmmoDrop : MonoBehaviour
             transform.Rotate(0, rotateSpeed, 0 * Time.deltaTime);
         else
             transform.Rotate(0, -rotateSpeed, 0 * Time.deltaTime);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            gameManager.instance.getPlayerScript().ammoPickup(ammoRefilPercent);
+            Destroy(ammoDrop);
+        }
+        else
+        {
+            return;
+        }
     }
 }

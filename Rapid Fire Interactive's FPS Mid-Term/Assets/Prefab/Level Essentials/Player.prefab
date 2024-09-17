@@ -53,16 +53,20 @@ MonoBehaviour:
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 8
+  playerShot: {fileID: 1026084026005163015, guid: 5a5514817e4d047408b83980d6775a8e, type: 3}
   HP: 10
   speed: 3
-  speedMod: 2
+  stamina: 100
+  playerXPMax: 0
+  speedMod: 3
   maxJumps: 2
   jumpSpeed: 15
   gravity: 32
-  dmgFlashTimer: 0.05
-  stamina: 100
   drainMod: 0.025
   recoveryMod: 0.03
+  toggleSprint: 0
+  dmgFlashTimer: 0.05
+  ammoWarningTimer: 0
   damage: 1
   fireRate: 0.5
   bulletDistance: 8
@@ -219,8 +223,10 @@ MonoBehaviour:
   normalFOV: 70
   aimingFOV: 40
   zoomSpeed: 60
-  leanAngel: 45
+  snapZoom: 0
+  leanAngle: 30
   leanSpeed: 10
+  LeanOffSet: 0.8
 --- !u!20 &5548763961163230911
 Camera:
   m_ObjectHideFlags: 0

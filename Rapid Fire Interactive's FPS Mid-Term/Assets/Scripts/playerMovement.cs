@@ -8,7 +8,7 @@ using UnityEngine.Android;
 /*For this whole code to work IDamage and gameManager scripts must both be functional.
  After completing scripts please uncomment ONLY that part of the script!!!
  Each one will be labeled as //IDamage or //gameManager at the end of each line of code or function.*/
-public class playerMovement : MonoBehaviour, IDamage 
+public class playerMovement : MonoBehaviour, IDamage
 {
 
     /// maybe add something to UI to indicate healing
@@ -373,5 +373,15 @@ public class playerMovement : MonoBehaviour, IDamage
     public void setPlayerLevel(int _playerLevel)
     {
         _playerLevel = playerLevel;
+    }
+
+    public void ammoPickup(int amount)
+    {
+        int a = amount / ammoOrig;
+        if (a + ammo >= ammoOrig)
+            ammo = ammoOrig;
+        else
+            ammo += a;
+        updatePlayerUI();
     }
 }
