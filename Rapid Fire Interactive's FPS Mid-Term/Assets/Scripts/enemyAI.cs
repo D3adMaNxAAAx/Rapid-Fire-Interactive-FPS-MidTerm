@@ -76,6 +76,7 @@ public class enemyAI : MonoBehaviour , IDamage
             // Checking if Enemy is shooting 
             if (!isShooting)
             {
+                
                 // Tell enemy to start shooting
                 StartCoroutine(shoot());
             }
