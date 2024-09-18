@@ -72,29 +72,30 @@ public class playerMovement : MonoBehaviour, IDamage
     bool onDashCooldown = false;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         HPOrig = HP;
         staminaOrig = stamina;
         ammoOrig = ammo;
         updatePlayerUI();
+        /// 
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        movement();
-        sprint();
-        Dash();
+    void Update() {
+        if (gameManager.instance.getPauseStatus() == false) {
+            movement();
+            Dash();
 
+            if (readyToHeal) { // HEALING STARTS HERE, READY TO HEAL DETERMINATION STARTS IN TAKEDAMAGE()
+                StartCoroutine(healing()); // recursive method
+                readyToHeal = false; // stop healing
+            }
+        }
+
+        sprint();
         // Check if sprinting -- Drain stamina as the player runs
         if (isSprinting && !isDraining)
             StartCoroutine(staminaDrain());
-
-        if (readyToHeal) { // HEALING STARTS HERE, READY TO HEAL DETERMINATION STARTS IN TAKEDAMAGE()
-            StartCoroutine(healing()); // recursive method
-            readyToHeal = false; // stop healing
-        }
     }
 
     // Player Movement Controls
