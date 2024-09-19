@@ -396,20 +396,20 @@ public class playerMovement : MonoBehaviour, IDamage
 
        
 
-        if (toggleSprint)
+        while (toggleSprint)
         {
             //speed *= speedMod;
             //isSprinting = true;
             //staminaDrain();
 
-            if (stamina == 0 && isSprinting)
+            if (stamina == 0)
             {
                 isSprinting = false;
                 speed /= speedMod;
                 staminaRecover();
             }
 
-            if (stamina >= (staminaOrig / 2) && !isSprinting)
+            if (stamina >= (staminaOrig / 2))
             {
                 isSprinting = true;
                 speed *= speedMod;

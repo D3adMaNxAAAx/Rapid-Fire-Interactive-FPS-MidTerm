@@ -67,4 +67,10 @@ public class buttonFunctions : MonoBehaviour
     {
         playerMovement.player.toggleSprintOn();
     }
+
+
+    public void toggleZoom()
+    {
+        CameraMovement.state.autoZoom();
+    }
 }

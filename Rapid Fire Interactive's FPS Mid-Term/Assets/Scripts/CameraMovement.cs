@@ -174,4 +174,10 @@ public class CameraMovement : MonoBehaviour
 
     }
 
+
+    public void autoZoom()
+    {
+        snapZoom = !snapZoom;
+    }
+
 }
