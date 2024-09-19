@@ -219,7 +219,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 dmg.takeDamage(damage);
                 --ammo;
             }
-            else if (hit.collider.GetComponent<nextRoom>() == true)
+            else if (hit.collider.GetComponent<bossRoom>() == true)
             {
                 // Debug.Log("Button Hit");
                 gameManager.instance.completeMenu();

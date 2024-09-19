@@ -3607,7 +3607,7 @@ MonoBehaviour:
   agent: {fileID: 4533720889381584512}
   headPos: {fileID: 4746895349365856765}
   shootPos: {fileID: 6216686424620242559}
-  ammoSpawn: {fileID: 0}
+  ammoSpawn: {fileID: 726390947967733081, guid: 4237d6ffeea48944596bf777dda61238, type: 3}
   ammoDrop: {fileID: 6904497920734926788, guid: 4237d6ffeea48944596bf777dda61238, type: 3}
   HP: 2
   rangedAttack: {fileID: 1026084026005163015, guid: 17def77748eb48e4fbb847c6e03563f6, type: 3}
@@ -3678,10 +3678,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 2
   m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.1, z: 0}
 --- !u!135 &8621353226924719134
 SphereCollider:
   m_ObjectHideFlags: 0

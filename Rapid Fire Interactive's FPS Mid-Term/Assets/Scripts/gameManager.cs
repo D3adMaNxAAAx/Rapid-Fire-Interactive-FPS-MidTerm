@@ -272,7 +272,8 @@ public class gameManager : MonoBehaviour {
         
         stateUnpause();
         menuActive = null;
-        //nextRoom.instance.startNextRoom();
+        bossRoom.instance.startNextRoom();
+        displayBossBar(true);
     }
 
     public void upgradeMenu() {

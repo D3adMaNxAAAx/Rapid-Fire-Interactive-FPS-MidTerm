@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 96, y: 1.0004, z: 0.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 903615749931522099}
@@ -54,23 +54,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   playerShot: {fileID: 1026084026005163015, guid: 5a5514817e4d047408b83980d6775a8e, type: 3}
-  HP: 10
-  speed: 3
-  stamina: 100
-  playerXPMax: 0
+  HP: 100
+  speed: 10
+  stamina: 50
+  playerXPMax: 10
   speedMod: 3
-  maxJumps: 2
-  jumpSpeed: 15
+  maxJumps: 1
+  jumpSpeed: 12
   gravity: 32
   drainMod: 0.025
   recoveryMod: 0.03
   toggleSprint: 0
   dmgFlashTimer: 0.05
-  ammoWarningTimer: 0
+  ammoWarningTimer: 0.4
   damage: 1
-  fireRate: 0.5
-  bulletDistance: 8
-  ammo: 10
+  fireRate: 0.4
+  bulletDistance: 25
+  ammo: 200
 --- !u!33 &1274210567246806318
 MeshFilter:
   m_ObjectHideFlags: 0

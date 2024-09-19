@@ -5,6 +5,10 @@ using UnityEngine.AI;
 
 public class bossEvent : MonoBehaviour, IDamage
 {
+    //not in use yet...still work in progress deciding if I should just use the enum in enemy ai
+
+
+
     public static bossEvent instance;
 
     [SerializeField] Transform bossHeadPos;
@@ -87,23 +91,6 @@ public class bossEvent : MonoBehaviour, IDamage
 
     int bossSpeedOrig;
 
-
-    //boss door switch object tracker 
-    [SerializeField] GameObject bossSwitch;
-
-    [SerializeField] GameObject bossDoor;
-
-    public GameObject getBossDoor()
-    { return bossDoor; }
-
-    public void setBossDoor(GameObject _door)
-    { bossDoor = _door; }
-
-    public GameObject getBossSwitch()
-        { return bossSwitch; }
-
-    public void setBossSwitch(GameObject _switch)
-        { bossSwitch = _switch; }
 
     public int getKeyCount()
         { return keysHeld; }
