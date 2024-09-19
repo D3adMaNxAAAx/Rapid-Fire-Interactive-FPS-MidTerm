@@ -394,9 +394,9 @@ public class playerMovement : MonoBehaviour, IDamage
     {
         toggleSprint = !toggleSprint;
 
-       
 
-        while (toggleSprint)
+
+        if (toggleSprint)   //tried while loop but it broke it
         {
             //speed *= speedMod;
             //isSprinting = true;
@@ -404,21 +404,28 @@ public class playerMovement : MonoBehaviour, IDamage
 
             if (stamina == 0)
             {
-                isSprinting = false;
+               
                 speed /= speedMod;
+                isSprinting = false;
                 staminaRecover();
+                
             }
 
             if (stamina >= (staminaOrig / 2))
             {
-                isSprinting = true;
+                
                 speed *= speedMod;
+                isSprinting = true;
                 staminaDrain();
+                
             }
 
+           
 
         }
 
-         updatePlayerUI() ;
+         updatePlayerUI();
+
+
     }
 }
