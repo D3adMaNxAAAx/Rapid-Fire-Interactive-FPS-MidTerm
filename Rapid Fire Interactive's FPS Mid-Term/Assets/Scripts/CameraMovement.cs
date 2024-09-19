@@ -168,7 +168,9 @@ public class CameraMovement : MonoBehaviour
 
     public void invert()
     {
-        invertY = true;
+       
+        invertY = !invertY;
+       
 
     }
 

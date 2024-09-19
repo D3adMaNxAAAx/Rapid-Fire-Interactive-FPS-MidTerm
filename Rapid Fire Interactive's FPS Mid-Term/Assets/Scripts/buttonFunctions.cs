@@ -63,5 +63,8 @@ public class buttonFunctions : MonoBehaviour
         gameManager.instance.backButton();
     }
 
-
+    public void toggleSprint()
+    {
+        playerMovement.player.toggleSprintOn();
+    }
 }

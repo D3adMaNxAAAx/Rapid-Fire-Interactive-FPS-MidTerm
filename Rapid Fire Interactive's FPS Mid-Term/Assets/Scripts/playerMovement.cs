@@ -11,6 +11,7 @@ using UnityEngine.Android;
 public class playerMovement : MonoBehaviour, IDamage
 {
 
+    public static playerMovement player;
     /// maybe add something to UI to indicate healing
 
     // -----MODIFIABLE VARIABLES-----
@@ -73,6 +74,8 @@ public class playerMovement : MonoBehaviour, IDamage
 
     // Start is called before the first frame update
     void Start() {
+
+        player = this;
         HPOrig = HP;
         staminaOrig = stamina;
         ammoOrig = ammo;
@@ -384,5 +387,38 @@ public class playerMovement : MonoBehaviour, IDamage
         else
             ammo += a;
         updatePlayerUI();
+    }
+
+
+    public void toggleSprintOn()
+    {
+        toggleSprint = !toggleSprint;
+
+       
+
+        if (toggleSprint)
+        {
+            //speed *= speedMod;
+            //isSprinting = true;
+            //staminaDrain();
+
+            if (stamina == 0 && isSprinting)
+            {
+                isSprinting = false;
+                speed /= speedMod;
+                staminaRecover();
+            }
+
+            if (stamina >= (staminaOrig / 2) && !isSprinting)
+            {
+                isSprinting = true;
+                speed *= speedMod;
+                staminaDrain();
+            }
+
+
+        }
+
+         updatePlayerUI() ;
     }
 }

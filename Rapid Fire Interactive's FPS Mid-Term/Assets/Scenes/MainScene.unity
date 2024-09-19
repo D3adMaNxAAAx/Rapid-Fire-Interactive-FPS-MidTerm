@@ -900,6 +900,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 799c5e5ac96999c45885e96ba6beb010, type: 3}
+--- !u!114 &927218492 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6032842864701399304, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+  m_PrefabInstance: {fileID: 5134236695207255473}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c704515dcf912604fa9ebcb69e0662ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &932718444
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1482,6 +1493,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1698244836736258489, guid: b0ba9c3fe5b9ce341ba39bd02d0658d4, type: 3}
+      propertyPath: toggleSprint
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4888439365048006944, guid: b0ba9c3fe5b9ce341ba39bd02d0658d4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 86.5
@@ -1728,6 +1743,34 @@ PrefabInstance:
     - target: {fileID: 5823421247959698043, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830258737468064208, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830258737468064208, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830258737468064208, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 927218492}
+    - target: {fileID: 5830258737468064208, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830258737468064208, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: toggleSprint
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830258737468064208, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: buttonFunctions, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830258737468064208, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 7380557327475970477, guid: 3fbe4c7aff1179247a28ebd40600faec, type: 3}
       propertyPath: m_Name
