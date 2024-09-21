@@ -16,6 +16,7 @@ public class enemyAI : MonoBehaviour , IDamage
     [SerializeField] Transform shootPos; // Enemy SHoot Point Origin Tracker For Designer
     [SerializeField] Transform ammoSpawn;
     [SerializeField] GameObject ammoDrop; //Ammo Drop prefab
+    [SerializeField] Animator animator;
 
     // -- Extra Checks --
     bool isShooting; // Private Tracker For If Enemy Is Shooting 
@@ -26,6 +27,7 @@ public class enemyAI : MonoBehaviour , IDamage
     Vector3 playerDir; // Tracks player Direction for AI rotation and player in range
     // Vector3 playerLastPos; // Tracks where the player was last
     Vector3 spawnPos;
+    Vector3 lastSeenPlayerPosition;
 
 
     //All value fields for enemy view and roam settings 
@@ -81,22 +83,29 @@ public class enemyAI : MonoBehaviour , IDamage
     void Update()
     {
         dropRNG = Random.Range(0, 100);
-        
+
+        ///float agentSpeed = agent.velocity.normalized.magnitude;
+        ///float animationSpeed = animator.GetFloat("Speed"); // getting current value of speed param in blend tree
+        ///animator.SetFloat("Speed", Mathf.Lerp(animationSpeed, agentSpeed, 6 * Time.deltaTime)); // changing "Speed" param in blend tree, setting it to enemy's speed but in 0-1 form
+        // lerp part helps smooth out transition from being still to the animation, 6 is how fast the transition is
+
         if (playerInRange && !canSeePlayer())
         {
             // seenPlayer = true; // Enemy has now seen the player -- this will be used for a check later in the Update method
 
 
-            if (!isRoaming && agent.remainingDistance < .05f && aCoRoutine == null)
-            {
-                aCoRoutine = StartCoroutine(roam());
+            if (!isRoaming && agent.remainingDistance < .05f && aCoRoutine == null) {
+                if (aCoRoutine == null) {
+                    aCoRoutine = StartCoroutine(roam());
+                }
             }
             else if (!playerInRange)
             {
                 if(!playerInRange && agent.remainingDistance < .05f && aCoRoutine == null)
-                    aCoRoutine= StartCoroutine(roam());
+                    if (aCoRoutine == null) {
+                        aCoRoutine = StartCoroutine(roam());
+                    }
             }
-
 
            
             // -- meant to be at the start of the method.
@@ -106,19 +115,7 @@ public class enemyAI : MonoBehaviour , IDamage
             //    gameManager.instance.displayBossBar(true);
             //}
 
-
         }
-
-        // TO-DO: Implement Enemy Memory for player position (maybe move to a Chase method and call it?)
-        // If the player moves out of range, move the enemy to where it last saw the player.
-        //if (seenPlayer && !playerInRange)
-        //{
-        //    // Move the enemy towards their last position
-        //    agent.SetDestination(gameManager.instance.getPlayer().transform.position);
-
-        //    // The enemy has no longer seen the player so mark it as false.
-        //    seenPlayer = false;
-        //}
         
         //Something like this but based off a key count each enemy killed adds key and keys required are equal to 
         //if (gameManager.instance.getEnemyCount() == 1 && gameManager.instance.getBossCount() == 1)
@@ -132,22 +129,6 @@ public class enemyAI : MonoBehaviour , IDamage
         //}
 
     }
-    IEnumerator shoot()
-    {
-        // Set shooting to true
-        isShooting = true;
-
-        // Create our bullet and fire from the shootPos of Enemy 
-        Instantiate(rangedAttack, shootPos.position, transform.rotation);
-
-        // Timer setting shootRate time
-        yield return new WaitForSeconds(shootRate);
-
-        // Set shooting back to false
-        isShooting = false;
-    }
-
-
 
     bool canSeePlayer()
     {
@@ -157,34 +138,27 @@ public class enemyAI : MonoBehaviour , IDamage
         //Creating an angle from our enemy forward direction to player direction in world 
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
-
-        //showing a line of sight reference in scene creator
+        //TURN THIS OFF AFTER WORKING, showing a line of sight reference in scene creator
         Debug.DrawRay(headPos.position, playerDir);
 
-        //Tracks ray for enemy line of sight 
-        RaycastHit hit;
+        RaycastHit hit; //Tracks ray for enemy line of sight 
 
-
-        if (Physics.Raycast(headPos.position, playerDir, out hit))
-        {
-
+        if (Physics.Raycast(headPos.position, playerDir, out hit)) {
             //if ray hits player and player is within view cone
-            if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
-            {
-                //face player
-                faceTarget();
+            if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle) {
+                lastSeenPlayerPosition = gameManager.instance.getPlayer().transform.position;
+                agent.SetDestination(lastSeenPlayerPosition); // makes enemys go to player
+                if (agent.remainingDistance <= agent.stoppingDistance) { // when enemy is within stopping distance of player
+                    faceTarget(); //face player
+                }
+                if (!isShooting) {
+                    StartCoroutine(shoot());
+                }
+                //reset ai stopping dist
+                agent.stoppingDistance = stoppingDistOrig;
+                return true;
             }
-
-            if (!isShooting)
-            {
-                //shoot if not already shooting 
-                StartCoroutine(shoot());
-            }
-            //reset ai stopping dist
-            agent.stoppingDistance = stoppingDistOrig;
-            return true;
         }
-
         agent.stoppingDistance = 0;
         return false;   
     }
@@ -192,7 +166,6 @@ public class enemyAI : MonoBehaviour , IDamage
     // Trigger Enter for inRange method to tell Ai seek player because he is now in range
     private void OnTriggerEnter(Collider other)
     {
-
         if (other.isTrigger) 
             return;
         // if our trigger object is a player then player is in range of enemy
@@ -201,38 +174,28 @@ public class enemyAI : MonoBehaviour , IDamage
     }
 
     // Trigger Exit for inRange method to tell Ai seek player because he is now out range 
-    private void OnTriggerExit(Collider other)
-    {
+    private void OnTriggerExit(Collider other) {
         // if trigger leaving range radius is tagged as player we know he left and can set player in range to false
-        if (other.CompareTag("Player"))
-        {
+        if (other.CompareTag("Player")) {
             playerInRange = false;
             agent.stoppingDistance = 0;
+            agent.SetDestination(lastSeenPlayerPosition); // makes the enemy "chase", goes to last location player was scene if the player runs out of his range
         }
     }
 
     //allows enemy to  roam 
-    IEnumerator roam()
-    {
+    IEnumerator roam() {
 
-        //set roaming on 
         isRoaming = true;
-        
-        //wait desired time 
-        yield return new WaitForSeconds(roamTimer);
+        yield return new WaitForSeconds(roamTimer); //wait desired time 
 
         //set agent to reach right on random spot
         agent.stoppingDistance = 0;
         Vector3 randomPos = Random.insideUnitSphere * roamDist;
-
-        //adds random position to start position so that we can circle around the main start position
-        randomPos += startingPos;
-
-
+        randomPos += startingPos; //adds random position to start position so that we can circle around the main start position
 
         NavMeshHit hit;
-
-        NavMesh.SamplePosition(randomPos, out hit, roamDist, 1);
+        NavMesh.SamplePosition(randomPos, out hit, roamDist, 1); // make sure position is valid
         agent.SetDestination(hit.position);
 
         isRoaming = false;
@@ -240,7 +203,21 @@ public class enemyAI : MonoBehaviour , IDamage
         aCoRoutine = null;
     }
 
-    
+    IEnumerator shoot() {
+        // Set shooting to true
+        isShooting = true;
+
+        // Create our bullet and fire from the shootPos of Enemy 
+        Instantiate(rangedAttack, shootPos.position, transform.rotation);
+        /// this needs to be changed to make during the shoot animation
+
+        // Timer setting shootRate time
+        yield return new WaitForSeconds(shootRate);
+
+        // Set shooting back to false
+        isShooting = false;
+    }
+
     // Tell AI to face player 
     // Quaterions used becasue we must rotate enemy velocity direction to always face current target
     void faceTarget()
@@ -257,15 +234,17 @@ public class enemyAI : MonoBehaviour , IDamage
     {    
         // Deduct HP on damage recieved
         HP -= _amount;
+        isRoaming = false;
+
         if (type == enemyType.boss) {
             bossHP -= _amount;
         }
-        
         // Flash Enemy Red To Indicate Damage Taken
         StartCoroutine(flashColor());
-
         // Decrement their health bar & update the UI
         gameManager.instance.getBossHPBar().fillAmount = (float)bossHP / HPOrig;
+
+        agent.SetDestination(gameManager.instance.getPlayer().transform.position); // makes enemys go to player
 
         if (HP <= 0)
         {
