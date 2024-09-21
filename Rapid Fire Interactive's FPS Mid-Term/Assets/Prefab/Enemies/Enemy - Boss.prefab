@@ -552,6 +552,37 @@ Transform:
   - {fileID: 8533290656285685508}
   m_Father: {fileID: 4177160901553392319}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3082245560610280120
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2211265906524788034}
+  m_Layer: 0
+  m_Name: Ammo Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2211265906524788034
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3082245560610280120}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4020473904586712451}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3090311619570788040
 GameObject:
   m_ObjectHideFlags: 0
@@ -1868,6 +1899,7 @@ Transform:
   m_Children:
   - {fileID: 481488701423354447}
   - {fileID: 991727613334854444}
+  - {fileID: 2211265906524788034}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8661276269792668980
@@ -1887,7 +1919,7 @@ MonoBehaviour:
   agent: {fileID: 5022875280789059963}
   headPos: {fileID: 5467910972576209273}
   shootPos: {fileID: 4432241784408976627}
-  ammoSpawn: {fileID: 726390947967733081, guid: 4237d6ffeea48944596bf777dda61238, type: 3}
+  ammoSpawn: {fileID: 2211265906524788034}
   ammoDrop: {fileID: 6904497920734926788, guid: 4237d6ffeea48944596bf777dda61238, type: 3}
   HP: 15
   rangedAttack: {fileID: 1026084026005163015, guid: 17def77748eb48e4fbb847c6e03563f6, type: 3}
@@ -1895,7 +1927,7 @@ MonoBehaviour:
   damageFlashTimer: 1
   faceTargetSpeed: 1
   dropXP: 1
-  rngDropRate: 37
+  rngDropRate: 0
 --- !u!95 &2998945408075480632
 Animator:
   serializedVersion: 5
