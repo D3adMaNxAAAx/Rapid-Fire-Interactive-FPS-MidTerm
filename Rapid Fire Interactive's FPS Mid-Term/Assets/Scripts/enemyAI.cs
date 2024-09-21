@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Unity.Properties;
 using UnityEngine;
 using UnityEngine.AI;
@@ -19,11 +20,29 @@ public class enemyAI : MonoBehaviour , IDamage
     // -- Extra Checks --
     bool isShooting; // Private Tracker For If Enemy Is Shooting 
     bool playerInRange; // Tracker of if player is in range of enemy detection radius
+   
+
     // bool seenPlayer; // Checks if the enemy has seen the player
     Vector3 playerDir; // Tracks player Direction for AI rotation and player in range
     // Vector3 playerLastPos; // Tracks where the player was last
     Vector3 spawnPos;
-    
+
+
+    //All value fields for enemy view and roam settings 
+    [SerializeField] int viewAngle;
+    [SerializeField] int roamDist;
+    [SerializeField] int roamTimer;
+
+    Vector3 startingPos;
+
+    bool isRoaming; // Tracks is enemy is roaming 
+
+    float angleToPlayer;
+    float stoppingDistOrig;
+
+    Coroutine aCoRoutine;
+
+
     // -- Attributes --
     [SerializeField] int HP; // Health Points Tracker and Modifier Field For Designer
     [SerializeField] GameObject rangedAttack; // Bullet Object Tracker and Communication Field For Designer
@@ -52,35 +71,34 @@ public class enemyAI : MonoBehaviour , IDamage
 
         // Tell gameManager To update game goal that an enemy has been added to gameGoal
         gameManager.instance.updateGameGoal(1);
+
+        stoppingDistOrig = agent.stoppingDistance;
+        startingPos = transform.position;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
         dropRNG = Random.Range(0, 100);
-        if (playerInRange)
+        
+        if (playerInRange && !canSeePlayer())
         {
             // seenPlayer = true; // Enemy has now seen the player -- this will be used for a check later in the Update method
 
-            // Setting direction of where player is in relation to enemy location when within detection range
-            playerDir = gameManager.instance.getPlayer().transform.position - headPos.position;
-            
-            // Telling our ai to go to the location of the Player's position until game ends or enemy destroyed
-            agent.SetDestination(gameManager.instance.getPlayer().transform.position);
 
-            // Tell ai to always face player while not in same coordinates(Will never reach destination so will allow constant face direction update)
-            if (agent.remainingDistance <= agent.stoppingDistance)
+            if (!isRoaming && agent.remainingDistance < .05f && aCoRoutine == null)
             {
-                faceTarget();
+                aCoRoutine = StartCoroutine(roam());
             }
-            // Checking if Enemy is shooting 
-            if (!isShooting)
+            else if (!playerInRange)
             {
-                
-                // Tell enemy to start shooting
-                StartCoroutine(shoot());
+                if(!playerInRange && agent.remainingDistance < .05f && aCoRoutine == null)
+                    aCoRoutine= StartCoroutine(roam());
             }
 
+
+           
             // -- meant to be at the start of the method.
             // Check if the enemy is a boss -- this will be to display the health bar when the player is in range.
             //if (type == enemyType.boss)
@@ -129,9 +147,54 @@ public class enemyAI : MonoBehaviour , IDamage
         isShooting = false;
     }
 
+
+
+    bool canSeePlayer()
+    {
+        // Setting direction of where player is in relation to enemy location when within detection rang
+        playerDir = gameManager.instance.getPlayer().transform.position - headPos.position;
+
+        //Creating an angle from our enemy forward direction to player direction in world 
+        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
+
+
+        //showing a line of sight reference in scene creator
+        Debug.DrawRay(headPos.position, playerDir);
+
+        //Tracks ray for enemy line of sight 
+        RaycastHit hit;
+
+
+        if (Physics.Raycast(headPos.position, playerDir, out hit))
+        {
+
+            //if ray hits player and player is within view cone
+            if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
+            {
+                //face player
+                faceTarget();
+            }
+
+            if (!isShooting)
+            {
+                //shoot if not already shooting 
+                StartCoroutine(shoot());
+            }
+            //reset ai stopping dist
+            agent.stoppingDistance = stoppingDistOrig;
+            return true;
+        }
+
+        agent.stoppingDistance = 0;
+        return false;   
+    }
+
     // Trigger Enter for inRange method to tell Ai seek player because he is now in range
     private void OnTriggerEnter(Collider other)
     {
+
+        if (other.isTrigger) 
+            return;
         // if our trigger object is a player then player is in range of enemy
         if (other.CompareTag("Player"))
             playerInRange = true;
@@ -142,9 +205,42 @@ public class enemyAI : MonoBehaviour , IDamage
     {
         // if trigger leaving range radius is tagged as player we know he left and can set player in range to false
         if (other.CompareTag("Player"))
+        {
             playerInRange = false;
+            agent.stoppingDistance = 0;
+        }
     }
 
+    //allows enemy to  roam 
+    IEnumerator roam()
+    {
+
+        //set roaming on 
+        isRoaming = true;
+        
+        //wait desired time 
+        yield return new WaitForSeconds(roamTimer);
+
+        //set agent to reach right on random spot
+        agent.stoppingDistance = 0;
+        Vector3 randomPos = Random.insideUnitSphere * roamDist;
+
+        //adds random position to start position so that we can circle around the main start position
+        randomPos += startingPos;
+
+
+
+        NavMeshHit hit;
+
+        NavMesh.SamplePosition(randomPos, out hit, roamDist, 1);
+        agent.SetDestination(hit.position);
+
+        isRoaming = false;
+
+        aCoRoutine = null;
+    }
+
+    
     // Tell AI to face player 
     // Quaterions used becasue we must rotate enemy velocity direction to always face current target
     void faceTarget()
