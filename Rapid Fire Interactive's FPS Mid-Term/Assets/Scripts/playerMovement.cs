@@ -80,14 +80,13 @@ public class playerMovement : MonoBehaviour, IDamage
         staminaOrig = stamina;
         ammoOrig = ammo;
         updatePlayerUI();
-        /// 
     }
 
     // Update is called once per frame
     void Update() {
         if (gameManager.instance.getPauseStatus() == false) {
             movement();
-            Dash();
+            StartCoroutine(Dash());
 
             if (readyToHeal) { // HEALING STARTS HERE, READY TO HEAL DETERMINATION STARTS IN TAKEDAMAGE()
                 StartCoroutine(healing()); // recursive method
@@ -185,10 +184,18 @@ public class playerMovement : MonoBehaviour, IDamage
         }
     }
 
-    void Dash() {
-        if (onDashCooldown == false) {
-            if (Input.GetButtonDown("Dash")) { // currently "f"
-                controller.Move(transform.forward * 5);
+    IEnumerator Dash() {
+        if (Input.GetButtonDown("Dash")) {
+            if (onDashCooldown == false) {
+                controller.Move(transform.forward * 1.5f);
+                yield return new WaitForSeconds(0.05f);
+                controller.Move(transform.forward * 1.5f);
+                yield return new WaitForSeconds(0.05f);
+                controller.Move(transform.forward * 1.5f);
+                yield return new WaitForSeconds(0.05f);
+                controller.Move(transform.forward * 1.5f);
+                yield return new WaitForSeconds(0.05f);
+                controller.Move(transform.forward * 1.5f);
                 StartCoroutine(dashCooldown()); // can't dash again for 3 seconds
             }
         }
@@ -420,12 +427,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 
             }
 
-           
-
         }
-
          updatePlayerUI();
-
-
     }
 }
