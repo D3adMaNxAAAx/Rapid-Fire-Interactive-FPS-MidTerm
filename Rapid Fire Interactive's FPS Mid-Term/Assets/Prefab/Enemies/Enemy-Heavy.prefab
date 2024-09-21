@@ -453,6 +453,7 @@ Transform:
   m_Children:
   - {fileID: 5973537437884780447}
   - {fileID: 8860257073607980567}
+  - {fileID: 6397245133363016069}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2482008848661056758
@@ -472,7 +473,7 @@ MonoBehaviour:
   agent: {fileID: 3136025754483489140}
   headPos: {fileID: 4692305735463570273}
   shootPos: {fileID: 6487564099054035855}
-  ammoSpawn: {fileID: 726390947967733081, guid: 4237d6ffeea48944596bf777dda61238, type: 3}
+  ammoSpawn: {fileID: 6397245133363016069}
   ammoDrop: {fileID: 6904497920734926788, guid: 4237d6ffeea48944596bf777dda61238, type: 3}
   HP: 15
   rangedAttack: {fileID: 1026084026005163015, guid: 17def77748eb48e4fbb847c6e03563f6, type: 3}
@@ -1674,6 +1675,37 @@ Transform:
   m_Children:
   - {fileID: 453452046321349961}
   m_Father: {fileID: 2365498835927795537}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6022586421985085808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6397245133363016069}
+  m_Layer: 7
+  m_Name: Ammo Spawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6397245133363016069
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6022586421985085808}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2855513741353969487}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6481402004005768478
 GameObject:
