@@ -16,7 +16,7 @@ public class enemyAI : MonoBehaviour , IDamage
     [SerializeField] Transform shootPos; // Enemy SHoot Point Origin Tracker For Designer
     [SerializeField] Transform ammoSpawn;
     [SerializeField] GameObject ammoDrop; //Ammo Drop prefab
-    [SerializeField] Animator animator;
+    ///[SerializeField] Animator animator;
 
     // -- Extra Checks --
     bool isShooting; // Private Tracker For If Enemy Is Shooting 

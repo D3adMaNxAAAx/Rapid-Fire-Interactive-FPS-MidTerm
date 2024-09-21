@@ -23,12 +23,12 @@ public class playerMovement : MonoBehaviour, IDamage
     // Player modifiers
     // -- Attributes --
     [SerializeField] int HP;
-    [SerializeField] int speed;
+    [SerializeField] float speed;
     [SerializeField] int stamina;
     [SerializeField] int playerXPMax;
 
     // -- Movement --
-    [SerializeField] int speedMod;
+    [SerializeField] float speedMod;
     [SerializeField] int maxJumps;
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;

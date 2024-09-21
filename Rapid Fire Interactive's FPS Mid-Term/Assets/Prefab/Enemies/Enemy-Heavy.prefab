@@ -475,14 +475,15 @@ MonoBehaviour:
   shootPos: {fileID: 6487564099054035855}
   ammoSpawn: {fileID: 6397245133363016069}
   ammoDrop: {fileID: 6904497920734926788, guid: 4237d6ffeea48944596bf777dda61238, type: 3}
-  viewAngle: 45
+  animator: {fileID: 0}
+  viewAngle: 75
   roamDist: 15
   roamTimer: 3
   HP: 15
   rangedAttack: {fileID: 1026084026005163015, guid: 17def77748eb48e4fbb847c6e03563f6, type: 3}
   shootRate: 0.5
   damageFlashTimer: 1
-  faceTargetSpeed: 1
+  faceTargetSpeed: 3
   dropXP: 1
   rngDropRate: 17
 --- !u!95 &7549303394707905848
@@ -570,7 +571,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2049913419548452060
 GameObject:
