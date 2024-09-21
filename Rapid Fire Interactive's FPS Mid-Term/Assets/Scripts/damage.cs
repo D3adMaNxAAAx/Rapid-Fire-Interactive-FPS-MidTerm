@@ -7,40 +7,44 @@ public class damage : MonoBehaviour
 
 
     //Allows switch between damage types
-    [SerializeField] enum damageType { ranged, stationary }
+    [SerializeField] enum damageType { ranged, missle, melee }
 
-    //Modifier field for damage type for designer
+    //Modifier field for damage type
     [SerializeField] damageType type;
 
-    //RigidBody component Field tracker for designer 
-    //Allows to add velocity to range attacks
+    //RigidBody component Field tracker, Allows to add velocity to range attacks
     [SerializeField] Rigidbody rb;
 
-    //Modifier for damageAmount by object for designer
+    [SerializeField] Transform missleTarget;
+    [SerializeField] float missleRotationSpeed = 10; // how much the missle will turn to follow player
+
     [SerializeField] int damageAmount;
+    [SerializeField] float attackSpeed;
+    [SerializeField] int destroyTime; //Object destroy timer
 
-    //Modifier Field for attack speed for designer
-    [SerializeField] int attackSpeed;
 
-    //Object destroy timer field for designer
-    [SerializeField] int destroyTime;
     // Start is called before the first frame update
-
-
-
-    void Start()
-    {
+    void Start() {
         // Check if ranged attack and give velocity
-        if (type == damageType.ranged)
-        {
+        if (type == damageType.ranged) {
             // Give velocity to ranged attack 
             rb.velocity = transform.forward * attackSpeed;
-            
-            // after so long of no hit we delete range attack object
             Destroy(gameObject, destroyTime);
         }
 
+        if (type == damageType.missle) { // enemySeaking projectile
+            missleTarget = gameManager.instance.getPlayer().transform; // getting player position
+            Destroy(gameObject, destroyTime);
+        }
+    }
 
+    void Update() {
+        if (type == damageType.missle) {
+            Vector3 direction = missleTarget.position - rb.position;
+            Vector3 rotation = Vector3.Cross(transform.forward, direction);
+            rb.angularVelocity = (Vector3.Cross(transform.forward, missleTarget.position - rb.position)) * missleRotationSpeed; // changing where missle is going as the target moves
+            rb.velocity = transform.forward * attackSpeed; // keeping bullet speed constant
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -61,7 +65,7 @@ public class damage : MonoBehaviour
         }
 
         // if it isnt an object that takes damage and damageType was ranged destroy damage inflicting object
-        if (type == damageType.ranged)
+        if (type == damageType.ranged || type == damageType.missle)
         {
             Destroy(gameObject);
         }
