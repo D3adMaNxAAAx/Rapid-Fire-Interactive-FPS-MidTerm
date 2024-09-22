@@ -11,7 +11,8 @@ using UnityEngine.Android;
 public class playerMovement : MonoBehaviour, IDamage
 {
 
-    public static playerMovement player;
+    public static playerMovement player; // singleton
+
     /// maybe add something to UI to indicate healing
 
     // -----MODIFIABLE VARIABLES-----
@@ -26,6 +27,37 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] float speed;
     [SerializeField] int stamina;
     [SerializeField] int playerXPMax;
+    float damageUpgradeMod = 1; // keep set = to 1, so damage can be upgraded (can just change damage var because it changes when swapping guns)
+
+    public int getHP() {
+        return HP;
+    }
+    public float getSpeed() {
+        return speed;
+    }
+    public int getStamina() {
+        return stamina;
+    }
+
+    public void setHP(int newHP) {
+        HP = newHP;
+    }
+    public void setSpeed(float newSpeed) {
+        speed = newSpeed;
+    }
+    public void setStamina(int newStamina) {
+        stamina = newStamina;
+    }
+    public void setDamageMod(float newDamageMod) { 
+        damageUpgradeMod = newDamageMod;
+    }
+
+    // Player Default Weapon Mods
+    [SerializeField] int damage;
+    [SerializeField] float fireRate;
+    [SerializeField] float bulletDistance;
+    [SerializeField] int ammo;
+    //[SerializeField] float bulletSpeed; //Is here if we wanna change to use bullets
 
     // -- Movement --
     [SerializeField] float speedMod;
@@ -39,13 +71,6 @@ public class playerMovement : MonoBehaviour, IDamage
     // -- Timer --
     [SerializeField] float dmgFlashTimer;
     [SerializeField] float ammoWarningTimer;
-    
-    // Player Default Weapon Mods
-    [SerializeField] int damage;
-    [SerializeField] float fireRate;
-    [SerializeField] float bulletDistance;
-    [SerializeField] int ammo;
-    //[SerializeField] float bulletSpeed; //Is here if we wanna change to use bullets
 
     // -----PRIVATE VARIABLES-----
     // Player movement variables
@@ -411,23 +436,20 @@ public class playerMovement : MonoBehaviour, IDamage
 
             if (stamina == 0)
             {
-               
                 speed /= speedMod;
                 isSprinting = false;
                 staminaRecover();
-                
             }
 
             if (stamina >= (staminaOrig / 2))
             {
-                
                 speed *= speedMod;
                 isSprinting = true;
                 staminaDrain();
-                
             }
-
         }
          updatePlayerUI();
     }
 }
+
+/// when setting damage var with gun methods, you need to add * damageUpgradeMod

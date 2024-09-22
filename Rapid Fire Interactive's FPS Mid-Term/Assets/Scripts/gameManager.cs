@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro; // for using textmesh pro
 
 public class gameManager : MonoBehaviour { 
+
     public static gameManager instance; // singleton
 
     // -- Menus --
@@ -281,6 +282,7 @@ public class gameManager : MonoBehaviour {
         menuActive = menuUpgrade;
         menuActive.SetActive(true);
     }
+
     public void storeMenu() {
         menuActive.SetActive(false);
         menuActive = menuStore;
