@@ -105,6 +105,7 @@ public class playerMovement : MonoBehaviour, IDamage
         staminaOrig = stamina;
         ammoOrig = ammo;
         updatePlayerUI();
+        upgradeMenu.upgradeUI.setVars();
     }
 
     // Update is called once per frame

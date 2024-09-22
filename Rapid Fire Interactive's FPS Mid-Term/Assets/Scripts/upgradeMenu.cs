@@ -28,15 +28,23 @@ public class upgradeMenu : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         upgradeUI = this;
+    }
+
+    public void setVars() { // wouldn't work in start
         HP = playerMovement.player.getHP();
         speed = playerMovement.player.getSpeed();
         stamina = playerMovement.player.getStamina();
+        healthUpgradeText.text = HP.ToString() + " >> " + (HP + 10).ToString();
+        damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.2f).ToString();
+        speedUpgradeText.text = speed.ToString() + " >> " + (speed + 1).ToString();
+        staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
     }
 
     public void onHealthUpgrade() {
         healthRank++;
         healthRankText.text = healthRank.ToString();
         HP += 10;
+        healthUpgradeText.text = HP.ToString() + " >> " + (HP + 10).ToString();
         playerMovement.player.setHP(HP);
     }
 
@@ -44,6 +52,7 @@ public class upgradeMenu : MonoBehaviour {
         damageRank++;
         damageRankText.text = damageRank.ToString();
         damageMod += 0.2f;
+        damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.2f).ToString();
         playerMovement.player.setDamageMod(damageMod);
     }
 
@@ -51,6 +60,7 @@ public class upgradeMenu : MonoBehaviour {
         speedRank++;
         speedRankText.text = speedRank.ToString();
         speed += 1;
+        speedUpgradeText.text = speed.ToString() + " >> " + (speed + 1).ToString();
         playerMovement.player.setSpeed(speed);
     }
 
@@ -58,6 +68,7 @@ public class upgradeMenu : MonoBehaviour {
         staminaRank++;
         staminaRankText.text = staminaRank.ToString();
         stamina += 5;
-        playerMovement.player.setStamina(staminaRank);
+        staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
+        playerMovement.player.setStamina(stamina);
     }
 }
