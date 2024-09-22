@@ -53,6 +53,10 @@ public class playerMovement : MonoBehaviour, IDamage
     }
 
     // Player Default Weapon Mods
+    [SerializeField] List<gunStats> guns;
+    [SerializeField] GameObject gunModel;
+    [SerializeField] GameObject muzzleFlash;
+
     [SerializeField] int damage;
     [SerializeField] float fireRate;
     [SerializeField] float bulletDistance;
@@ -86,6 +90,7 @@ public class playerMovement : MonoBehaviour, IDamage
     int staminaOrig; // Stamina
     int playerLevel; // Level
     int ammoOrig; // Ammo
+    int gunPos; //Weapon selected
 
     // Checks
     bool isSprinting;
@@ -124,6 +129,9 @@ public class playerMovement : MonoBehaviour, IDamage
         // Check if sprinting -- Drain stamina as the player runs
         if (isSprinting && !isDraining)
             StartCoroutine(staminaDrain());
+
+        if (guns.Count != 0)
+            selectGun();
     }
 
     // Player Movement Controls
@@ -177,7 +185,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
     void shootGun() {
         if (Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus()) {
-            if (ammo > 0) {
+            if (guns[gunPos].ammoCur > 0) {
                 StartCoroutine(shoot());
                 Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation);
             }
@@ -253,15 +261,21 @@ public class playerMovement : MonoBehaviour, IDamage
             if (dmg != null)
             {
                 dmg.takeDamage(damage);
-                --ammo;
+                guns[gunPos].ammoCur--;
+                if (guns[gunPos].hitEffects != null)
+                    Instantiate(guns[gunPos].hitEffects, hit.point, Quaternion.identity);
             }
             else if (hit.collider.GetComponent<bossRoom>() == true)
             {
                 // Debug.Log("Button Hit");
                 gameManager.instance.completeMenu();
             }
-            else { --ammo; }
+            else { guns[gunPos].ammoCur--;
+                if (guns[gunPos].hitEffects != null)
+                    Instantiate(guns[gunPos].hitEffects, hit.point, Quaternion.identity);
+            }
         }
+        else { guns[gunPos].ammoCur--; } //had to put this here, there's a bug this was causing where if the bullet isn't hitting anything, it doesn't use ammo.
 
         // Update the UI
         updatePlayerUI();
@@ -372,7 +386,8 @@ public class playerMovement : MonoBehaviour, IDamage
     {
         gameManager.instance.getHPBar().fillAmount = (float)HP / HPOrig;
         gameManager.instance.getStamBar().fillAmount = (float)stamina / staminaOrig;
-        gameManager.instance.getAmmoBar().fillAmount = (float)ammo / ammoOrig;
+        if (guns.Count > 0)
+            gameManager.instance.getAmmoBar().fillAmount = (float)guns[gunPos].ammoCur / guns[gunPos].ammoMax;
         gameManager.instance.getXPBar().fillAmount = (float)playerXP / playerXPMax;
     }
 
@@ -450,6 +465,53 @@ public class playerMovement : MonoBehaviour, IDamage
             }
         }
          updatePlayerUI();
+    }
+
+    public void getGunStats(gunStats _gun)
+    {
+        _gun.ammoCur = _gun.ammoMax;
+        guns.Add(_gun);
+        gunPos = guns.Count - 1;
+        updatePlayerUI();
+
+        float damTemp = _gun.damage * damageUpgradeMod; //reason I did this is because we can't supply a float value to an int.
+        damage = (int)damTemp; //so then we can cast it back as an int so we aren't using decimals for damage on enemies.
+        fireRate = _gun.fireRate;
+        bulletDistance = _gun.bulletDist;
+        ammoOrig = _gun.ammoMax;
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = _gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = _gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
+    void selectGun()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            gunPos++;
+            if (gunPos == guns.Count)
+                gunPos = 0;
+            changeGun();
+        }
+        else if(Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            gunPos--;
+            if (gunPos < 0)
+                gunPos = guns.Count - 1;
+            changeGun();
+        }
+    }
+
+    void changeGun()
+    {
+        float damTemp = guns[gunPos].damage * damageUpgradeMod;
+        damage = (int)damTemp;
+        bulletDistance = guns[gunPos].bulletDist;
+        fireRate = guns[gunPos].fireRate;
+        updatePlayerUI();
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = guns[gunPos].gunModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = guns[gunPos].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 }
 

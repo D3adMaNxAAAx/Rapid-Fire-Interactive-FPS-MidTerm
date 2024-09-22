@@ -259,11 +259,10 @@ public class enemyAI : MonoBehaviour , IDamage
 
             if (rngDropRate > 0)
             {
-                Quaternion rot = Quaternion.LookRotation(ammoSpawn.forward);
                 spawnPos = ammoSpawn.position;
                 if (dropRNG <= rngDropRate)
                 {
-                    Instantiate<GameObject>(ammoDrop, spawnPos, rot);
+                    Instantiate<GameObject>(ammoDrop, spawnPos, Quaternion.identity);
                 }
             }
 
