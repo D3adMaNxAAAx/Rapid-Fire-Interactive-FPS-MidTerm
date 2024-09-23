@@ -193,6 +193,7 @@ public class gameManager : MonoBehaviour {
         reticleSizeOrig = playerReticle.rectTransform.sizeDelta;
         setPlayer(GameObject.FindWithTag("Player")); // Setting player tracker to player object in engine by tag name set on player object
         setPlayerScript(getPlayer().GetComponent<playerMovement>()); // setting the player script from the above player tracker script component 
+        setPlayerSpawnPos(GameObject.FindWithTag("PlayerSpawnPos")); //setting player spawn position by tag
     }
 
     // Update is called once per frame

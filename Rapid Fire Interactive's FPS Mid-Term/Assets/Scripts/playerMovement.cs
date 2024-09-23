@@ -188,7 +188,19 @@ public class playerMovement : MonoBehaviour, IDamage
         staminaOrig = stamina;
         ammoOrig = ammo;
         updatePlayerUI();
+        spawnPlayer();
+
        // upgradeMenu.upgradeUI.setVars();
+    }
+    
+    public void spawnPlayer()
+    {
+        controller.enabled = false;
+        transform.position = gameManager.instance.getPlayerSpawnPos().transform.position;
+        controller.enabled = true;
+
+        HP = HPOrig;
+        updatePlayerUI();
     }
 
     // Update is called once per frame
