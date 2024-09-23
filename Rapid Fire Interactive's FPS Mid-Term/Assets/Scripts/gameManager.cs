@@ -23,6 +23,8 @@ public class gameManager : MonoBehaviour {
     [SerializeField] Image XPBar;
     [SerializeField] Image playerReticle;
     [SerializeField] Image ammoTrackerBar;
+    [SerializeField] GameObject playerSpawnPos;
+    [SerializeField] GameObject checkPointPopup;
 
     // --- Game ---
     [SerializeField] TMP_Text levelTracker;
@@ -55,6 +57,18 @@ public class gameManager : MonoBehaviour {
     float timeScaleOrig; // Tracks & stores original game time scale
     bool isPaused;
 
+    public GameObject getPlayerSpawnPos()
+    { return playerSpawnPos;}
+  
+    public void setPlayerSpawnPos(GameObject _playerSpawnPos)
+    { playerSpawnPos = _playerSpawnPos; }
+  
+    public GameObject getCheckPointPopup()
+    { return checkPointPopup; }
+   
+    public void setCheckPointPopup(GameObject _checkPointPopup)
+    { checkPointPopup = _checkPointPopup; }
+   
     public GameObject getDmgFlash()
         { return damagePanelFlash; }
 
