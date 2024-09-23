@@ -48,8 +48,14 @@ public class buttonFunctions : MonoBehaviour {
         gameManager.instance.backButton();
     }
 
-    public void toggleSprint() {
-        playerMovement.player.toggleSprintOn();
+    public void toggleSprint() 
+    {
+        if (playerMovement.player.getStamina() >= (playerMovement.player.getStaminaOrig() / 2))
+        {
+            playerMovement.player.toggleSprintOn();
+
+        }
+       
     }
 
 

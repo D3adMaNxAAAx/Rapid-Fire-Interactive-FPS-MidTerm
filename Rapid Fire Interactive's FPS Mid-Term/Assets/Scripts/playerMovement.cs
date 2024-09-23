@@ -27,7 +27,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] float speed;
     [SerializeField] int stamina;
     [SerializeField] int playerXPMax;
-    float damageUpgradeMod = 1; // keep set = to 1, so damage can be upgraded (can just change damage var because it changes when swapping guns)
+    float damageUpgradeMod = 1;  // keep set = to 1, so damage can be upgraded (can just change damage var because it changes when swapping guns)
 
     public int getHP() {
         return HP;
@@ -68,9 +68,9 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] int maxJumps;
     [SerializeField] int jumpSpeed;
     [SerializeField] int gravity;
-    [SerializeField] float drainMod; // How quickly stamina points drain
-    [SerializeField] float recoveryMod; // How quickly stamina points recovers
-    [SerializeField] bool toggleSprint;  //Turns sprint on or off
+    [SerializeField] float drainMod;  // How quickly stamina points drain
+    [SerializeField] float recoveryMod;  // How quickly stamina points recovers
+    [SerializeField] bool toggleSprint;   //Turns sprint on or off
 
     // -- Timer --
     [SerializeField] float dmgFlashTimer;
@@ -91,6 +91,7 @@ public class playerMovement : MonoBehaviour, IDamage
     int playerLevel; // Level
     int ammoOrig; // Ammo
     int gunPos; //Weapon selected
+    int speedOrig;  //
 
     // Checks
     bool isSprinting;
@@ -102,6 +103,12 @@ public class playerMovement : MonoBehaviour, IDamage
     bool stopHealing = false; // was the player damaged while healing?
     bool onDashCooldown = false;
 
+
+    public int getStaminaOrig()
+    {
+        return staminaOrig;
+    }
+
     // Start is called before the first frame update
     void Start() {
 
@@ -110,7 +117,7 @@ public class playerMovement : MonoBehaviour, IDamage
         staminaOrig = stamina;
         ammoOrig = ammo;
         updatePlayerUI();
-        upgradeMenu.upgradeUI.setVars();
+       // upgradeMenu.upgradeUI.setVars();
     }
 
     // Update is called once per frame
@@ -119,9 +126,9 @@ public class playerMovement : MonoBehaviour, IDamage
             movement();
             StartCoroutine(Dash());
 
-            if (readyToHeal) { // HEALING STARTS HERE, READY TO HEAL DETERMINATION STARTS IN TAKEDAMAGE()
-                StartCoroutine(healing()); // recursive method
-                readyToHeal = false; // stop healing
+            if (readyToHeal) {  // HEALING STARTS HERE, READY TO HEAL DETERMINATION STARTS IN TAKEDAMAGE()
+                StartCoroutine(healing());  // recursive method
+                readyToHeal = false;  // stop healing
             }
         }
 
@@ -442,29 +449,34 @@ public class playerMovement : MonoBehaviour, IDamage
     {
         toggleSprint = !toggleSprint;
 
+        speedOrig = (int) speed;
 
+        // if (toggleSprint == true)   //tried while loop but it broke it
+        //{
+        speed *= speedMod;
+        isSprinting = true;
+        staminaDrain();
 
-        if (toggleSprint)   //tried while loop but it broke it
+        if (stamina == 0)
         {
-            //speed *= speedMod;
-            //isSprinting = true;
-            //staminaDrain();
-
-            if (stamina == 0)
-            {
-                speed /= speedMod;
+                speed = speedOrig;
                 isSprinting = false;
                 staminaRecover();
-            }
-
-            if (stamina >= (staminaOrig / 2))
-            {
-                speed *= speedMod;
-                isSprinting = true;
-                staminaDrain();
-            }
+                
+                
         }
-         updatePlayerUI();
+
+            //if (stamina >= (staminaOrig / 2))
+            //{
+
+            ////toggleSprintOn();
+            //    speed *= speedMod;
+            //    isSprinting = true;
+            //    staminaDrain();
+            //}
+
+        //}
+        updatePlayerUI();
     }
 
     public void getGunStats(gunStats _gun)
