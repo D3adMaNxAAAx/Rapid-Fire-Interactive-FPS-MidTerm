@@ -475,7 +475,6 @@ MonoBehaviour:
   shootPos: {fileID: 6487564099054035855}
   ammoSpawn: {fileID: 6397245133363016069}
   ammoDrop: {fileID: 6904497920734926788, guid: 4237d6ffeea48944596bf777dda61238, type: 3}
-  animator: {fileID: 0}
   viewAngle: 75
   roamDist: 15
   roamTimer: 3
@@ -485,6 +484,7 @@ MonoBehaviour:
   damageFlashTimer: 1
   faceTargetSpeed: 3
   dropXP: 1
+  dropCoins: 5
   rngDropRate: 17
 --- !u!95 &7549303394707905848
 Animator:

@@ -21,29 +21,20 @@ public class enemyAI : MonoBehaviour , IDamage
     // -- Extra Checks --
     bool isShooting; // Private Tracker For If Enemy Is Shooting 
     bool playerInRange; // Tracker of if player is in range of enemy detection radius
-   
-
-    // bool seenPlayer; // Checks if the enemy has seen the player
     Vector3 playerDir; // Tracks player Direction for AI rotation and player in range
-    // Vector3 playerLastPos; // Tracks where the player was last
     Vector3 spawnPos;
     Vector3 lastSeenPlayerPosition;
 
-
-    //All value fields for enemy view and roam settings 
+    // All value fields for enemy view and roam settings 
     [SerializeField] int viewAngle;
     [SerializeField] int roamDist;
     [SerializeField] int roamTimer;
 
     Vector3 startingPos;
-
-    bool isRoaming; // Tracks is enemy is roaming 
-
+    bool isRoaming; // Tracks if enemy is roaming 
     float angleToPlayer;
     float stoppingDistOrig;
-
     Coroutine aCoRoutine;
-
 
     // -- Attributes --
     [SerializeField] int HP; // Health Points Tracker and Modifier Field For Designer
@@ -52,6 +43,7 @@ public class enemyAI : MonoBehaviour , IDamage
     [SerializeField] float damageFlashTimer; // Allows Designer To Set Damage Flash Timer 
     [SerializeField] int faceTargetSpeed; // Sets enemy rotation look speed for turning towards enemy look direction
     [SerializeField] int dropXP; // How much XP enemy drops
+    [SerializeField] int dropCoins; // How many coins enemy drops
     [Range(0,100)]
     [SerializeField] int rngDropRate;
     int HPOrig; // Private Tracker for enemy original HP
@@ -245,18 +237,21 @@ public class enemyAI : MonoBehaviour , IDamage
         gameManager.instance.getBossHPBar().fillAmount = (float)bossHP / HPOrig;
 
         agent.SetDestination(gameManager.instance.getPlayer().transform.position); // makes enemys go to player
-
+        
+        // Check if enemy is dead
         if (HP <= 0)
         {
             // Tells Game manager to take 1 enemy out of game goal enemy total
             gameManager.instance.updateGameGoal(-1);
 
-            // On enemy death add enemy dropped xp to player xp
+            // Give the player XP & coins for defeating the enemy
             gameManager.instance.getPlayerScript().setXP(getEnemyXP()); // setXP will ADD the amount given.
+            gameManager.instance.getPlayerScript().setCoins(getEnemyCoins()); // setCoins will ADD the amount given.
 
             // Update UI
             gameManager.instance.getPlayerScript().updatePlayerUI();
 
+            // Roll for an ammo pickup
             if (rngDropRate > 0)
             {
                 spawnPos = ammoSpawn.position;
@@ -291,6 +286,14 @@ public class enemyAI : MonoBehaviour , IDamage
     // Setter for enemy xp from other classes
     public void setEnemyXP(int _xp)
     { dropXP = _xp; }
+
+    // Gives other classes access to enemy coins value
+    public int getEnemyCoins()
+    { return dropCoins; }
+
+    // Setter for enemy coins from other classes
+    public void setEnemyCoins(int _coins)
+    { dropCoins = _coins; }
 
     // Getter for Enemy HP
     public int getEnemyHP()

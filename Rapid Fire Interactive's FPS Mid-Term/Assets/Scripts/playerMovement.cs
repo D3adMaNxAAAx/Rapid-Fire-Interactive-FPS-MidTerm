@@ -26,31 +26,9 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] int HP;
     [SerializeField] float speed;
     [SerializeField] int stamina;
+    [SerializeField] int coins;
     [SerializeField] int playerXPMax;
     float damageUpgradeMod = 1;  // keep set = to 1, so damage can be upgraded (can just change damage var because it changes when swapping guns)
-
-    public int getHP() {
-        return HP;
-    }
-    public float getSpeed() {
-        return speed;
-    }
-    public int getStamina() {
-        return stamina;
-    }
-
-    public void setHP(int newHP) {
-        HP = newHP;
-    }
-    public void setSpeed(float newSpeed) {
-        speed = newSpeed;
-    }
-    public void setStamina(int newStamina) {
-        stamina = newStamina;
-    }
-    public void setDamageMod(float newDamageMod) { 
-        damageUpgradeMod = newDamageMod;
-    }
 
     // Player Default Weapon Mods
     [SerializeField] List<gunStats> guns;
@@ -103,10 +81,49 @@ public class playerMovement : MonoBehaviour, IDamage
     bool stopHealing = false; // was the player damaged while healing?
     bool onDashCooldown = false;
 
+    // Getters
+    public int getHP()
+    {
+        return HP;
+    }
+    public float getSpeed()
+    {
+        return speed;
+    }
+    public int getStamina()
+    {
+        return stamina;
+    }
 
+    public int getCoins()
+    {
+        return coins;
+    }
     public int getStaminaOrig()
     {
         return staminaOrig;
+    }
+
+    // Setters
+    public void setHP(int newHP)
+    {
+        HP = newHP;
+    }
+    public void setSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
+    public void setStamina(int newStamina)
+    {
+        stamina = newStamina;
+    }
+    public void setCoins(int _coins)
+    {
+        coins += _coins;
+    }
+    public void setDamageMod(float newDamageMod)
+    {
+        damageUpgradeMod = newDamageMod;
     }
 
     // Start is called before the first frame update
