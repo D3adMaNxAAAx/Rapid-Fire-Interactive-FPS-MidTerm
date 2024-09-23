@@ -8,9 +8,10 @@ public class bossEvent : MonoBehaviour, IDamage
     //not in use yet...still work in progress deciding if I should just use the enum in enemy ai
 
 
-
+    // Singleton
     public static bossEvent instance;
 
+    // -- Boss Positioning --
     [SerializeField] Transform bossHeadPos;
 
     [SerializeField] Transform bossRangePos;
@@ -18,7 +19,7 @@ public class bossEvent : MonoBehaviour, IDamage
     [SerializeField] Transform bossMeleePos;
 
 
-
+    // -- Boss Attack Information --
     [SerializeField] GameObject bossRangedAttack;
 
     [SerializeField] GameObject bossMeleeAttack;
@@ -37,8 +38,7 @@ public class bossEvent : MonoBehaviour, IDamage
 
 
 
-
-
+    // -- Boss Attributes --
     [SerializeField] int bossHP;
 
     [SerializeField] int bossSpeed;
@@ -55,7 +55,7 @@ public class bossEvent : MonoBehaviour, IDamage
    
 
   
-
+    // Modifiers
     [SerializeField] int bossDmgMod;
 
     [SerializeField] int bossHPMod;

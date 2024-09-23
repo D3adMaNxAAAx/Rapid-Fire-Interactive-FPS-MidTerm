@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour {
-   
+
     public void resume() {
         gameManager.instance.stateUnpause();
     }
@@ -32,11 +32,11 @@ public class buttonFunctions : MonoBehaviour {
     }
 
     public void quit() {
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
             Application.Quit();
-        #endif
+#endif
     }
 
     public void invertY() {
@@ -48,16 +48,15 @@ public class buttonFunctions : MonoBehaviour {
         gameManager.instance.backButton();
     }
 
-    public void toggleSprint() 
+    public void toggleSprint()
     {
         if (playerMovement.player.getStamina() >= (playerMovement.player.getStaminaOrig() / 2))
         {
             playerMovement.player.toggleSprintOn();
 
         }
-       
-    }
 
+    }
 
     public void toggleZoom() {
         CameraMovement.state.autoZoom();
@@ -78,5 +77,14 @@ public class buttonFunctions : MonoBehaviour {
 
     public void staminaUpgrade() {
         upgradeMenu.upgradeUI.onStaminaUpgrade();
+    }
+
+    public void healthPurchase() {
+        storeManager.instance.onHealthPurchase();
+    }
+
+    public void ammoPurchase()
+    {
+        storeManager.instance.onAmmoPurchase();
     }
 }

@@ -1439,6 +1439,56 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &741285734193747885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3764613916346096515}
+  - component: {fileID: 457611222320381474}
+  m_Layer: 5
+  m_Name: StoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &3764613916346096515
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741285734193747885}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5823421247959698043}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &457611222320381474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741285734193747885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b61fb30ca268cc4495fda3e474b701c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthCost: 1
+  ammoCost: 1
 --- !u!1 &792462234169616610
 GameObject:
   m_ObjectHideFlags: 0
@@ -1635,7 +1685,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7135242718259149712}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6032842864701399304}
+        m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
+        m_MethodName: ammoPurchase
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &861546503179996379
 GameObject:
   m_ObjectHideFlags: 0
@@ -4641,7 +4703,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1561815496385295530}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6032842864701399304}
+        m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
+        m_MethodName: healthPurchase
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2833441024610858014
 GameObject:
   m_ObjectHideFlags: 0
@@ -11244,6 +11318,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8733526787851522082}
+  - {fileID: 3764613916346096515}
   - {fileID: 7351545378487449876}
   - {fileID: 5187461131323642566}
   - {fileID: 6527564860543623480}
@@ -14138,12 +14213,14 @@ MonoBehaviour:
   menuLose: {fileID: 5621314690915714858}
   menuComplete: {fileID: 2472821767710190091}
   menuUpgrade: {fileID: 5687853132917736741}
-  menuStore: {fileID: 0}
+  menuStore: {fileID: 4933404238250744295}
   HPBar: {fileID: 395213240258513247}
   stamBar: {fileID: 856762793134588654}
   XPBar: {fileID: 6519315420267137081}
   playerReticle: {fileID: 7487552646630663236}
   ammoTrackerBar: {fileID: 4821608183998799527}
+  playerSpawnPos: {fileID: 0}
+  checkPointPopup: {fileID: 0}
   levelTracker: {fileID: 5765475421304594023}
   bossHP: {fileID: 312314880329837941}
   bossHPBar: {fileID: 5502419556936992492}
