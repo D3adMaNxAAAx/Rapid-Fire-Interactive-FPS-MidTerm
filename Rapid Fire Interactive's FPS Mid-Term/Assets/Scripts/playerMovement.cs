@@ -68,8 +68,8 @@ public class playerMovement : MonoBehaviour, IDamage
     int staminaOrig; // Stamina
     int playerLevel; // Level
     int ammoOrig; // Ammo
-    int gunPos; //Weapon selected
-    int speedOrig;  //
+    int gunPos; // Weapon selected
+    int speedOrig;  // Original Speed
 
     // Checks
     bool isSprinting;
@@ -85,6 +85,36 @@ public class playerMovement : MonoBehaviour, IDamage
     public int getHP()
     {
         return HP;
+    }
+    public int getHPOrig()
+    {
+        return HPOrig;
+    }
+    public int getAmmo()
+    {
+        // Int variable to store ammo to return
+        int _ammo;
+        
+        // Check if the player has a gun first
+        if (guns != null || guns.Count != 0)
+            _ammo = guns[gunPos].ammoCur;
+        else
+            _ammo = 0;
+
+        return _ammo;
+    }
+    public int getAmmoOrig()
+    {
+        // Int variable to store ammo to return
+        int _ammoOrig;
+
+        // Check if the player has a gun first
+        if (guns != null || guns.Count != 0)
+            _ammoOrig = guns[gunPos].ammoMax;
+        else
+            _ammoOrig = 0;
+
+        return _ammoOrig;
     }
     public float getSpeed()
     {
@@ -108,6 +138,30 @@ public class playerMovement : MonoBehaviour, IDamage
     public void setHP(int newHP)
     {
         HP = newHP;
+    }
+    public void setHPOrig(int newHPOrig)
+    {
+        HPOrig = newHPOrig;
+    }
+    public void setAmmo(int newAmmo)
+    {
+        // Check if the player has a gun
+        if (guns != null || guns.Count != 0)
+            guns[gunPos].ammoCur = newAmmo;
+
+        // Update the UI to show it's been changed
+        // (might not be necessary?)
+        updatePlayerUI();
+    }
+    public void setAmmoOrig(int newAmmoOrig)
+    {
+        // Check if the player has a gun
+        if (guns != null || guns.Count != 0)
+            guns[gunPos].ammoMax = newAmmoOrig;
+
+        // Update the UI to show it's been changed
+        // (might not be necessary?)
+        updatePlayerUI();
     }
     public void setSpeed(float newSpeed)
     {

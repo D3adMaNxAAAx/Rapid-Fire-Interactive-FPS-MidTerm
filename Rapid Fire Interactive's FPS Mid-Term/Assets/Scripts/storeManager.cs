@@ -24,8 +24,15 @@ public class storeManager : MonoBehaviour
         
     }
 
-    void buyHealth()
+    void giveHealth()
     {
-        
+        // Heal the player to full as per their purchase
+        gameManager.instance.getPlayerScript().setHP(gameManager.instance.getPlayerScript().getHPOrig());
+    }
+
+    void giveAmmo()
+    {
+        // Give the player max ammo as per their purchase
+        gameManager.instance.getPlayerScript().setAmmo(gameManager.instance.getPlayerScript().getAmmoOrig());
     }
 }
