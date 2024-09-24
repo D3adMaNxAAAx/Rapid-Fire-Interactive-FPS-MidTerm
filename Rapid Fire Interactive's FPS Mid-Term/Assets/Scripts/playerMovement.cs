@@ -39,7 +39,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] int damage;
     [SerializeField] float fireRate;
     [SerializeField] float bulletDistance;
-    [SerializeField] int ammo;
+    //[SerializeField] int ammo;
     //[SerializeField] float bulletSpeed; //Is here if we wanna change to use bullets
 
     // -- Movement --
@@ -93,16 +93,16 @@ public class playerMovement : MonoBehaviour, IDamage
     }
     public int getAmmo()
     {
-        // Int variable to store ammo to return
-        int _ammo;
+        //// Int variable to store ammo to return
+        //int _ammo;
         
-        // Check if the player has a gun first
-        if (guns != null || guns.Count != 0)
-            _ammo = guns[gunPos].ammoCur;
-        else
-            _ammo = 0;
+        //// Check if the player has a gun first
+        //if (guns != null || guns.Count != 0)
+        //    _ammo = guns[gunPos].ammoCur;
+        //else
+        //    _ammo = 0;
 
-        return _ammo;
+        return getCurGun().ammoCur;
     }
     public bool getIsSniper() {
         return isSniper;
@@ -113,16 +113,16 @@ public class playerMovement : MonoBehaviour, IDamage
 
     public int getAmmoOrig()
     {
-        // Int variable to store ammo to return
-        int _ammoOrig;
+        //// Int variable to store ammo to return
+        //int _ammoOrig;
 
-        // Check if the player has a gun first
-        if (guns != null || guns.Count != 0)
-            _ammoOrig = guns[gunPos].ammoMax;
-        else
-            _ammoOrig = 0;
+        //// Check if the player has a gun first
+        //if (guns != null || guns.Count != 0)
+        //    _ammoOrig = guns[gunPos].ammoMax;
+        //else
+        //    _ammoOrig = 0;
 
-        return _ammoOrig;
+        return getCurGun().ammoMax;
     }
     public float getSpeed()
     {
@@ -155,7 +155,7 @@ public class playerMovement : MonoBehaviour, IDamage
     {
         // Check if the player has a gun
         if (guns != null || guns.Count != 0)
-            guns[gunPos].ammoCur = newAmmo;
+            getCurGun().ammoCur = newAmmo;
 
         // Update the UI to show it's been changed
         // (might not be necessary?)
@@ -165,7 +165,7 @@ public class playerMovement : MonoBehaviour, IDamage
     {
         // Check if the player has a gun
         if (guns != null || guns.Count != 0)
-            guns[gunPos].ammoMax = newAmmoOrig;
+            getCurGun().ammoMax = newAmmoOrig;
 
         // Update the UI to show it's been changed
         // (might not be necessary?)
@@ -194,7 +194,7 @@ public class playerMovement : MonoBehaviour, IDamage
         player = this;
         HPOrig = HP;
         staminaOrig = stamina;
-        ammoOrig = ammo;
+        //ammoOrig = ammo;
         updatePlayerUI();
         if (gameManager.instance.getPlayerSpawnPos() != null)
             spawnPlayer();
@@ -286,13 +286,34 @@ public class playerMovement : MonoBehaviour, IDamage
     }
 
     void shootGun() {
-        if (Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus()) {
-            if (guns[gunPos].ammoCur > 0) {
-                StartCoroutine(shoot());
-                Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation);
+        if (getCurGun().isAutomatic)
+        {
+            if (Input.GetButton("Fire1") && !isShooting && !gameManager.instance.getPauseStatus())
+            {
+                if (getAmmo() > 0)
+                {
+                    StartCoroutine(shoot());
+                    Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation);
+                }
+                else
+                {
+                    StartCoroutine(AmmoWarningFlash());
+                }
             }
-            else {
-                StartCoroutine(AmmoWarningFlash());
+        }
+        else
+        {
+            if (Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus())
+            {
+                if (getAmmo() > 0)
+                {
+                    StartCoroutine(shoot());
+                    Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation);
+                }
+                else
+                {
+                    StartCoroutine(AmmoWarningFlash());
+                }
             }
         }
     }
@@ -489,7 +510,11 @@ public class playerMovement : MonoBehaviour, IDamage
         gameManager.instance.getHPBar().fillAmount = (float)HP / HPOrig;
         gameManager.instance.getStamBar().fillAmount = (float)stamina / staminaOrig;
         if (guns.Count > 0)
-            gameManager.instance.getAmmoBar().fillAmount = (float)guns[gunPos].ammoCur / guns[gunPos].ammoMax;
+        {
+            gameManager.instance.getAmmoBar().fillAmount = (float)getCurGun().ammoCur / getCurGun().ammoMax;
+            //gameManager.instance.getAmmoCText().text = getAmmo().ToString("F0");
+            //gameManager.instance.getAmmoMText().text = getAmmoOrig().ToString("F0");
+        } ///Please add these into gameManager later.
         gameManager.instance.getXPBar().fillAmount = (float)playerXP / playerXPMax;
     }
 
@@ -523,6 +548,11 @@ public class playerMovement : MonoBehaviour, IDamage
         return playerLevel;
     }
 
+    public gunStats getCurGun()
+    {
+        return guns[gunPos];
+    }
+
     // Setters
     public void setPlayerLevel(int _playerLevel)
     {
@@ -531,11 +561,14 @@ public class playerMovement : MonoBehaviour, IDamage
 
     public void ammoPickup(int amount)
     {
-        int a = amount / ammoOrig;
-        if (a + ammo >= ammoOrig)
-            ammo = ammoOrig;
-        else
-            ammo += a;
+        if (guns.Count > 0)
+        {
+            int a = (int)(getAmmoOrig() * (amount / 100f));
+            if (a + getCurGun().ammoCur >= getAmmoOrig())
+                getCurGun().ammoCur = getAmmoOrig();
+            else
+                getCurGun().ammoCur += a;
+        }
         updatePlayerUI();
     }
 
@@ -615,12 +648,12 @@ public class playerMovement : MonoBehaviour, IDamage
         float damTemp = guns[gunPos].damage * damageUpgradeMod;
         damage = (int)damTemp;
         bulletDistance = guns[gunPos].bulletDist;
-        fireRate = guns[gunPos].fireRate;
-        isSniper = guns[gunPos].isSniper;
+        fireRate = getCurGun().fireRate;
+        isSniper = getCurGun().isSniper;
         updatePlayerUI();
 
-        gunModel.GetComponent<MeshFilter>().sharedMesh = guns[gunPos].gunModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = guns[gunPos].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+        gunModel.GetComponent<MeshFilter>().sharedMesh = getCurGun().gunModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = getCurGun().gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 }
 

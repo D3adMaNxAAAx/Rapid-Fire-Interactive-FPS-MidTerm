@@ -45,11 +45,13 @@ public class doorController : MonoBehaviour
     //Set if door is open or closed.
     private void OnTriggerEnter(Collider other)
     {
-        isOpen = true;
+        if (other.CompareTag("Player"))
+            isOpen = true;
     }
     private void OnTriggerExit(Collider other)
     {
-        isOpen = false;
+        if (other.CompareTag("Player"))
+            isOpen = false;
     }
 
     //Open door timer
