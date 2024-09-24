@@ -41,9 +41,25 @@ public class loadout : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager.instance.statePause();
+        
+
         presetLoadout1 = new List<ScriptableObject>();
         
         presetLoadout1.Add(_primaryLd1);
+        presetLoadout1.Add(_secondaryLd1);
+        presetLoadout1.Add(_cons1Ld1);
+        presetLoadout1.Add(_cons2Ld1);
+        presetLoadout1.Add(_thrwLd1);
+
+        presetLoadout2 = new List<ScriptableObject>();
+
+        presetLoadout2.Add(_primaryLd2);
+        presetLoadout2.Add(_secondaryLd2);
+        presetLoadout2.Add(_cons1Ld2);
+        presetLoadout2.Add(_cons2Ld2);
+        presetLoadout2.Add(_thrwLd2);
+
 
     }
 
