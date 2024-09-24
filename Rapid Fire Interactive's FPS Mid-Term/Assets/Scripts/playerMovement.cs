@@ -69,7 +69,7 @@ public class playerMovement : MonoBehaviour, IDamage
     int staminaOrig; // Stamina
     int playerLevel; // Level
     int ammoOrig; // Ammo
-    int gunPos; // Weapon selected
+    int gunPos = 0; // Weapon selected
     int speedOrig;  // Original Speed
 
     // Checks
