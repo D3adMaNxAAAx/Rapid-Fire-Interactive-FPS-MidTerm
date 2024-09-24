@@ -264,13 +264,12 @@ public class playerMovement : MonoBehaviour, IDamage
 
                 if (dmg != null)
                 {
-                    Vector2 dangerSize = new Vector2(15, 15);
                     gameManager.instance.changeReticle(true);
                 }
-            }
-            else
-            {
-                gameManager.instance.changeReticle(false);
+                else
+                {
+                    gameManager.instance.changeReticle(false);
+                }
             }
 
             shootGun();
