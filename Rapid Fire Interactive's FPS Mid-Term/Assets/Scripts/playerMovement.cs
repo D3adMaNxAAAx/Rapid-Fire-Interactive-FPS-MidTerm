@@ -410,8 +410,9 @@ public class playerMovement : MonoBehaviour, IDamage
         updatePlayerUI();
         StartCoroutine(damageFlash());
 
-        //On Player Death
-        if(HP <= 0) {
+        // On Player Death
+        if (HP <= 0) {
+            HP = 0; // set HP to 0 for no weirdness in code/visuals
             gameManager.instance.youLose();
         }
         else if (((float)HP / HPOrig) <= .25) { 
@@ -499,13 +500,22 @@ public class playerMovement : MonoBehaviour, IDamage
     // Update information on the UI
     public void updatePlayerUI() 
     {
+        // Health Info
         gameManager.instance.getHPBar().fillAmount = (float)HP / HPOrig;
+        gameManager.instance.getHPText().text = HP.ToString("F0");
+
+        // Stamina Info
         gameManager.instance.getStamBar().fillAmount = (float)stamina / staminaOrig;
+        
+
+        // Attack Info
         if (guns.Count > 0)
         {
             gameManager.instance.getAmmoBar().fillAmount = (float)getCurGun().ammoCur / getCurGun().ammoMax;
             gameManager.instance.getAmmoText().text = getAmmo().ToString("F0") + " / " + getAmmoOrig().ToString("F0");
         }
+
+        // XP Info
         gameManager.instance.getXPBar().fillAmount = (float)playerXP / playerXPMax;
     }
 

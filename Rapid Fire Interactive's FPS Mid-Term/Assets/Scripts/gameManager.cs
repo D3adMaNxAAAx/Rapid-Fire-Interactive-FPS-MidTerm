@@ -22,8 +22,11 @@ public class gameManager : MonoBehaviour {
     // -- Player --
     [Header("-- Player UI --")]
     [SerializeField] Image HPBar;
+    [SerializeField] TMP_Text HPText;
     [SerializeField] Image stamBar;
+    [SerializeField] TMP_Text stamText;
     [SerializeField] Image XPBar;
+    [SerializeField] TMP_Text XPText;
     [SerializeField] GameObject ammoUI;
     [SerializeField] Image ammoTrackerBar;
     [SerializeField] TMP_Text ammoText;
@@ -94,9 +97,39 @@ public class gameManager : MonoBehaviour {
     public void setAmmoWarning(GameObject _ammoWarning)
     { ammoWarning = _ammoWarning; }
 
+    public TMP_Text getHPText()
+    {
+        return HPText;
+    }
+
+    public TMP_Text getStamText()
+    {
+        return stamText;
+    }
+
+    public TMP_Text getXPText()
+    {
+        return XPText;
+    }
+
     public TMP_Text getAmmoText()
     {
         return ammoText;
+    }
+
+    void setHPText(TMP_Text _HPText)
+    {
+        HPText = _HPText;
+    }
+
+    void setStamText(TMP_Text _stamText)
+    {
+        stamText = _stamText;
+    }
+
+    void setXPText(TMP_Text _XPText)
+    {
+        XPText = _XPText;
     }
 
     void setAmmoText(TMP_Text _ammoText)
@@ -192,6 +225,7 @@ public class gameManager : MonoBehaviour {
 
     public int getEnemyCount()
     { return enemyCount;}
+
     public void setEnemyCount(int _count)
     { enemyCount = _count; }
 
