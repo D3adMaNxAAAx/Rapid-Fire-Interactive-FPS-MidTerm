@@ -655,6 +655,15 @@ public class playerMovement : MonoBehaviour, IDamage
         gunModel.GetComponent<MeshFilter>().sharedMesh = getCurGun().gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = getCurGun().gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
+
+    // temporary check if the player has a gun -- can remove later, using for debug purposes
+    public bool hasGun()
+    {
+        if (guns.Count != 0)
+            return true;
+        else
+            return false;
+    }
 }
 
 /// when setting damage var with gun methods, you need to add * damageUpgradeMod

@@ -29,12 +29,13 @@ public class storeManager : MonoBehaviour
     void Start()
     {
         instance = this;
-        updateStoreUI();
     }
 
     void Update()
     {
-        updateStoreUI(); // for now just update every frame
+        // temporary thing to check if the player has a gun
+        if (gameManager.instance.getPlayerScript().hasGun())
+            updateStoreUI(); // for now just update every frame
     }
 
     // Public methods for external store functions -- these will call internal store functions as necessary
