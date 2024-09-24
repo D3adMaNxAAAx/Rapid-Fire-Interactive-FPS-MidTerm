@@ -91,5 +91,6 @@ public class buttonFunctions : MonoBehaviour {
     public void Respawn()
     {
         playerMovement.player.spawnPlayer();
+        gameManager.instance.statePause();
     }
 }
