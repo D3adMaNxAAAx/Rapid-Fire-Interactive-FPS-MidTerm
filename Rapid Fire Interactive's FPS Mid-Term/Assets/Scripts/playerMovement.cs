@@ -35,6 +35,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject muzzleFlash;
 
+    bool isSniper = false;
     [SerializeField] int damage;
     [SerializeField] float fireRate;
     [SerializeField] float bulletDistance;
@@ -103,6 +104,13 @@ public class playerMovement : MonoBehaviour, IDamage
 
         return _ammo;
     }
+    public bool getIsSniper() {
+        return isSniper;
+    }
+    public GameObject getGunModel() {
+        return gunModel;
+    }
+
     public int getAmmoOrig()
     {
         // Int variable to store ammo to return
@@ -574,6 +582,7 @@ public class playerMovement : MonoBehaviour, IDamage
         fireRate = _gun.fireRate;
         bulletDistance = _gun.bulletDist;
         ammoOrig = _gun.ammoMax;
+        isSniper = _gun.isSniper;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = _gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = _gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
@@ -603,6 +612,7 @@ public class playerMovement : MonoBehaviour, IDamage
         damage = (int)damTemp;
         bulletDistance = guns[gunPos].bulletDist;
         fireRate = guns[gunPos].fireRate;
+        isSniper = guns[gunPos].isSniper;
         updatePlayerUI();
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = guns[gunPos].gunModel.GetComponent<MeshFilter>().sharedMesh;

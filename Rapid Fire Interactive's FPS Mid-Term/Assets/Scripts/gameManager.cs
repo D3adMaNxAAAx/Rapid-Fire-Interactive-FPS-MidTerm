@@ -25,6 +25,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] Image ammoTrackerBar;
     [SerializeField] GameObject playerSpawnPos;
     [SerializeField] GameObject checkPointPopup;
+    [SerializeField] GameObject sniperScope;
 
     // --- Game ---
     [SerializeField] TMP_Text levelTracker;
@@ -86,6 +87,10 @@ public class gameManager : MonoBehaviour {
 
     public void setHealthWarning(GameObject _lowHealthWarning) 
         { lowHealthWarning = _lowHealthWarning; }
+
+    public GameObject getSniperScope() {
+        return sniperScope;
+    }
 
     public playerMovement getPlayerScript() 
         { return playerScript; }

@@ -9,6 +9,8 @@ public class CameraMovement : MonoBehaviour
     public static CameraMovement state;
 
     [SerializeField] private int sens;
+    int zoomSens;
+    int startingSens;
     [SerializeField] private int lockVertMin, lockVertMax;
     [SerializeField] private bool invertY;
 
@@ -91,6 +93,8 @@ public class CameraMovement : MonoBehaviour
         cam = GetComponent<Camera>();
         cam.fieldOfView = normalFOV;
         OrigCameraPos = transform.localPosition;
+        startingSens = sens;
+        zoomSens = sens / 2;
     }
 
     // Update is called once per frame
@@ -113,31 +117,36 @@ public class CameraMovement : MonoBehaviour
         HandleLeaning();
 
         //AimLogic
-        if (Input.GetMouseButton(1))
-        {
+        if (Input.GetMouseButton(1)) {
             isAiming = true;
-            if (snapZoom)
-            {
-                cam.fieldOfView = aimingFOV; //if snap Zoom Enabled zoom instantly
+            if (gameManager.instance.getPlayerScript().getIsSniper() == false) {
+                if (snapZoom) {
+                    cam.fieldOfView = aimingFOV; //if snap Zoom Enabled zoom instantly
+                }
+                else {
+                    //if snap zoom not enabled, smooth zoom;
+                    cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, aimingFOV, zoomSpeed * Time.deltaTime);
+                }
             }
-            else
-            {
-                //if snap zoom not enabled, smooth zoom;
-                cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, aimingFOV, zoomSpeed * Time.deltaTime);
-            }          
+            else { // sniper zoom
+                cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, 20, 999);
+                sens = zoomSens;
+                gameManager.instance.getPlayerScript().getGunModel().SetActive(false);
+                gameManager.instance.getSniperScope().SetActive(true);
+            }
         }
-        else
-        {
+        else {
             isAiming = false;
-            if (snapZoom)
-            {
+            if (snapZoom) {
                 cam.fieldOfView = normalFOV; //snap back to normal Fov
             }
-            else
-            {
+            else {
                 //smooth transition back to normal FoV
                 cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, normalFOV, zoomSpeed * Time.deltaTime);
             }
+            sens = startingSens;
+            gameManager.instance.getPlayerScript().getGunModel().SetActive(true);
+            gameManager.instance.getSniperScope().SetActive(false);
         }
     }
 
