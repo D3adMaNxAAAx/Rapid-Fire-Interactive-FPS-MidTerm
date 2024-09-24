@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class storeManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class storeManager : MonoBehaviour
     public static storeManager instance;
 
     // Store Text
+    [Header("-- Store Information --")]
     [SerializeField] TMP_Text healthText;
     [SerializeField] TMP_Text ammoText;
     [SerializeField] TMP_Text healthCostText;
@@ -16,19 +18,23 @@ public class storeManager : MonoBehaviour
     [SerializeField] TMP_Text playerCoinsText;
     
     // Store Costs
-    [Header("-- Store Costs --")]
+    [Header("-- Store Modifiers --")]
     [SerializeField] int healthCost;
     [SerializeField] int ammoCost;
+    [SerializeField] float flashMod;
 
-    // Player Stats
-    int playerHP;
-    int playerAmmo;
-    int playerCoins;
+    // Memory
+    Color healthColorOrig;
+    Color ammoColorOrig;
 
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
+
+        // Remember the original color of the text
+        healthColorOrig = healthCostText.color;
+        ammoColorOrig = ammoCostText.color;
     }
 
     void Update()
@@ -42,57 +48,35 @@ public class storeManager : MonoBehaviour
     // Buy Button Methods
     public void onHealthPurchase()
     {
-        if (healthTransaction())
+        if (tryTransaction(healthCost))
             giveHealth();
         else
-            StartCoroutine(flashRed());
+            // If the transaction fails, flash text red.
+            StartCoroutine(flashText(healthCostText, Color.red, healthColorOrig));
     }
 
     public void onAmmoPurchase()
     {
-        if (ammoTransaction())
+        if (tryTransaction(ammoCost))
             giveAmmo();
         else
-            StartCoroutine(flashRed());
+            // If the transaction fails, flash text red.
+            StartCoroutine(flashText(ammoCostText, Color.red, ammoColorOrig));
     }
 
     // Private methods for internal store functions
-    // Transaction methods for checking if player can purchase anything from the store
-    bool healthTransaction()
-    {
-        // Bool variable to store the result of the transaction
-        bool _state;
-
-        // Check if the player has enough to purchase health
-        if (gameManager.instance.getPlayerScript().getCoins() >= healthCost)
-        {
-            // Player can afford health, so charge them and return true
-            _state = true;
-            gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() - healthCost);
-        }
-        else
-        {
-            _state = false;
-        }
-
-        return _state;
-    }
-
-    bool ammoTransaction()
+    // Transaction method for checking if player can purchase anything from the store, taking in a cost.
+    bool tryTransaction(int _cost)
     {
         bool _state;
 
-        // Check if the player has enough to purchase ammo
-        if (gameManager.instance.getPlayerScript().getCoins() >= ammoCost)
+        // Check if the player has enough to make the purchase
+        if (gameManager.instance.getPlayerScript().getCoins() >= _cost)
         {
-            // Player can afford ammo, so charge them and return true
+            // Player can afford the purchase, so charge them and return true
             _state = true;
-            gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() - ammoCost);
-        }
-        else
-        {
-            _state = false;
-        }
+            gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() - _cost);
+        } else { _state = false; }
 
         return _state;
     }
@@ -104,8 +88,8 @@ public class storeManager : MonoBehaviour
         gameManager.instance.getPlayerScript().setHP(gameManager.instance.getPlayerScript().getHPOrig());
         gameManager.instance.getPlayerScript().updatePlayerUI();
 
-        // Flash button green signaling success
-        StartCoroutine(flashGreen());
+        // Flash text green signaling success
+        StartCoroutine(flashText(healthCostText, Color.green, healthColorOrig));
     }
 
     void giveAmmo()
@@ -114,8 +98,8 @@ public class storeManager : MonoBehaviour
         gameManager.instance.getPlayerScript().setAmmo(gameManager.instance.getPlayerScript().getAmmoOrig());
         gameManager.instance.getPlayerScript().updatePlayerUI();
 
-        // Flash button green signaling success
-        StartCoroutine(flashGreen());
+        // Flash text green signaling success
+        StartCoroutine(flashText(ammoCostText, Color.green, ammoColorOrig));
     }
 
     // UI Display methods
@@ -139,16 +123,6 @@ public class storeManager : MonoBehaviour
             healthCostText.text += " coins";
     }
 
-    IEnumerator flashRed()
-    {
-        yield return new WaitForSeconds(0.5f);
-    }
-
-    IEnumerator flashGreen()
-    {
-        yield return new WaitForSeconds(0.5f);
-    }
-
     void updateAmmoDisplay()
     {
         // Update the Ammo Restoration Display
@@ -170,5 +144,13 @@ public class storeManager : MonoBehaviour
         updateCoinsDisplay();
         updateHealthDisplay();
         updateAmmoDisplay();
+    }
+
+    // Flash Timers -- Pass in three parameters: one for the text to flash, the color to flash it as, and the original color of the text
+    IEnumerator flashText(TMP_Text _text, Color _flashColor, Color _origColor)
+    {
+        _text.color = _flashColor;
+        yield return new WaitForSeconds(flashMod);
+        _text.color = _origColor;
     }
 }
