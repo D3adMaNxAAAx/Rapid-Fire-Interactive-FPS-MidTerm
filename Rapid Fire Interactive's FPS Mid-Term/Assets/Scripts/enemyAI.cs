@@ -264,7 +264,7 @@ public class enemyAI : MonoBehaviour , IDamage
 
             // Give the player XP & coins for defeating the enemy
             gameManager.instance.getPlayerScript().setXP(getEnemyXP()); // setXP will ADD the amount given.
-            gameManager.instance.getPlayerScript().setCoins(getEnemyCoins()); // setCoins will ADD the amount given.
+            gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() + getEnemyCoins()); // Add coins to player amount.
 
             // Update UI
             gameManager.instance.getPlayerScript().updatePlayerUI();
