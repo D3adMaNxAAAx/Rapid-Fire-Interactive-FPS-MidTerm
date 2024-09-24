@@ -7,19 +7,30 @@ public class loadout : MonoBehaviour
 {
     public static loadout instance;
 
-    //Loadout items selected by player
+    /*//Loadout items selected by player
     [SerializeField] ScriptableObject _primaryWeapon;
     [SerializeField] ScriptableObject _secondaryWeapon;
     [SerializeField] ScriptableObject _consumable;
     [SerializeField] ScriptableObject _consumable2;
-    [SerializeField] ScriptableObject _throwable;
+    [SerializeField] ScriptableObject _throwable;*/
+
+    [SerializeField] gunStats AR;
+    [SerializeField] gunStats Sniper;
+    [SerializeField] gunStats HandCannon;
+    [SerializeField] gunStats Knife;
+    [SerializeField] gunStats Health1;
+    [SerializeField] gunStats Health2;
+    [SerializeField] gunStats Gernade1;
+    [SerializeField] gunStats Gernade2;
+
+    List<gunStats> selectedGuns;
 
     //Players selected loadout
-    List<ScriptableObject> selectedLoadout;
-    List<ScriptableObject> presetLoadout1;
-    List<ScriptableObject> presetLoadout2;
+    /*List<ScriptableObject> selectedLoadout;*/
+    /*List<ScriptableObject> presetLoadout1;
+    List<ScriptableObject> presetLoadout2;*/
 
-    public List<ScriptableObject> getPreset1() { return presetLoadout1; }
+    /*public List<ScriptableObject> getPreset1() { return presetLoadout1; }
     public void setPreset1(List<ScriptableObject> _loadout)
     { presetLoadout1 = new List<ScriptableObject>();
       presetLoadout1.AddRange(_loadout);
@@ -29,28 +40,28 @@ public class loadout : MonoBehaviour
     {
         presetLoadout2 = new List<ScriptableObject>();
         presetLoadout2.AddRange(_loadout);
-    }
-    public List<ScriptableObject> getSelectedLoadout() { return selectedLoadout; }
+    }*/
+    /*public List<ScriptableObject> getSelectedLoadout() { return selectedLoadout; }
     public void setSelectedLoadout(List<ScriptableObject> _loadout)
     {
         selectedLoadout = new List<ScriptableObject>();
         selectedLoadout.AddRange(_loadout);
-    }
+    }*/
 
-    //Preset objects loadout 1
+    /*//Preset objects loadout 1
     [SerializeField] ScriptableObject _primaryLd1;
     [SerializeField] ScriptableObject _secondaryLd1;
     [SerializeField] ScriptableObject _cons1Ld1;
     [SerializeField] ScriptableObject _cons2Ld1;
-    [SerializeField] ScriptableObject _thrwLd1;
+    [SerializeField] ScriptableObject _thrwLd1;*/
 
 
-    //Preset objects loadout 2
+    /*//Preset objects loadout 2
     [SerializeField] ScriptableObject _primaryLd2;
     [SerializeField] ScriptableObject _secondaryLd2;
     [SerializeField] ScriptableObject _cons1Ld2;
     [SerializeField] ScriptableObject _cons2Ld2;
-    [SerializeField] ScriptableObject _thrwLd2;
+    [SerializeField] ScriptableObject _thrwLd2;*/
 
     //Preset objects loadout 1 images
     [SerializeField] Image _primaryLd1Image;
@@ -67,82 +78,59 @@ public class loadout : MonoBehaviour
     [SerializeField] Image _cons2Ld2Image;
     [SerializeField] Image _thrwLd2Image;
 
-    public Image getPrmLd1Img()
-    { return _primaryLd1Image; }
+    public Image getPrmLd1Img() { return _primaryLd1Image; }
 
-    public void setPrmLd1Img(Image _src)
-    { _primaryLd1Image = _src; }
+    public void setPrmLd1Img(Image _src) { _primaryLd1Image = _src; }
 
-    public Image getSecLd1Img()
-    { return _secondaryLd1Image; }
+    public Image getSecLd1Img() { return _secondaryLd1Image; }
 
-    public void setSecLd1Img(Image _src)
-    { _secondaryLd1Image = _src; }
+    public void setSecLd1Img(Image _src) { _secondaryLd1Image = _src; }
 
-    public Image getCnsm1Ld1Img()
-    { return _cons1Ld1Image; }
+    public Image getCnsm1Ld1Img() { return _cons1Ld1Image; }
 
-    public void setCnsm1Ld1Img(Image _src)
-    { _cons1Ld1Image = _src; }
+    public void setCnsm1Ld1Img(Image _src) { _cons1Ld1Image = _src; }
 
-    public Image getCnsm2Ld1Img()
-    { return _cons2Ld1Image; }
+    public Image getCnsm2Ld1Img() { return _cons2Ld1Image; }
 
-    public void setCnsm2Ld1Img(Image _src)
-    { _cons2Ld1Image = _src; }
-    public Image getThrwLd1Img()
-    { return _primaryLd1Image; }
+    public void setCnsm2Ld1Img(Image _src) { _cons2Ld1Image = _src; }
+    public Image getThrwLd1Img() { return _primaryLd1Image; }
 
-    public void setThrwLd1Img(Image _src)
-    { _thrwLd1Image = _src; } 
-    
-    
-    
-    
-    public Image getPrmLd2Img()
-    { return _primaryLd2Image; }
+    public void setThrwLd1Img(Image _src) { _thrwLd1Image = _src; }
 
-    public void setPrmLd2Img(Image _src)
-    { _primaryLd2Image = _src; }
 
-    public Image getSecLd2Img()
-    { return _secondaryLd2Image; }
+    public Image getPrmLd2Img() { return _primaryLd2Image; }
 
-    public void setSecLd2Img(Image _src)
-    { _secondaryLd2Image = _src; }
+    public void setPrmLd2Img(Image _src) { _primaryLd2Image = _src; }
 
-    public Image getCnsm1Ld2Img()
-    { return _cons1Ld2Image; }
+    public Image getSecLd2Img() { return _secondaryLd2Image; }
 
-    public void setCnsm1Ld2Img(Image _src)
-    { _cons1Ld2Image = _src; }
-    
-    public Image getCnsm2Ld2Img()
-    { return _cons2Ld2Image; }
+    public void setSecLd2Img(Image _src) { _secondaryLd2Image = _src; }
 
-    public void setCnsm2Ld2Img(Image _src)
-    { _cons2Ld2Image = _src; }
+    public Image getCnsm1Ld2Img() { return _cons1Ld2Image; }
 
-    public Image getThrwLd2Img()
-    { return _thrwLd2Image; }
+    public void setCnsm1Ld2Img(Image _src) { _cons1Ld2Image = _src; }
 
-    public void setThrwLd2Img(Image _src)
-    { _thrwLd2Image = _src; }
-    
+    public Image getCnsm2Ld2Img() { return _cons2Ld2Image; }
 
-    //Lists for players to select items out of 
+    public void setCnsm2Ld2Img(Image _src) { _cons2Ld2Image = _src; }
+
+    public Image getThrwLd2Img() { return _thrwLd2Image; }
+
+    public void setThrwLd2Img(Image _src) { _thrwLd2Image = _src; }
+
+
+    /*//Lists for players to select items out of 
     [SerializeField] List<ScriptableObject> primaryWeapons; 
     [SerializeField] List<ScriptableObject> secondaryWeapons;
     [SerializeField] List<ScriptableObject> consumables;
-    [SerializeField] List<ScriptableObject> throwables;
+    [SerializeField] List<ScriptableObject> throwables;*/
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         instance = this;
 
 
-        //Add preset loadout 1 items
+        /*//Add preset loadout 1 items
         presetLoadout1.Add(_primaryLd1);
         presetLoadout1.Add(_secondaryLd1);
         presetLoadout1.Add(_cons1Ld1);
@@ -155,14 +143,26 @@ public class loadout : MonoBehaviour
         presetLoadout2.Add(_cons1Ld2);
         presetLoadout2.Add(_cons2Ld2);
         presetLoadout2.Add(_thrwLd2);
-
+*/
 
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void loadOut1 () {
+        playerMovement.player.getGunStats(AR);
+        playerMovement.player.getGunStats(HandCannon);
+        /*playerMovement.player.getGunStats(Gernade1);
+        playerMovement.player.getGunStats(Health1);
+        playerMovement.player.getGunStats(Health2);*/
+        gameManager.instance.stateUnpause();
+    }
+
+    public void loadOut2() {
+        playerMovement.player.getGunStats(Sniper);
+        //playerMovement.player.getGunStats(Knife);
+        /*playerMovement.player.getGunStats(Gernade1);
+        playerMovement.player.getGunStats(Gernade2);
+        playerMovement.player.getGunStats(Health1);*/
+        gameManager.instance.stateUnpause();
     }
 
     //click on the primary weapon slot

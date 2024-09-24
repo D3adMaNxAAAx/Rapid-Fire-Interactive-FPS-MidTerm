@@ -18,6 +18,10 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuStore;
     [SerializeField] GameObject menuLoadout;
 
+    public GameObject getMenuLoadout () {
+        return menuLoadout;
+    }
+
     // --- Player ---
     [SerializeField] Image HPBar;
     [SerializeField] Image stamBar;
@@ -376,7 +380,7 @@ public class gameManager : MonoBehaviour {
 
 
     //if you need to test just comment out 
-    public void loadoutPreset1Pick()
+    /*public void loadoutPreset1Pick()
     {
         loadout.instance.setSelectedLoadout(loadout.instance.getPreset1());
         loadout.instance.getPrmLd1Img().gameObject.SetActive(true);
@@ -389,7 +393,7 @@ public class gameManager : MonoBehaviour {
     public void loadoutPreset2Pick()
     {
         loadout.instance.setSelectedLoadout(loadout.instance.getPreset2());
-    }
+    }*/
 
     public void backButton() {
         if (menuActive == menuSettings)
