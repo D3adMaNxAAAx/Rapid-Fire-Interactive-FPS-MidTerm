@@ -87,4 +87,9 @@ public class buttonFunctions : MonoBehaviour {
     {
         storeManager.instance.onAmmoPurchase();
     }
+
+    public void Respawn()
+    {
+        playerMovement.player.spawnPlayer();
+    }
 }
