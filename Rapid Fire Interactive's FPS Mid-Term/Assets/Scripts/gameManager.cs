@@ -16,6 +16,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuComplete;
     [SerializeField] GameObject menuUpgrade;
     [SerializeField] GameObject menuStore;
+    [SerializeField] GameObject menuLoadout;
 
     // --- Player ---
     [SerializeField] Image HPBar;
@@ -199,21 +200,39 @@ public class gameManager : MonoBehaviour {
         setPlayer(GameObject.FindWithTag("Player")); // Setting player tracker to player object in engine by tag name set on player object
         setPlayerScript(getPlayer().GetComponent<playerMovement>()); // setting the player script from the above player tracker script component 
         setPlayerSpawnPos(GameObject.FindWithTag("PlayerSpawnPos")); //setting player spawn position by tag
+
+        //Pausing game, hididng player background ui, and showing loadout menu
+        
+        menuActive = menuLoadout;
+        
+
     }
 
     // Update is called once per frame
     void Update() {
 
-        if (Input.GetButtonDown("Cancel")) { // When ESC clicked
-            if (menuActive == null) {
+        if (menuActive != menuLoadout)
+        {
+            if (Input.GetButtonDown("Cancel"))
+            { // When ESC clicked
+                if (menuActive == null)
+                {
 
-                statePause();
-                menuActive = menuPause; // Set the pause menu as active menu
-                menuActive.SetActive(getPauseStatus()); // Show active menu
+                    statePause();
+                    menuActive = menuPause; // Set the pause menu as active menu
+                    menuActive.SetActive(getPauseStatus()); // Show active menu
+                }
+                else if (menuActive == menuPause)
+                {
+                    stateUnpause();
+                }
             }
-            else if (menuActive == menuPause) {
-                stateUnpause();
-            }
+        }
+        else if (menuActive == menuLoadout)
+        {
+            statePause();
+            displayUI(false);
+            menuActive.SetActive(true);
         }
     }
 
@@ -271,10 +290,47 @@ public class gameManager : MonoBehaviour {
             playerReticle.rectTransform.sizeDelta = reticleSizeOrig;
         }
     }
+    public void displayUI(bool state)
+    {
+        displayPlayerHP(state);
+        displayEnemyCount(state);
+        displayPlayerStam(state);
+        displayXPTracker(state);
+    }
+
     public void displayBossBar(bool state) {
         getBossHP().SetActive(state);
     }
 
+    public void displayPlayerHP(bool state)
+    {
+        getHPBar().gameObject.SetActive(state);
+    }
+
+    public void displayPlayerStam(bool state) 
+    {
+        getStamBar().gameObject.SetActive(state);
+    }
+    public void displayXPTracker(bool state)
+    {
+        getXPBar().gameObject.SetActive(state);
+    }
+
+    public void displayEnemyCount(bool state)
+    {
+        getEnemyRemainCount().gameObject.SetActive(state);
+        getEnemyRemainLabel().gameObject.SetActive(state);
+        
+    }
+
+
+    //Uncomment and fill in when new ammo counter made
+    //public void displayAmmoCount(bool status)
+    //{
+
+    //}
+
+   
     public void settingsMenu() {
         menuActive.SetActive(false);
         menuActive = menuSettings;
@@ -309,6 +365,31 @@ public class gameManager : MonoBehaviour {
         menuActive.SetActive(true);
     }
 
+    public void newGame()
+    {
+        stateUnpause();
+        displayUI(true);
+    }
+
+
+    //still working out the null reference and the rest of how the next two functions work
+
+
+    //if you need to test just comment out 
+    public void loadoutPreset1Pick()
+    {
+        loadout.instance.setSelectedLoadout(loadout.instance.getPreset1());
+        loadout.instance.getPrmLd1Img().gameObject.SetActive(true);
+        loadout.instance.getSecLd1Img().gameObject.SetActive(true);
+        loadout.instance.getCnsm1Ld1Img().gameObject.SetActive(true);
+        loadout.instance.getCnsm2Ld1Img().gameObject.SetActive(true);
+        loadout.instance.getThrwLd1Img().gameObject.SetActive(true);
+    }
+
+    public void loadoutPreset2Pick()
+    {
+        loadout.instance.setSelectedLoadout(loadout.instance.getPreset2());
+    }
 
     public void backButton() {
         if (menuActive == menuSettings)
