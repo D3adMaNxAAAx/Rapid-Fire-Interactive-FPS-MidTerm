@@ -11,6 +11,8 @@ public class enemyAI : MonoBehaviour , IDamage
     [SerializeField] enum enemyType { basic, challenge, boss } // Allows selection of enemy type
     [SerializeField] enemyType type; // Tracks which type of enemy in play
     [SerializeField] Renderer model; // Allows Designer Communication to Model's Renderer
+    [SerializeField] Animator anim; //Sets animation animator controller
+    [SerializeField] int animSpeedTrans;
     [SerializeField] NavMeshAgent agent; // Allows Designer Communication To NavMeshAgent Component 
     [SerializeField] Transform headPos; // Enemy Head Position Tracker(Line Of Sight) For Designer
     [SerializeField] Transform shootPos; // Enemy SHoot Point Origin Tracker For Designer
@@ -74,6 +76,15 @@ public class enemyAI : MonoBehaviour , IDamage
     // Update is called once per frame
     void Update()
     {
+        //animation speed we go to 
+        float agentSpeed = agent.velocity.normalized.magnitude;
+
+        //current animation speed
+        float animSpeed = anim.GetFloat("Speed");
+
+        //smoothly transitioning animation speed over time 
+        anim.SetFloat("Speed", Mathf.Lerp(animSpeed, agentSpeed, Time.deltaTime * animSpeedTrans));
+
         dropRNG = Random.Range(0, 100);
 
         ///float agentSpeed = agent.velocity.normalized.magnitude;
@@ -199,8 +210,9 @@ public class enemyAI : MonoBehaviour , IDamage
         // Set shooting to true
         isShooting = true;
 
+        if(rangedAttack != null)
         // Create our bullet and fire from the shootPos of Enemy 
-        Instantiate(rangedAttack, shootPos.position, transform.rotation);
+            Instantiate(rangedAttack, shootPos.position, transform.rotation);
         /// this needs to be changed to make during the shoot animation
 
         // Timer setting shootRate time
