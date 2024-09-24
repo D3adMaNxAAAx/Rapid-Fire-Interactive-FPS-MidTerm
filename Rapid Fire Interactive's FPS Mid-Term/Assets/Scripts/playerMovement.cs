@@ -506,7 +506,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
         // Stamina Info
         gameManager.instance.getStamBar().fillAmount = (float)stamina / staminaOrig;
-        
+        gameManager.instance.getStamText().text = stamina.ToString("F0");
 
         // Attack Info
         if (guns.Count > 0)
@@ -517,6 +517,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
         // XP Info
         gameManager.instance.getXPBar().fillAmount = (float)playerXP / playerXPMax;
+        gameManager.instance.getXPText().text = playerXP.ToString("F0") + " / " + playerXPMax.ToString("F0");
     }
 
     public int getXP()
