@@ -191,7 +191,7 @@ public class playerMovement : MonoBehaviour, IDamage
         if (gameManager.instance.getPlayerSpawnPos() != null)
             spawnPlayer();
 
-        // upgradeMenu.upgradeUI.setVars();
+        upgradeMenu.upgradeUI.setVars();
     }
     
     public void spawnPlayer()
@@ -201,6 +201,7 @@ public class playerMovement : MonoBehaviour, IDamage
         controller.enabled = true;
 
         HP = HPOrig;
+        gameManager.instance.getHealthWarning().SetActive(false);
         updatePlayerUI();
     }
 
