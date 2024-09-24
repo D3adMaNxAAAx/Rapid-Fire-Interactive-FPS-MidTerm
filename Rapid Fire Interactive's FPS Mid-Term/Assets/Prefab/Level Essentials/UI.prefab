@@ -14177,7 +14177,6 @@ RectTransform:
   - {fileID: 15610642217669382}
   - {fileID: 6513789801439919047}
   - {fileID: 4517937176834242114}
-  - {fileID: 3189835182878330764}
   - {fileID: 8018483122246438080}
   - {fileID: 4734614130769479271}
   - {fileID: 7542592411194093230}
@@ -14503,6 +14502,7 @@ RectTransform:
   m_Children:
   - {fileID: 7423939461591643892}
   - {fileID: 8284746100912812043}
+  - {fileID: 3189835182878330764}
   m_Father: {fileID: 5823421247959698043}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
@@ -14860,16 +14860,16 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7770669635643185742}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 5823421247959698043}
+  m_Father: {fileID: 4517937176834242114}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 122.1001, y: -25}
+  m_AnchoredPosition: {x: 101.6001, y: -14.5}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1962973186820225013
@@ -17467,22 +17467,23 @@ MonoBehaviour:
   HPBar: {fileID: 395213240258513247}
   stamBar: {fileID: 856762793134588654}
   XPBar: {fileID: 6519315420267137081}
-  playerReticle: {fileID: 7487552646630663236}
   ammoTrackerBar: {fileID: 4821608183998799527}
-  playerSpawnPos: {fileID: 0}
-  checkPointPopup: {fileID: 4046146167249215335}
-  sniperScope: {fileID: 2072781518792985060}
+  ammoText: {fileID: 0}
+  playerReticle: {fileID: 7487552646630663236}
   levelTracker: {fileID: 5765475421304594023}
+  sniperScope: {fileID: 2072781518792985060}
   bossHP: {fileID: 312314880329837941}
   bossHPBar: {fileID: 5502419556936992492}
   EnemiesRemainingCount: {fileID: 304217664025071362}
   EnemiesRemainingLabel: {fileID: 4635550184921598484}
-  menuSettings: {fileID: 5366901746874572136}
   damagePanelFlash: {fileID: 6633100067919156904}
   ammoWarning: {fileID: 2833441024610858014}
   lowHealthWarning: {fileID: 4528820610351342862}
+  checkPointPopup: {fileID: 4046146167249215335}
   player: {fileID: 0}
   playerScript: {fileID: 0}
+  playerSpawnPos: {fileID: 0}
+  menuSettings: {fileID: 5366901746874572136}
 --- !u!1 &8877954487368445190
 GameObject:
   m_ObjectHideFlags: 0

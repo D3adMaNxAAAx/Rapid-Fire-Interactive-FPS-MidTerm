@@ -9,6 +9,7 @@ public class gameManager : MonoBehaviour {
     public static gameManager instance; // singleton
 
     // -- Menus --
+    [Header("-- Menus --")]
     [SerializeField] GameObject menuActive; // this will change depending on what menu is showing in the game
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
@@ -18,22 +19,20 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuStore;
     [SerializeField] GameObject menuLoadout;
 
-    public GameObject getMenuLoadout () {
-        return menuLoadout;
-    }
-
-    // --- Player ---
+    // -- Player --
+    [Header("-- Player UI --")]
     [SerializeField] Image HPBar;
     [SerializeField] Image stamBar;
     [SerializeField] Image XPBar;
-    [SerializeField] Image playerReticle;
+    [SerializeField] GameObject ammoUI;
     [SerializeField] Image ammoTrackerBar;
-    [SerializeField] GameObject playerSpawnPos;
-    [SerializeField] GameObject checkPointPopup;
+    [SerializeField] TMP_Text ammoText;
+    [SerializeField] Image playerReticle;
+    [SerializeField] TMP_Text levelTracker;
     [SerializeField] GameObject sniperScope;
 
-    // --- Game ---
-    [SerializeField] TMP_Text levelTracker;
+    // -- Game --
+    [Header("-- Enemy UI --")]
     [SerializeField] GameObject bossHP;
     [SerializeField] Image bossHPBar;
 
@@ -41,16 +40,19 @@ public class gameManager : MonoBehaviour {
     [SerializeField] TMP_Text EnemiesRemainingCount;
     [SerializeField] TMP_Text EnemiesRemainingLabel;
 
-    [SerializeField] GameObject menuSettings;
-
     // -- Warnings --
+    [Header("-- Popups --")]
     [SerializeField] GameObject damagePanelFlash;
     [SerializeField] GameObject ammoWarning;
     [SerializeField] GameObject lowHealthWarning;
+    [SerializeField] GameObject checkPointPopup;
 
     // -- Objects --
+    [Header("-- Game Components --")]
     [SerializeField] GameObject player; // Tracks player object
     [SerializeField] playerMovement playerScript; // Tracks playerController field
+    [SerializeField] GameObject playerSpawnPos;
+    [SerializeField] GameObject menuSettings;
 
     // Reticle Variables
     Vector2 reticleSize; // so the player can adjust reticle size through settings & also to change it to and from.
@@ -62,6 +64,11 @@ public class gameManager : MonoBehaviour {
     int bossCount; // For when we make boss monster
     float timeScaleOrig; // Tracks & stores original game time scale
     bool isPaused;
+
+    public GameObject getMenuLoadout()
+    {
+        return menuLoadout;
+    }
 
     public GameObject getPlayerSpawnPos()
     { return playerSpawnPos;}
@@ -86,6 +93,26 @@ public class gameManager : MonoBehaviour {
 
     public void setAmmoWarning(GameObject _ammoWarning)
     { ammoWarning = _ammoWarning; }
+
+    public TMP_Text getAmmoText()
+    {
+        return ammoText;
+    }
+
+    void setAmmoText(TMP_Text _ammoText)
+    {
+        ammoText = _ammoText;
+    }
+
+    public GameObject getAmmoUI()
+    {
+        return ammoUI;
+    }
+
+    void setAmmoUI(GameObject _ammoUI)
+    {
+        ammoUI = _ammoUI;
+    }
 
     public GameObject getHealthWarning() 
         { return lowHealthWarning; }
@@ -168,7 +195,6 @@ public class gameManager : MonoBehaviour {
     public void setEnemyCount(int _count)
     { enemyCount = _count; }
 
-
     /*public void setEnemyBar(Image newEnemyBar) 
         { EnemiesRemainingBar = newEnemyBar; }
 
@@ -187,7 +213,6 @@ public class gameManager : MonoBehaviour {
     public TMP_Text getEnemyRemainLabel()
     { return EnemiesRemainingLabel; }
 
-
     public void setAmmoBar(Image newAmmoBar) 
         { ammoTrackerBar = newAmmoBar; }
 
@@ -205,10 +230,9 @@ public class gameManager : MonoBehaviour {
         setPlayerScript(getPlayer().GetComponent<playerMovement>()); // setting the player script from the above player tracker script component 
         setPlayerSpawnPos(GameObject.FindWithTag("PlayerSpawnPos")); //setting player spawn position by tag
 
-        //Pausing game, hididng player background ui, and showing loadout menu
+        // Pausing game, hididng player background ui, and showing loadout menu
         
         menuActive = menuLoadout;
-        
 
     }
 
@@ -296,10 +320,14 @@ public class gameManager : MonoBehaviour {
     }
     public void displayUI(bool state)
     {
-        displayPlayerHP(state);
-        displayEnemyCount(state);
-        displayPlayerStam(state);
-        displayXPTracker(state);
+        // All of this only hides some things and not the entire thing. Refer to how the AmmoUI is hidden
+        // Unhide these after loadout is picked.
+        // Leave commented until above is addressed.
+        //displayPlayerHP(state);
+        //displayAmmoUI(state);
+        //displayEnemyCount(state);
+        //displayPlayerStam(state);
+        //displayXPTracker(state);
     }
 
     public void displayBossBar(bool state) {
@@ -311,10 +339,16 @@ public class gameManager : MonoBehaviour {
         getHPBar().gameObject.SetActive(state);
     }
 
+    public void displayAmmoUI(bool state)
+    {
+        getAmmoUI().gameObject.SetActive(state);
+    }
+
     public void displayPlayerStam(bool state) 
     {
         getStamBar().gameObject.SetActive(state);
     }
+
     public void displayXPTracker(bool state)
     {
         getXPBar().gameObject.SetActive(state);
@@ -327,14 +361,6 @@ public class gameManager : MonoBehaviour {
         
     }
 
-
-    //Uncomment and fill in when new ammo counter made
-    //public void displayAmmoCount(bool status)
-    //{
-
-    //}
-
-   
     public void settingsMenu() {
         menuActive.SetActive(false);
         menuActive = menuSettings;
@@ -374,7 +400,6 @@ public class gameManager : MonoBehaviour {
         stateUnpause();
         displayUI(true);
     }
-
 
     //still working out the null reference and the rest of how the next two functions work
 

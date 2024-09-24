@@ -113,15 +113,6 @@ public class playerMovement : MonoBehaviour, IDamage
 
     public int getAmmoOrig()
     {
-        //// Int variable to store ammo to return
-        //int _ammoOrig;
-
-        //// Check if the player has a gun first
-        //if (guns != null || guns.Count != 0)
-        //    _ammoOrig = guns[gunPos].ammoMax;
-        //else
-        //    _ammoOrig = 0;
-
         return getCurGun().ammoMax;
     }
     public float getSpeed()
@@ -190,16 +181,17 @@ public class playerMovement : MonoBehaviour, IDamage
 
     // Start is called before the first frame update
     void Start() {
-
+        // Variable Initialization
         player = this;
         HPOrig = HP;
         staminaOrig = stamina;
-        //ammoOrig = ammo;
+
+        // Update Player Information & Spawn
         updatePlayerUI();
         if (gameManager.instance.getPlayerSpawnPos() != null)
             spawnPlayer();
 
-       // upgradeMenu.upgradeUI.setVars();
+        // upgradeMenu.upgradeUI.setVars();
     }
     
     public void spawnPlayer()
@@ -512,9 +504,8 @@ public class playerMovement : MonoBehaviour, IDamage
         if (guns.Count > 0)
         {
             gameManager.instance.getAmmoBar().fillAmount = (float)getCurGun().ammoCur / getCurGun().ammoMax;
-            //gameManager.instance.getAmmoCText().text = getAmmo().ToString("F0");
-            //gameManager.instance.getAmmoMText().text = getAmmoOrig().ToString("F0");
-        } ///Please add these into gameManager later.
+            gameManager.instance.getAmmoText().text = getAmmo().ToString("F0") + " / " + getAmmoOrig().ToString("F0");
+        }
         gameManager.instance.getXPBar().fillAmount = (float)playerXP / playerXPMax;
     }
 
@@ -571,7 +562,6 @@ public class playerMovement : MonoBehaviour, IDamage
         }
         updatePlayerUI();
     }
-
 
     public void toggleSprintOn()
     {
