@@ -26,10 +26,12 @@ public class storeManager : MonoBehaviour
     // Memory
     Color healthColorOrig;
     Color ammoColorOrig;
+    bool isStoreUpdated = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Singleton instance
         instance = this;
 
         // Remember the original color of the text
@@ -39,12 +41,20 @@ public class storeManager : MonoBehaviour
 
     void Update()
     {
-        // temporary thing to check if the player has a gun
+        // Debug for now
         if (gameManager.instance.getPlayerScript().hasGun())
-            updateStoreUI(); // for now just update every frame
+            updateStoreUI();
     }
 
     // Public methods for external store functions -- these will call internal store functions as necessary
+    // Update the store UI as the player interacts with it
+    public void updateStoreUI()
+    {
+        updateCoinsDisplay();
+        updateHealthDisplay();
+        updateAmmoDisplay();
+    }
+
     // Buy Button Methods
     public void onHealthPurchase()
     {
@@ -90,16 +100,26 @@ public class storeManager : MonoBehaviour
 
         // Flash text green signaling success
         StartCoroutine(flashText(healthCostText, Color.green, healthColorOrig));
+
+        // Update UI
+        updateStoreUI();
     }
 
     void giveAmmo()
     {
-        // Give the player max ammo as per their purchase & update the UI
-        gameManager.instance.getPlayerScript().setAmmo(gameManager.instance.getPlayerScript().getAmmoOrig());
-        gameManager.instance.getPlayerScript().updatePlayerUI();
+        // Precautionary check if the player has a gun
+        if (gameManager.instance.getPlayerScript().hasGun())
+        {
+            // Give the player max ammo as per their purchase & update the UI
+            gameManager.instance.getPlayerScript().setAmmo(gameManager.instance.getPlayerScript().getAmmoOrig());
+            gameManager.instance.getPlayerScript().updatePlayerUI();
 
-        // Flash text green signaling success
-        StartCoroutine(flashText(ammoCostText, Color.green, ammoColorOrig));
+            // Flash text green signaling success
+            StartCoroutine(flashText(ammoCostText, Color.green, ammoColorOrig));
+
+            // Update UI
+            updateStoreUI();
+        }
     }
 
     // UI Display methods
@@ -125,25 +145,27 @@ public class storeManager : MonoBehaviour
 
     void updateAmmoDisplay()
     {
-        // Update the Ammo Restoration Display
-        ammoText.text = gameManager.instance.getPlayerScript().getAmmo().ToString("F0") + " > " + gameManager.instance.getPlayerScript().getAmmoOrig().ToString("F0");
+        if (gameManager.instance.getPlayerScript().hasGun())
+        {
+            // Update the Ammo Restoration Display
+            ammoText.text = gameManager.instance.getPlayerScript().getAmmo().ToString("F0") + " > " + gameManager.instance.getPlayerScript().getAmmoOrig().ToString("F0");
 
-        // Update the Ammo Cost
-        ammoCostText.text = "Cost: " + ammoCost.ToString();
+            // Update the Ammo Cost
+            ammoCostText.text = "Cost: " + ammoCost.ToString();
 
-        // Append Coin or Coins at the end
-        if (ammoCost == 1)
-            ammoCostText.text += " coin";
+            // Append Coin or Coins at the end
+            if (ammoCost == 1)
+                ammoCostText.text += " coin";
+            else
+                ammoCostText.text += " coins";
+        }
         else
-            ammoCostText.text += " coins";
-    }
-
-    // Update the store UI as the player interacts with it
-    void updateStoreUI()
-    {
-        updateCoinsDisplay();
-        updateHealthDisplay();
-        updateAmmoDisplay();
+        {
+            // Edge case
+            ammoCost = 0;
+            ammoText.text = "No Weapon";
+            ammoCostText.text = "Cost: N/A";
+        }
     }
 
     // Flash Timers -- Pass in three parameters: one for the text to flash, the color to flash it as, and the original color of the text

@@ -425,6 +425,8 @@ public class gameManager : MonoBehaviour {
 
     public void storeMenu() {
         menuActive.SetActive(false);
+        // Update the store before it is displayed
+        storeManager.instance.updateStoreUI();
         menuActive = menuStore;
         menuActive.SetActive(true);
     }
