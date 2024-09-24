@@ -196,7 +196,8 @@ public class playerMovement : MonoBehaviour, IDamage
         staminaOrig = stamina;
         ammoOrig = ammo;
         updatePlayerUI();
-        spawnPlayer();
+        if (gameManager.instance.getPlayerSpawnPos() != null)
+            spawnPlayer();
 
        // upgradeMenu.upgradeUI.setVars();
     }
@@ -262,23 +263,26 @@ public class playerMovement : MonoBehaviour, IDamage
         playerVel.y -= gravity * Time.deltaTime;
 
         // Check for Enemy (Reticle)
-        RaycastHit hit;
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, bulletDistance, ~ignoreLayer))
+        if (guns.Count > 0)
         {
-            IDamage dmg = hit.collider.GetComponent<IDamage>();
-
-            if (dmg != null)
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, bulletDistance, ~ignoreLayer))
             {
-                Vector2 dangerSize = new Vector2(15, 15);
-                gameManager.instance.changeReticle(true);
-            } 
-        }
-        else
-        {
-            gameManager.instance.changeReticle(false);
-        }
+                IDamage dmg = hit.collider.GetComponent<IDamage>();
 
-        shootGun();
+                if (dmg != null)
+                {
+                    Vector2 dangerSize = new Vector2(15, 15);
+                    gameManager.instance.changeReticle(true);
+                }
+            }
+            else
+            {
+                gameManager.instance.changeReticle(false);
+            }
+
+            shootGun();
+        }
     }
 
     void shootGun() {
@@ -581,7 +585,7 @@ public class playerMovement : MonoBehaviour, IDamage
         damage = (int)damTemp; //so then we can cast it back as an int so we aren't using decimals for damage on enemies.
         fireRate = _gun.fireRate;
         bulletDistance = _gun.bulletDist;
-        ammoOrig = _gun.ammoMax;
+        //ammoOrig = _gun.ammoMax;
         isSniper = _gun.isSniper;
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = _gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
