@@ -30,6 +30,7 @@ public class enemyAI : MonoBehaviour , IDamage
     // All value fields for enemy view and roam settings 
     [SerializeField] int viewAngle;
     [SerializeField] int roamDist;
+    [SerializeField] int roamSpeed;
     [SerializeField] int roamTimer;
 
     Vector3 startingPos;
@@ -51,7 +52,7 @@ public class enemyAI : MonoBehaviour , IDamage
     int HPOrig; // Private Tracker for enemy original HP
     Color colorOrig; // Enemy Model Original Color Private Tracker
     int bossHP; // tracks boss hp for boss fight progress bar
-
+    float OGSpeed;
     int dropRNG;
 
     // Start is called before the first frame update
@@ -60,6 +61,7 @@ public class enemyAI : MonoBehaviour , IDamage
         // Assign variables that need to be set at enemy creation
         colorOrig = model.material.color; // Sets our Models original color on scene start
         HPOrig = HP; // Set orginal hp value on scene open for enemy
+        float OGSpeed = agent.speed;
 
         // if enemy is boss original = enemy hp used for boss health progress bar
         if (type == enemyType.boss)
@@ -159,10 +161,12 @@ public class enemyAI : MonoBehaviour , IDamage
                 }
                 //reset ai stopping dist
                 agent.stoppingDistance = stoppingDistOrig;
+                agent.speed = OGSpeed;
                 return true;
             }
         }
         agent.stoppingDistance = 0;
+        agent.speed = roamSpeed;
         return false;   
     }
 
@@ -182,6 +186,7 @@ public class enemyAI : MonoBehaviour , IDamage
         if (other.CompareTag("Player")) {
             playerInRange = false;
             agent.stoppingDistance = 0;
+            agent.speed = roamSpeed;
             agent.SetDestination(lastSeenPlayerPosition); // makes the enemy "chase", goes to last location player was scene if the player runs out of his range
         }
     }
@@ -194,6 +199,7 @@ public class enemyAI : MonoBehaviour , IDamage
 
         //set agent to reach right on random spot
         agent.stoppingDistance = 0;
+        agent.speed = roamSpeed;
         Vector3 randomPos = Random.insideUnitSphere * roamDist;
         randomPos += startingPos; //adds random position to start position so that we can circle around the main start position
 

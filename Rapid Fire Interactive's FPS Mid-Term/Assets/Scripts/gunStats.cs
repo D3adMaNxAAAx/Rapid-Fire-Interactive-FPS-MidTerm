@@ -15,4 +15,5 @@ public class gunStats : ScriptableObject
     public ParticleSystem hitEffects;
     public AudioClip[] shootSound;
     public float audioVolume;
+    public bool isSniper;
 }

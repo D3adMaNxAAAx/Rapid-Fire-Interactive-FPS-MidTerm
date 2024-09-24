@@ -1916,6 +1916,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   model: {fileID: 8308164210745448961}
+  anim: {fileID: 0}
+  animSpeedTrans: 0
   agent: {fileID: 5022875280789059963}
   headPos: {fileID: 5467910972576209273}
   shootPos: {fileID: 4432241784408976627}
@@ -1923,6 +1925,7 @@ MonoBehaviour:
   ammoDrop: {fileID: 6904497920734926788, guid: 4237d6ffeea48944596bf777dda61238, type: 3}
   viewAngle: 90
   roamDist: 5
+  roamSpeed: 3
   roamTimer: 2
   HP: 15
   rangedAttack: {fileID: 1026084026005163015, guid: 17def77748eb48e4fbb847c6e03563f6, type: 3}
