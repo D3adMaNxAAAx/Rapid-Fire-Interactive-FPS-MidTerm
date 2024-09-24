@@ -179,9 +179,9 @@ public class playerMovement : MonoBehaviour, IDamage
     {
         stamina = newStamina;
     }
-    public void setCoins(int _coins)
+    public void setCoins(int newCoins)
     {
-        coins += _coins;
+        coins = newCoins;
     }
     public void setDamageMod(float newDamageMod)
     {

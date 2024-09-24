@@ -41,20 +41,70 @@ public class storeManager : MonoBehaviour
     // Buy Button Methods
     public void onHealthPurchase()
     {
-        giveHealth();
+        if (healthTransaction())
+            giveHealth();
+        else
+            StartCoroutine(flashRed());
     }
 
     public void onAmmoPurchase()
     {
-        giveAmmo();
+        if (ammoTransaction())
+            giveAmmo();
+        else
+            StartCoroutine(flashRed());
     }
 
     // Private methods for internal store functions
+    // Transaction methods for checking if player can purchase anything from the store
+    bool healthTransaction()
+    {
+        // Bool variable to store the result of the transaction
+        bool _state;
+
+        // Check if the player has enough to purchase health
+        if (gameManager.instance.getPlayerScript().getCoins() >= healthCost)
+        {
+            // Player can afford health, so charge them and return true
+            _state = true;
+            gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() - healthCost);
+        }
+        else
+        {
+            _state = false;
+        }
+
+        return _state;
+    }
+
+    bool ammoTransaction()
+    {
+        bool _state;
+
+        // Check if the player has enough to purchase ammo
+        if (gameManager.instance.getPlayerScript().getCoins() >= ammoCost)
+        {
+            // Player can afford ammo, so charge them and return true
+            _state = true;
+            gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() - ammoCost);
+        }
+        else
+        {
+            _state = false;
+        }
+
+        return _state;
+    }
+
+    // Methods to give the player what they purchased
     void giveHealth()
     {
         // Heal the player to full as per their purchase & update the UI
         gameManager.instance.getPlayerScript().setHP(gameManager.instance.getPlayerScript().getHPOrig());
         gameManager.instance.getPlayerScript().updatePlayerUI();
+
+        // Flash button green signaling success
+        StartCoroutine(flashGreen());
     }
 
     void giveAmmo()
@@ -62,8 +112,12 @@ public class storeManager : MonoBehaviour
         // Give the player max ammo as per their purchase & update the UI
         gameManager.instance.getPlayerScript().setAmmo(gameManager.instance.getPlayerScript().getAmmoOrig());
         gameManager.instance.getPlayerScript().updatePlayerUI();
+
+        // Flash button green signaling success
+        StartCoroutine(flashGreen());
     }
 
+    // UI Display methods
     void updateCoinsDisplay()
     {
         playerCoinsText.text = gameManager.instance.getPlayerScript().getCoins().ToString("F0");
@@ -82,6 +136,16 @@ public class storeManager : MonoBehaviour
             healthCostText.text += " coin";
         else
             healthCostText.text += " coins";
+    }
+
+    IEnumerator flashRed()
+    {
+        yield return new WaitForSeconds(0.5f);
+    }
+
+    IEnumerator flashGreen()
+    {
+        yield return new WaitForSeconds(0.5f);
     }
 
     void updateAmmoDisplay()
