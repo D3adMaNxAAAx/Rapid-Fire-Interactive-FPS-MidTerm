@@ -55,8 +55,9 @@ MonoBehaviour:
     m_Bits: 8
   playerShot: {fileID: 1026084026005163015, guid: 5a5514817e4d047408b83980d6775a8e, type: 3}
   HP: 100
-  speed: 10
+  speed: 8
   stamina: 50
+  coins: 0
   playerXPMax: 10
   guns: []
   gunModel: {fileID: 8347418103555859136}
@@ -64,8 +65,7 @@ MonoBehaviour:
   damage: 1
   fireRate: 0.4
   bulletDistance: 25
-  ammo: 200
-  speedMod: 3
+  speedMod: 2.5
   maxJumps: 1
   jumpSpeed: 12
   gravity: 32

@@ -5430,9 +5430,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6032842864701399304}
-        m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
-        m_MethodName: quit
+      - m_Target: {fileID: 4288367480697507125}
+        m_TargetAssemblyTypeName: loadout, Assembly-CSharp
+        m_MethodName: loadOut2
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6636,9 +6636,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7846602057115120480}
-        m_TargetAssemblyTypeName: gameManager, Assembly-CSharp
-        m_MethodName: newGame
+      - m_Target: {fileID: 4288367480697507125}
+        m_TargetAssemblyTypeName: loadout, Assembly-CSharp
+        m_MethodName: loadOut1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -11098,6 +11098,72 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &5811605723249495038
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2502681428513668765}
+  - component: {fileID: 4288367480697507125}
+  m_Layer: 5
+  m_Name: Loadout Buttons
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2502681428513668765
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5811605723249495038}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5823421247959698043}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4288367480697507125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5811605723249495038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad7c96a6ace794b4b8278de95f37670a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AR: {fileID: 11400000, guid: dd3932d08f267b146a5f51ddbf63f211, type: 2}
+  Sniper: {fileID: 11400000, guid: 0f5be7bc7ab71674c93ee013276a1646, type: 2}
+  HandCannon: {fileID: 11400000, guid: 7683dc41db60e1c4d85eb35f1c6f4a31, type: 2}
+  Knife: {fileID: 0}
+  Health1: {fileID: 0}
+  Health2: {fileID: 0}
+  Gernade1: {fileID: 0}
+  Gernade2: {fileID: 0}
+  _primaryLd1Image: {fileID: 0}
+  _secondaryLd1Image: {fileID: 0}
+  _cons1Ld1Image: {fileID: 0}
+  _cons2Ld1Image: {fileID: 0}
+  _thrwLd1Image: {fileID: 0}
+  _primaryLd2Image: {fileID: 0}
+  _secondaryLd2Image: {fileID: 0}
+  _cons1Ld2Image: {fileID: 0}
+  _cons2Ld2Image: {fileID: 0}
+  _thrwLd2Image: {fileID: 0}
 --- !u!1 &5873559288796752635
 GameObject:
   m_ObjectHideFlags: 0
@@ -13139,7 +13205,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &9207231912005533436
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13220,21 +13286,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad7c96a6ace794b4b8278de95f37670a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _primaryWeapon: {fileID: 0}
-  _secondaryWeapon: {fileID: 0}
-  _consumable: {fileID: 0}
-  _consumable2: {fileID: 0}
-  _throwable: {fileID: 0}
-  _primaryLd1: {fileID: 0}
-  _secondaryLd1: {fileID: 0}
-  _cons1Ld1: {fileID: 0}
-  _cons2Ld1: {fileID: 0}
-  _thrwLd1: {fileID: 0}
-  _primaryLd2: {fileID: 0}
-  _secondaryLd2: {fileID: 0}
-  _cons1Ld2: {fileID: 0}
-  _cons2Ld2: {fileID: 0}
-  _thrwLd2: {fileID: 0}
+  AR: {fileID: 0}
+  Sniper: {fileID: 0}
+  HandCannon: {fileID: 0}
+  Knife: {fileID: 0}
+  Health1: {fileID: 0}
+  Health2: {fileID: 0}
+  Gernade1: {fileID: 0}
+  Gernade2: {fileID: 0}
   _primaryLd1Image: {fileID: 9107939209147188249}
   _secondaryLd1Image: {fileID: 8919183420067838047}
   _cons1Ld1Image: {fileID: 5785932980559552447}
@@ -13245,10 +13304,6 @@ MonoBehaviour:
   _cons1Ld2Image: {fileID: 0}
   _cons2Ld2Image: {fileID: 0}
   _thrwLd2Image: {fileID: 0}
-  primaryWeapons: []
-  secondaryWeapons: []
-  consumables: []
-  throwables: []
 --- !u!1 &6818421450756295676
 GameObject:
   m_ObjectHideFlags: 0
@@ -14056,6 +14111,7 @@ RectTransform:
   - {fileID: 9207231912005533436}
   - {fileID: 6337239975847200675}
   - {fileID: 5617076677800864392}
+  - {fileID: 2502681428513668765}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
