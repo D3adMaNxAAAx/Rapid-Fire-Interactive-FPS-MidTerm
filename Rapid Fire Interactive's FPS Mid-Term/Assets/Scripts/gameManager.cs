@@ -229,12 +229,6 @@ public class gameManager : MonoBehaviour {
     public void setEnemyCount(int _count)
     { enemyCount = _count; }
 
-    /*public void setEnemyBar(Image newEnemyBar) 
-        { EnemiesRemainingBar = newEnemyBar; }
-
-    public Image getEnemyBar() 
-        { return EnemiesRemainingBar; }*/
-
     public void setEnemyRemainCount(TMP_Text newEnemyCount) 
         { EnemiesRemainingCount = newEnemyCount; }
 
@@ -449,11 +443,6 @@ public class gameManager : MonoBehaviour {
         loadout.instance.getCnsm1Ld1Img().gameObject.SetActive(true);
         loadout.instance.getCnsm2Ld1Img().gameObject.SetActive(true);
         loadout.instance.getThrwLd1Img().gameObject.SetActive(true);
-    }
-
-    public void loadoutPreset2Pick()
-    {
-        loadout.instance.setSelectedLoadout(loadout.instance.getPreset2());
     }*/
 
     public void backButton() {
