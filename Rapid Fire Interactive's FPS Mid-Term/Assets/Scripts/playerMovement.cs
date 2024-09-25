@@ -227,6 +227,11 @@ public class playerMovement : MonoBehaviour, IDamage
 
         if (guns.Count != 0)
             selectGun();
+
+        if (Input.GetButtonDown("ThrowGrenade"))
+        {
+            throwGrenade();
+        }
     }
 
     // Player Movement Controls
