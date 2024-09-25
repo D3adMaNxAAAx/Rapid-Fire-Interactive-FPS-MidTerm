@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class loadout : MonoBehaviour
-{
+public class loadout : MonoBehaviour {
+
+    /// need to make it so that player can't start game without selecting a weapon loadout
+
     public static loadout instance;
 
     [SerializeField] gunStats AR;

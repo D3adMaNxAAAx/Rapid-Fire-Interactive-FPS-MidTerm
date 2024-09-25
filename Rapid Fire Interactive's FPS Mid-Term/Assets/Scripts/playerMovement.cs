@@ -37,7 +37,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [Header("-- Player Weapons --")]
     [SerializeField] List<gunStats> guns;
     [SerializeField] GameObject gunModel;
-    [SerializeField] GameObject muzzleFlash;
+    [SerializeField] GameObject shotFlash;
 
     bool isSniper = false;
     [SerializeField] int damage;
@@ -377,7 +377,7 @@ public class playerMovement : MonoBehaviour, IDamage
     {
         // Set bool true at timer begin
         isShooting = true;
-
+        StartCoroutine(shotFlashTimer());
         // Play the gun's shoot sound
         aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume);
 
@@ -436,6 +436,12 @@ public class playerMovement : MonoBehaviour, IDamage
         if (((float)HP / HPOrig) < .5) { 
             StartCoroutine(noDamageTime()); // TIMER FOR WHEN PLAYER CAN START TO HEAL
         }
+    }
+
+    IEnumerator shotFlashTimer() {
+        shotFlash.SetActive(true);
+        yield return new WaitForSeconds(0.075f);
+        shotFlash.SetActive(false);
     }
 
     public void Heal() {
@@ -744,5 +750,3 @@ public class playerMovement : MonoBehaviour, IDamage
         isStepping = false;
     }
 }
-
-/// when setting damage var with gun methods, you need to add * damageUpgradeMod
