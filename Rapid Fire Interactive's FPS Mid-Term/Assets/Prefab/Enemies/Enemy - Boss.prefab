@@ -1879,7 +1879,7 @@ GameObject:
   - component: {fileID: 572825595936647740}
   m_Layer: 0
   m_Name: Enemy - Boss
-  m_TagString: Enemy
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1928,13 +1928,14 @@ MonoBehaviour:
   roamSpeed: 3
   roamTimer: 2
   HP: 15
-  rangedAttack: {fileID: 1026084026005163015, guid: 17def77748eb48e4fbb847c6e03563f6, type: 3}
-  shootRate: 0.5
-  damageFlashTimer: 1
   faceTargetSpeed: 5
   dropXP: 1
   dropCoins: 25
   rngDropRate: 0
+  rangedAttack: {fileID: 1026084026005163015, guid: 17def77748eb48e4fbb847c6e03563f6, type: 3}
+  meleeCol: {fileID: 0}
+  shootRate: 0.5
+  damageFlashTimer: 1
 --- !u!95 &2998945408075480632
 Animator:
   serializedVersion: 5

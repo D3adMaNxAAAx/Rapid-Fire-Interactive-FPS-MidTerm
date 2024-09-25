@@ -2088,7 +2088,7 @@ GameObject:
   - component: {fileID: 1520275731239686166}
   m_Layer: 0
   m_Name: Enemy - Basic
-  m_TagString: Enemy
+  m_TagString: Basic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2137,13 +2137,14 @@ MonoBehaviour:
   roamSpeed: 3
   roamTimer: 2
   HP: 5
-  rangedAttack: {fileID: 1026084026005163015, guid: 17def77748eb48e4fbb847c6e03563f6, type: 3}
-  shootRate: 0.5
-  damageFlashTimer: 1
   faceTargetSpeed: 5
   dropXP: 1
   dropCoins: 1
   rngDropRate: 30
+  rangedAttack: {fileID: 1026084026005163015, guid: 17def77748eb48e4fbb847c6e03563f6, type: 3}
+  meleeCol: {fileID: 0}
+  shootRate: 0.5
+  damageFlashTimer: 1
 --- !u!95 &3732205276819310901
 Animator:
   serializedVersion: 5
