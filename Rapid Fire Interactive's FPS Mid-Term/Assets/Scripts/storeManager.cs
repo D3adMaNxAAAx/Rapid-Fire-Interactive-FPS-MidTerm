@@ -26,7 +26,6 @@ public class storeManager : MonoBehaviour
     // Memory
     Color healthColorOrig;
     Color ammoColorOrig;
-    bool isStoreUpdated = false;
 
     // Start is called before the first frame update
     void Start()
@@ -131,7 +130,7 @@ public class storeManager : MonoBehaviour
     void updateHealthDisplay()
     {
         // Update the Health Restoration Display
-        healthText.text = gameManager.instance.getPlayerScript().getHP().ToString("F0") + " > " + gameManager.instance.getPlayerScript().getHPOrig().ToString("F0");
+        healthText.text = gameManager.instance.getPlayerScript().getHP().ToString("F0") + " >> " + gameManager.instance.getPlayerScript().getHPOrig().ToString("F0");
 
         // Update the Health Cost
         healthCostText.text = "Cost: " + healthCost.ToString();
@@ -148,7 +147,7 @@ public class storeManager : MonoBehaviour
         if (gameManager.instance.getPlayerScript().hasGun())
         {
             // Update the Ammo Restoration Display
-            ammoText.text = gameManager.instance.getPlayerScript().getAmmo().ToString("F0") + " > " + gameManager.instance.getPlayerScript().getAmmoOrig().ToString("F0");
+            ammoText.text = gameManager.instance.getPlayerScript().getAmmo().ToString("F0") + " >> " + gameManager.instance.getPlayerScript().getAmmoOrig().ToString("F0");
 
             // Update the Ammo Cost
             ammoCostText.text = "Cost: " + ammoCost.ToString();
