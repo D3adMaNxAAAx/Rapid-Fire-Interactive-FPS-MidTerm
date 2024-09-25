@@ -222,8 +222,12 @@ public class enemyAI : MonoBehaviour , IDamage
         isShooting = true;
         if (gameObject.CompareTag("Heavy"))
             anim.SetTrigger("Melee");
-        else
+        else if (gameObject.CompareTag("Basic") || gameObject.CompareTag("Light") || gameObject.CompareTag("Challenge"))
             anim.SetTrigger("Shoot");
+        else if (gameObject.CompareTag("Boss"))
+        {
+            
+        }
         if(rangedAttack != null)
         // Create our bullet and fire from the shootPos of Enemy 
             Instantiate(rangedAttack, shootPos.position, transform.rotation);

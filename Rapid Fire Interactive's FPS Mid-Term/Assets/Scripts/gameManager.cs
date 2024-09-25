@@ -361,6 +361,7 @@ public class gameManager : MonoBehaviour {
 
     public void displayBossBar(bool state) {
         getBossHP().SetActive(state);
+        getBossHPBar().enabled = state;
     }
 
     public void displayPlayerHP(bool state)
