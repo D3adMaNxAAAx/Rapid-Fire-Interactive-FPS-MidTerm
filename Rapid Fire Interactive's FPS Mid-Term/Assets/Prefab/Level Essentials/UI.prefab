@@ -948,7 +948,7 @@ GameObject:
   - component: {fileID: 6371490259339156433}
   m_Layer: 5
   m_Name: Thowable Grenade
-  m_TagString: Untagged
+  m_TagString: Loadout Preset 1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1308,7 +1308,7 @@ GameObject:
   - component: {fileID: 7703774740864992039}
   m_Layer: 5
   m_Name: Consumable 2 Preset 2 Grenade
-  m_TagString: Untagged
+  m_TagString: 'Loadout Preset 2 '
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1859,7 +1859,7 @@ GameObject:
   - component: {fileID: 2455427420748061601}
   m_Layer: 5
   m_Name: Consumable 2 Preset 1 HP Potion
-  m_TagString: Untagged
+  m_TagString: Loadout Preset 1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4277,7 +4277,7 @@ GameObject:
   - component: {fileID: 5785932980559552447}
   m_Layer: 5
   m_Name: Consumable 1 Preset 1 HP Potion
-  m_TagString: Untagged
+  m_TagString: Loadout Preset 1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5106,7 +5106,7 @@ GameObject:
   - component: {fileID: 8919183420067838047}
   m_Layer: 5
   m_Name: Secondary Preset 1
-  m_TagString: Untagged
+  m_TagString: Loadout Preset 1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5243,81 +5243,6 @@ MonoBehaviour:
   m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!1 &2219782687473183649
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2528051301315903922}
-  - component: {fileID: 4665771276989347419}
-  - component: {fileID: 1746361415902112592}
-  m_Layer: 5
-  m_Name: Buffer Timer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2528051301315903922
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2219782687473183649}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2720897971959462091}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -75.25, y: 74.5}
-  m_SizeDelta: {x: 150, y: 150}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &4665771276989347419
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2219782687473183649}
-  m_CullTransparentMesh: 1
---- !u!114 &1746361415902112592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2219782687473183649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.4901961, g: 0.34509805, b: 0.050980397, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 62b0d2017b34cdc4589689f0e2d5930c, type: 3}
-  m_Type: 3
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 1
-  m_FillAmount: 0.73
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &2305617992446141173
 GameObject:
   m_ObjectHideFlags: 0
@@ -5438,9 +5363,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4288367480697507125}
-        m_TargetAssemblyTypeName: loadout, Assembly-CSharp
-        m_MethodName: loadOut2
+      - m_Target: {fileID: 6032842864701399304}
+        m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
+        m_MethodName: quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6719,9 +6644,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4288367480697507125}
-        m_TargetAssemblyTypeName: loadout, Assembly-CSharp
-        m_MethodName: loadOut1
+      - m_Target: {fileID: 7846602057115120480}
+        m_TargetAssemblyTypeName: gameManager, Assembly-CSharp
+        m_MethodName: newGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8041,7 +7966,7 @@ GameObject:
   - component: {fileID: 6769572070196417291}
   m_Layer: 5
   m_Name: Thowable Grenade (1)
-  m_TagString: Untagged
+  m_TagString: 'Loadout Preset 2 '
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9838,7 +9763,7 @@ GameObject:
   - component: {fileID: 3310821978473457510}
   - component: {fileID: 9012581690528632138}
   m_Layer: 5
-  m_Name: Gauntlet Charge Label
+  m_Name: Ammo Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9891,7 +9816,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Gauntlet Charge
+  m_text: 'Ammo
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -11913,82 +11840,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &6212452349520974290
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2720897971959462091}
-  - component: {fileID: 5684422661494344644}
-  - component: {fileID: 2480528182310654107}
-  m_Layer: 5
-  m_Name: Buffer Timer
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2720897971959462091
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6212452349520974290}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2528051301315903922}
-  m_Father: {fileID: 5823421247959698043}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -326.875, y: 75.5}
-  m_SizeDelta: {x: 150, y: 150}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &5684422661494344644
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6212452349520974290}
-  m_CullTransparentMesh: 1
---- !u!114 &2480528182310654107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6212452349520974290}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.93710685, b: 0, a: 0.02745098}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 38dcb7de3c1a9494483e75e9f02b43d8, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &6238618805482185751
 GameObject:
   m_ObjectHideFlags: 0
@@ -13360,10 +13211,10 @@ MonoBehaviour:
   _cons2Ld1Image: {fileID: 2455427420748061601}
   _thrwLd1Image: {fileID: 6371490259339156433}
   _primaryLd2Image: {fileID: 4264927769621728536}
-  _secondaryLd2Image: {fileID: 0}
-  _cons1Ld2Image: {fileID: 0}
-  _cons2Ld2Image: {fileID: 0}
-  _thrwLd2Image: {fileID: 0}
+  _secondaryLd2Image: {fileID: 1732380186630024261}
+  _cons1Ld2Image: {fileID: 3703401263362117522}
+  _cons2Ld2Image: {fileID: 7703774740864992039}
+  _thrwLd2Image: {fileID: 6371490259339156433}
 --- !u!1 &6818421450756295676
 GameObject:
   m_ObjectHideFlags: 0
@@ -14309,7 +14160,6 @@ RectTransform:
   - {fileID: 8018483122246438080}
   - {fileID: 7542592411194093230}
   - {fileID: 146958364178761562}
-  - {fileID: 2720897971959462091}
   - {fileID: 6407625075338342148}
   - {fileID: 6669856371051650523}
   - {fileID: 6621798095331830031}
@@ -14607,7 +14457,7 @@ GameObject:
   - component: {fileID: 3491454858156651257}
   - component: {fileID: 4636857885402996098}
   m_Layer: 5
-  m_Name: Gauntlet Charge
+  m_Name: Ammo Count Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15106,7 +14956,7 @@ GameObject:
   - component: {fileID: 3478402805578611453}
   - component: {fileID: 4821608183998799527}
   m_Layer: 5
-  m_Name: Gauntlet Charge
+  m_Name: Ammo Count Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18152,7 +18002,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7781712206419638315}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4288367480697507125}
+        m_TargetAssemblyTypeName: loadout, Assembly-CSharp
+        m_MethodName: loadOut2
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &9103762494932088395
 GameObject:
   m_ObjectHideFlags: 0
@@ -18407,9 +18269,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7846602057115120480}
-        m_TargetAssemblyTypeName: gameManager, Assembly-CSharp
-        m_MethodName: loadoutPreset1Pick
+      - m_Target: {fileID: 4288367480697507125}
+        m_TargetAssemblyTypeName: loadout, Assembly-CSharp
+        m_MethodName: loadOut1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
