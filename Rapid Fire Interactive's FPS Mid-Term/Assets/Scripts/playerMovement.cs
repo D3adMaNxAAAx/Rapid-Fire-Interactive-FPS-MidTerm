@@ -670,18 +670,22 @@ public class playerMovement : MonoBehaviour, IDamage
     }
     void throwGrenade()
     {
-        if(totalGrenades < 0)
+        if (grenade == null)
+        {
+            grenade = grenadeStats.grenadeModel;
+        }
+        if (totalGrenades > 0)
         {
             GameObject grenadeInstance = Instantiate(grenade, transform.position + transform.forward, Quaternion.identity);
 
             Rigidbody rb = grenadeInstance.GetComponent<Rigidbody>(); //throw force 
-            if(rb != null)
+            if (rb != null)
             {
-                rb.AddForce(transform.forward * grenadeStats.throwForce, ForceMode.VelocityChange);
+                rb.AddForce(Camera.main.transform.forward * grenadeStats.throwForce, ForceMode.VelocityChange);
             }
-           
+
             StartCoroutine(HandelGrenadeExplosion(grenadeInstance));// start explosion count down 
-            
+
             totalGrenades--;
         }
     }
