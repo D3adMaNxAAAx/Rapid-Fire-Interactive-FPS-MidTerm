@@ -271,6 +271,7 @@ public class gameManager : MonoBehaviour {
         {
             if (Input.GetButtonDown("Cancel"))
             { // When ESC clicked
+                scopeZoomOut();
                 if (menuActive == null)
                 {
 
@@ -472,4 +473,20 @@ public class gameManager : MonoBehaviour {
             menuActive = null;
         }
     }
+    public void scopeZoomIn() {
+        if (menuActive == null) { // won't work if there is a menu active
+            menuActive = sniperScope;
+            getPlayerScript().getGunModel().SetActive(false);
+            getSniperScope().SetActive(true);
+        }
+    }
+
+    public void scopeZoomOut() {
+        if (menuActive == sniperScope) {
+            menuActive = null;
+            getPlayerScript().getGunModel().SetActive(true);
+            getSniperScope().SetActive(false);
+        }
+    }
+
 }

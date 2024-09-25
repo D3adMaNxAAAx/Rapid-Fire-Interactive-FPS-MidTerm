@@ -118,21 +118,22 @@ public class CameraMovement : MonoBehaviour
 
         //AimLogic
         if (Input.GetMouseButton(1)) {
-            isAiming = true;
-            if (gameManager.instance.getPlayerScript().getIsSniper() == false) {
-                if (snapZoom) {
-                    cam.fieldOfView = aimingFOV; //if snap Zoom Enabled zoom instantly
+            if (gameManager.instance.getPauseStatus() == false) {
+                isAiming = true;
+                if (gameManager.instance.getPlayerScript().getIsSniper() == false) {
+                    if (snapZoom) {
+                        cam.fieldOfView = aimingFOV; //if snap Zoom Enabled zoom instantly
+                    }
+                    else {
+                        //if snap zoom not enabled, smooth zoom;
+                        cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, aimingFOV, zoomSpeed * Time.deltaTime);
+                    }
                 }
-                else {
-                    //if snap zoom not enabled, smooth zoom;
-                    cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, aimingFOV, zoomSpeed * Time.deltaTime);
+                else { // sniper zoom
+                    cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, 20, 999);
+                    sens = zoomSens;
+                    gameManager.instance.scopeZoomIn();
                 }
-            }
-            else { // sniper zoom
-                cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, 20, 999);
-                sens = zoomSens;
-                gameManager.instance.getPlayerScript().getGunModel().SetActive(false);
-                gameManager.instance.getSniperScope().SetActive(true);
             }
         }
         else {
@@ -145,8 +146,7 @@ public class CameraMovement : MonoBehaviour
                 cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, normalFOV, zoomSpeed * Time.deltaTime);
             }
             sens = startingSens;
-            gameManager.instance.getPlayerScript().getGunModel().SetActive(true);
-            gameManager.instance.getSniperScope().SetActive(false);
+            gameManager.instance.scopeZoomOut();
         }
     }
 
