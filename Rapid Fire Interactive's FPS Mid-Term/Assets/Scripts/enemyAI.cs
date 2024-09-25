@@ -7,12 +7,14 @@ using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour , IDamage
 {
-    // -- Enemy Information --
+
+    
     [SerializeField] enum enemyType { basic, challenge, boss } // Allows selection of enemy type
+    [Header("----- Components -----")]
     [SerializeField] enemyType type; // Tracks which type of enemy in play
     [SerializeField] Renderer model; // Allows Designer Communication to Model's Renderer
     [SerializeField] Animator anim; //Sets animation animator controller
-    [SerializeField] int animSpeedTrans;
+    [Range(1,20)][SerializeField] int animSpeedTrans;
     [SerializeField] NavMeshAgent agent; // Allows Designer Communication To NavMeshAgent Component 
     [SerializeField] Transform headPos; // Enemy Head Position Tracker(Line Of Sight) For Designer
     [SerializeField] Transform shootPos; // Enemy SHoot Point Origin Tracker For Designer
@@ -26,29 +28,32 @@ public class enemyAI : MonoBehaviour , IDamage
     Vector3 playerDir; // Tracks player Direction for AI rotation and player in range
     Vector3 spawnPos;
     Vector3 lastSeenPlayerPosition;
-
+    [Header("----- Roam -----")]
     // All value fields for enemy view and roam settings 
-    [SerializeField] int viewAngle;
-    [SerializeField] int roamDist;
-    [SerializeField] int roamSpeed;
-    [SerializeField] int roamTimer;
+    [Range(1, 359)][SerializeField] int viewAngle;
+    [Range(1, 100)][SerializeField] int roamDist;
+    [Range(0, 180)][SerializeField] int roamSpeed;
+    [Range(1, 180)][SerializeField] int roamTimer;
 
     Vector3 startingPos;
     bool isRoaming; // Tracks if enemy is roaming 
     float angleToPlayer;
     float stoppingDistOrig;
     Coroutine aCoRoutine;
-
+    [Header("----- Stats -----")]
     // -- Attributes --
-    [SerializeField] int HP; // Health Points Tracker and Modifier Field For Designer
+    [Range(1, 300)][SerializeField] int HP; // Health Points Tracker and Modifier Field For Designer
+
+    [Range(1, 30)][SerializeField] int faceTargetSpeed; // Sets enemy rotation look speed for turning towards enemy look direction
+    [Range(1, 1000)][SerializeField] int dropXP; // How much XP enemy drops
+    [Range(1, 1000)][SerializeField] int dropCoins; // How many coins enemy drops
+    [Range(0,100)][SerializeField] int rngDropRate;
+
+    [Header("----- Attack -----")]
     [SerializeField] GameObject rangedAttack; // Bullet Object Tracker and Communication Field For Designer
-    [SerializeField] float shootRate; // Enemy Fire Rate Modifier Field For Designer
-    [SerializeField] float damageFlashTimer; // Allows Designer To Set Damage Flash Timer 
-    [SerializeField] int faceTargetSpeed; // Sets enemy rotation look speed for turning towards enemy look direction
-    [SerializeField] int dropXP; // How much XP enemy drops
-    [SerializeField] int dropCoins; // How many coins enemy drops
-    [Range(0,100)]
-    [SerializeField] int rngDropRate;
+    [SerializeField] GameObject meleeAttack;
+    [Range(.01f, 100)][SerializeField] float shootRate; // Enemy Fire Rate Modifier Field For Designer
+    [Range(.01f, 30)][SerializeField] float damageFlashTimer; // Allows Designer To Set Damage Flash Timer 
     int HPOrig; // Private Tracker for enemy original HP
     Color colorOrig; // Enemy Model Original Color Private Tracker
     int bossHP; // tracks boss hp for boss fight progress bar
