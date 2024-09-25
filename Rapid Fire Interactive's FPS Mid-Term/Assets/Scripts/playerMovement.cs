@@ -17,12 +17,15 @@ public class playerMovement : MonoBehaviour, IDamage
 
     // -----MODIFIABLE VARIABLES-----
     // Unity object fields
+    [Header("-- Player Components --")]
     [SerializeField] CharacterController controller;
+    [SerializeField] AudioSource aud; // Audio controller for the player
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] GameObject playerShot;
 
     // Player modifiers
     // -- Attributes --
+    [Header("-- Player Attributes --")]
     [SerializeField] int HP;
     [SerializeField] float speed;
     [SerializeField] int stamina;
@@ -31,6 +34,7 @@ public class playerMovement : MonoBehaviour, IDamage
     float damageUpgradeMod = 1;  // keep set = to 1, so damage can be upgraded (can just change damage var because it changes when swapping guns)
 
     // Player Default Weapon Mods
+    [Header("-- Player Weapons --")]
     [SerializeField] List<gunStats> guns;
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject muzzleFlash;
@@ -46,6 +50,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] int totalGrenades = 3;
 
     // -- Movement --
+    [Header("-- Player Movement --")]
     [SerializeField] float speedMod;
     [SerializeField] int maxJumps;
     [SerializeField] int jumpSpeed;
@@ -55,6 +60,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] bool toggleSprint;   //Turns sprint on or off
 
     // -- Timer --
+    [Header("-- Timers --")]
     [SerializeField] float dmgFlashTimer;
     [SerializeField] float ammoWarningTimer;
 
@@ -371,13 +377,11 @@ public class playerMovement : MonoBehaviour, IDamage
     // Shoot Timer
     IEnumerator shoot()
     {
-        //Set bool true at timer begin
+        // Set bool true at timer begin
         isShooting = true;
 
-        // Decrement ammo count
-        //ammo--; // This doesn't need to be here now, but before it did, because when you shot you would want to decriment the amount of bullets when you shoot wether or not you hit something
-        //but now it's not necessary because we also need to check wether or not we are clicking a button with our raycast, although I would like to see if we can change that to an "interact" button. 
-        ///Reminder: remove this in a couple of days.
+        // Play the gun's shoot sound
+        aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume);
 
         //Create Raycast
         RaycastHit hit;

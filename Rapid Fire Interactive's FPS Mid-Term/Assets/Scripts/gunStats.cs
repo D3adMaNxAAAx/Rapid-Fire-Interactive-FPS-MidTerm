@@ -6,15 +6,17 @@ using UnityEngine;
 
 public class gunStats : ScriptableObject
 {
+    // -- Gun Attributes --
     public GameObject gunModel;
+    public int damage;
     public float fireRate;
     public float bulletDist;
-    public int damage;
-    public int ammoCur;
-    public int ammoMax;
+    public int ammoCur, ammoMax;
+    public bool isSniper;
+    public bool isAutomatic;
+
+    // -- Gun Visuals --
     public ParticleSystem hitEffects;
     public AudioClip[] shootSound;
     public float audioVolume;
-    public bool isSniper;
-    public bool isAutomatic;
 }
