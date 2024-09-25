@@ -41,8 +41,8 @@ public class storeManager : MonoBehaviour
     void Update()
     {
         // Debug for now
-        if (gameManager.instance.getPlayerScript().hasGun())
-            updateStoreUI();
+        //if (gameManager.instance.getPlayerScript().hasGun())
+        //    updateStoreUI();
     }
 
     // Public methods for external store functions -- these will call internal store functions as necessary
@@ -57,37 +57,49 @@ public class storeManager : MonoBehaviour
     // Buy Button Methods
     public void onHealthPurchase()
     {
-        if (tryTransaction(healthCost))
+        // Check if player can afford health
+        if (canAfford(healthCost))
+        {
+            // Player can, so make transaction and give health.
+            makeTransaction(healthCost);
             giveHealth();
-        else
-            // If the transaction fails, flash text red.
-            StartCoroutine(flashText(healthCostText, Color.red, healthColorOrig));
+        }
+        
+        // else transaction failed
     }
 
     public void onAmmoPurchase()
     {
-        if (tryTransaction(ammoCost))
+        // Check if player can afford ammo
+        if (canAfford(ammoCost))
+        {
+            // Player can, so make transaction and give health.
+            makeTransaction(ammoCost);
             giveAmmo();
-        else
-            // If the transaction fails, flash text red.
-            StartCoroutine(flashText(ammoCostText, Color.red, ammoColorOrig));
+        }
+        
+        // else transaction failed
     }
 
     // Private methods for internal store functions
     // Transaction method for checking if player can purchase anything from the store, taking in a cost.
-    bool tryTransaction(int _cost)
+    bool canAfford(int _cost)
     {
         bool _state;
 
         // Check if the player has enough to make the purchase
         if (gameManager.instance.getPlayerScript().getCoins() >= _cost)
-        {
-            // Player can afford the purchase, so charge them and return true
-            _state = true;
-            gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() - _cost);
-        } else { _state = false; }
+            _state = true; // Player can afford the purchase, return true
+        else _state = false;
 
         return _state;
+    }
+
+    void makeTransaction(int _cost)
+    {
+        // Designated function just in case transactions may be more deliberate
+        // Method is called if canAfford returns true so player can afford something
+       gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() - _cost);
     }
 
     // Methods to give the player what they purchased
@@ -96,9 +108,6 @@ public class storeManager : MonoBehaviour
         // Heal the player to full as per their purchase & update the UI
         gameManager.instance.getPlayerScript().setHP(gameManager.instance.getPlayerScript().getHPOrig());
         gameManager.instance.getPlayerScript().updatePlayerUI();
-
-        // Flash text green signaling success
-        StartCoroutine(flashText(healthCostText, Color.green, healthColorOrig));
 
         // Update UI
         updateStoreUI();
@@ -112,9 +121,6 @@ public class storeManager : MonoBehaviour
             // Give the player max ammo as per their purchase & update the UI
             gameManager.instance.getPlayerScript().setAmmo(gameManager.instance.getPlayerScript().getAmmoOrig());
             gameManager.instance.getPlayerScript().updatePlayerUI();
-
-            // Flash text green signaling success
-            StartCoroutine(flashText(ammoCostText, Color.green, ammoColorOrig));
 
             // Update UI
             updateStoreUI();
@@ -140,6 +146,12 @@ public class storeManager : MonoBehaviour
             healthCostText.text += " coin";
         else
             healthCostText.text += " coins";
+
+        // Color the cost text green/red depending on if the player can afford it
+        if (canAfford(healthCost))
+            healthCostText.color = Color.green;
+        else
+            healthCostText.color = Color.red;
     }
 
     void updateAmmoDisplay()
@@ -157,6 +169,12 @@ public class storeManager : MonoBehaviour
                 ammoCostText.text += " coin";
             else
                 ammoCostText.text += " coins";
+
+            // Color the cost text green/red depending on if the player can afford it
+            if (canAfford(ammoCost))
+                ammoCostText.color = Color.green;
+            else
+                ammoCostText.color = Color.red;
         }
         else
         {
@@ -164,14 +182,8 @@ public class storeManager : MonoBehaviour
             ammoCost = 0;
             ammoText.text = "No Weapon";
             ammoCostText.text = "Cost: N/A";
+            ammoText.color = Color.red;
+            ammoCostText.color = Color.red;
         }
-    }
-
-    // Flash Timers -- Pass in three parameters: one for the text to flash, the color to flash it as, and the original color of the text
-    IEnumerator flashText(TMP_Text _text, Color _flashColor, Color _origColor)
-    {
-        _text.color = _flashColor;
-        yield return new WaitForSeconds(flashMod);
-        _text.color = _origColor;
     }
 }
