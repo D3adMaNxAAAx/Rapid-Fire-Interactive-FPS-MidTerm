@@ -19,7 +19,7 @@ public class buttonFunctions : MonoBehaviour {
     }
 
     public void onUpgradeMenu() {
-        gameManager.instance.upgradeMenu();
+        gameManager.instance.openUpgradeMenu();
     }
 
     public void continueGame() {

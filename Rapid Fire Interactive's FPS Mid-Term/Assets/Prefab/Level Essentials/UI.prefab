@@ -11198,7 +11198,7 @@ GameObject:
   - component: {fileID: 2502681428513668765}
   - component: {fileID: 4288367480697507125}
   m_Layer: 5
-  m_Name: Loadout Buttons
+  m_Name: Loadout Script
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11238,11 +11238,11 @@ MonoBehaviour:
   AR: {fileID: 11400000, guid: dd3932d08f267b146a5f51ddbf63f211, type: 2}
   Sniper: {fileID: 11400000, guid: 0f5be7bc7ab71674c93ee013276a1646, type: 2}
   HandCannon: {fileID: 11400000, guid: 7683dc41db60e1c4d85eb35f1c6f4a31, type: 2}
-  Knife: {fileID: 0}
+  Pistol: {fileID: 11400000, guid: 048919107d27e9d4fac910c37b3a4fe7, type: 2}
   Health1: {fileID: 0}
   Health2: {fileID: 0}
-  Gernade1: {fileID: 0}
-  Gernade2: {fileID: 0}
+  Gernade1: {fileID: 11400000, guid: 97ba14f077da2264bb4743fc5222a169, type: 2}
+  Gernade2: {fileID: 11400000, guid: 97ba14f077da2264bb4743fc5222a169, type: 2}
   _primaryLd1Image: {fileID: 0}
   _secondaryLd1Image: {fileID: 0}
   _cons1Ld1Image: {fileID: 0}
@@ -13265,7 +13265,7 @@ MonoBehaviour:
   AR: {fileID: 0}
   Sniper: {fileID: 0}
   HandCannon: {fileID: 0}
-  Knife: {fileID: 0}
+  Pistol: {fileID: 0}
   Health1: {fileID: 0}
   Health2: {fileID: 0}
   Gernade1: {fileID: 0}

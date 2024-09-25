@@ -411,10 +411,12 @@ public class gameManager : MonoBehaviour {
         displayBossBar(true);
     }
 
-    public void upgradeMenu() {
+    public void openUpgradeMenu() {
         menuActive.SetActive(false);
         menuActive = menuUpgrade;
         menuActive.SetActive(true);
+        upgradeMenu.upgradeUI.setVars();
+        /// this needs to be called somewhere around boss battle!!!
     }
 
     public void storeMenu() {

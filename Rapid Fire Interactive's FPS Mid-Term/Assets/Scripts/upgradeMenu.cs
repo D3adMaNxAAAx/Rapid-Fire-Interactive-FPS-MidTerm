@@ -25,8 +25,7 @@ public class upgradeMenu : MonoBehaviour {
     float speed;
     int stamina;
 
-    // Start is called before the first frame update
-    void Start() {
+    void Start() { 
         upgradeUI = this;
     }
 

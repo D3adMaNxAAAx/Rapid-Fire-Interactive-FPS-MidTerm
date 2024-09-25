@@ -192,7 +192,6 @@ public class playerMovement : MonoBehaviour, IDamage
         if (gameManager.instance.getPlayerSpawnPos() != null)
             spawnPlayer();
 
-        upgradeMenu.upgradeUI.setVars();
     }
     
     public void spawnPlayer()
