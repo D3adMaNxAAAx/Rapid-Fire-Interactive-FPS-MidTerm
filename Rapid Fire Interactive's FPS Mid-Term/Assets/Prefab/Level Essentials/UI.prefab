@@ -6132,7 +6132,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 10.035744, y: 20.300049}
+  m_AnchoredPosition: {x: 10, y: 28}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1620057026118589002
@@ -11777,7 +11777,20 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 937c333b0582b5f44b16fd5c5fc0f82a, type: 3}
   - {fileID: 8300000, guid: 39218290bffa652459a798f11695e77a, type: 3}
   - {fileID: 8300000, guid: d214ed240307a75428479907e2e0ddc9, type: 3}
+  audJump:
+  - {fileID: 8300000, guid: 0dfac468a5b6f0d4882333851bf9c958, type: 3}
+  - {fileID: 8300000, guid: f948363e9e88d704a8d63296be897ece, type: 3}
+  - {fileID: 8300000, guid: 90fc50aa69dc5d64598b62bb9c9695ab, type: 3}
+  audHurt:
+  - {fileID: 8300000, guid: c947e4182dbee5343b792845e26435e1, type: 3}
+  - {fileID: 8300000, guid: 95fe13b522733ae48be2c0a66fac680c, type: 3}
+  - {fileID: 8300000, guid: 558d4c916cef8ea4189aa98e7cb6ec17, type: 3}
+  - {fileID: 8300000, guid: 437e7473eab454548acf9d7416f8b2d2, type: 3}
+  - {fileID: 8300000, guid: 56ac4585f1d6aa44e8e4b49cccdfb8f1, type: 3}
+  - {fileID: 8300000, guid: e7443484e9e5b7e43809b7913a755517, type: 3}
   audStepVol: 0.1
+  audJumpVol: 0.5
+  audHurtVol: 0.35
   audEnemySteps: []
   audEnemyStepVol: 0.5
   audHeal: {fileID: 0}
