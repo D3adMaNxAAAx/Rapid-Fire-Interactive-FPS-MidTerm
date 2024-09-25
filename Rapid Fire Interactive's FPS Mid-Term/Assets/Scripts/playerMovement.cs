@@ -321,23 +321,27 @@ public class playerMovement : MonoBehaviour, IDamage
     // Sprint Movement Func
     void sprint()
     {
-        // Check if the player has stamina to sprint
-        if(Input.GetButtonDown("Sprint") && stamina > 0)
+        if (controller.isGrounded)
         {
-            speed *= speedMod;
-            isSprinting = true;
-        } else if (stamina <= 0 && isSprinting)
-        {
-            // Stop sprinting if shift is up or player doesn't have stamina.
-            speed /= speedMod;
-            isSprinting = false;
-        } 
-        else if (Input.GetButtonUp("Sprint") && isSprinting)
-        {
-            // This is a preventative measure for a bug that permanently decreases the player speed if
-            // they run out of stamina while running and let go of shift.
-            speed /= speedMod;
-            isSprinting = false;
+            // Check if the player has stamina to sprint
+            if (Input.GetButtonDown("Sprint") && stamina > 0)
+            {
+                speed *= speedMod;
+                isSprinting = true;
+            }
+            else if (stamina <= 0 && isSprinting)
+            {
+                // Stop sprinting if shift is up or player doesn't have stamina.
+                speed /= speedMod;
+                isSprinting = false;
+            }
+            else if (Input.GetButtonUp("Sprint") && isSprinting)
+            {
+                // This is a preventative measure for a bug that permanently decreases the player speed if
+                // they run out of stamina while running and let go of shift.
+                speed /= speedMod;
+                isSprinting = false;
+            }
         }
     }
 
