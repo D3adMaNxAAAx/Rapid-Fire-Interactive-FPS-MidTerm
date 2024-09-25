@@ -49,6 +49,12 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] GrenadeStats grenadeStats;
     [SerializeField] int totalGrenades = 3;
 
+    //player heals 
+    [SerializeField] HealStats healItem;
+    [SerializeField] int healItemCount = 3;
+    [SerializeField] float healCoolDown = 5f;
+
+
     // -- Movement --
     [Header("-- Player Movement --")]
     [SerializeField] float speedMod;
@@ -91,7 +97,7 @@ public class playerMovement : MonoBehaviour, IDamage
     bool readyToHeal = false;
     bool stopHealing = false; // was the player damaged while healing?
     bool onDashCooldown = false;
-
+    bool isHealing;
     // Start is called before the first frame update
     void Start() {
         // Variable Initialization
@@ -125,10 +131,19 @@ public class playerMovement : MonoBehaviour, IDamage
         if (guns.Count != 0)
             selectGun();
 
-        if (Input.GetButtonDown("ThrowGrenade"))
+        if (Input.GetButtonDown("ThrowGrenade") && totalGrenades > 0)
         {
             throwGrenade();
         }
+        if (Input.GetButtonDown("Heal Item") && healItemCount > 0 && healCoolDown <= 0f && !isHealing)
+        {
+            StartCoroutine(HealPlayer());
+        }
+        if(healCoolDown > 0f)
+        {
+            healCoolDown -= Time.deltaTime;
+        }
+
     }
 
     public void spawnPlayer()
@@ -599,6 +614,26 @@ public class playerMovement : MonoBehaviour, IDamage
         }
 
         Destroy(grenadeInstance);
+    }
+
+    IEnumerator HealPlayer()
+    {
+        isHealing = true;
+
+        HP = Mathf.Min(HP + healItem.healAmmount,HPOrig);
+        healItemCount--;
+
+        if(healItem.healSound != null)
+        {
+            AudioSource.PlayClipAtPoint(healItem.healSound, transform.position);
+        }
+        updatePlayerUI();
+
+        yield return new WaitForSeconds(healItem.healCoolDown);
+       
+        isHealing = false;
+
+        healCoolDown = healItem.healCoolDown;
     }
 
     // temporary check if the player has a gun -- can remove later, using for debug purposes
