@@ -41,6 +41,9 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] float bulletDistance;
     //[SerializeField] int ammo;
     //[SerializeField] float bulletSpeed; //Is here if we wanna change to use bullets
+    [SerializeField] GameObject grenade;
+    [SerializeField] GrenadeStats grenadeStats;
+    [SerializeField] int totalGrenades = 3;
 
     // -- Movement --
     [SerializeField] float speedMod;
@@ -655,6 +658,50 @@ public class playerMovement : MonoBehaviour, IDamage
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = getCurGun().gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = getCurGun().gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+    void throwGrenade()
+    {
+        if(totalGrenades < 0)
+        {
+            GameObject grenadeInstance = Instantiate(grenade, transform.position + transform.forward, Quaternion.identity);
+
+            Rigidbody rb = grenadeInstance.GetComponent<Rigidbody>(); //throw force 
+            if(rb != null)
+            {
+                rb.AddForce(transform.forward * grenadeStats.throwForce, ForceMode.VelocityChange);
+            }
+           
+            StartCoroutine(HandelGrenadeExplosion(grenadeInstance));// start explosion count down 
+            
+            totalGrenades--;
+        }
+    }
+
+    IEnumerator HandelGrenadeExplosion(GameObject grenadeInstance)
+    {
+        yield return new WaitForSeconds(grenadeStats.explosionDelay); //explosion delay
+
+        if(grenadeStats.explosionEffect != null) // trigger explosion effect
+        {
+            Instantiate(grenadeStats.explosionEffect,grenadeInstance.transform.position, Quaternion.identity);
+        }
+       
+        Collider[] colliders = Physics.OverlapSphere(grenadeInstance.transform.position,grenadeStats.explosionRadius); // damage thing around in explosion
+        foreach(Collider nearbyObject in colliders)
+        {
+            IDamage damageable = nearbyObject.GetComponent<IDamage>();
+            if(damageable != null)
+            {
+                damageable.takeDamage(grenadeStats.explosionDamage);
+            }
+        }
+
+        if(grenadeStats.explosionSound != null) // play explosion sound
+        {
+            AudioSource.PlayClipAtPoint(grenadeStats.explosionSound,grenadeInstance.transform.position);
+        }
+
+        Destroy(grenadeInstance);
     }
 
     // temporary check if the player has a gun -- can remove later, using for debug purposes
