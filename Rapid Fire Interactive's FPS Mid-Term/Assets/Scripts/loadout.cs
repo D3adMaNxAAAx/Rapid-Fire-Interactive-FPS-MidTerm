@@ -153,16 +153,27 @@ public class loadout : MonoBehaviour
         /*playerMovement.player.getGunStats(Gernade1);
         playerMovement.player.getGunStats(Health1);
         playerMovement.player.getGunStats(Health2);*/
-        gameManager.instance.stateUnpause();
+        getPrmLd1Img().gameObject.SetActive(true);
+        getSecLd1Img().gameObject.SetActive(true);
+        getCnsm1Ld1Img().gameObject.SetActive(true);
+        getCnsm2Ld1Img().gameObject.SetActive(true);
+        getThrwLd1Img().gameObject.SetActive(true);
+
     }
 
     public void loadOut2() {
         playerMovement.player.getGunStats(Sniper);
+
+        getPrmLd2Img().gameObject.SetActive(true);
+        getSecLd2Img().gameObject.SetActive(true);
+        getCnsm1Ld2Img().gameObject.SetActive(true);
+        getCnsm2Ld2Img().gameObject.SetActive(true);
+        getThrwLd2Img().gameObject.SetActive(true);
         //playerMovement.player.getGunStats(Knife);
         /*playerMovement.player.getGunStats(Gernade1);
         playerMovement.player.getGunStats(Gernade2);
         playerMovement.player.getGunStats(Health1);*/
-        gameManager.instance.stateUnpause();
+       
     }
 
     //click on the primary weapon slot
