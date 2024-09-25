@@ -8,22 +8,28 @@ public class audioManager : MonoBehaviour
     public static audioManager instance; // Singleton
 
     [Header("-- Player Sounds --")]
-    [SerializeField] AudioClip[] playerSteps;
+    [SerializeField] public AudioClip[] audSteps;
 
     [Header("-- Player Volume --")]
-    [Range(0,1)] [SerializeField] float playerStepVol;
+    [Range(0,1)] [SerializeField] public float audStepVol;
 
     [Header("-- Enemy Sounds --")]
-    [SerializeField] AudioClip[] enemySteps;
+    [SerializeField] public AudioClip[] audEnemySteps;
 
     [Header("-- Enemy Volume --")]
-    [Range(0, 1)] [SerializeField] float enemyStepVol;
+    [Range(0, 1)] [SerializeField] public float audEnemyStepVol;
+
+    [Header("-- Game Sounds --")]
+    [SerializeField] public AudioClip audHeal;
+
+    [Header("-- Game Volume --")]
+    [Range(0, 1)] [SerializeField] public float audHealVol;
 
     [Header("-- UI Sounds --")]
-    [SerializeField] AudioClip buttonClick;
+    [SerializeField] public AudioClip audButtonClick;
 
     [Header("-- UI Volume --")]
-    [Range(0, 1)][SerializeField] float buttonClickVol;
+    [Range(0, 1)] [SerializeField] public float audButtonClickVol;
 
     void Start()
     {

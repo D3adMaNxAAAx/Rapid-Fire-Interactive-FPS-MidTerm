@@ -84,6 +84,7 @@ public class playerMovement : MonoBehaviour, IDamage
     // Checks
     bool isSprinting;
     bool isShooting;
+    bool isStepping;
     bool isDraining; // To check if the player is currently losing stamina
     bool isRecovering; // To check if the player is currently recovering stamina
     bool lowHealth = false;
@@ -102,15 +103,6 @@ public class playerMovement : MonoBehaviour, IDamage
     }
     public int getAmmo()
     {
-        //// Int variable to store ammo to return
-        //int _ammo;
-        
-        //// Check if the player has a gun first
-        //if (guns != null || guns.Count != 0)
-        //    _ammo = guns[gunPos].ammoCur;
-        //else
-        //    _ammo = 0;
-
         return getCurGun().ammoCur;
     }
     public bool getIsSniper() {
@@ -289,6 +281,11 @@ public class playerMovement : MonoBehaviour, IDamage
 
             shootGun();
         }
+
+        // Play footsteps as the player moves on the ground
+        // Need additional checks to make sure sound isn't funky & only plays when the player is on the ground.
+        if (controller.isGrounded && moveDir.magnitude > 0.3f && !isStepping)
+            StartCoroutine(playFootsteps());
     }
 
     void shootGun() {
@@ -327,8 +324,10 @@ public class playerMovement : MonoBehaviour, IDamage
     // Sprint Movement Func
     void sprint()
     {
-        if (controller.isGrounded)
-        {
+        // TODO: Make sprinting only happen on the ground. I commented out the check for the isGrounded because this
+        // is still buggy & needs to be properly implemented into the checks. Ask Adam for help?
+        //if (controller.isGrounded)
+        //{
             // Check if the player has stamina to sprint
             if (Input.GetButtonDown("Sprint") && stamina > 0)
             {
@@ -348,7 +347,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 speed /= speedMod;
                 isSprinting = false;
             }
-        }
+        //}
     }
 
     IEnumerator Dash() {
@@ -728,6 +727,22 @@ public class playerMovement : MonoBehaviour, IDamage
             return true;
         else
             return false;
+    }
+
+    IEnumerator playFootsteps()
+    {
+        isStepping = true;
+
+        // Play step sound
+        aud.PlayOneShot(audioManager.instance.audSteps[Random.Range(0, audioManager.instance.audSteps.Length)], audioManager.instance.audStepVol);
+
+        // Check if the player is sprinting and play the sound faster if so
+        if (!isSprinting)
+            yield return new WaitForSeconds(0.5f);
+        else
+            yield return new WaitForSeconds(0.3f);
+
+        isStepping = false;
     }
 }
 
