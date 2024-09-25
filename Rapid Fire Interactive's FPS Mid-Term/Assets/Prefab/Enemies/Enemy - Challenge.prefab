@@ -2078,13 +2078,14 @@ MonoBehaviour:
   roamSpeed: 4
   roamTimer: 3
   HP: 10
-  rangedAttack: {fileID: 1026084026005163015, guid: 9cf944e79bfcf2d4a86117ea6e5ed04e, type: 3}
-  shootRate: 1.5
-  damageFlashTimer: 1
   faceTargetSpeed: 10
-  dropXP: 0
+  dropXP: 1
   dropCoins: 10
   rngDropRate: 0
+  rangedAttack: {fileID: 1026084026005163015, guid: 9cf944e79bfcf2d4a86117ea6e5ed04e, type: 3}
+  meleeCol: {fileID: 0}
+  shootRate: 1.5
+  damageFlashTimer: 1
 --- !u!95 &8163225788725298743
 Animator:
   serializedVersion: 5
@@ -2125,7 +2126,7 @@ NavMeshAgent:
   m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
-  m_BaseOffset: 0.83
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!136 &1438525546929778986
