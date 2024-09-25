@@ -147,17 +147,22 @@ public class loadout : MonoBehaviour
 
     }
 
+    public void imageOn(Image _src)
+        { _src.enabled = true; }
+    public void imageOff(Image _src)
+        { _src.enabled = false; }
+
     public void loadOut1 () {
         playerMovement.player.getGunStats(AR);
         playerMovement.player.getGunStats(HandCannon);
         /*playerMovement.player.getGunStats(Gernade1);
         playerMovement.player.getGunStats(Health1);
         playerMovement.player.getGunStats(Health2);*/
-        getPrmLd1Img().gameObject.SetActive(true);
-        getSecLd1Img().gameObject.SetActive(true);
-        getCnsm1Ld1Img().gameObject.SetActive(true);
-        getCnsm2Ld1Img().gameObject.SetActive(true);
-        getThrwLd1Img().gameObject.SetActive(true);
+        imageOn(getPrmLd1Img());
+        imageOn(getSecLd1Img());
+        imageOn(getCnsm1Ld1Img());
+        imageOn(getCnsm2Ld1Img());
+        imageOn(getThrwLd1Img());
 
     }
 

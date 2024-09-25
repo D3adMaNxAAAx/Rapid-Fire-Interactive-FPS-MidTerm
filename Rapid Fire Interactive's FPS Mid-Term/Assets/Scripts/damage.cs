@@ -50,7 +50,7 @@ public class damage : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Ignore if it collides with another trigger or is tagged as enemy
-        if (other.isTrigger || other.CompareTag("Enemy"))
+        if (other.isTrigger || other.CompareTag("Enemy") || other.CompareTag("Heavy"))
             return;
 
         // Object tracker and checker to see if object takes damage

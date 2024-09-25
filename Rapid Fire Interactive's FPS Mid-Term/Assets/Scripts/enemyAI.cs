@@ -51,7 +51,7 @@ public class enemyAI : MonoBehaviour , IDamage
 
     [Header("----- Attack -----")]
     [SerializeField] GameObject rangedAttack; // Bullet Object Tracker and Communication Field For Designer
-    [SerializeField] GameObject meleeAttack;
+    [SerializeField] Collider meleeCol;
     [Range(.01f, 100)][SerializeField] float shootRate; // Enemy Fire Rate Modifier Field For Designer
     [Range(.01f, 30)][SerializeField] float damageFlashTimer; // Allows Designer To Set Damage Flash Timer 
     int HPOrig; // Private Tracker for enemy original HP
@@ -220,7 +220,10 @@ public class enemyAI : MonoBehaviour , IDamage
     IEnumerator shoot() {
         // Set shooting to true
         isShooting = true;
-
+        if (gameObject.CompareTag("Heavy"))
+            anim.SetTrigger("Melee");
+        else
+            anim.SetTrigger("Shoot");
         if(rangedAttack != null)
         // Create our bullet and fire from the shootPos of Enemy 
             Instantiate(rangedAttack, shootPos.position, transform.rotation);
@@ -232,6 +235,16 @@ public class enemyAI : MonoBehaviour , IDamage
         // Set shooting back to false
         isShooting = false;
     }
+
+    public void meleeOn()
+    {
+        meleeCol.enabled = true;
+    } public void meleeOff()
+    {
+        meleeCol.enabled = false;
+    } 
+   
+
 
     // Tell AI to face player 
     // Quaterions used becasue we must rotate enemy velocity direction to always face current target
