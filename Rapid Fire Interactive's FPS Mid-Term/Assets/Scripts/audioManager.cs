@@ -9,9 +9,13 @@ public class audioManager : MonoBehaviour
 
     [Header("-- Player Sounds --")]
     [SerializeField] public AudioClip[] audSteps;
+    [SerializeField] public AudioClip[] audJump;
+    [SerializeField] public AudioClip[] audHurt;
 
     [Header("-- Player Volume --")]
-    [Range(0,1)] [SerializeField] public float audStepVol;
+    [Range(0, 1)] [SerializeField] public float audStepVol;
+    [Range(0, 1)][SerializeField] public float audJumpVol;
+    [Range(0, 1)][SerializeField] public float audHurtVol;
 
     [Header("-- Enemy Sounds --")]
     [SerializeField] public AudioClip[] audEnemySteps;

@@ -5,9 +5,9 @@ using UnityEngine;
 using UnityEngine.Android;
 
 //------------NOTES-------------
-/*For this whole code to work IDamage and gameManager scripts must both be functional.
- After completing scripts please uncomment ONLY that part of the script!!!
- Each one will be labeled as //IDamage or //gameManager at the end of each line of code or function.*/
+/* For this whole code to work IDamage and gameManager scripts must both be functional.
+   After completing scripts please uncomment ONLY that part of the script!!!
+   Each one will be labeled as //IDamage or //gameManager at the end of each line of code or function. */
 public class playerMovement : MonoBehaviour, IDamage
 {
 
@@ -44,7 +44,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] float fireRate;
     [SerializeField] float bulletDistance;
     //[SerializeField] int ammo;
-    //[SerializeField] float bulletSpeed; //Is here if we wanna change to use bullets
+    //[SerializeField] float bulletSpeed; // Is here if we wanna change to use bullets
     [SerializeField] GameObject grenade;
     [SerializeField] GrenadeStats grenadeStats;
     [SerializeField] int totalGrenades = 3;
@@ -57,7 +57,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] int gravity;
     [SerializeField] float drainMod;  // How quickly stamina points drain
     [SerializeField] float recoveryMod;  // How quickly stamina points recovers
-    [SerializeField] bool toggleSprint;   //Turns sprint on or off
+    [SerializeField] bool toggleSprint;   // Turns sprint on or off
 
     // -- Timer --
     [Header("-- Timers --")]
@@ -92,94 +92,6 @@ public class playerMovement : MonoBehaviour, IDamage
     bool stopHealing = false; // was the player damaged while healing?
     bool onDashCooldown = false;
 
-    // Getters
-    public int getHP()
-    {
-        return HP;
-    }
-    public int getHPOrig()
-    {
-        return HPOrig;
-    }
-    public int getAmmo()
-    {
-        return getCurGun().ammoCur;
-    }
-    public bool getIsSniper() {
-        return isSniper;
-    }
-    public GameObject getGunModel() {
-        return gunModel;
-    }
-
-    public int getAmmoOrig()
-    {
-        return getCurGun().ammoMax;
-    }
-    public float getSpeed()
-    {
-        return speed;
-    }
-    public int getStamina()
-    {
-        return stamina;
-    }
-
-    public int getCoins()
-    {
-        return coins;
-    }
-    public int getStaminaOrig()
-    {
-        return staminaOrig;
-    }
-
-    // Setters
-    public void setHP(int newHP)
-    {
-        HP = newHP;
-    }
-    public void setHPOrig(int newHPOrig)
-    {
-        HPOrig = newHPOrig;
-    }
-    public void setAmmo(int newAmmo)
-    {
-        // Check if the player has a gun
-        if (guns != null || guns.Count != 0)
-            getCurGun().ammoCur = newAmmo;
-
-        // Update the UI to show it's been changed
-        // (might not be necessary?)
-        updatePlayerUI();
-    }
-    public void setAmmoOrig(int newAmmoOrig)
-    {
-        // Check if the player has a gun
-        if (guns != null || guns.Count != 0)
-            getCurGun().ammoMax = newAmmoOrig;
-
-        // Update the UI to show it's been changed
-        // (might not be necessary?)
-        updatePlayerUI();
-    }
-    public void setSpeed(float newSpeed)
-    {
-        speed = newSpeed;
-    }
-    public void setStamina(int newStamina)
-    {
-        stamina = newStamina;
-    }
-    public void setCoins(int newCoins)
-    {
-        coins = newCoins;
-    }
-    public void setDamageMod(float newDamageMod)
-    {
-        damageUpgradeMod = newDamageMod;
-    }
-
     // Start is called before the first frame update
     void Start() {
         // Variable Initialization
@@ -191,18 +103,6 @@ public class playerMovement : MonoBehaviour, IDamage
         updatePlayerUI();
         if (gameManager.instance.getPlayerSpawnPos() != null)
             spawnPlayer();
-
-    }
-    
-    public void spawnPlayer()
-    {
-        controller.enabled = false;
-        transform.position = gameManager.instance.getPlayerSpawnPos().transform.position;
-        controller.enabled = true;
-
-        HP = HPOrig;
-        gameManager.instance.getHealthWarning().SetActive(false);
-        updatePlayerUI();
     }
 
     // Update is called once per frame
@@ -231,6 +131,17 @@ public class playerMovement : MonoBehaviour, IDamage
         }
     }
 
+    public void spawnPlayer()
+    {
+        controller.enabled = false;
+        transform.position = gameManager.instance.getPlayerSpawnPos().transform.position;
+        controller.enabled = true;
+
+        HP = HPOrig;
+        gameManager.instance.getHealthWarning().SetActive(false);
+        updatePlayerUI();
+    }
+
     // Player Movement Controls
     void movement()
     {
@@ -254,6 +165,9 @@ public class playerMovement : MonoBehaviour, IDamage
         {
             jumpCounter++;
             playerVel.y = jumpSpeed;
+
+            // Play Jump Sound
+            aud.PlayOneShot(audioManager.instance.audJump[Random.Range(0, audioManager.instance.audJump.Length)], audioManager.instance.audJumpVol);
         }
 
         // Gravity Controller
@@ -419,8 +333,14 @@ public class playerMovement : MonoBehaviour, IDamage
     // Player Damage Controller
     public void takeDamage(int amount)
     {
+        // Player takes damage
         HP -= amount;
         stopHealing = true; // STOP HEALING IF DAMAGED
+
+        // Play hurt sound for audio indication
+        aud.PlayOneShot(audioManager.instance.audHurt[Random.Range(0, audioManager.instance.audHurt.Length)], audioManager.instance.audHurtVol);
+
+        // Update UI & Flash Screen red
         updatePlayerUI();
         StartCoroutine(damageFlash());
 
@@ -539,17 +459,6 @@ public class playerMovement : MonoBehaviour, IDamage
         gameManager.instance.getXPBar().fillAmount = (float)playerXP / playerXPMax;
         gameManager.instance.getXPText().text = playerXP.ToString("F0") + " / " + playerXPMax.ToString("F0");
     }
-
-    public int getXP()
-    {
-        return playerXP;
-    }
-
-    public void setXP(int amount)
-    {
-        playerXP += amount;
-        levelTracker(); // Check if the player can level up
-    }
     
     // Tracks the player's xp and levels them up
     public void levelTracker()
@@ -560,26 +469,10 @@ public class playerMovement : MonoBehaviour, IDamage
             playerLevel++;
             playerXP = 0; // Reset XP back to zero
             gameManager.instance.getLevelTracker().text = playerLevel.ToString("F0");
-            // TODO: HAVE TRAILING ZEROS FOR THE LEVELS
         }
     }
 
-    // Getters
-    public int getPlayerLevel()
-    {
-        return playerLevel;
-    }
-
-    public gunStats getCurGun()
-    {
-        return guns[gunPos];
-    }
-
-    // Setters
-    public void setPlayerLevel(int _playerLevel)
-    {
-        _playerLevel = playerLevel;
-    }
+    
 
     public void ammoPickup(int amount)
     {
@@ -628,24 +521,6 @@ public class playerMovement : MonoBehaviour, IDamage
         updatePlayerUI();
     }
 
-    public void getGunStats(gunStats _gun)
-    {
-        _gun.ammoCur = _gun.ammoMax;
-        guns.Add(_gun);
-        gunPos = guns.Count - 1;
-        updatePlayerUI();
-
-        float damTemp = _gun.damage * damageUpgradeMod; //reason I did this is because we can't supply a float value to an int.
-        damage = (int)damTemp; //so then we can cast it back as an int so we aren't using decimals for damage on enemies.
-        fireRate = _gun.fireRate;
-        bulletDistance = _gun.bulletDist;
-        //ammoOrig = _gun.ammoMax;
-        isSniper = _gun.isSniper;
-
-        gunModel.GetComponent<MeshFilter>().sharedMesh = _gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = _gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
-    }
-
     void selectGun()
     {
         if (Input.GetAxis("Mouse ScrollWheel") > 0)
@@ -676,6 +551,7 @@ public class playerMovement : MonoBehaviour, IDamage
         gunModel.GetComponent<MeshFilter>().sharedMesh = getCurGun().gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = getCurGun().gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
+
     void throwGrenade()
     {
         if (grenade == null)
@@ -692,13 +568,13 @@ public class playerMovement : MonoBehaviour, IDamage
                 rb.AddForce(Camera.main.transform.forward * grenadeStats.throwForce, ForceMode.VelocityChange);
             }
 
-            StartCoroutine(HandelGrenadeExplosion(grenadeInstance));// start explosion count down 
+            StartCoroutine(HandleGrenadeExplosion(grenadeInstance));// start explosion count down 
 
             totalGrenades--;
         }
     }
 
-    IEnumerator HandelGrenadeExplosion(GameObject grenadeInstance)
+    IEnumerator HandleGrenadeExplosion(GameObject grenadeInstance)
     {
         yield return new WaitForSeconds(grenadeStats.explosionDelay); //explosion delay
 
@@ -748,5 +624,150 @@ public class playerMovement : MonoBehaviour, IDamage
             yield return new WaitForSeconds(0.3f);
 
         isStepping = false;
+    }
+
+    // -- GETTERS --
+    public void getGunStats(gunStats _gun)
+    {
+        _gun.ammoCur = _gun.ammoMax;
+        guns.Add(_gun);
+        gunPos = guns.Count - 1;
+        updatePlayerUI();
+
+        float damTemp = _gun.damage * damageUpgradeMod; //reason I did this is because we can't supply a float value to an int.
+        damage = (int)damTemp; //so then we can cast it back as an int so we aren't using decimals for damage on enemies.
+        fireRate = _gun.fireRate;
+        bulletDistance = _gun.bulletDist;
+        //ammoOrig = _gun.ammoMax;
+        isSniper = _gun.isSniper;
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = _gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = _gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
+    public int getHP()
+    {
+        return HP;
+    }
+
+    public int getHPOrig()
+    {
+        return HPOrig;
+    }
+
+    public int getStamina()
+    {
+        return stamina;
+    }
+
+    public int getStaminaOrig()
+    {
+        return staminaOrig;
+    }
+
+    public int getXP()
+    {
+        return playerXP;
+    }
+
+    public int getAmmo()
+    {
+        return getCurGun().ammoCur;
+    }
+
+    public int getAmmoOrig()
+    {
+        return getCurGun().ammoMax;
+    }
+
+    public bool getIsSniper()
+    {
+        return isSniper;
+    }
+
+    public GameObject getGunModel()
+    {
+        return gunModel;
+    }
+
+    public float getSpeed()
+    {
+        return speed;
+    }
+    
+    public int getCoins()
+    {
+        return coins;
+    }
+
+    // Setters
+    public void setHP(int newHP)
+    {
+        HP = newHP;
+    }
+    public void setHPOrig(int newHPOrig)
+    {
+        HPOrig = newHPOrig;
+    }
+    public void setAmmo(int newAmmo)
+    {
+        // Check if the player has a gun
+        if (guns != null || guns.Count != 0)
+            getCurGun().ammoCur = newAmmo;
+
+        // Update the UI to show it's been changed
+        // (might not be necessary?)
+        updatePlayerUI();
+    }
+    public void setAmmoOrig(int newAmmoOrig)
+    {
+        // Check if the player has a gun
+        if (guns != null || guns.Count != 0)
+            getCurGun().ammoMax = newAmmoOrig;
+
+        // Update the UI to show it's been changed
+        // (might not be necessary?)
+        updatePlayerUI();
+    }
+    public int getPlayerLevel()
+    {
+        return playerLevel;
+    }
+
+    public gunStats getCurGun()
+    {
+        return guns[gunPos];
+    }
+
+    // -- SETTERS --
+    public void setSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
+    
+    public void setStamina(int newStamina)
+    {
+        stamina = newStamina;
+    }
+
+    public void setCoins(int newCoins)
+    {
+        coins = newCoins;
+    }
+
+    public void setDamageMod(float newDamageMod)
+    {
+        damageUpgradeMod = newDamageMod;
+    }
+
+    public void setXP(int amount)
+    {
+        playerXP += amount;
+        levelTracker(); // Check if the player can level up
+    }
+
+    public void setPlayerLevel(int _playerLevel)
+    {
+        _playerLevel = playerLevel;
     }
 }
