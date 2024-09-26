@@ -139,6 +139,8 @@ public class playerMovement : MonoBehaviour, IDamage
         if (Input.GetButtonDown("Heal Item") && heals.Count > 0 && healCoolDown <= 0f && !isHealing)
         {
             StartCoroutine(HealPlayer());
+            lowHealth = false;
+            gameManager.instance.getHealthWarning().SetActive(false);
         }
         if(healCoolDown > 0f)
         {
