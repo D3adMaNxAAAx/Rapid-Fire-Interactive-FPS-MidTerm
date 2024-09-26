@@ -484,8 +484,12 @@ public class playerMovement : MonoBehaviour, IDamage
         {
             playerLevel++;
             skillPoints++;
-            playerXP = 0; // Reset XP back to zero
+            playerXP -= playerXPMax; // Reset XP back to zero
             gameManager.instance.getLevelTracker().text = playerLevel.ToString("F0");
+            
+            // Run again if the player has enough remaining XP.
+            if (playerXP >= playerXPMax)
+                levelTracker();
         }
     }
 

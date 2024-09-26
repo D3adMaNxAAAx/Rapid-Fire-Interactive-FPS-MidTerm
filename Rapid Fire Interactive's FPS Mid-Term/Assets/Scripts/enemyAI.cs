@@ -93,27 +93,11 @@ public class enemyAI : MonoBehaviour , IDamage
 
         dropRNG = Random.Range(0, 100);
 
-        ///float agentSpeed = agent.velocity.normalized.magnitude;
-        ///float animationSpeed = animator.GetFloat("Speed"); // getting current value of speed param in blend tree
-        ///animator.SetFloat("Speed", Mathf.Lerp(animationSpeed, agentSpeed, 6 * Time.deltaTime)); // changing "Speed" param in blend tree, setting it to enemy's speed but in 0-1 form
-        // lerp part helps smooth out transition from being still to the animation, 6 is how fast the transition is
-
         if (playerInRange && !canSeePlayer())
         {
-            // seenPlayer = true; // Enemy has now seen the player -- this will be used for a check later in the Update method
-
 
             if (!isRoaming && agent.remainingDistance < .05f && aCoRoutine == null)
                 aCoRoutine = StartCoroutine(roam());
-           
-
-           
-            // -- meant to be at the start of the method.
-            // Check if the enemy is a boss -- this will be to display the health bar when the player is in range.
-            //if (type == enemyType.boss)
-            //{
-            //    gameManager.instance.displayBossBar(true);
-            //}
 
         }
         else if (!playerInRange) {
@@ -121,17 +105,6 @@ public class enemyAI : MonoBehaviour , IDamage
                aCoRoutine = StartCoroutine(roam());
                 
         }
-
-        //Something like this but based off a key count each enemy killed adds key and keys required are equal to 
-        //if (gameManager.instance.getEnemyCount() == 1 && gameManager.instance.getBossCount() == 1)
-        //    gameManager.instance.displayBossBar(true);
-        //else { gameManager.instance.displayBossBar(false); }
-
-        // If player isn't in range or has defeated the boss, hide the bar.
-        //if (gameManager.instance.getBossHP().activeSelf && !playerInRange)
-        //{
-        //    gameManager.instance.displayBossBar(false);
-        //}
 
     }
 
@@ -143,7 +116,7 @@ public class enemyAI : MonoBehaviour , IDamage
         //Creating an angle from our enemy forward direction to player direction in world 
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
 
-        //TURN THIS OFF AFTER WORKING, showing a line of sight reference in scene creator
+        //showing a line of sight reference in scene creator
         Debug.DrawRay(headPos.position, playerDir);
 
         RaycastHit hit; //Tracks ray for enemy line of sight 

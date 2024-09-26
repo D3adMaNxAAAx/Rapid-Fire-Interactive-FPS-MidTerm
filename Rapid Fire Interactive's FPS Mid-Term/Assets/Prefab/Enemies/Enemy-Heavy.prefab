@@ -482,8 +482,8 @@ MonoBehaviour:
   roamSpeed: 3
   roamTimer: 3
   HP: 15
-  faceTargetSpeed: 3
-  dropXP: 1
+  faceTargetSpeed: 4
+  dropXP: 7
   dropCoins: 5
   rngDropRate: 17
   rangedAttack: {fileID: 0}
@@ -525,7 +525,7 @@ NavMeshAgent:
   m_Acceleration: 32
   avoidancePriority: 50
   m_AngularSpeed: 500
-  m_StoppingDistance: 0
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -1787,7 +1787,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.5, y: 2, z: 2}
+  m_Size: {x: 3, y: 3, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6481402004005768478
 GameObject:
