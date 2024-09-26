@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro; // for using textmesh pro
+using TMPro;
+using Unity.VisualScripting; // for using textmesh pro
 
 public class gameManager : MonoBehaviour { 
 
@@ -321,6 +322,15 @@ public class gameManager : MonoBehaviour {
         }
     }
 
+    public void updateBossBar(Image _bossHealthBar, float bossHP, int _health)
+    {
+        // Check if the player has entered the boss room
+        if (bossRoom.instance.getBossFightState())
+        {
+            _bossHealthBar.fillAmount = bossHP / _health;
+        }
+    }
+
     public void updateGameGoal(int _enemyCount, int _bossCount = 0) {
         enemyCount += _enemyCount ;
 
@@ -328,6 +338,12 @@ public class gameManager : MonoBehaviour {
         EnemiesRemainingCount.text = enemyCount.ToString();
 
         bossCount += _bossCount;
+
+        // Decrement the bossCount from enemy count.
+        if (bossCount > 0) {
+            enemyCount -= bossCount;
+        }
+
         if (enemyCount <= 0 && bossCount <= 0) {
             statePause();
             menuActive = menuWin; // set active menu to win menu
@@ -366,7 +382,6 @@ public class gameManager : MonoBehaviour {
 
     public void displayBossBar(bool state) {
         getBossHP().SetActive(state);
-        getBossHPBar().enabled = state;
     }
 
     public void displayPlayerHP(bool state)

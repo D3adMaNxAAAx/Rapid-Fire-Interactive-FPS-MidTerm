@@ -7,8 +7,6 @@ using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour , IDamage
 {
-
-    
     [SerializeField] enum enemyType { basic, challenge, boss } // Allows selection of enemy type
     [Header("----- Components -----")]
     [SerializeField] enemyType type; // Tracks which type of enemy in play
@@ -276,10 +274,14 @@ public class enemyAI : MonoBehaviour , IDamage
         if (type == enemyType.boss) {
             bossHP -= _amount;
         }
+        
         // Flash Enemy Red To Indicate Damage Taken
         StartCoroutine(flashColor());
+
         // Decrement their health bar & update the UI
-        gameManager.instance.getBossHPBar().fillAmount = (float)bossHP / HPOrig;
+        //gameManager.instance.getBossHPBar().fillAmount = (float)bossHP / HPOrig;
+        //updateBossHealth();
+        gameManager.instance.updateBossBar(gameManager.instance.getBossHPBar(), bossHP, HPOrig);
 
         agent.SetDestination(gameManager.instance.getPlayer().transform.position); // makes enemys go to player
         

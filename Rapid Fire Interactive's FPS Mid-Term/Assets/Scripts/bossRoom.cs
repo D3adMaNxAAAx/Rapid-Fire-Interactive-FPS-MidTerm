@@ -18,9 +18,10 @@ public class bossRoom : MonoBehaviour
     [SerializeField] float doorMoveY;
     [SerializeField] float doorMoveZ;
     [SerializeField] float timeToOpen;
-   
 
-  
+    // Bool for boss fight state
+    bool isFightingBoss = false;
+
 
     //add ui element to gameManager to tell player to click button to move on to next room when all enemies are killed in current room
 
@@ -42,9 +43,6 @@ public class bossRoom : MonoBehaviour
         instance = this;
         closePos = activeDoor.transform.position;
         openPos = new Vector3(closePos.x + doorMoveX, closePos.y + doorMoveY, closePos.z + doorMoveZ);
-
-        
-        
     }
 
     // Update is called once per frame
@@ -83,6 +81,7 @@ public class bossRoom : MonoBehaviour
         {
             a = Time.deltaTime * timeToOpen;
             activeDoor.transform.position = Vector3.Lerp(activeDoor.transform.position, openPos, a);
+            isFightingBoss = true;
         }
         yield return null;
     }
@@ -99,5 +98,12 @@ public class bossRoom : MonoBehaviour
         yield return null;
     }
 
-   
+    // Getter & Setter
+    public bool getBossFightState()
+    {
+        return isFightingBoss;
+    }
+
+    public void setBossFightState(bool _state)
+    { isFightingBoss = _state; }
 }

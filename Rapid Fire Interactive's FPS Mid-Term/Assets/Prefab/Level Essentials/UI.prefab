@@ -947,7 +947,7 @@ GameObject:
   - component: {fileID: 6854113971550216766}
   - component: {fileID: 6371490259339156433}
   m_Layer: 5
-  m_Name: Thowable Grenade
+  m_Name: Throwable Grenade Preset 1
   m_TagString: Loadout Preset 1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1080,7 +1080,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 0.79
+  m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -7977,7 +7977,7 @@ GameObject:
   - component: {fileID: 7751987577373004128}
   - component: {fileID: 6769572070196417291}
   m_Layer: 5
-  m_Name: Thowable Grenade (1)
+  m_Name: Throwable Grenade Preset 2
   m_TagString: 'Loadout Preset 2 '
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10969,7 +10969,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6473166517630565964
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11255,16 +11255,16 @@ MonoBehaviour:
   Health2: {fileID: 0}
   Gernade1: {fileID: 11400000, guid: 97ba14f077da2264bb4743fc5222a169, type: 2}
   Gernade2: {fileID: 11400000, guid: 97ba14f077da2264bb4743fc5222a169, type: 2}
-  _primaryLd1Image: {fileID: 0}
-  _secondaryLd1Image: {fileID: 0}
-  _cons1Ld1Image: {fileID: 0}
-  _cons2Ld1Image: {fileID: 0}
-  _thrwLd1Image: {fileID: 0}
-  _primaryLd2Image: {fileID: 0}
-  _secondaryLd2Image: {fileID: 0}
-  _cons1Ld2Image: {fileID: 0}
-  _cons2Ld2Image: {fileID: 0}
-  _thrwLd2Image: {fileID: 0}
+  _primaryLd1Image: {fileID: 9107939209147188249}
+  _secondaryLd1Image: {fileID: 8919183420067838047}
+  _cons1Ld1Image: {fileID: 5785932980559552447}
+  _cons2Ld1Image: {fileID: 2455427420748061601}
+  _thrwLd1Image: {fileID: 6371490259339156433}
+  _primaryLd2Image: {fileID: 4264927769621728536}
+  _secondaryLd2Image: {fileID: 1732380186630024261}
+  _cons1Ld2Image: {fileID: 3703401263362117522}
+  _cons2Ld2Image: {fileID: 7703774740864992039}
+  _thrwLd2Image: {fileID: 6769572070196417291}
 --- !u!1 &5873559288796752635
 GameObject:
   m_ObjectHideFlags: 0
@@ -13199,7 +13199,6 @@ GameObject:
   - component: {fileID: 9207231912005533436}
   - component: {fileID: 5391482003372172309}
   - component: {fileID: 6710906349551400322}
-  - component: {fileID: 15237789693263450}
   m_Layer: 5
   m_Name: Pre-Game Loadout Menu
   m_TagString: Untagged
@@ -13275,36 +13274,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &15237789693263450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6744173151888895728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad7c96a6ace794b4b8278de95f37670a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AR: {fileID: 0}
-  Sniper: {fileID: 0}
-  HandCannon: {fileID: 0}
-  Pistol: {fileID: 0}
-  Health1: {fileID: 0}
-  Health2: {fileID: 0}
-  Gernade1: {fileID: 0}
-  Gernade2: {fileID: 0}
-  _primaryLd1Image: {fileID: 9107939209147188249}
-  _secondaryLd1Image: {fileID: 8919183420067838047}
-  _cons1Ld1Image: {fileID: 5785932980559552447}
-  _cons2Ld1Image: {fileID: 2455427420748061601}
-  _thrwLd1Image: {fileID: 6371490259339156433}
-  _primaryLd2Image: {fileID: 4264927769621728536}
-  _secondaryLd2Image: {fileID: 1732380186630024261}
-  _cons1Ld2Image: {fileID: 3703401263362117522}
-  _cons2Ld2Image: {fileID: 7703774740864992039}
-  _thrwLd2Image: {fileID: 6371490259339156433}
 --- !u!1 &6818421450756295676
 GameObject:
   m_ObjectHideFlags: 0
@@ -14838,7 +14807,7 @@ GameObject:
   - component: {fileID: 5332386502041528286}
   - component: {fileID: 6260516167142136973}
   m_Layer: 5
-  m_Name: Thowable Slot Cover
+  m_Name: Throwable Slot Cover
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17829,7 +17798,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 68308d684c9c4c046a200eaa84de7b4d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7fa8514e00236b14881cfadd6da6c2ec, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
