@@ -34,9 +34,7 @@ public class upgradeMenu : MonoBehaviour {
     int stamina;
 
     void Start() {
-        gameManager.instance.getUpgradeMenu().SetActive(true);
         upgradeUI = this;
-        gameManager.instance.getUpgradeMenu().SetActive(false);
     }
 
     public void setVars() { // wouldn't work in start

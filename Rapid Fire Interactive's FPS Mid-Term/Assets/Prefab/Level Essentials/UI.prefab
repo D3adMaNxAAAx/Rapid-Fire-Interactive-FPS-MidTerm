@@ -7622,6 +7622,67 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &3652119339457874480
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7619270149652112887}
+  - component: {fileID: 6400422183390029360}
+  m_Layer: 5
+  m_Name: UpgradeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7619270149652112887
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3652119339457874480}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5823421247959698043}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6400422183390029360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3652119339457874480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ef8d0a186323c043ba6d3b4b0349350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSkillPoints: {fileID: 8223007658668061326}
+  healthRankText: {fileID: 6592453357631897210}
+  healthUpgradeText: {fileID: 4983949704899121181}
+  damageRankText: {fileID: 2395892522736428052}
+  damageUpgradeText: {fileID: 8158171443434996763}
+  speedRankText: {fileID: 785433255411878675}
+  speedUpgradeText: {fileID: 2397487963629893806}
+  staminaRankText: {fileID: 3177577954662710580}
+  staminaUpgradeText: {fileID: 8964453435697846803}
+  healthUpgradeCost: 1
+  damageUpgradeCost: 1
+  speedUpgradeCost: 1
+  staminaUpgradeCost: 1
 --- !u!1 &3663923579333289360
 GameObject:
   m_ObjectHideFlags: 0
@@ -11229,7 +11290,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6473166517630565964}
   - component: {fileID: 8289741491720138270}
-  - component: {fileID: 5136246641639676282}
   - component: {fileID: 5627379122195710190}
   m_Layer: 5
   m_Name: Upgrade Menu
@@ -11286,31 +11346,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5687853132917736741}
   m_CullTransparentMesh: 1
---- !u!114 &5136246641639676282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5687853132917736741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3ef8d0a186323c043ba6d3b4b0349350, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSkillPoints: {fileID: 8223007658668061326}
-  healthRankText: {fileID: 6592453357631897210}
-  healthUpgradeText: {fileID: 4983949704899121181}
-  damageRankText: {fileID: 2395892522736428052}
-  damageUpgradeText: {fileID: 8158171443434996763}
-  speedRankText: {fileID: 785433255411878675}
-  speedUpgradeText: {fileID: 2397487963629893806}
-  staminaRankText: {fileID: 3177577954662710580}
-  staminaUpgradeText: {fileID: 8964453435697846803}
-  healthUpgradeCost: 1
-  damageUpgradeCost: 1
-  speedUpgradeCost: 1
-  staminaUpgradeCost: 1
 --- !u!114 &5627379122195710190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14479,6 +14514,7 @@ RectTransform:
   - {fileID: 8733526787851522082}
   - {fileID: 3764613916346096515}
   - {fileID: 6220959310036197683}
+  - {fileID: 7619270149652112887}
   - {fileID: 7351545378487449876}
   - {fileID: 5187461131323642566}
   - {fileID: 6527564860543623480}
