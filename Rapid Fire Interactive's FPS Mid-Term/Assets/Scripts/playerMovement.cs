@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Android;
 
@@ -46,13 +47,12 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] float bulletDistance;
     //[SerializeField] int ammo;
     //[SerializeField] float bulletSpeed; // Is here if we wanna change to use bullets
+    [SerializeField] List<GrenadeStats> grenades;
     [SerializeField] GameObject grenade;
     [SerializeField] GrenadeStats grenadeStats;
-    [SerializeField] int totalGrenades = 3;
 
-    //player heals 
-    [SerializeField] HealStats healItem;
-    [SerializeField] int healItemCount = 3;
+    //player heals
+    [SerializeField] List<HealStats> heals;
     [SerializeField] float healCoolDown = 5f;
 
 
@@ -132,11 +132,11 @@ public class playerMovement : MonoBehaviour, IDamage
         if (guns.Count != 0)
             selectGun();
 
-        if (Input.GetButtonDown("ThrowGrenade") && totalGrenades > 0)
+        if (Input.GetButtonDown("ThrowGrenade") && grenades.Count > 0)
         {
             throwGrenade();
         }
-        if (Input.GetButtonDown("Heal Item") && healItemCount > 0 && healCoolDown <= 0f && !isHealing)
+        if (Input.GetButtonDown("Heal Item") && heals.Count > 0 && healCoolDown <= 0f && !isHealing)
         {
             StartCoroutine(HealPlayer());
         }
@@ -569,11 +569,11 @@ public class playerMovement : MonoBehaviour, IDamage
 
     void throwGrenade()
     {
-        if (grenade == null)
+        if (grenades[0] == null)
         {
             grenade = grenadeStats.grenadeModel;
         }
-        if (totalGrenades > 0)
+        if (grenades.Count > 0)
         {
             GameObject grenadeInstance = Instantiate(grenade, transform.position + transform.forward, Quaternion.identity);
 
@@ -585,7 +585,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
             StartCoroutine(HandleGrenadeExplosion(grenadeInstance));// start explosion count down 
 
-            totalGrenades--;
+            grenades.Remove(grenades[0]);
         }
     }
 
@@ -618,22 +618,23 @@ public class playerMovement : MonoBehaviour, IDamage
 
     IEnumerator HealPlayer()
     {
+        Debug.Log("hi");
         isHealing = true;
 
-        HP = Mathf.Min(HP + healItem.healAmmount,HPOrig);
-        healItemCount--;
+        HP = Mathf.Min(HP + heals[0].healAmmount,HPOrig);
 
-        if(healItem.healSound != null)
+        if(heals[0].healSound != null)
         {
-            AudioSource.PlayClipAtPoint(healItem.healSound, transform.position);
+            AudioSource.PlayClipAtPoint(heals[0].healSound, transform.position);
         }
         updatePlayerUI();
 
-        yield return new WaitForSeconds(healItem.healCoolDown);
+        yield return new WaitForSeconds(heals[0].healCoolDown);
        
         isHealing = false;
 
-        healCoolDown = healItem.healCoolDown;
+        healCoolDown = heals[0].healCoolDown;
+        heals.Remove(heals[0]);
     }
 
     // temporary check if the player has a gun -- can remove later, using for debug purposes
@@ -661,7 +662,14 @@ public class playerMovement : MonoBehaviour, IDamage
         isStepping = false;
     }
 
-    // -- GETTERS --
+    public void addToHeals(HealStats newHeal) {
+        heals.Add(newHeal);
+    }
+
+    public void addToGrenades(GrenadeStats newGrenade) {
+        grenades.Add(newGrenade);
+    }
+
     public void getGunStats(gunStats _gun)
     {
         _gun.ammoCur = _gun.ammoMax;
@@ -680,6 +688,7 @@ public class playerMovement : MonoBehaviour, IDamage
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = _gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
+    // -- GETTERS --
     public int getHP()
     {
         return HP;

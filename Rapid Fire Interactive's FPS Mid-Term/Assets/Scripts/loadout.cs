@@ -13,8 +13,8 @@ public class loadout : MonoBehaviour {
     [SerializeField] gunStats Sniper;
     [SerializeField] gunStats HandCannon;
     [SerializeField] gunStats Pistol;
-    [SerializeField] gunStats Health1;
-    [SerializeField] gunStats Health2;
+    [SerializeField] HealStats Health1;
+    [SerializeField] HealStats Health2;
     [SerializeField] GrenadeStats Gernade1;
     [SerializeField] GrenadeStats Gernade2;
 
@@ -92,9 +92,9 @@ public class loadout : MonoBehaviour {
         playerMovement.player.getGunStats(AR);
         playerMovement.player.getGunStats(HandCannon);
 
-        /*playerMovement.player.getGunStats(Gernade1);
-        playerMovement.player.getGunStats(Health1);
-        playerMovement.player.getGunStats(Health2);*/
+        playerMovement.player.addToGrenades(Gernade1);
+        playerMovement.player.addToHeals(Health1);
+        playerMovement.player.addToHeals(Health2);
         getPrmLd2Img().gameObject.SetActive(false);
         getSecLd2Img().gameObject.SetActive(false);
         getCnsm1Ld2Img().gameObject.SetActive(false);
@@ -132,9 +132,9 @@ public class loadout : MonoBehaviour {
         getCnsm2Ld2Img().gameObject.SetActive(true);
         getThrwLd2Img().gameObject.SetActive(true);
 
-        /*playerMovement.player.getGunStats(Gernade1);
-        playerMovement.player.getGunStats(Gernade2);
-        playerMovement.player.getGunStats(Health1);*/
+        playerMovement.player.addToGrenades(Gernade1);
+        playerMovement.player.addToGrenades(Gernade2);
+        playerMovement.player.addToHeals(Health1);
 
     }
 
