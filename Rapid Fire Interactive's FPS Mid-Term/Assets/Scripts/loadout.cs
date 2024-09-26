@@ -47,7 +47,7 @@ public class loadout : MonoBehaviour {
     public Image getCnsm2Ld1Img() { return _cons2Ld1Image; }
 
     public void setCnsm2Ld1Img(Image _src) { _cons2Ld1Image = _src; }
-    public Image getThrwLd1Img() { return _primaryLd1Image; }
+    public Image getThrwLd1Img() { return _thrwLd1Image; }
 
     public void setThrwLd1Img(Image _src) { _thrwLd1Image = _src; }
 
@@ -84,11 +84,6 @@ public class loadout : MonoBehaviour {
         instance = this;
     }
 
-    public void imageOn(Image _src)
-        { _src.enabled = true; }
-    public void imageOff(Image _src)
-        { _src.enabled = false; }
-
     public void loadOut1 () {
         playerMovement.player.getGunStats(AR);
         playerMovement.player.getGunStats(HandCannon);
@@ -96,18 +91,33 @@ public class loadout : MonoBehaviour {
         /*playerMovement.player.getGunStats(Gernade1);
         playerMovement.player.getGunStats(Health1);
         playerMovement.player.getGunStats(Health2);*/
+        getPrmLd2Img().gameObject.SetActive(false);
+        getSecLd2Img().gameObject.SetActive(false);
+        getCnsm1Ld2Img().gameObject.SetActive(false);
+        getCnsm2Ld2Img().gameObject.SetActive(false);
+        getThrwLd2Img().gameObject.SetActive(false);
 
-        imageOn(getPrmLd1Img());
-        imageOn(getSecLd1Img());
-        imageOn(getCnsm1Ld1Img());
-        imageOn(getCnsm2Ld1Img());
-        imageOn(getThrwLd1Img());
+
+        getPrmLd1Img().gameObject.SetActive(true);
+        getSecLd1Img().gameObject.SetActive(true);
+        getCnsm1Ld1Img().gameObject.SetActive(true);
+        getCnsm2Ld1Img().gameObject.SetActive(true);
+        getThrwLd1Img().gameObject.SetActive(true);
+
+
+        
 
     }
 
     public void loadOut2() {
         playerMovement.player.getGunStats(Sniper);
         playerMovement.player.getGunStats(Pistol);
+
+        getPrmLd1Img().gameObject.SetActive(false);
+        getSecLd1Img().gameObject.SetActive(false);
+        getCnsm1Ld1Img().gameObject.SetActive(false);
+        getCnsm2Ld1Img().gameObject.SetActive(false);
+        getThrwLd1Img().gameObject.SetActive(false);
 
         getPrmLd2Img().gameObject.SetActive(true);
         getSecLd2Img().gameObject.SetActive(true);
