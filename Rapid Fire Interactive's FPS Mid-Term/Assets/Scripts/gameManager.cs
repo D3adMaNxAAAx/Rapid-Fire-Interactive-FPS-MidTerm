@@ -39,6 +39,9 @@ public class gameManager : MonoBehaviour {
     [SerializeField] Image playerReticle;
     [SerializeField] TMP_Text levelTracker;
     [SerializeField] GameObject sniperScope;
+    [SerializeField] GameObject stamUI;
+    [SerializeField] GameObject hpUI;
+    [SerializeField] GameObject xpUI;
 
     // -- Game --
     [Header("-- Enemy UI --")]
@@ -253,6 +256,15 @@ public class gameManager : MonoBehaviour {
     public Image getAmmoBar() 
         { return ammoTrackerBar; }
 
+    public GameObject getStamUI()
+    { return stamUI; }
+
+    public GameObject getHealthUI()
+    { return hpUI; }
+
+    public GameObject getXpUI()
+    { return xpUI; }
+
     // Start is called before the first frame update, awake is before start
     void Awake() {
 
@@ -265,8 +277,9 @@ public class gameManager : MonoBehaviour {
         setPlayerSpawnPos(GameObject.FindWithTag("PlayerSpawnPos")); //setting player spawn position by tag
 
         // Pausing game, hididng player background ui, and showing loadout menu
-        
-        menuActive = menuLoadout;
+
+        //menuActive = menuLoadout;
+        loadout();
 
     }
 
@@ -380,11 +393,23 @@ public class gameManager : MonoBehaviour {
         // All of this only hides some things and not the entire thing. Refer to how the AmmoUI is hidden
         // Unhide these after loadout is picked.
         // Leave commented until above is addressed.
-        //displayPlayerHP(state);
-        //displayAmmoUI(state);
-        //displayEnemyCount(state);
-        //displayPlayerStam(state);
-        //displayXPTracker(state);
+        displayPlayerHP(state);
+        displayAmmoUI(state);
+        displayEnemyCount(state);
+        displayPlayerStam(state);
+        displayXPTracker(state);
+    }
+
+    public void loadout()
+    {
+        menuActive = menuLoadout;
+
+        displayUI(false);
+        //displayAmmoUI(false);
+        //displayEnemyCount(false);
+        //displayPlayerHP(false);
+        //displayPlayerStam(false);
+        //displayXPTracker(false);
     }
 
     public void displayBossBar(bool state) {
@@ -394,6 +419,7 @@ public class gameManager : MonoBehaviour {
     public void displayPlayerHP(bool state)
     {
         getHPBar().gameObject.SetActive(state);
+        getHealthUI().gameObject.SetActive(state);
     }
 
     public void displayAmmoUI(bool state)
@@ -404,11 +430,13 @@ public class gameManager : MonoBehaviour {
     public void displayPlayerStam(bool state) 
     {
         getStamBar().gameObject.SetActive(state);
+        getStamUI().gameObject.SetActive(state);
     }
 
     public void displayXPTracker(bool state)
     {
         getXPBar().gameObject.SetActive(state);
+        getXpUI().gameObject.SetActive(state);
     }
 
     public void displayEnemyCount(bool state)

@@ -31,6 +31,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] int stamina;
     [SerializeField] int coins;
     [SerializeField] int playerXPMax;
+    [SerializeField] int skillPoints;
     float damageUpgradeMod = 1;  // keep set = to 1, so damage can be upgraded (can just change damage var because it changes when swapping guns)
 
     // Player Default Weapon Mods
@@ -475,19 +476,18 @@ public class playerMovement : MonoBehaviour, IDamage
         gameManager.instance.getXPText().text = playerXP.ToString("F0") + " / " + playerXPMax.ToString("F0");
     }
     
-    // Tracks the player's xp and levels them up
+    // Tracks the player's xp and levels them up and gives them a skill point
     public void levelTracker()
     {
         // Check if player XP meets requirement to level up (XP Max)
         if (playerXP >= playerXPMax && playerLevel < 999)
         {
             playerLevel++;
+            skillPoints++;
             playerXP = 0; // Reset XP back to zero
             gameManager.instance.getLevelTracker().text = playerLevel.ToString("F0");
         }
     }
-
-    
 
     public void ammoPickup(int amount)
     {
@@ -519,7 +519,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 speed = speedOrig;
                 isSprinting = false;
                 staminaRecover();
-                
+            
                 
         }
 
@@ -774,6 +774,9 @@ public class playerMovement : MonoBehaviour, IDamage
         return guns[gunPos];
     }
 
+    public int getSkillPoints()
+    { return skillPoints; }
+
     // -- SETTERS --
     public void setSpeed(float newSpeed)
     {
@@ -801,12 +804,15 @@ public class playerMovement : MonoBehaviour, IDamage
         levelTracker(); // Check if the player can level up
     }
 
-    public void setPlayerLevel(int _playerLevel)
+    public void setPlayerLevel(int newPlayerLevel)
     {
-        _playerLevel = playerLevel;
+        playerLevel = newPlayerLevel;
     }
 
-
+    public void setSkillPoints(int newSkillPoints)
+    {
+        skillPoints = newSkillPoints;
+    }
 
 
 

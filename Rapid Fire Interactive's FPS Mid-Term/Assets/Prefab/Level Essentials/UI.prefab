@@ -2089,7 +2089,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 178, y: -189}
+  m_AnchoredPosition: {x: 173, y: -189}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2300075485972317026
@@ -2242,9 +2242,9 @@ MonoBehaviour:
   healthCostText: {fileID: 3163084234699126201}
   ammoCostText: {fileID: 4165534997490647459}
   playerCoinsText: {fileID: 2934833554912843513}
+  flashMod: 0.2
   healthCost: 5
   ammoCost: 3
-  flashMod: 0.2
 --- !u!1 &792462234169616610
 GameObject:
   m_ObjectHideFlags: 0
@@ -5715,7 +5715,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 180, y: -350}
+  m_AnchoredPosition: {x: 116, y: -350}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3794476277125941245
@@ -5780,8 +5780,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -11298,6 +11298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ef8d0a186323c043ba6d3b4b0349350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerSkillPoints: {fileID: 8223007658668061326}
   healthRankText: {fileID: 6592453357631897210}
   healthUpgradeText: {fileID: 4983949704899121181}
   damageRankText: {fileID: 2395892522736428052}
@@ -11306,6 +11307,10 @@ MonoBehaviour:
   speedUpgradeText: {fileID: 2397487963629893806}
   staminaRankText: {fileID: 3177577954662710580}
   staminaUpgradeText: {fileID: 8964453435697846803}
+  healthUpgradeCost: 1
+  damageUpgradeCost: 1
+  speedUpgradeCost: 1
+  staminaUpgradeCost: 1
 --- !u!114 &5627379122195710190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17858,6 +17863,9 @@ MonoBehaviour:
   playerReticle: {fileID: 7487552646630663236}
   levelTracker: {fileID: 5765475421304594023}
   sniperScope: {fileID: 2072781518792985060}
+  stamUI: {fileID: 0}
+  hpUI: {fileID: 0}
+  xpUI: {fileID: 0}
   bossHP: {fileID: 312314880329837941}
   bossHPBar: {fileID: 5502419556936992492}
   EnemiesRemainingCount: {fileID: 304217664025071362}
