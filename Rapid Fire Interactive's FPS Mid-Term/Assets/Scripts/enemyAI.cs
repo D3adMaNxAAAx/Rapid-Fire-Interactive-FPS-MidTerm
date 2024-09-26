@@ -103,11 +103,9 @@ public class enemyAI : MonoBehaviour , IDamage
             // seenPlayer = true; // Enemy has now seen the player -- this will be used for a check later in the Update method
 
 
-            if (!isRoaming && agent.remainingDistance < .05f && aCoRoutine == null) {
-                if (aCoRoutine == null) {
-                    aCoRoutine = StartCoroutine(roam());
-                }
-            }
+            if (!isRoaming && agent.remainingDistance < .05f && aCoRoutine == null)
+                aCoRoutine = StartCoroutine(roam());
+           
 
            
             // -- meant to be at the start of the method.
@@ -120,9 +118,8 @@ public class enemyAI : MonoBehaviour , IDamage
         }
         else if (!playerInRange) {
             if (!playerInRange && agent.remainingDistance < .05f && aCoRoutine == null)
-                if (aCoRoutine == null) {
-                    aCoRoutine = StartCoroutine(roam());
-                }
+               aCoRoutine = StartCoroutine(roam());
+                
         }
 
         //Something like this but based off a key count each enemy killed adds key and keys required are equal to 
@@ -261,6 +258,10 @@ public class enemyAI : MonoBehaviour , IDamage
     // Quaterions used becasue we must rotate enemy velocity direction to always face current target
     void faceTarget()
     {
+
+        if (agent.CompareTag("Light"))
+            transform.rotation = Quaternion.LookRotation(playerDir);
+
         // Create a rotation object to store direction to face (Direction of player)
         Quaternion rot = Quaternion.LookRotation(playerDir);
 
