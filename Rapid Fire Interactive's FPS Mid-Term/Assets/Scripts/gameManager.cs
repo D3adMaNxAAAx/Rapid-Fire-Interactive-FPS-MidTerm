@@ -345,10 +345,17 @@ public class gameManager : MonoBehaviour {
         }
 
         if (enemyCount <= 0 && bossCount <= 0) {
-            statePause();
-            menuActive = menuWin; // set active menu to win menu
-            menuActive.SetActive(true); // Show active menu
+            StartCoroutine(gameWinEasterEgg());
+            
         }
+    }
+
+    IEnumerator gameWinEasterEgg()
+    {
+        yield return new WaitForSeconds(.5f);
+        statePause();
+        menuActive = menuWin; // set active menu to win menu
+        menuActive.SetActive(true); // Show active menu
     }
 
     public void youLose() {

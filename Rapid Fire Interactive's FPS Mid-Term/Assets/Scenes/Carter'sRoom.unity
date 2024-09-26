@@ -403,13 +403,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 2664849932926601975, guid: ccf4e2e4d3a647c4da0c84df0b3e199d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2068281726}
-    - targetCorrespondingSourceObject: {fileID: 2201789514557611522, guid: ccf4e2e4d3a647c4da0c84df0b3e199d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1802867640}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccf4e2e4d3a647c4da0c84df0b3e199d, type: 3}
 --- !u!4 &802107304 stripped
@@ -451,7 +445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4888439365048006944, guid: b0ba9c3fe5b9ce341ba39bd02d0658d4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 52.675
+      value: 55.93
       objectReference: {fileID: 0}
     - target: {fileID: 4888439365048006944, guid: b0ba9c3fe5b9ce341ba39bd02d0658d4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -459,7 +453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4888439365048006944, guid: b0ba9c3fe5b9ce341ba39bd02d0658d4, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -20.825
+      value: -29.86
       objectReference: {fileID: 0}
     - target: {fileID: 4888439365048006944, guid: b0ba9c3fe5b9ce341ba39bd02d0658d4, type: 3}
       propertyPath: m_LocalRotation.w
@@ -595,11 +589,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8961856874074312068, guid: ef3fbe119f8e6e545be5cdf7d51dbe45, type: 3}
   m_PrefabInstance: {fileID: 1350226629767257434}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1013696014 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2201789514557611522, guid: ccf4e2e4d3a647c4da0c84df0b3e199d, type: 3}
-  m_PrefabInstance: {fileID: 790412120}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1165846162
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -670,59 +659,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3131306397352406725, guid: 3b6fb8c3e2e17194190be599c2964541, type: 3}
   m_PrefabInstance: {fileID: 1165846162}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1802867639
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1802867640}
-  - component: {fileID: 1802867641}
-  m_Layer: 0
-  m_Name: Right Melee
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1802867640
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1802867639}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1013696014}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1802867641
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1802867639}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2032083465
 GameObject:
   m_ObjectHideFlags: 0
@@ -817,64 +753,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!4 &2052382418 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2664849932926601975, guid: ccf4e2e4d3a647c4da0c84df0b3e199d, type: 3}
-  m_PrefabInstance: {fileID: 790412120}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2068281725
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2068281726}
-  - component: {fileID: 2068281727}
-  m_Layer: 0
-  m_Name: Left Melee
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2068281726
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2068281725}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2052382418}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2068281727
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2068281725}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1350226629767257434
 PrefabInstance:
   m_ObjectHideFlags: 0

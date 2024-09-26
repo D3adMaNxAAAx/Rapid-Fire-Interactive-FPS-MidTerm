@@ -50,6 +50,7 @@ public class enemyAI : MonoBehaviour , IDamage
     [Header("----- Attack -----")]
     [SerializeField] GameObject rangedAttack; // Bullet Object Tracker and Communication Field For Designer
     [SerializeField] Collider meleeCol;
+    
     [Range(.01f, 100)][SerializeField] float shootRate; // Enemy Fire Rate Modifier Field For Designer
     [Range(.01f, 30)][SerializeField] float damageFlashTimer; // Allows Designer To Set Damage Flash Timer 
     int HPOrig; // Private Tracker for enemy original HP
@@ -246,10 +247,12 @@ public class enemyAI : MonoBehaviour , IDamage
     public void meleeOn()
     {
         meleeCol.enabled = true;
-    } public void meleeOff()
+    } 
+    public void meleeOff()
     {
         meleeCol.enabled = false;
-    } 
+    }
+    
    
 
 
@@ -288,15 +291,20 @@ public class enemyAI : MonoBehaviour , IDamage
         // Check if enemy is dead
         if (HP <= 0)
         {
+
+            if (agent.gameObject.CompareTag("Boss"))
+            {
+                anim.SetTrigger("Dead");
+            }
             // Tells Game manager to take 1 enemy out of game goal enemy total
             gameManager.instance.updateGameGoal(-1);
 
-            // Give the player XP & coins for defeating the enemy
-            gameManager.instance.getPlayerScript().setXP(getEnemyXP()); // setXP will ADD the amount given.
-            gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() + getEnemyCoins()); // Add coins to player amount.
+            
 
             // Update UI
             gameManager.instance.getPlayerScript().updatePlayerUI();
+
+            
 
             // Roll for an ammo pickup
             if (rngDropRate > 0)
@@ -309,11 +317,18 @@ public class enemyAI : MonoBehaviour , IDamage
             }
 
             // Since No HP Delete Enemy Object
-            Destroy(gameObject);
+            if (!gameObject.CompareTag("Boss"))
+            {
+                // Give the player XP & coins for defeating the enemy
+                gameManager.instance.getPlayerScript().setXP(getEnemyXP()); // setXP will ADD the amount given.
+                gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() + getEnemyCoins()); // Add coins to player amount.
+                Destroy(gameObject);
+            }
             gameManager.instance.getPlayerScript().updatePlayerUI();
         }
     }
 
+    
     // Will flash Enemy mesh on damage taken
     IEnumerator flashColor()
     {
