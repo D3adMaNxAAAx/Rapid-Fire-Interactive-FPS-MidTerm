@@ -15,6 +15,11 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuComplete;
+
+    public GameObject getUpgradeMenu() {
+        return menuUpgrade;
+    }
+
     [SerializeField] GameObject menuUpgrade;
     [SerializeField] GameObject menuStore;
     [SerializeField] GameObject menuLoadout;
@@ -414,7 +419,9 @@ public class gameManager : MonoBehaviour {
     }
 
     public void openUpgradeMenu() {
-        menuActive.SetActive(false);
+        if (menuActive != null) {
+            menuActive.SetActive(false);
+        }
         menuActive = menuUpgrade;
         menuActive.SetActive(true);
         upgradeMenu.upgradeUI.setVars();
