@@ -805,4 +805,13 @@ public class playerMovement : MonoBehaviour, IDamage
     {
         _playerLevel = playerLevel;
     }
+
+
+
+
+
+    public List<gunStats> getGunList() 
+        { return guns; }
+    public void setGunList(List<gunStats> _list)
+        { guns = _list; }
 }
