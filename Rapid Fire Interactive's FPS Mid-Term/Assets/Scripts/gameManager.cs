@@ -386,22 +386,23 @@ public class gameManager : MonoBehaviour {
         // All of this only hides some things and not the entire thing. Refer to how the AmmoUI is hidden
         // Unhide these after loadout is picked.
         // Leave commented until above is addressed.
-        //displayPlayerHP(state);
-        //displayAmmoUI(state);
-        //displayEnemyCount(state);
-        //displayPlayerStam(state);
-        //displayXPTracker(state);
+        displayPlayerHP(state);
+        displayAmmoUI(state);
+        displayEnemyCount(state);
+        displayPlayerStam(state);
+        displayXPTracker(state);
     }
 
     public void loadout()
     {
         menuActive = menuLoadout;
 
-        displayAmmoUI(false);
-        displayEnemyCount(false);
-        displayPlayerHP(false);
-        displayPlayerStam(false);
-        displayXPTracker(false);
+        displayUI(false);
+        //displayAmmoUI(false);
+        //displayEnemyCount(false);
+        //displayPlayerHP(false);
+        //displayPlayerStam(false);
+        //displayXPTracker(false);
     }
 
     public void displayBossBar(bool state) {

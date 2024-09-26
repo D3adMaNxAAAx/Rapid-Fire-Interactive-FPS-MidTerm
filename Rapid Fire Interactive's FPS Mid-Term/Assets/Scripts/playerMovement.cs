@@ -519,7 +519,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 speed = speedOrig;
                 isSprinting = false;
                 staminaRecover();
-                
+            
                 
         }
 
