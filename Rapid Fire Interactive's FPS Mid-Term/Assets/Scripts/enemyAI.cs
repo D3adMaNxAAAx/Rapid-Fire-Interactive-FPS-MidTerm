@@ -219,8 +219,10 @@ public class enemyAI : MonoBehaviour , IDamage
     IEnumerator shoot() {
         // Set shooting to true
         isShooting = true;
-        if (gameObject.CompareTag("Heavy"))
+        if (gameObject.CompareTag("Heavy") && agent.remainingDistance <= agent.stoppingDistance + 1)
+        {
             anim.SetTrigger("Melee");
+        }
 
         else if (gameObject.CompareTag("Basic") || gameObject.CompareTag("Light") || gameObject.CompareTag("Challenge"))
             anim.SetTrigger("Shoot");
