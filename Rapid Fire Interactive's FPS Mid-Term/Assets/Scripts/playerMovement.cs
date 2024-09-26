@@ -750,6 +750,16 @@ public class playerMovement : MonoBehaviour, IDamage
         return coins;
     }
 
+    public int getDamage()
+    {
+        return damage;
+    }
+
+    public int getDamageMod()
+    {
+        return (int)damageUpgradeMod;
+    }
+
     // Setters
     public void setHP(int newHP)
     {
@@ -829,6 +839,10 @@ public class playerMovement : MonoBehaviour, IDamage
         skillPoints = newSkillPoints;
     }
 
+    public void setDamage(int newDamage)
+    {
+        damage = newDamage;
+    }
 
 
     public List<gunStats> getGunList() 

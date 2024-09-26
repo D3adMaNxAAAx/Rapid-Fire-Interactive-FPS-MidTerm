@@ -32,6 +32,7 @@ public class upgradeMenu : MonoBehaviour {
     float damageMod = 1;
     float speed;
     int stamina;
+    int moddedDam;
 
     void Start() {
         upgradeUI = this;
@@ -79,9 +80,10 @@ public class upgradeMenu : MonoBehaviour {
             makeTransaction(healthUpgradeCost);
             healthRank++;
             healthRankText.text = healthRank.ToString();
-            HP += 10;
+            HP = HP + 10;
             healthUpgradeText.text = HP.ToString() + " >> " + (HP + 10).ToString();
             playerMovement.player.setHP(HP);
+            playerMovement.player.updatePlayerUI();
         }
     }
 
@@ -94,6 +96,9 @@ public class upgradeMenu : MonoBehaviour {
             damageMod += 0.2f;
             damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.2f).ToString();
             playerMovement.player.setDamageMod(damageMod);
+            moddedDam = playerMovement.player.getDamage() + playerMovement.player.getDamageMod();
+            playerMovement.player.setDamage(moddedDam);
+            playerMovement.player.updatePlayerUI();
         }
     }
 
@@ -103,9 +108,10 @@ public class upgradeMenu : MonoBehaviour {
             makeTransaction(speedUpgradeCost);
             speedRank++;
             speedRankText.text = speedRank.ToString();
-            speed += 1;
+            speed = speed + 1;
             speedUpgradeText.text = speed.ToString() + " >> " + (speed + 1).ToString();
             playerMovement.player.setSpeed(speed);
+            playerMovement.player.updatePlayerUI();
         }
     }
 
@@ -115,9 +121,10 @@ public class upgradeMenu : MonoBehaviour {
             makeTransaction(staminaUpgradeCost);
             staminaRank++;
             staminaRankText.text = staminaRank.ToString();
-            stamina += 5;
+            stamina = stamina + 5;
             staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
             playerMovement.player.setStamina(stamina);
+            playerMovement.player.updatePlayerUI();
         }
     }
 }
