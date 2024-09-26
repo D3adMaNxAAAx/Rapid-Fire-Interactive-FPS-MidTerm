@@ -108,13 +108,6 @@ public class enemyAI : MonoBehaviour , IDamage
                     aCoRoutine = StartCoroutine(roam());
                 }
             }
-            else if (!playerInRange)
-            {
-                if(!playerInRange && agent.remainingDistance < .05f && aCoRoutine == null)
-                    if (aCoRoutine == null) {
-                        aCoRoutine = StartCoroutine(roam());
-                    }
-            }
 
            
             // -- meant to be at the start of the method.
@@ -125,7 +118,13 @@ public class enemyAI : MonoBehaviour , IDamage
             //}
 
         }
-        
+        else if (!playerInRange) {
+            if (!playerInRange && agent.remainingDistance < .05f && aCoRoutine == null)
+                if (aCoRoutine == null) {
+                    aCoRoutine = StartCoroutine(roam());
+                }
+        }
+
         //Something like this but based off a key count each enemy killed adds key and keys required are equal to 
         //if (gameManager.instance.getEnemyCount() == 1 && gameManager.instance.getBossCount() == 1)
         //    gameManager.instance.displayBossBar(true);
