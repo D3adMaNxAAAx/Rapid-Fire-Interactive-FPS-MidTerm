@@ -19,10 +19,9 @@ public class storeManager : MonoBehaviour
     
     // Store Costs
     [Header("-- Store Modifiers --")]
+    [SerializeField] float flashMod;
     [SerializeField] int healthCost;
     [SerializeField] int ammoCost;
-    [SerializeField] float flashMod;
-
     // Memory
     Color healthColorOrig;
     Color ammoColorOrig;
