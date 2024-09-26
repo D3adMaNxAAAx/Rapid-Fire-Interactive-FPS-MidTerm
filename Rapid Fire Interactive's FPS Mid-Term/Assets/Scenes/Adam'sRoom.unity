@@ -107,8 +107,8 @@ NavMeshSettings:
     agentTypeID: 0
     agentRadius: 0.5
     agentHeight: 2
-    agentSlope: 45
-    agentClimb: 0.4
+    agentSlope: 55
+    agentClimb: 0.95
     ledgeDropHeight: 0
     maxJumpAcrossDistance: 0
     minRegionArea: 2
@@ -248,6 +248,10 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 7332384738921287326, guid: 3a9dc79d8794f194089843a3a442176b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b9a8f7e406b8f9545be88e8c2389b0f1, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -415,6 +419,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2392922155387268859, guid: 59f359ace34f4514fa176b9b2d962f26, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b8750461ed084dc40aa792c82bba83da, type: 2}
     - target: {fileID: 6926877556112543969, guid: 59f359ace34f4514fa176b9b2d962f26, type: 3}
       propertyPath: m_Name
       value: Warehouse
