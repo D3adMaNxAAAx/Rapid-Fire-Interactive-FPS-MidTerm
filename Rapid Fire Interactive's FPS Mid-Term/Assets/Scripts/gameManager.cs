@@ -278,8 +278,8 @@ public class gameManager : MonoBehaviour {
 
         // Pausing game, hididng player background ui, and showing loadout menu
 
-        //menuActive = menuLoadout;
-        loadout();
+        menuActive = menuLoadout;
+        displayUI(false);
 
     }
 
@@ -400,17 +400,7 @@ public class gameManager : MonoBehaviour {
         displayXPTracker(state);
     }
 
-    public void loadout()
-    {
-        menuActive = menuLoadout;
-
-        displayUI(false);
-        //displayAmmoUI(false);
-        //displayEnemyCount(false);
-        //displayPlayerHP(false);
-        //displayPlayerStam(false);
-        //displayXPTracker(false);
-    }
+    
 
     public void displayBossBar(bool state) {
         getBossHP().SetActive(state);
