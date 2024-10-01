@@ -65,7 +65,7 @@ public class enemyAI : MonoBehaviour , IDamage
         // Assign variables that need to be set at enemy creation
         colorOrig = model.material.color; // Sets our Models original color on scene start
         HPOrig = HP; // Set orginal hp value on scene open for enemy
-        float OGSpeed = agent.speed;
+        OGSpeed = agent.speed;
 
         // if enemy is boss original = enemy hp used for boss health progress bar
         if (type == enemyType.boss)
@@ -188,7 +188,7 @@ public class enemyAI : MonoBehaviour , IDamage
     IEnumerator shoot() {
         // Set shooting to true
         isShooting = true;
-        if (gameObject.CompareTag("Heavy") && agent.remainingDistance <= agent.stoppingDistance + 1)
+        if (gameObject.CompareTag("Heavy"))
         {
             anim.SetTrigger("Melee");
         }
@@ -229,15 +229,12 @@ public class enemyAI : MonoBehaviour , IDamage
 
     // Tell AI to face player 
     // Quaterions used becasue we must rotate enemy velocity direction to always face current target
-    void faceTarget()
-    {
+    void faceTarget() {
 
         if (agent.CompareTag("Light"))
-            transform.rotation = Quaternion.LookRotation(playerDir);
+            transform.rotation = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
 
-        // Create a rotation object to store direction to face (Direction of player)
-        Quaternion rot = Quaternion.LookRotation(playerDir);
-
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z)); // Create a rotation object to store direction to face (Direction of player)
         // Telling AI to transform(Move) in rotation direaction of set destions position in time and rotate at the desired speed set to be frame rate INDEPENDENT
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }

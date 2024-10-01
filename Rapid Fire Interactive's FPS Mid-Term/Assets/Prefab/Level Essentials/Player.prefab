@@ -61,17 +61,17 @@ MonoBehaviour:
   stamina: 50
   coins: 0
   playerXPMax: 10
+  skillPoints: 0
   guns: []
   gunModel: {fileID: 8347418103555859136}
   shotFlash: {fileID: 8003970111949719129}
   damage: 1
   fireRate: 0.4
   bulletDistance: 25
-  grenade: {fileID: 0}
+  grenades: []
+  grenade: {fileID: 1666907183475564130, guid: cdf11c09e9ecf7446bab81d249de101c, type: 3}
   grenadeStats: {fileID: 11400000, guid: 97ba14f077da2264bb4743fc5222a169, type: 2}
-  totalGrenades: 3
-  healItem: {fileID: 0}
-  healItemCount: 3
+  heals: []
   healCoolDown: 5
   speedMod: 2.5
   maxJumps: 1
@@ -532,7 +532,7 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 0
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
