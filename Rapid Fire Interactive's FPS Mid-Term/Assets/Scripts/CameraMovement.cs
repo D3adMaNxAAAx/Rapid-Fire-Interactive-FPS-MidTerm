@@ -115,6 +115,9 @@ public class CameraMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        sens = (int)sensitivitySlider.value;
+
         float mouseY = Input.GetAxis("Mouse Y") * sens * Time.deltaTime;
         float mouseX = Input.GetAxis("Mouse X") * sens * Time.deltaTime;
 
