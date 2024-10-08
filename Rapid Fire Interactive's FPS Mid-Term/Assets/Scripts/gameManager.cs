@@ -42,6 +42,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject stamUI;
     [SerializeField] GameObject hpUI;
     [SerializeField] GameObject xpUI;
+    [SerializeField] GameObject timer;
 
     // -- Game --
     [Header("-- Enemy UI --")]
@@ -119,6 +120,10 @@ public class gameManager : MonoBehaviour {
     public TMP_Text getXPText()
     {
         return XPText;
+    }
+
+    public GameObject getTimer() {
+        return timer;
     }
 
     public TMP_Text getAmmoText()

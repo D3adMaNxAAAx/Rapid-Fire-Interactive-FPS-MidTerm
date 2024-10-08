@@ -44,6 +44,12 @@ public class buttonFunctions : MonoBehaviour {
 
     }
 
+    bool timerOn = false;
+    public void toggleTimer() {
+        timerOn = !timerOn;
+        gameManager.instance.getTimer().SetActive(timerOn);
+    }
+
     public void back() {
         gameManager.instance.backButton();
     }
