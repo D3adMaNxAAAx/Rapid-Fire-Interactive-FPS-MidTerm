@@ -3,14 +3,18 @@ using System.Collections.Generic;
 
 //using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraMovement : MonoBehaviour
 {
     public static CameraMovement state;
-
-    [SerializeField] private int sens;
+    //Sensitivity settings 
+    [SerializeField] private Slider sensitivitySlider;
+    [SerializeField] private Toggle invertYToggle;
+    [SerializeField] private int sens = 300;
     int zoomSens;
     int startingSens;
+  
     [SerializeField] private int lockVertMin, lockVertMax;
     [SerializeField] private bool invertY;
 
@@ -27,6 +31,8 @@ public class CameraMovement : MonoBehaviour
     private float currentLeanAngle = 0f;
     private Vector3 OrigCameraPos;
 
+   
+ 
 
     private bool isAiming;
     private Camera cam;
@@ -81,7 +87,14 @@ public class CameraMovement : MonoBehaviour
         invertY = value;
     }
 
-
+    public void AdjustSensitivity(float value)
+    {
+        sens = Mathf.Clamp((int)value, 100, 600);
+    }
+    public void ToggleInvertY(bool isInverted)
+    {
+        invertY = isInverted;
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -95,6 +108,13 @@ public class CameraMovement : MonoBehaviour
         OrigCameraPos = transform.localPosition;
         startingSens = sens;
         zoomSens = sens / 2;
+
+        sensitivitySlider.value = sens;
+        sensitivitySlider.onValueChanged.AddListener(AdjustSensitivity);
+
+        invertYToggle.isOn = invertY;
+        invertYToggle.onValueChanged.AddListener(ToggleInvertY);
+
     }
 
     // Update is called once per frame
@@ -188,5 +208,5 @@ public class CameraMovement : MonoBehaviour
     {
         snapZoom = !snapZoom;
     }
-
+   
 }
