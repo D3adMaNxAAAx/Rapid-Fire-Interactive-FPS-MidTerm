@@ -10,7 +10,7 @@ public class CameraMovement : MonoBehaviour
     public static CameraMovement state;
     //Sensitivity settings 
     [SerializeField] private Slider sensitivitySlider;
-    [SerializeField] private Toggle invertYToggle;
+    
     [SerializeField] private int sens = 300;
     int zoomSens;
     int startingSens;
@@ -89,12 +89,10 @@ public class CameraMovement : MonoBehaviour
 
     public void AdjustSensitivity(float value)
     {
-        sens = Mathf.Clamp((int)value, 100, 600);
+        sens = (int)value;
+        Debug.Log("Sensitivity adjusted to: " + sens);
     }
-    public void ToggleInvertY(bool isInverted)
-    {
-        invertY = isInverted;
-    }
+   
     // Start is called before the first frame update
     void Start()
     {
@@ -111,9 +109,6 @@ public class CameraMovement : MonoBehaviour
 
         sensitivitySlider.value = sens;
         sensitivitySlider.onValueChanged.AddListener(AdjustSensitivity);
-
-        invertYToggle.isOn = invertY;
-        invertYToggle.onValueChanged.AddListener(ToggleInvertY);
 
     }
 
