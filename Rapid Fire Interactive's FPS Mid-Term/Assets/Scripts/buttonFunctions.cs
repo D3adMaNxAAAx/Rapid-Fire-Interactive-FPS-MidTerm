@@ -44,7 +44,7 @@ public class buttonFunctions : MonoBehaviour {
 
     }
 
-    bool timerOn = false;
+    bool timerOn = true;
     public void toggleTimer() {
         timerOn = !timerOn;
         gameManager.instance.getTimer().SetActive(timerOn);
