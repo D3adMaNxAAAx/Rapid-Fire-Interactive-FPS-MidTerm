@@ -123,37 +123,30 @@ public class playerMovement : MonoBehaviour, IDamage
                 StartCoroutine(healing());  // recursive method
                 readyToHeal = false;  // stop healing
             }
+
+            if (guns.Count != 0)
+                selectGun();
+
+            if (Input.GetButtonDown("ThrowGrenade") && grenades.Count > 0) {
+                throwGrenade();
+            }
+            if (Input.GetButtonDown("Heal Item") && heals.Count > 0 && healCoolDown <= 0f && !isHealing) {
+                StartCoroutine(HealPlayer());
+            }
+            if (healCoolDown > 0f) {
+                healCoolDown -= Time.deltaTime;
+            }
+
+            //Working out null ref bug...put on pause for time being
+
+            //if (Input.GetButton("Melee"))
+            //    StartCoroutine(PlayerMelee());
         }
 
         sprint();
         // Check if sprinting -- Drain stamina as the player runs
         if (isSprinting && !isDraining)
             StartCoroutine(staminaDrain());
-
-        if (guns.Count != 0)
-            selectGun();
-
-        if (Input.GetButtonDown("ThrowGrenade") && grenades.Count > 0)
-        {
-            throwGrenade();
-        }
-        if (Input.GetButtonDown("Heal Item") && heals.Count > 0 && healCoolDown <= 0f && !isHealing)
-        {
-            StartCoroutine(HealPlayer());
-            lowHealth = false;
-            gameManager.instance.getHealthWarning().SetActive(false);
-        }
-        if(healCoolDown > 0f)
-        {
-            healCoolDown -= Time.deltaTime;
-        }
-
-
-        //Working out null ref bug...put on pause for time being
-
-        //if (Input.GetButton("Melee"))
-        //    StartCoroutine(PlayerMelee());
-
     }
 
     public void spawnPlayer()
@@ -163,6 +156,7 @@ public class playerMovement : MonoBehaviour, IDamage
         controller.enabled = true;
 
         HP = HPOrig;
+        lowHealth = false;
         gameManager.instance.getHealthWarning().SetActive(false);
         updatePlayerUI();
     }
@@ -224,6 +218,21 @@ public class playerMovement : MonoBehaviour, IDamage
         // Need additional checks to make sure sound isn't funky & only plays when the player is on the ground.
         if (controller.isGrounded && moveDir.magnitude > 0.3f && !isStepping)
             StartCoroutine(playFootsteps());
+    }
+
+    IEnumerator playFootsteps() {
+        isStepping = true;
+
+        // Play step sound
+        aud.PlayOneShot(audioManager.instance.audSteps[Random.Range(0, audioManager.instance.audSteps.Length)], audioManager.instance.audStepVol);
+
+        // Check if the player is sprinting and play the sound faster if so
+        if (!isSprinting)
+            yield return new WaitForSeconds(0.5f);
+        else
+            yield return new WaitForSeconds(0.3f);
+
+        isStepping = false;
     }
 
     void shootGun() {
@@ -535,49 +544,7 @@ public class playerMovement : MonoBehaviour, IDamage
             
                 
         }
-
-            //if (stamina >= (staminaOrig / 2))
-            //{
-
-            ////toggleSprintOn();
-            //    speed *= speedMod;
-            //    isSprinting = true;
-            //    staminaDrain();
-            //}
-
-        //}
         updatePlayerUI();
-    }
-
-    void selectGun()
-    {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0)
-        {
-            gunPos++;
-            if (gunPos == guns.Count)
-                gunPos = 0;
-            changeGun();
-        }
-        else if(Input.GetAxis("Mouse ScrollWheel") < 0)
-        {
-            gunPos--;
-            if (gunPos < 0)
-                gunPos = guns.Count - 1;
-            changeGun();
-        }
-    }
-
-    void changeGun()
-    {
-        float damTemp = guns[gunPos].damage * damageUpgradeMod;
-        damage = (int)damTemp;
-        bulletDistance = guns[gunPos].bulletDist;
-        fireRate = getCurGun().fireRate;
-        isSniper = getCurGun().isSniper;
-        updatePlayerUI();
-
-        gunModel.GetComponent<MeshFilter>().sharedMesh = getCurGun().gunModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = getCurGun().gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     void throwGrenade()
@@ -650,25 +617,29 @@ public class playerMovement : MonoBehaviour, IDamage
 
     //}
 
-    IEnumerator HealPlayer()
-    {
-        Debug.Log("hi");
-        isHealing = true;
+    IEnumerator HealPlayer() { // h
+        if (HP != HPOrig) {
+            isHealing = true;
 
-        HP = Mathf.Min(HP + heals[0].healAmmount,HPOrig);
+            HP = Mathf.Min(HP + heals[0].healAmmount, HPOrig);
 
-        if(heals[0].healSound != null)
-        {
-            AudioSource.PlayClipAtPoint(heals[0].healSound, transform.position);
+            if (heals[0].healSound != null) {
+                AudioSource.PlayClipAtPoint(heals[0].healSound, transform.position);
+            }
+            updatePlayerUI();
+
+            yield return new WaitForSeconds(heals[0].healCoolDown);
+
+            isHealing = false;
+
+            healCoolDown = heals[0].healCoolDown;
+            heals.Remove(heals[0]);
+
+            if (((float)HP / HPOrig) > .25) {
+                lowHealth = false;
+                gameManager.instance.getHealthWarning().SetActive(false); // getting rid of low health state if not low anymore
+            }
         }
-        updatePlayerUI();
-
-        yield return new WaitForSeconds(heals[0].healCoolDown);
-       
-        isHealing = false;
-
-        healCoolDown = heals[0].healCoolDown;
-        heals.Remove(heals[0]);
     }
 
     // temporary check if the player has a gun -- can remove later, using for debug purposes
@@ -680,28 +651,39 @@ public class playerMovement : MonoBehaviour, IDamage
             return false;
     }
 
-    IEnumerator playFootsteps()
-    {
-        isStepping = true;
-
-        // Play step sound
-        aud.PlayOneShot(audioManager.instance.audSteps[Random.Range(0, audioManager.instance.audSteps.Length)], audioManager.instance.audStepVol);
-
-        // Check if the player is sprinting and play the sound faster if so
-        if (!isSprinting)
-            yield return new WaitForSeconds(0.5f);
-        else
-            yield return new WaitForSeconds(0.3f);
-
-        isStepping = false;
-    }
-
     public void addToHeals(HealStats newHeal) {
         heals.Add(newHeal);
     }
 
     public void addToGrenades(GrenadeStats newGrenade) {
         grenades.Add(newGrenade);
+    }
+
+    void selectGun() {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0) {
+            gunPos++;
+            if (gunPos == guns.Count)
+                gunPos = 0;
+            changeGun();
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0) {
+            gunPos--;
+            if (gunPos < 0)
+                gunPos = guns.Count - 1;
+            changeGun();
+        }
+    }
+
+    void changeGun() {
+        float damTemp = guns[gunPos].damage * damageUpgradeMod;
+        damage = (int)damTemp;
+        bulletDistance = guns[gunPos].bulletDist;
+        fireRate = getCurGun().fireRate;
+        isSniper = getCurGun().isSniper;
+        updatePlayerUI();
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = getCurGun().gunModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = getCurGun().gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     public void getGunStats(gunStats _gun)
@@ -723,82 +705,54 @@ public class playerMovement : MonoBehaviour, IDamage
     }
 
     // -- GETTERS --
-    public int getHP()
-    {
-        return HP;
-    }
 
-    public int getHPOrig()
-    {
-        return HPOrig;
-    }
+    public int getHP() {
+        return HP;}
 
-    public int getStamina()
-    {
-        return stamina;
-    }
+    public int getHPOrig() {
+        return HPOrig;}
 
-    public int getStaminaOrig()
-    {
-        return staminaOrig;
-    }
+    public int getStamina() {
+        return stamina;}
 
-    public int getXP()
-    {
-        return playerXP;
-    }
+    public int getStaminaOrig() {
+        return staminaOrig;}
 
-    public int getAmmo()
-    {
-        return getCurGun().ammoCur;
-    }
+    public int getXP() {
+        return playerXP;}
 
-    public int getAmmoOrig()
-    {
-        return getCurGun().ammoMax;
-    }
+    public int getAmmo() {
+        return getCurGun().ammoCur;}
 
-    public bool getIsSniper()
-    {
-        return isSniper;
-    }
+    public int getAmmoOrig() {
+        return getCurGun().ammoMax;}
 
-    public GameObject getGunModel()
-    {
-        return gunModel;
-    }
+    public bool getIsSniper() {
+        return isSniper;}
 
-    public float getSpeed()
-    {
-        return speed;
-    }
-    
-    public int getCoins()
-    {
-        return coins;
-    }
+    public GameObject getGunModel() {
+        return gunModel;}
 
-    public int getDamage()
-    {
-        return damage;
-    }
+    public float getSpeed() {
+        return speed;}
 
-    public int getDamageMod()
-    {
-        return (int)damageUpgradeMod;
-    }
+    public int getCoins() {
+        return coins;}
+
+    public int getDamage() {
+        return damage;}
+
+    public int getDamageMod() {
+        return (int)damageUpgradeMod;}
 
     // Setters
-    public void setHP(int newHP)
-    {
+    public void setHP(int newHP) {
         HP = newHP;
     }
-    public void setHPOrig(int newHPOrig)
-    {
+    public void setHPOrig(int newHPOrig) {
         HPOrig = newHPOrig;
     }
-    public void setAmmo(int newAmmo)
-    {
+    public void setAmmo(int newAmmo) {
         // Check if the player has a gun
         if (guns != null || guns.Count != 0)
             getCurGun().ammoCur = newAmmo;
@@ -807,8 +761,7 @@ public class playerMovement : MonoBehaviour, IDamage
         // (might not be necessary?)
         updatePlayerUI();
     }
-    public void setAmmoOrig(int newAmmoOrig)
-    {
+    public void setAmmoOrig(int newAmmoOrig) {
         // Check if the player has a gun
         if (guns != null || guns.Count != 0)
             getCurGun().ammoMax = newAmmoOrig;
@@ -817,61 +770,49 @@ public class playerMovement : MonoBehaviour, IDamage
         // (might not be necessary?)
         updatePlayerUI();
     }
-    public int getPlayerLevel()
-    {
+    public int getPlayerLevel() {
         return playerLevel;
     }
 
-    public gunStats getCurGun()
-    {
+    public gunStats getCurGun() {
         return guns[gunPos];
     }
 
-    public int getSkillPoints()
-    { return skillPoints; }
+    public int getSkillPoints() { return skillPoints; }
 
     // -- SETTERS --
-    public void setSpeed(float newSpeed)
-    {
+    public void setSpeed(float newSpeed) {
         speed = newSpeed;
     }
-    
-    public void setStamina(int newStamina)
-    {
+
+    public void setStamina(int newStamina) {
         stamina = newStamina;
     }
 
-    public void setCoins(int newCoins)
-    {
+    public void setCoins(int newCoins) {
         coins = newCoins;
     }
 
-    public void setDamageMod(float newDamageMod)
-    {
+    public void setDamageMod(float newDamageMod) {
         damageUpgradeMod = newDamageMod;
     }
 
-    public void setXP(int amount)
-    {
+    public void setXP(int amount) {
         playerXP += amount;
         levelTracker(); // Check if the player can level up
     }
 
-    public void setPlayerLevel(int newPlayerLevel)
-    {
+    public void setPlayerLevel(int newPlayerLevel) {
         playerLevel = newPlayerLevel;
     }
 
-    public void setSkillPoints(int newSkillPoints)
-    {
+    public void setSkillPoints(int newSkillPoints) {
         skillPoints = newSkillPoints;
     }
 
-    public void setDamage(int newDamage)
-    {
+    public void setDamage(int newDamage) {
         damage = newDamage;
     }
-
 
     public List<gunStats> getGunList() 
         { return guns; }
