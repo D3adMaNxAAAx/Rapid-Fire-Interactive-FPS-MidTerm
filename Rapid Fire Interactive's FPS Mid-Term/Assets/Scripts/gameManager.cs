@@ -43,6 +43,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject hpUI;
     [SerializeField] GameObject xpUI;
     [SerializeField] GameObject timer;
+    [SerializeField] GameObject timerTracker; // this makes the timer run regardless if its hidden or not
 
     // -- Game --
     [Header("-- Enemy UI --")]
@@ -124,6 +125,10 @@ public class gameManager : MonoBehaviour {
 
     public GameObject getTimer() {
         return timer;
+    }
+
+    public GameObject getTimerTracker() {
+        return timerTracker;
     }
 
     public TMP_Text getAmmoText()
@@ -484,22 +489,9 @@ public class gameManager : MonoBehaviour {
     public void newGame()
     {
         stateUnpause();
+        timerTracker.SetActive(true);
         displayUI(true);
     }
-
-    //still working out the null reference and the rest of how the next two functions work
-
-
-    //if you need to test just comment out 
-    /*public void loadoutPreset1Pick()
-    {
-        loadout.instance.setSelectedLoadout(loadout.instance.getPreset1());
-        loadout.instance.getPrmLd1Img().gameObject.SetActive(true);
-        loadout.instance.getSecLd1Img().gameObject.SetActive(true);
-        loadout.instance.getCnsm1Ld1Img().gameObject.SetActive(true);
-        loadout.instance.getCnsm2Ld1Img().gameObject.SetActive(true);
-        loadout.instance.getThrwLd1Img().gameObject.SetActive(true);
-    }*/
 
     public void backButton() {
         if (menuActive == menuSettings)
