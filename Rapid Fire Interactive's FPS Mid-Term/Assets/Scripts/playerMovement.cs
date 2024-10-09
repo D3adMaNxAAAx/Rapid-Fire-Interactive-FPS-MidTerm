@@ -148,6 +148,12 @@ public class playerMovement : MonoBehaviour, IDamage
             healCoolDown -= Time.deltaTime;
         }
 
+
+        //Working out null ref bug...put on pause for time being
+
+        //if (Input.GetButton("Melee"))
+        //    StartCoroutine(PlayerMelee());
+
     }
 
     public void spawnPlayer()
@@ -623,22 +629,26 @@ public class playerMovement : MonoBehaviour, IDamage
         Destroy(grenadeInstance);
     }
 
-    IEnumerator PlayerMelee()
-    {
-        Vector3 currGunPos = getCurGun().GameObject().transform.position;
-        Vector3 meleePos = new Vector3(getCurGun().GameObject().transform.position.x, getCurGun().GameObject().transform.position.y + 3f, getCurGun().GameObject().transform.position.z);
-        BoxCollider bayonet = getCurGun().GameObject().GetComponentInChildren<BoxCollider>();
-        if (Input.GetButton("Melee"))
-        {
-            if (guns[gunPos].GetComponentInChildren<BoxCollider>().isTrigger)
-            {
-                Vector3.Lerp(currGunPos, meleePos, 1f);
-                yield return new WaitForSeconds(2);
-            }
-            else
-                yield return new WaitForSeconds(2);
-        }
-    }
+
+    //Working out null ref bug...put on pause for time being
+
+    //IEnumerator PlayerMelee()
+    //{
+    //    Vector3 currGunPos = getCurGun().GameObject().transform.position;
+    //    Vector3 meleePos = new Vector3(getCurGun().GameObject().transform.position.x, getCurGun().GameObject().transform.position.y , getCurGun().GameObject().transform.position.z + 3f);
+
+
+    //        if (guns[gunPos].GetComponentInChildren<BoxCollider>() != null)
+    //        {
+    //        Debug.Log("Melee Ready");
+    //            getCurGun().GameObject().transform.forward += Vector3.Lerp(currGunPos, meleePos, 1f);
+    //            yield return new WaitForSeconds(2);
+    //            getCurGun().GameObject().transform.position = currGunPos;
+    //        }
+    //        else
+    //            yield return new WaitForSeconds(2);
+
+    //}
 
     IEnumerator HealPlayer()
     {
