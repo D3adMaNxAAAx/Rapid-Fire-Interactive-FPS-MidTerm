@@ -17,13 +17,11 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuComplete;
 
-    public GameObject getUpgradeMenu() {
-        return menuUpgrade;
-    }
-
     [SerializeField] GameObject menuUpgrade;
     [SerializeField] GameObject menuStore;
     [SerializeField] GameObject menuLoadout;
+    [SerializeField] GameObject menuSettings;
+    [SerializeField] GameObject menuOptions;
 
     // -- Player --
     [Header("-- Player UI --")]
@@ -66,7 +64,6 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject player; // Tracks player object
     [SerializeField] playerMovement playerScript; // Tracks playerController field
     [SerializeField] GameObject playerSpawnPos;
-    [SerializeField] GameObject menuSettings;
 
     // Reticle Variables
     Vector2 reticleSize; // so the player can adjust reticle size through settings & also to change it to and from.
@@ -78,202 +75,6 @@ public class gameManager : MonoBehaviour {
     int bossCount; // For when we make boss monster
     float timeScaleOrig; // Tracks & stores original game time scale
     bool isPaused;
-
-    public GameObject getMenuLoadout()
-    {
-        return menuLoadout;
-    }
-
-    public GameObject getPlayerSpawnPos()
-    { return playerSpawnPos;}
-  
-    public void setPlayerSpawnPos(GameObject _playerSpawnPos)
-    { playerSpawnPos = _playerSpawnPos; }
-  
-    public GameObject getCheckPointPopup()
-    { return checkPointPopup; }
-   
-    public void setCheckPointPopup(GameObject _checkPointPopup)
-    { checkPointPopup = _checkPointPopup; }
-   
-    public GameObject getDmgFlash()
-        { return damagePanelFlash; }
-
-    public void setDmgFlash(GameObject _dmgPanel)
-        { damagePanelFlash = _dmgPanel; }
-
-    public GameObject getAmmoWarning()
-    { return ammoWarning; }
-
-    public void setAmmoWarning(GameObject _ammoWarning)
-    { ammoWarning = _ammoWarning; }
-
-    public TMP_Text getHPText()
-    {
-        return HPText;
-    }
-
-    public TMP_Text getStamText()
-    {
-        return stamText;
-    }
-
-    public TMP_Text getXPText()
-    {
-        return XPText;
-    }
-
-    public GameObject getTimer() {
-        return timer;
-    }
-
-    public GameObject getTimerTracker() {
-        return timerTracker;
-    }
-
-    public TMP_Text getAmmoText()
-    {
-        return ammoText;
-    }
-
-    void setHPText(TMP_Text _HPText)
-    {
-        HPText = _HPText;
-    }
-
-    void setStamText(TMP_Text _stamText)
-    {
-        stamText = _stamText;
-    }
-
-    void setXPText(TMP_Text _XPText)
-    {
-        XPText = _XPText;
-    }
-
-    void setAmmoText(TMP_Text _ammoText)
-    {
-        ammoText = _ammoText;
-    }
-
-    public GameObject getAmmoUI()
-    {
-        return ammoUI;
-    }
-
-    void setAmmoUI(GameObject _ammoUI)
-    {
-        ammoUI = _ammoUI;
-    }
-
-    public GameObject getHealthWarning() 
-        { return lowHealthWarning; }
-
-    public void setHealthWarning(GameObject _lowHealthWarning) 
-        { lowHealthWarning = _lowHealthWarning; }
-
-    public GameObject getSniperScope() {
-        return sniperScope;
-    }
-
-    public playerMovement getPlayerScript() 
-        { return playerScript; }
-
-    public GameObject getPlayer() 
-        { return player; }
-
-    public void setPlayer(GameObject _player) 
-        { player = _player; }
-
-    public void setPlayerScript(playerMovement _script)
-        { playerScript = _script; }
-
-    public bool getPauseStatus()
-        { return isPaused; }
-
-    public void setPauseStatus(bool _status)
-        { isPaused = _status; }
-
-    public Image getPlayerReticle()
-        { return playerReticle; }
-
-    public void setPlayerReticle(Image newReticle)
-        { playerReticle = newReticle; }
-
-    public int getBossCount() 
-        { return bossCount; }
-
-    public void setBossCount(int _amount) 
-        { bossCount = _amount; }
-
-    public void setLevelTracker(TMP_Text newLevel) 
-        { levelTracker = newLevel; }
-
-    public TMP_Text getLevelTracker() 
-        { return levelTracker; }
-    
-    public void setHPBar(Image newHPBar) 
-        { HPBar = newHPBar; }
-
-    public Image getHPBar() 
-        { return HPBar; }
-
-    public void setXPBar(Image newXPBar)
-    { XPBar = newXPBar; }
-
-    public Image getXPBar()
-    { return XPBar; }
-
-    public void setBossHP(GameObject newBossHP) 
-        { bossHP = newBossHP; }
-
-    public GameObject getBossHP() 
-        { return bossHP; }
-
-    public void setBossHPBar(Image newBossHPBar)
-    { bossHPBar = newBossHPBar; }
-
-    public Image getBossHPBar()
-    { return bossHPBar; }
-
-    public void setStamBar(Image newStamBar) 
-        { stamBar = newStamBar; }
-
-    public Image getStamBar() 
-        { return stamBar; }
-
-    public int getEnemyCount()
-    { return enemyCount;}
-
-    public void setEnemyCount(int _count)
-    { enemyCount = _count; }
-
-    public void setEnemyRemainCount(TMP_Text newEnemyCount) 
-        { EnemiesRemainingCount = newEnemyCount; }
-
-    public TMP_Text getEnemyRemainCount() 
-        { return EnemiesRemainingCount; }
-
-    public void setEnemyRemainLabel(TMP_Text newEnemyLabel)
-    { EnemiesRemainingLabel = newEnemyLabel; }
-
-    public TMP_Text getEnemyRemainLabel()
-    { return EnemiesRemainingLabel; }
-
-    public void setAmmoBar(Image newAmmoBar) 
-        { ammoTrackerBar = newAmmoBar; }
-
-    public Image getAmmoBar() 
-        { return ammoTrackerBar; }
-
-    public GameObject getStamUI()
-    { return stamUI; }
-
-    public GameObject getHealthUI()
-    { return hpUI; }
-
-    public GameObject getXpUI()
-    { return xpUI; }
 
     // Start is called before the first frame update, awake is before start
     void Awake() {
@@ -410,45 +211,37 @@ public class gameManager : MonoBehaviour {
         displayXPTracker(state);
     }
 
-    
-
     public void displayBossBar(bool state) {
-        getBossHP().SetActive(state);
-    }
+        getBossHP().SetActive(state);}
 
-    public void displayPlayerHP(bool state)
-    {
+    public void displayPlayerHP(bool state){
         getHPBar().gameObject.SetActive(state);
-        getHealthUI().gameObject.SetActive(state);
-    }
+        getHealthUI().gameObject.SetActive(state);}
 
-    public void displayAmmoUI(bool state)
-    {
-        getAmmoUI().gameObject.SetActive(state);
-    }
+    public void displayAmmoUI(bool state){
+        getAmmoUI().gameObject.SetActive(state);}
 
-    public void displayPlayerStam(bool state) 
-    {
+    public void displayPlayerStam(bool state) {
         getStamBar().gameObject.SetActive(state);
-        getStamUI().gameObject.SetActive(state);
-    }
+        getStamUI().gameObject.SetActive(state);}
 
-    public void displayXPTracker(bool state)
-    {
+    public void displayXPTracker(bool state){
         getXPBar().gameObject.SetActive(state);
-        getXpUI().gameObject.SetActive(state);
-    }
+        getXpUI().gameObject.SetActive(state);}
 
-    public void displayEnemyCount(bool state)
-    {
+    public void displayEnemyCount(bool state){
         getEnemyRemainCount().gameObject.SetActive(state);
-        getEnemyRemainLabel().gameObject.SetActive(state);
-        
-    }
+        getEnemyRemainLabel().gameObject.SetActive(state);}
 
     public void settingsMenu() {
         menuActive.SetActive(false);
         menuActive = menuSettings;
+        menuActive.SetActive(true);
+    }
+
+    public void openOptionsMenu() {
+        menuActive.SetActive(false);
+        menuActive = menuOptions;
         menuActive.SetActive(true);
     }
 
@@ -475,7 +268,6 @@ public class gameManager : MonoBehaviour {
         menuActive = menuUpgrade;
         menuActive.SetActive(true);
         upgradeMenu.upgradeUI.setVars();
-        /// this needs to be called somewhere around boss battle!!!
     }
 
     public void storeMenu() {
@@ -494,10 +286,14 @@ public class gameManager : MonoBehaviour {
     }
 
     public void backButton() {
-        if (menuActive == menuSettings)
-        {
+        if (menuActive == menuOptions) {
             menuActive.SetActive(false);
             menuActive = menuPause;
+            menuActive.SetActive(true);
+        }
+        else if (menuActive == menuSettings) {
+            menuActive.SetActive(false);
+            menuActive = menuOptions;
             menuActive.SetActive(true);
         }
         else if (menuActive == menuUpgrade)
@@ -533,5 +329,137 @@ public class gameManager : MonoBehaviour {
             getSniperScope().SetActive(false);
         }
     }
+
+    public GameObject getMenuLoadout() {
+        return menuLoadout;}
+
+    public GameObject getUpgradeMenu() {
+        return menuUpgrade;}
+
+    public GameObject getPlayerSpawnPos() { return playerSpawnPos; }
+
+    public void setPlayerSpawnPos(GameObject _playerSpawnPos) { playerSpawnPos = _playerSpawnPos; }
+
+    public GameObject getCheckPointPopup() { return checkPointPopup; }
+
+    public void setCheckPointPopup(GameObject _checkPointPopup) { checkPointPopup = _checkPointPopup; }
+
+    public GameObject getDmgFlash() { return damagePanelFlash; }
+
+    public void setDmgFlash(GameObject _dmgPanel) { damagePanelFlash = _dmgPanel; }
+
+    public GameObject getAmmoWarning() { return ammoWarning; }
+
+    public void setAmmoWarning(GameObject _ammoWarning) { ammoWarning = _ammoWarning; }
+
+    public TMP_Text getHPText() {
+        return HPText;}
+
+    public TMP_Text getStamText() {
+        return stamText;}
+
+    public TMP_Text getXPText() {
+        return XPText;}
+
+    public GameObject getTimer() {
+        return timer;}
+
+    public GameObject getTimerTracker() {
+        return timerTracker;}
+
+    public TMP_Text getAmmoText() {
+        return ammoText;}
+
+    void setHPText(TMP_Text _HPText) {
+        HPText = _HPText;}
+
+    void setStamText(TMP_Text _stamText) {
+        stamText = _stamText;}
+
+    void setXPText(TMP_Text _XPText) {
+        XPText = _XPText;}
+
+    void setAmmoText(TMP_Text _ammoText) {
+        ammoText = _ammoText;
+    }
+
+    public GameObject getAmmoUI() {
+        return ammoUI;}
+
+    void setAmmoUI(GameObject _ammoUI) {
+        ammoUI = _ammoUI;}
+
+    public GameObject getHealthWarning() { return lowHealthWarning; }
+
+    public void setHealthWarning(GameObject _lowHealthWarning) { lowHealthWarning = _lowHealthWarning; }
+
+    public GameObject getSniperScope() {
+        return sniperScope;}
+
+    public playerMovement getPlayerScript() { return playerScript; }
+
+    public GameObject getPlayer() { return player; }
+
+    public void setPlayer(GameObject _player) { player = _player; }
+
+    public void setPlayerScript(playerMovement _script) { playerScript = _script; }
+
+    public bool getPauseStatus() { return isPaused; }
+
+    public void setPauseStatus(bool _status) { isPaused = _status; }
+
+    public Image getPlayerReticle() { return playerReticle; }
+
+    public void setPlayerReticle(Image newReticle) { playerReticle = newReticle; }
+
+    public int getBossCount() { return bossCount; }
+
+    public void setBossCount(int _amount) { bossCount = _amount; }
+
+    public void setLevelTracker(TMP_Text newLevel) { levelTracker = newLevel; }
+
+    public TMP_Text getLevelTracker() { return levelTracker; }
+
+    public void setHPBar(Image newHPBar) { HPBar = newHPBar; }
+
+    public Image getHPBar() { return HPBar; }
+
+    public void setXPBar(Image newXPBar) { XPBar = newXPBar; }
+
+    public Image getXPBar() { return XPBar; }
+
+    public void setBossHP(GameObject newBossHP) { bossHP = newBossHP; }
+
+    public GameObject getBossHP() { return bossHP; }
+
+    public void setBossHPBar(Image newBossHPBar) { bossHPBar = newBossHPBar; }
+
+    public Image getBossHPBar() { return bossHPBar; }
+
+    public void setStamBar(Image newStamBar) { stamBar = newStamBar; }
+
+    public Image getStamBar() { return stamBar; }
+
+    public int getEnemyCount() { return enemyCount; }
+
+    public void setEnemyCount(int _count) { enemyCount = _count; }
+
+    public void setEnemyRemainCount(TMP_Text newEnemyCount) { EnemiesRemainingCount = newEnemyCount; }
+
+    public TMP_Text getEnemyRemainCount() { return EnemiesRemainingCount; }
+
+    public void setEnemyRemainLabel(TMP_Text newEnemyLabel) { EnemiesRemainingLabel = newEnemyLabel; }
+
+    public TMP_Text getEnemyRemainLabel() { return EnemiesRemainingLabel; }
+
+    public void setAmmoBar(Image newAmmoBar) { ammoTrackerBar = newAmmoBar; }
+
+    public Image getAmmoBar() { return ammoTrackerBar; }
+
+    public GameObject getStamUI() { return stamUI; }
+
+    public GameObject getHealthUI() { return hpUI; }
+
+    public GameObject getXpUI() { return xpUI; }
 
 }

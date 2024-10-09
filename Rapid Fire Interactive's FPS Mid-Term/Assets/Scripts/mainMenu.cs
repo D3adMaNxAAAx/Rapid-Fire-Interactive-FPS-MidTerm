@@ -5,14 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class mainMenu : MonoBehaviour
 {
-    private void Start()
-    {
 
-    }
+    [SerializeField] GameObject menuOptions;
+
     public void startGame()
     {
         SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
     }
+
+    public void optionsMenu() {
+        menuOptions.SetActive(true);
+    }
+
+    public void optionsBack() {
+        menuOptions.SetActive(false);
+    }
+
     public void quitGame()
     {
 #if UNITY_EDITOR
