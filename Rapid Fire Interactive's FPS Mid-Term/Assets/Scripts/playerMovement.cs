@@ -40,6 +40,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] List<gunStats> guns;
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject shotFlash;
+    
 
     bool isSniper = false;
     [SerializeField] int damage;
@@ -620,6 +621,23 @@ public class playerMovement : MonoBehaviour, IDamage
         }
 
         Destroy(grenadeInstance);
+    }
+
+    IEnumerator PlayerMelee()
+    {
+        Vector3 currGunPos = getCurGun().GameObject().transform.position;
+        Vector3 meleePos = new Vector3(getCurGun().GameObject().transform.position.x, getCurGun().GameObject().transform.position.y + 3f, getCurGun().GameObject().transform.position.z);
+        BoxCollider bayonet = getCurGun().GameObject().GetComponentInChildren<BoxCollider>();
+        if (Input.GetButton("Melee"))
+        {
+            if (guns[gunPos].GetComponentInChildren<BoxCollider>().isTrigger)
+            {
+                Vector3.Lerp(currGunPos, meleePos, 1f);
+                yield return new WaitForSeconds(2);
+            }
+            else
+                yield return new WaitForSeconds(2);
+        }
     }
 
     IEnumerator HealPlayer()
