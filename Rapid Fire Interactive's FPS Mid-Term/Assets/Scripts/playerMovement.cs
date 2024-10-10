@@ -32,6 +32,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] int stamina;
     [SerializeField] int coins;
     [SerializeField] int playerXPMax;
+    [SerializeField] int lives;
     [SerializeField] int skillPoints;
     float damageUpgradeMod = 1;  // keep set = to 1, so damage can be upgraded (can just change damage var because it changes when swapping guns)
 
@@ -153,14 +154,18 @@ public class playerMovement : MonoBehaviour, IDamage
 
     public void spawnPlayer()
     {
-        controller.enabled = false;
-        transform.position = gameManager.instance.getPlayerSpawnPos().transform.position;
-        controller.enabled = true;
+        // Secondary check to make sure the player can only respawn if they have lives.
+        if (lives > 0)
+        {
+            controller.enabled = false;
+            transform.position = gameManager.instance.getPlayerSpawnPos().transform.position;
+            controller.enabled = true;
 
-        HP = HPOrig;
-        lowHealth = false;
-        gameManager.instance.getHealthWarning().SetActive(false);
-        updatePlayerUI();
+            HP = HPOrig;
+            lowHealth = false;
+            gameManager.instance.getHealthWarning().SetActive(false);
+            updatePlayerUI();
+        }
     }
 
     // Player Movement Controls
@@ -346,31 +351,40 @@ public class playerMovement : MonoBehaviour, IDamage
     // Player Damage Controller
     public void takeDamage(float amount)
     {
-        // Player takes damage
-        HP -= amount;
-        stopHealing = true; // STOP HEALING IF DAMAGED
+        // Further prevention from additional damage that may trigger things like lives lost multiple times or negative HP values.
+        if (HP > 0)
+        {
+            // Player takes damage
+            HP -= amount;
+            stopHealing = true; // STOP HEALING IF DAMAGED
 
-        // Play hurt sound for audio indication
-        if (damageAudioReady) {
-            aud.PlayOneShot(audioManager.instance.audHurt[Random.Range(0, audioManager.instance.audHurt.Length)], audioManager.instance.audHurtVol);
-            StartCoroutine(damageAudioCooldown());
-        }
+            // Play hurt sound for audio indication
+            if (damageAudioReady)
+            {
+                aud.PlayOneShot(audioManager.instance.audHurt[Random.Range(0, audioManager.instance.audHurt.Length)], audioManager.instance.audHurtVol);
+                StartCoroutine(damageAudioCooldown());
+            }
 
-        // Update UI & Flash Screen red
-        updatePlayerUI();
-        StartCoroutine(damageFlash());
+            // Update UI & Flash Screen red
+            updatePlayerUI();
+            StartCoroutine(damageFlash());
 
-        // On Player Death
-        if (HP <= 0) {
-            HP = 0; // set HP to 0 for no weirdness in code/visuals
-            gameManager.instance.youLose();
-        }
-        else if ((HP / HPOrig) <= .25) { 
-            lowHealth = true;
-            gameManager.instance.getHealthWarning().SetActive(true);
-        }
-        if ((HP / HPOrig) < .5) { 
-            StartCoroutine(noDamageTime()); // TIMER FOR WHEN PLAYER CAN START TO HEAL
+            // On Player Death
+            if (HP <= 0)
+            {
+                HP = 0; // set HP to 0 for no weirdness in code/visuals
+                if (lives > 0) { lives--; }
+                gameManager.instance.youLose();
+            }
+            else if ((HP / HPOrig) <= .25)
+            {
+                lowHealth = true;
+                gameManager.instance.getHealthWarning().SetActive(true);
+            }
+            if ((HP / HPOrig) < .5)
+            {
+                StartCoroutine(noDamageTime()); // TIMER FOR WHEN PLAYER CAN START TO HEAL
+            }
         }
     }
 
@@ -844,6 +858,12 @@ public class playerMovement : MonoBehaviour, IDamage
     public float getDamageMod() {
         return damageUpgradeMod;}
 
+    public int getLives() { 
+        return lives;}
+
+    public List<gunStats> getGunList()
+    { return guns; }
+
     // Setters
     public void setHP(float newHP) {
         HP = newHP;
@@ -902,8 +922,9 @@ public class playerMovement : MonoBehaviour, IDamage
     public void setDamage(float newDamage) {
         damage = newDamage;}
 
-    public List<gunStats> getGunList() 
-        { return guns; }
     public void setGunList(List<gunStats> _list)
         { guns = _list; }
+
+    public void setLives(int _lives)
+        { lives = _lives; }
 }
