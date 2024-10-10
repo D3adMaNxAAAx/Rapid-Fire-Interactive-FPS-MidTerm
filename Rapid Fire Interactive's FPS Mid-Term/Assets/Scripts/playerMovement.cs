@@ -86,7 +86,6 @@ public class playerMovement : MonoBehaviour, IDamage
     int playerXP; // XP
     int staminaOrig; // Stamina
     int playerLevel; // Level
-    int ammoOrig; // Ammo
     int gunPos = 0; // Weapon selected
     int speedOrig;  // Original Speed
 
@@ -244,8 +243,9 @@ public class playerMovement : MonoBehaviour, IDamage
 
     void shootGun() {
         // Reload
-        // Check if the player is not shooting & if they pressed R
-        if (!isShooting && Input.GetButton("Reload"))
+        // Check if the player is not shooting & if they pressed the reload button mapped in input manager
+        // Also have an additional check if they aren't at max already.
+        if (!isShooting && Input.GetButton("Reload") && guns[gunPos].ammoCur < guns[gunPos].ammoMag)
         {
             reload();
         }
@@ -284,8 +284,22 @@ public class playerMovement : MonoBehaviour, IDamage
 
     void reload()
     {
-        // Set the current ammo to the max ammo -- THIS IS FOR DEBUGGING. TO-DO: CREATE A CLIP SIZE TO RELOAD TO INSTEAD AND TAKE FROM MAX AMMO
-        guns[gunPos].ammoCur = guns[gunPos].ammoMax;
+        // Gun is not at full, so reload
+
+        // Check if there's enough spare ammo to fill a mag
+        if (guns[gunPos].ammoMax - (guns[gunPos].ammoMag - guns[gunPos].ammoCur) >= 0)
+        {
+            guns[gunPos].ammoMax -= (guns[gunPos].ammoMag - guns[gunPos].ammoCur);
+            
+            // Set cur to mag size
+            guns[gunPos].ammoCur = guns[gunPos].ammoMag;
+        }
+        else
+        {
+            // If there's not enough for a mag, force add any remaining bullets left over to ammoCur.
+            guns[gunPos].ammoCur += guns[gunPos].ammoMax;
+            guns[gunPos].ammoMax = 0;
+        }
 
         // Update the UI for confirmation
         updatePlayerUI();
@@ -503,8 +517,8 @@ public class playerMovement : MonoBehaviour, IDamage
         // Attack Info
         if (guns.Count > 0)
         {
-            gameManager.instance.getAmmoBar().fillAmount = (float)getCurGun().ammoCur / getCurGun().ammoMax;
-            gameManager.instance.getAmmoText().text = getAmmo().ToString("F0") + " / " + getAmmoOrig().ToString("F0");
+            gameManager.instance.getAmmoBar().fillAmount = (float)getCurGun().ammoCur / getCurGun().ammoMag;
+            gameManager.instance.getAmmoText().text = getAmmo().ToString("F0") + " / " + getAmmoMax().ToString("F0");
         }
 
         // XP Info
@@ -706,7 +720,8 @@ public class playerMovement : MonoBehaviour, IDamage
 
     public void getGunStats(gunStats _gun)
     {
-        _gun.ammoCur = _gun.ammoMax;
+        _gun.ammoCur = _gun.ammoMag; // Set the current to the magazine size.
+        _gun.ammoMax = _gun.ammoOrig; // Set the max to the original gun ammo capacity.
         guns.Add(_gun);
         gunPos = guns.Count - 1;
         updatePlayerUI();
@@ -853,8 +868,17 @@ public class playerMovement : MonoBehaviour, IDamage
     public int getAmmo() {
         return getCurGun().ammoCur;}
 
+    public int getAmmoMag()
+    {
+        return getCurGun().ammoMag;}
+
+    public int getAmmoMax()
+    {
+        return getCurGun().ammoMax;
+    }
+
     public int getAmmoOrig() {
-        return getCurGun().ammoMax;}
+        return getCurGun().ammoOrig;}
 
     public bool getIsSniper() {
         return isSniper;}
@@ -893,18 +917,38 @@ public class playerMovement : MonoBehaviour, IDamage
             getCurGun().ammoCur = newAmmo;
 
         // Update the UI to show it's been changed
-        // (might not be necessary?)
         updatePlayerUI();
     }
+
+    public void setAmmoMag(int newAmmoMag)
+    {
+        // Check if the player has a gun
+        if (guns != null || guns.Count != 0)
+            getCurGun().ammoMag = newAmmoMag;
+
+        // Update the UI to show it's been changed
+        updatePlayerUI();
+    }
+
+    public void setAmmoMax(int newAmmoMax)
+    {
+        // Check if the player has a gun
+        if (guns != null || guns.Count != 0)
+            getCurGun().ammoMax = newAmmoMax;
+
+        // Update the UI to show it's been changed
+        updatePlayerUI();
+    }
+
     public void setAmmoOrig(int newAmmoOrig) {
         // Check if the player has a gun
         if (guns != null || guns.Count != 0)
-            getCurGun().ammoMax = newAmmoOrig;
+            getCurGun().ammoOrig = newAmmoOrig;
 
         // Update the UI to show it's been changed
-        // (might not be necessary?)
         updatePlayerUI();
     }
+
     public int getPlayerLevel() {
         return playerLevel;}
 
