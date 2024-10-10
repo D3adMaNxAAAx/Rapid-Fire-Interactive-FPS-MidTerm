@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b63643684d59cf148bb3fcf9317ee454, type: 3}
-  m_Name: SO - Pistol
+  m_Name: SMG - SO
   m_EditorClassIdentifier: 
-  gunModel: {fileID: 1325081442419833414, guid: c0c4a076a606ca04a8ac0b9208f08bf8, type: 3}
-  damage: 0.75
-  fireRate: 0.25
-  bulletDist: 35
-  ammoCur: 150
-  ammoMax: 150
+  gunModel: {fileID: 3732461681602117843, guid: 72feab17eca9b0449b0060086ec39362, type: 3}
+  damage: 0.1
+  fireRate: 0.1
+  bulletDist: 25
+  ammoCur: 350
+  ammoMax: 350
   isSniper: 0
   isAutomatic: 1
   hitEffects: {fileID: 7226583673155636403, guid: a2ab56839e1c9504ea9d141e95d0b16b, type: 3}
   shootSound:
   - {fileID: 8300000, guid: e08e8c248cdb26a4bab649ac6eb7a828, type: 3}
-  audioVolume: 0.5
+  audioVolume: 1

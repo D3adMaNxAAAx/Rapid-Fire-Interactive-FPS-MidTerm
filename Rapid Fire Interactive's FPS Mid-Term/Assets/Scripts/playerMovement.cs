@@ -43,7 +43,7 @@ public class playerMovement : MonoBehaviour, IDamage
     
 
     bool isSniper = false;
-    [SerializeField] int damage;
+    [SerializeField] float damage;
     [SerializeField] float fireRate;
     [SerializeField] float bulletDistance;
     //[SerializeField] int ammo;
@@ -609,7 +609,7 @@ public class playerMovement : MonoBehaviour, IDamage
         if (HP != HPOrig) {
             isHealing = true;
 
-            HP = Mathf.Min(HP + heals[0].healAmmount, HPOrig);
+            HP = Mathf.Min(HP + heals[0].healAmount, HPOrig);
 
             if (heals[0].healSound != null) {
                 AudioSource.PlayClipAtPoint(heals[0].healSound, transform.position);
@@ -682,7 +682,7 @@ public class playerMovement : MonoBehaviour, IDamage
         updatePlayerUI();
 
         float damTemp = _gun.damage * damageUpgradeMod; //reason I did this is because we can't supply a float value to an int.
-        damage = (int)damTemp; //so then we can cast it back as an int so we aren't using decimals for damage on enemies.
+        damage = damTemp;
         fireRate = _gun.fireRate;
         bulletDistance = _gun.bulletDist;
         //ammoOrig = _gun.ammoMax;
@@ -838,11 +838,11 @@ public class playerMovement : MonoBehaviour, IDamage
     public int getCoins() {
         return coins;}
 
-    public int getDamage() {
+    public float getDamage() {
         return damage;}
 
-    public int getDamageMod() {
-        return (int)damageUpgradeMod;}
+    public float getDamageMod() {
+        return damageUpgradeMod;}
 
     // Setters
     public void setHP(float newHP) {
@@ -899,7 +899,7 @@ public class playerMovement : MonoBehaviour, IDamage
     public void setSkillPoints(int newSkillPoints) {
         skillPoints = newSkillPoints;}
 
-    public void setDamage(int newDamage) {
+    public void setDamage(float newDamage) {
         damage = newDamage;}
 
     public List<gunStats> getGunList() 

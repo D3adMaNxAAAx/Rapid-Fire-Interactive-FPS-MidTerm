@@ -32,7 +32,7 @@ public class upgradeMenu : MonoBehaviour {
     float damageMod = 1;
     float speed;
     int stamina;
-    int moddedDam;
+    float moddedDam;
 
     void Start() {
         upgradeUI = this;

@@ -16,7 +16,7 @@ public class NewBehaviourScript : MonoBehaviour {
     private void OnTriggerEnter(Collider otherObject) {
         if (type == objectType.powerUp) {
             if (otherObject.CompareTag("Player")) {
-                gameManager.manager.playerScript.getAudioSource().PlayOneShot(pickUpNutsA, pickUpNutsV); // playing audio once object is picked up
+                // play audio
                 Destroy(gameObject);
             }
         }
