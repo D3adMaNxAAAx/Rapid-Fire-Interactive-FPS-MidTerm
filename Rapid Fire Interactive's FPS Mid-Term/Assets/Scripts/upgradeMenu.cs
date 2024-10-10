@@ -28,11 +28,11 @@ public class upgradeMenu : MonoBehaviour {
     int damageRank = 0;
     int speedRank = 0;
     int staminaRank = 0;
-    int HP;
+    float HP;
     float damageMod = 1;
     float speed;
     int stamina;
-    int moddedDam;
+    float moddedDam;
 
     void Start() {
         upgradeUI = this;

@@ -6,6 +6,6 @@ public interface IDamage
 {
     //Interface IDamage class 
     //Allows any derived object of class to take Damage
-    void takeDamage(int amount);
+    void takeDamage(float amount);
 
 }

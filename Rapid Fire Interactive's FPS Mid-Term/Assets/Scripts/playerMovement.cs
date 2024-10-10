@@ -27,11 +27,12 @@ public class playerMovement : MonoBehaviour, IDamage
     // Player modifiers
     // -- Attributes --
     [Header("-- Player Attributes --")]
-    [SerializeField] int HP;
+    [SerializeField] float HP;
     [SerializeField] float speed;
     [SerializeField] int stamina;
     [SerializeField] int coins;
     [SerializeField] int playerXPMax;
+    [SerializeField] int lives;
     [SerializeField] int skillPoints;
     float damageUpgradeMod = 1;  // keep set = to 1, so damage can be upgraded (can just change damage var because it changes when swapping guns)
 
@@ -43,7 +44,7 @@ public class playerMovement : MonoBehaviour, IDamage
     
 
     bool isSniper = false;
-    [SerializeField] int damage;
+    [SerializeField] float damage;
     [SerializeField] float fireRate;
     [SerializeField] float bulletDistance;
     //[SerializeField] int ammo;
@@ -81,7 +82,7 @@ public class playerMovement : MonoBehaviour, IDamage
     int jumpCounter;
 
     // Trackers
-    int HPOrig; // HP
+    float HPOrig; // HP
     int playerXP; // XP
     int staminaOrig; // Stamina
     int playerLevel; // Level
@@ -100,6 +101,8 @@ public class playerMovement : MonoBehaviour, IDamage
     bool stopHealing = false; // was the player damaged while healing?
     bool onDashCooldown = false;
     bool isHealing;
+    bool damageAudioReady = true;
+
     // Start is called before the first frame update
     void Start() {
         // Variable Initialization
@@ -117,54 +120,52 @@ public class playerMovement : MonoBehaviour, IDamage
     void Update() {
         if (gameManager.instance.getPauseStatus() == false) {
             movement();
-            StartCoroutine(Dash());
+            DashAll(); // at bottom of file, only does anything if specific key is pressed
 
             if (readyToHeal) {  // HEALING STARTS HERE, READY TO HEAL DETERMINATION STARTS IN TAKEDAMAGE()
                 StartCoroutine(healing());  // recursive method
                 readyToHeal = false;  // stop healing
             }
+
+            if (guns.Count != 0)
+                selectGun();
+
+            if (Input.GetButtonDown("ThrowGrenade") && grenades.Count > 0) {
+                throwGrenade();
+            }
+            if (Input.GetButtonDown("Heal Item") && heals.Count > 0 && healCoolDown <= 0f && !isHealing) {
+                StartCoroutine(HealPlayer());
+            }
+            if (healCoolDown > 0f) {
+                healCoolDown -= Time.deltaTime;
+            }
+
+            //Working out null ref bug...put on pause for time being
+
+            //if (Input.GetButton("Melee"))
+            //    StartCoroutine(PlayerMelee());
         }
 
         sprint();
         // Check if sprinting -- Drain stamina as the player runs
         if (isSprinting && !isDraining)
             StartCoroutine(staminaDrain());
-
-        if (guns.Count != 0)
-            selectGun();
-
-        if (Input.GetButtonDown("ThrowGrenade") && grenades.Count > 0)
-        {
-            throwGrenade();
-        }
-        if (Input.GetButtonDown("Heal Item") && heals.Count > 0 && healCoolDown <= 0f && !isHealing)
-        {
-            StartCoroutine(HealPlayer());
-            lowHealth = false;
-            gameManager.instance.getHealthWarning().SetActive(false);
-        }
-        if(healCoolDown > 0f)
-        {
-            healCoolDown -= Time.deltaTime;
-        }
-
-
-        //Working out null ref bug...put on pause for time being
-
-        //if (Input.GetButton("Melee"))
-        //    StartCoroutine(PlayerMelee());
-
     }
 
     public void spawnPlayer()
     {
-        controller.enabled = false;
-        transform.position = gameManager.instance.getPlayerSpawnPos().transform.position;
-        controller.enabled = true;
+        // Secondary check to make sure the player can only respawn if they have lives.
+        if (lives > 0)
+        {
+            controller.enabled = false;
+            transform.position = gameManager.instance.getPlayerSpawnPos().transform.position;
+            controller.enabled = true;
 
-        HP = HPOrig;
-        gameManager.instance.getHealthWarning().SetActive(false);
-        updatePlayerUI();
+            HP = HPOrig;
+            lowHealth = false;
+            gameManager.instance.getHealthWarning().SetActive(false);
+            updatePlayerUI();
+        }
     }
 
     // Player Movement Controls
@@ -224,6 +225,21 @@ public class playerMovement : MonoBehaviour, IDamage
         // Need additional checks to make sure sound isn't funky & only plays when the player is on the ground.
         if (controller.isGrounded && moveDir.magnitude > 0.3f && !isStepping)
             StartCoroutine(playFootsteps());
+    }
+
+    IEnumerator playFootsteps() {
+        isStepping = true;
+
+        // Play step sound
+        aud.PlayOneShot(audioManager.instance.audSteps[Random.Range(0, audioManager.instance.audSteps.Length)], audioManager.instance.audStepVol);
+
+        // Check if the player is sprinting and play the sound faster if so
+        if (!isSprinting)
+            yield return new WaitForSeconds(0.5f);
+        else
+            yield return new WaitForSeconds(0.3f);
+
+        isStepping = false;
     }
 
     void shootGun() {
@@ -288,29 +304,6 @@ public class playerMovement : MonoBehaviour, IDamage
         //}
     }
 
-    IEnumerator Dash() {
-        if (Input.GetButtonDown("Dash")) {
-            if (onDashCooldown == false) {
-                controller.Move(transform.forward * 1.5f);
-                yield return new WaitForSeconds(0.05f);
-                controller.Move(transform.forward * 1.5f);
-                yield return new WaitForSeconds(0.05f);
-                controller.Move(transform.forward * 1.5f);
-                yield return new WaitForSeconds(0.05f);
-                controller.Move(transform.forward * 1.5f);
-                yield return new WaitForSeconds(0.05f);
-                controller.Move(transform.forward * 1.5f);
-                StartCoroutine(dashCooldown()); // can't dash again for 3 seconds
-            }
-        }
-    }
-
-    IEnumerator dashCooldown() {
-        onDashCooldown = true;
-        yield return new WaitForSeconds(3);
-        onDashCooldown = false;
-    }
-
     // Shoot Timer
     IEnumerator shoot()
     {
@@ -356,31 +349,49 @@ public class playerMovement : MonoBehaviour, IDamage
     }
 
     // Player Damage Controller
-    public void takeDamage(int amount)
+    public void takeDamage(float amount)
     {
-        // Player takes damage
-        HP -= amount;
-        stopHealing = true; // STOP HEALING IF DAMAGED
+        // Further prevention from additional damage that may trigger things like lives lost multiple times or negative HP values.
+        if (HP > 0)
+        {
+            // Player takes damage
+            HP -= amount;
+            stopHealing = true; // STOP HEALING IF DAMAGED
 
-        // Play hurt sound for audio indication
-        aud.PlayOneShot(audioManager.instance.audHurt[Random.Range(0, audioManager.instance.audHurt.Length)], audioManager.instance.audHurtVol);
+            // Play hurt sound for audio indication
+            if (damageAudioReady)
+            {
+                aud.PlayOneShot(audioManager.instance.audHurt[Random.Range(0, audioManager.instance.audHurt.Length)], audioManager.instance.audHurtVol);
+                StartCoroutine(damageAudioCooldown());
+            }
 
-        // Update UI & Flash Screen red
-        updatePlayerUI();
-        StartCoroutine(damageFlash());
+            // Update UI & Flash Screen red
+            updatePlayerUI();
+            StartCoroutine(damageFlash());
 
-        // On Player Death
-        if (HP <= 0) {
-            HP = 0; // set HP to 0 for no weirdness in code/visuals
-            gameManager.instance.youLose();
+            // On Player Death
+            if (HP <= 0)
+            {
+                HP = 0; // set HP to 0 for no weirdness in code/visuals
+                if (lives > 0) { lives--; }
+                gameManager.instance.youLose();
+            }
+            else if ((HP / HPOrig) <= .25)
+            {
+                lowHealth = true;
+                gameManager.instance.getHealthWarning().SetActive(true);
+            }
+            if ((HP / HPOrig) < .5)
+            {
+                StartCoroutine(noDamageTime()); // TIMER FOR WHEN PLAYER CAN START TO HEAL
+            }
         }
-        else if (((float)HP / HPOrig) <= .25) { 
-            lowHealth = true;
-            gameManager.instance.getHealthWarning().SetActive(true);
-        }
-        if (((float)HP / HPOrig) < .5) { 
-            StartCoroutine(noDamageTime()); // TIMER FOR WHEN PLAYER CAN START TO HEAL
-        }
+    }
+
+    IEnumerator damageAudioCooldown() { // so player doesnt go UH AH UH AH ER UMF UH AH every half second
+        damageAudioReady = false;
+        yield return new WaitForSeconds(1);
+        damageAudioReady = true;
     }
 
     IEnumerator shotFlashTimer() {
@@ -392,12 +403,12 @@ public class playerMovement : MonoBehaviour, IDamage
     public void Heal() {
         HP += 3; // HEAL THE PLAYER
         if (lowHealth == true) {
-            if (((float)HP / HPOrig) > .25) { 
+            if ((HP / HPOrig) > .25) { 
                 lowHealth = false;
                 gameManager.instance.getHealthWarning().SetActive(false); // getting rid of low health state if not low anymore
             }
         }
-        if (((float)HP / HPOrig) > .5) { // only heals to half HP
+        if ((HP / HPOrig) > .5) { // only heals to half HP
             HP = (HPOrig / 2); // if HP goes over half, reset to half
             readyToHeal = false; // HEALING OVER
         }
@@ -415,7 +426,7 @@ public class playerMovement : MonoBehaviour, IDamage
     }
 
     IEnumerator noDamageTime() { // time till healing (if no damage was taken)
-        int currentHP = HP;
+        float currentHP = HP;
         yield return new WaitForSeconds(3);
         if (currentHP == HP) { // PLAYER CAN START HEALING (SEE UPDATE())
             stopHealing = false;
@@ -466,7 +477,7 @@ public class playerMovement : MonoBehaviour, IDamage
     public void updatePlayerUI() 
     {
         // Health Info
-        gameManager.instance.getHPBar().fillAmount = (float)HP / HPOrig;
+        gameManager.instance.getHPBar().fillAmount = HP / HPOrig;
         gameManager.instance.getHPText().text = HP.ToString("F0");
 
         // Stamina Info
@@ -535,49 +546,7 @@ public class playerMovement : MonoBehaviour, IDamage
             
                 
         }
-
-            //if (stamina >= (staminaOrig / 2))
-            //{
-
-            ////toggleSprintOn();
-            //    speed *= speedMod;
-            //    isSprinting = true;
-            //    staminaDrain();
-            //}
-
-        //}
         updatePlayerUI();
-    }
-
-    void selectGun()
-    {
-        if (Input.GetAxis("Mouse ScrollWheel") > 0)
-        {
-            gunPos++;
-            if (gunPos == guns.Count)
-                gunPos = 0;
-            changeGun();
-        }
-        else if(Input.GetAxis("Mouse ScrollWheel") < 0)
-        {
-            gunPos--;
-            if (gunPos < 0)
-                gunPos = guns.Count - 1;
-            changeGun();
-        }
-    }
-
-    void changeGun()
-    {
-        float damTemp = guns[gunPos].damage * damageUpgradeMod;
-        damage = (int)damTemp;
-        bulletDistance = guns[gunPos].bulletDist;
-        fireRate = getCurGun().fireRate;
-        isSniper = getCurGun().isSniper;
-        updatePlayerUI();
-
-        gunModel.GetComponent<MeshFilter>().sharedMesh = getCurGun().gunModel.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = getCurGun().gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     void throwGrenade()
@@ -650,25 +619,29 @@ public class playerMovement : MonoBehaviour, IDamage
 
     //}
 
-    IEnumerator HealPlayer()
-    {
-        Debug.Log("hi");
-        isHealing = true;
+    IEnumerator HealPlayer() { // h
+        if (HP != HPOrig) {
+            isHealing = true;
 
-        HP = Mathf.Min(HP + heals[0].healAmmount,HPOrig);
+            HP = Mathf.Min(HP + heals[0].healAmount, HPOrig);
 
-        if(heals[0].healSound != null)
-        {
-            AudioSource.PlayClipAtPoint(heals[0].healSound, transform.position);
+            if (heals[0].healSound != null) {
+                AudioSource.PlayClipAtPoint(heals[0].healSound, transform.position);
+            }
+            updatePlayerUI();
+
+            yield return new WaitForSeconds(heals[0].healCoolDown);
+
+            isHealing = false;
+
+            healCoolDown = heals[0].healCoolDown;
+            heals.Remove(heals[0]);
+
+            if ((HP / HPOrig) > .25) {
+                lowHealth = false;
+                gameManager.instance.getHealthWarning().SetActive(false); // getting rid of low health state if not low anymore
+            }
         }
-        updatePlayerUI();
-
-        yield return new WaitForSeconds(heals[0].healCoolDown);
-       
-        isHealing = false;
-
-        healCoolDown = heals[0].healCoolDown;
-        heals.Remove(heals[0]);
     }
 
     // temporary check if the player has a gun -- can remove later, using for debug purposes
@@ -680,28 +653,39 @@ public class playerMovement : MonoBehaviour, IDamage
             return false;
     }
 
-    IEnumerator playFootsteps()
-    {
-        isStepping = true;
-
-        // Play step sound
-        aud.PlayOneShot(audioManager.instance.audSteps[Random.Range(0, audioManager.instance.audSteps.Length)], audioManager.instance.audStepVol);
-
-        // Check if the player is sprinting and play the sound faster if so
-        if (!isSprinting)
-            yield return new WaitForSeconds(0.5f);
-        else
-            yield return new WaitForSeconds(0.3f);
-
-        isStepping = false;
-    }
-
     public void addToHeals(HealStats newHeal) {
         heals.Add(newHeal);
     }
 
     public void addToGrenades(GrenadeStats newGrenade) {
         grenades.Add(newGrenade);
+    }
+
+    void selectGun() {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0) {
+            gunPos++;
+            if (gunPos == guns.Count)
+                gunPos = 0;
+            changeGun();
+        }
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0) {
+            gunPos--;
+            if (gunPos < 0)
+                gunPos = guns.Count - 1;
+            changeGun();
+        }
+    }
+
+    void changeGun() {
+        float damTemp = guns[gunPos].damage * damageUpgradeMod;
+        damage = (int)damTemp;
+        bulletDistance = guns[gunPos].bulletDist;
+        fireRate = getCurGun().fireRate;
+        isSniper = getCurGun().isSniper;
+        updatePlayerUI();
+
+        gunModel.GetComponent<MeshFilter>().sharedMesh = getCurGun().gunModel.GetComponent<MeshFilter>().sharedMesh;
+        gunModel.GetComponent<MeshRenderer>().sharedMaterial = getCurGun().gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     public void getGunStats(gunStats _gun)
@@ -712,7 +696,7 @@ public class playerMovement : MonoBehaviour, IDamage
         updatePlayerUI();
 
         float damTemp = _gun.damage * damageUpgradeMod; //reason I did this is because we can't supply a float value to an int.
-        damage = (int)damTemp; //so then we can cast it back as an int so we aren't using decimals for damage on enemies.
+        damage = damTemp;
         fireRate = _gun.fireRate;
         bulletDistance = _gun.bulletDist;
         //ammoOrig = _gun.ammoMax;
@@ -722,83 +706,172 @@ public class playerMovement : MonoBehaviour, IDamage
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = _gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
+    public void DashAll() {
+        StartCoroutine(DashW());
+        StartCoroutine(DashA());
+        StartCoroutine(DashS());
+        StartCoroutine(DashD());
+    }
+    // 3 vars for each dash directions, w a s d
+    float time1W;
+    float time2W;
+    bool isTapW = false;
+    float time1A;
+    float time2A;
+    bool isTapA = false;
+    float time1S;
+    float time2S;
+    bool isTapS = false;
+    float time1D;
+    float time2D;
+    bool isTapD = false;
+
+    IEnumerator DashW() {
+        if (Input.GetButtonDown("Dash W")) {
+            if (isTapW == true) {
+                time1W = Time.time;
+                isTapW = false;
+                if (onDashCooldown == false && time1W - time2W < 0.2f) { // time that both key pressed need to be done within
+                    for (int i = 1; i <= 4; i++) {
+                        controller.Move(transform.forward * 1.5f);
+                        yield return new WaitForSeconds(0.05f);
+                    }
+                    StartCoroutine(dashCooldown()); // can't dash again for x seconds
+                }
+            }
+        }
+        else {
+            if (isTapW == false) {
+                time2W = Time.time;
+                isTapW = true;
+            }
+        }
+    }
+    IEnumerator DashA() {
+        if (Input.GetButtonDown("Dash A")) {
+            if (isTapA == true) {
+                time1A = Time.time;
+                isTapA = false;
+                if (onDashCooldown == false && time1A - time2A < 0.2f) { // time that both key pressed need to be done within
+                    for (int i = 1; i <= 4; i++) {
+                        controller.Move(-transform.right * 1.5f); // negative right = left
+                        yield return new WaitForSeconds(0.05f);
+                    }
+                    StartCoroutine(dashCooldown()); // can't dash again for x seconds
+                }
+            }
+        }
+        else {
+            if (isTapA == false) {
+                time2A = Time.time;
+                isTapA = true;
+            }
+        }
+    }
+    IEnumerator DashS() {
+        if (Input.GetButtonDown("Dash S")) {
+            if (isTapS == true) {
+                time1S = Time.time;
+                isTapS = false;
+                if (onDashCooldown == false && time1S - time2S < 0.2f) { // time that both key pressed need to be done within
+                    for (int i = 1; i <= 4; i++) {
+                        controller.Move(-transform.forward * 1.5f); // negative forward = backwards
+                        yield return new WaitForSeconds(0.05f);
+                    }
+                    StartCoroutine(dashCooldown()); // can't dash again for x seconds
+                }
+            }
+        }
+        else {
+            if (isTapS == false) {
+                time2S = Time.time;
+                isTapS = true;
+            }
+        }
+    }
+    IEnumerator DashD() {
+        if (Input.GetButtonDown("Dash D")) {
+            if (isTapD == true) {
+                time1D = Time.time;
+                isTapD = false;
+                if (onDashCooldown == false && time1D - time2D < 0.2f) { // time that both key pressed need to be done within
+                    for (int i = 1; i <= 4; i++) {
+                        controller.Move(transform.right * 1.5f);
+                        yield return new WaitForSeconds(0.05f);
+                    }
+                    StartCoroutine(dashCooldown()); // can't dash again for x seconds
+                }
+            }
+        }
+        else {
+            if (isTapD == false) {
+                time2D = Time.time;
+                isTapD = true;
+            }
+        }
+    }
+
+    IEnumerator dashCooldown() {
+        onDashCooldown = true;
+        yield return new WaitForSeconds(2);
+        onDashCooldown = false;
+    }
+
     // -- GETTERS --
-    public int getHP()
-    {
-        return HP;
-    }
 
-    public int getHPOrig()
-    {
-        return HPOrig;
-    }
+    public float getHP() {
+        return HP;}
 
-    public int getStamina()
-    {
-        return stamina;
-    }
+    public float getHPOrig() {
+        return HPOrig;}
 
-    public int getStaminaOrig()
-    {
-        return staminaOrig;
-    }
+    public int getStamina() {
+        return stamina;}
 
-    public int getXP()
-    {
-        return playerXP;
-    }
+    public int getStaminaOrig() {
+        return staminaOrig;}
 
-    public int getAmmo()
-    {
-        return getCurGun().ammoCur;
-    }
+    public int getXP() {
+        return playerXP;}
 
-    public int getAmmoOrig()
-    {
-        return getCurGun().ammoMax;
-    }
+    public int getAmmo() {
+        return getCurGun().ammoCur;}
 
-    public bool getIsSniper()
-    {
-        return isSniper;
-    }
+    public int getAmmoOrig() {
+        return getCurGun().ammoMax;}
 
-    public GameObject getGunModel()
-    {
-        return gunModel;
-    }
+    public bool getIsSniper() {
+        return isSniper;}
 
-    public float getSpeed()
-    {
-        return speed;
-    }
-    
-    public int getCoins()
-    {
-        return coins;
-    }
+    public GameObject getGunModel() {
+        return gunModel;}
 
-    public int getDamage()
-    {
-        return damage;
-    }
+    public float getSpeed() {
+        return speed;}
 
-    public int getDamageMod()
-    {
-        return (int)damageUpgradeMod;
-    }
+    public int getCoins() {
+        return coins;}
+
+    public float getDamage() {
+        return damage;}
+
+    public float getDamageMod() {
+        return damageUpgradeMod;}
+
+    public int getLives() { 
+        return lives;}
+
+    public List<gunStats> getGunList()
+    { return guns; }
 
     // Setters
-    public void setHP(int newHP)
-    {
+    public void setHP(float newHP) {
         HP = newHP;
     }
-    public void setHPOrig(int newHPOrig)
-    {
+    public void setHPOrig(float newHPOrig) {
         HPOrig = newHPOrig;
     }
-    public void setAmmo(int newAmmo)
-    {
+    public void setAmmo(int newAmmo) {
         // Check if the player has a gun
         if (guns != null || guns.Count != 0)
             getCurGun().ammoCur = newAmmo;
@@ -807,8 +880,7 @@ public class playerMovement : MonoBehaviour, IDamage
         // (might not be necessary?)
         updatePlayerUI();
     }
-    public void setAmmoOrig(int newAmmoOrig)
-    {
+    public void setAmmoOrig(int newAmmoOrig) {
         // Check if the player has a gun
         if (guns != null || guns.Count != 0)
             getCurGun().ammoMax = newAmmoOrig;
@@ -817,64 +889,42 @@ public class playerMovement : MonoBehaviour, IDamage
         // (might not be necessary?)
         updatePlayerUI();
     }
-    public int getPlayerLevel()
-    {
-        return playerLevel;
-    }
+    public int getPlayerLevel() {
+        return playerLevel;}
 
-    public gunStats getCurGun()
-    {
-        return guns[gunPos];
-    }
+    public gunStats getCurGun() {
+        return guns[gunPos];}
 
-    public int getSkillPoints()
-    { return skillPoints; }
+    public int getSkillPoints() { return skillPoints; }
 
-    // -- SETTERS --
-    public void setSpeed(float newSpeed)
-    {
-        speed = newSpeed;
-    }
-    
-    public void setStamina(int newStamina)
-    {
-        stamina = newStamina;
-    }
+    public void setSpeed(float newSpeed) {
+        speed = newSpeed;}
 
-    public void setCoins(int newCoins)
-    {
-        coins = newCoins;
-    }
+    public void setStamina(int newStamina) {
+        stamina = newStamina;}
 
-    public void setDamageMod(float newDamageMod)
-    {
-        damageUpgradeMod = newDamageMod;
-    }
+    public void setCoins(int newCoins) {
+        coins = newCoins;}
 
-    public void setXP(int amount)
-    {
+    public void setDamageMod(float newDamageMod) {
+        damageUpgradeMod = newDamageMod;}
+
+    public void setXP(int amount) {
         playerXP += amount;
-        levelTracker(); // Check if the player can level up
-    }
+        levelTracker(); }// Check if the player can level up
 
-    public void setPlayerLevel(int newPlayerLevel)
-    {
-        playerLevel = newPlayerLevel;
-    }
+    public void setPlayerLevel(int newPlayerLevel) {
+        playerLevel = newPlayerLevel;}
 
-    public void setSkillPoints(int newSkillPoints)
-    {
-        skillPoints = newSkillPoints;
-    }
+    public void setSkillPoints(int newSkillPoints) {
+        skillPoints = newSkillPoints;}
 
-    public void setDamage(int newDamage)
-    {
-        damage = newDamage;
-    }
+    public void setDamage(float newDamage) {
+        damage = newDamage;}
 
-
-    public List<gunStats> getGunList() 
-        { return guns; }
     public void setGunList(List<gunStats> _list)
         { guns = _list; }
+
+    public void setLives(int _lives)
+        { lives = _lives; }
 }

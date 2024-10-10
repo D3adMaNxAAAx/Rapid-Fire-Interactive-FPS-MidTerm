@@ -8,7 +8,7 @@ public class gunStats : ScriptableObject
 {
     // -- Gun Attributes --
     public GameObject gunModel;
-    public int damage;
+    public float damage;
     public float fireRate;
     public float bulletDist;
     public int ammoCur, ammoMax;

@@ -42,6 +42,8 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject xpUI;
     [SerializeField] GameObject timer;
     [SerializeField] GameObject timerTracker; // this makes the timer run regardless if its hidden or not
+    [SerializeField] Button respawnButton;
+    [SerializeField] TMP_Text livesText;
 
     // -- Game --
     [Header("-- Enemy UI --")]
@@ -146,7 +148,7 @@ public class gameManager : MonoBehaviour {
         }
     }
 
-    public void updateBossBar(Image _bossHealthBar, float bossHP, int _health)
+    public void updateBossBar(Image _bossHealthBar, float bossHP, float _health)
     {
         // Check if the player has entered the boss room
         if (bossRoom.instance.getBossFightState())
@@ -184,8 +186,15 @@ public class gameManager : MonoBehaviour {
 
     public void youLose() {
         statePause();
+        if (getPlayerScript().getLives() <= 0)
+        {
+            getRespawnButton().interactable = false;
+        }
         menuActive = menuLose; // set active menu to lose menu
         menuActive.SetActive(true); // Show active menu
+
+        // Since text is now active, update it.
+        getLivesText().text = getPlayerScript().getLives().ToString();
     }
 
     // Change reticle when aiming at an enemy
@@ -461,5 +470,13 @@ public class gameManager : MonoBehaviour {
     public GameObject getHealthUI() { return hpUI; }
 
     public GameObject getXpUI() { return xpUI; }
+
+    public Button getRespawnButton() { return respawnButton; }
+
+    public void setRespawnButton(Button _respawnButton) { respawnButton = _respawnButton; }
+
+    public TMP_Text getLivesText() { return livesText; }
+
+    public void setLivesText(TMP_Text _livesText) { livesText = _livesText; }
 
 }

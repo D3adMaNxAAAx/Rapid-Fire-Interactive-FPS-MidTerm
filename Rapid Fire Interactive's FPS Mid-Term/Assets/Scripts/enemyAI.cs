@@ -40,7 +40,7 @@ public class enemyAI : MonoBehaviour , IDamage
     Coroutine aCoRoutine;
     [Header("----- Stats -----")]
     // -- Attributes --
-    [Range(1, 300)][SerializeField] int HP; // Health Points Tracker and Modifier Field For Designer
+    [Range(1, 300)][SerializeField] float HP; // Health Points Tracker and Modifier Field For Designer
 
     [Range(1, 30)][SerializeField] int faceTargetSpeed; // Sets enemy rotation look speed for turning towards enemy look direction
     [Range(1, 1000)][SerializeField] int dropXP; // How much XP enemy drops
@@ -53,9 +53,9 @@ public class enemyAI : MonoBehaviour , IDamage
     
     [Range(.01f, 100)][SerializeField] float shootRate; // Enemy Fire Rate Modifier Field For Designer
     [Range(.01f, 30)][SerializeField] float damageFlashTimer; // Allows Designer To Set Damage Flash Timer 
-    int HPOrig; // Private Tracker for enemy original HP
+    float HPOrig; // Private Tracker for enemy original HP
     Color colorOrig; // Enemy Model Original Color Private Tracker
-    int bossHP; // tracks boss hp for boss fight progress bar
+    float bossHP; // tracks boss hp for boss fight progress bar
     float OGSpeed;
     int dropRNG;
 
@@ -240,7 +240,7 @@ public class enemyAI : MonoBehaviour , IDamage
     }
 
     // Calling our takeDamage method from interface class IDamage
-    public void takeDamage(int _amount)
+    public void takeDamage(float _amount)
     {    
         // Deduct HP on damage recieved
         HP -= _amount;
@@ -330,7 +330,7 @@ public class enemyAI : MonoBehaviour , IDamage
     { dropCoins = _coins; }
 
     // Getter for Enemy HP
-    public int getEnemyHP()
+    public float getEnemyHP()
     { return HP; }
 
     // Setter for Enemy HP from other classes

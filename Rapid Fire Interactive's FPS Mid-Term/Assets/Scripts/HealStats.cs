@@ -6,7 +6,7 @@ using UnityEngine;
 public class HealStats : ScriptableObject
 {
     public string itemName;
-    public int healAmmount;
+    public int healAmount;
     public AudioClip healSound;
     public float healCoolDown;
 }
