@@ -100,6 +100,8 @@ public class playerMovement : MonoBehaviour, IDamage
     bool stopHealing = false; // was the player damaged while healing?
     bool onDashCooldown = false;
     bool isHealing;
+    bool damageAudioReady = true;
+
     // Start is called before the first frame update
     void Start() {
         // Variable Initialization
@@ -349,7 +351,10 @@ public class playerMovement : MonoBehaviour, IDamage
         stopHealing = true; // STOP HEALING IF DAMAGED
 
         // Play hurt sound for audio indication
-        aud.PlayOneShot(audioManager.instance.audHurt[Random.Range(0, audioManager.instance.audHurt.Length)], audioManager.instance.audHurtVol);
+        if (damageAudioReady) {
+            aud.PlayOneShot(audioManager.instance.audHurt[Random.Range(0, audioManager.instance.audHurt.Length)], audioManager.instance.audHurtVol);
+            StartCoroutine(damageAudioCooldown());
+        }
 
         // Update UI & Flash Screen red
         updatePlayerUI();
@@ -367,6 +372,12 @@ public class playerMovement : MonoBehaviour, IDamage
         if ((HP / HPOrig) < .5) { 
             StartCoroutine(noDamageTime()); // TIMER FOR WHEN PLAYER CAN START TO HEAL
         }
+    }
+
+    IEnumerator damageAudioCooldown() { // so player doesnt go UH AH UH AH ER UMF UH AH every half second
+        damageAudioReady = false;
+        yield return new WaitForSeconds(1);
+        damageAudioReady = true;
     }
 
     IEnumerator shotFlashTimer() {
