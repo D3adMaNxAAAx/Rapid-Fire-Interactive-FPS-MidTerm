@@ -41,7 +41,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] List<gunStats> guns;
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject shotFlash;
-    
+
 
     bool isSniper = false;
     [SerializeField] float damage;
@@ -243,6 +243,13 @@ public class playerMovement : MonoBehaviour, IDamage
     }
 
     void shootGun() {
+        // Reload
+        // Check if the player is not shooting & if they pressed R
+        if (!isShooting && Input.GetButton("Reload"))
+        {
+            reload();
+        }
+
         if (getCurGun().isAutomatic)
         {
             if (Input.GetButton("Fire1") && !isShooting && !gameManager.instance.getPauseStatus())
@@ -273,6 +280,15 @@ public class playerMovement : MonoBehaviour, IDamage
                 }
             }
         }
+    }
+
+    void reload()
+    {
+        // Set the current ammo to the max ammo -- THIS IS FOR DEBUGGING. TO-DO: CREATE A CLIP SIZE TO RELOAD TO INSTEAD AND TAKE FROM MAX AMMO
+        guns[gunPos].ammoCur = guns[gunPos].ammoMax;
+
+        // Update the UI for confirmation
+        updatePlayerUI();
     }
 
     // Sprint Movement Func
