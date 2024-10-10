@@ -27,7 +27,7 @@ public class playerMovement : MonoBehaviour, IDamage
     // Player modifiers
     // -- Attributes --
     [Header("-- Player Attributes --")]
-    [SerializeField] int HP;
+    [SerializeField] float HP;
     [SerializeField] float speed;
     [SerializeField] int stamina;
     [SerializeField] int coins;
@@ -81,7 +81,7 @@ public class playerMovement : MonoBehaviour, IDamage
     int jumpCounter;
 
     // Trackers
-    int HPOrig; // HP
+    float HPOrig; // HP
     int playerXP; // XP
     int staminaOrig; // Stamina
     int playerLevel; // Level
@@ -342,7 +342,7 @@ public class playerMovement : MonoBehaviour, IDamage
     }
 
     // Player Damage Controller
-    public void takeDamage(int amount)
+    public void takeDamage(float amount)
     {
         // Player takes damage
         HP -= amount;
@@ -360,11 +360,11 @@ public class playerMovement : MonoBehaviour, IDamage
             HP = 0; // set HP to 0 for no weirdness in code/visuals
             gameManager.instance.youLose();
         }
-        else if (((float)HP / HPOrig) <= .25) { 
+        else if ((HP / HPOrig) <= .25) { 
             lowHealth = true;
             gameManager.instance.getHealthWarning().SetActive(true);
         }
-        if (((float)HP / HPOrig) < .5) { 
+        if ((HP / HPOrig) < .5) { 
             StartCoroutine(noDamageTime()); // TIMER FOR WHEN PLAYER CAN START TO HEAL
         }
     }
@@ -378,12 +378,12 @@ public class playerMovement : MonoBehaviour, IDamage
     public void Heal() {
         HP += 3; // HEAL THE PLAYER
         if (lowHealth == true) {
-            if (((float)HP / HPOrig) > .25) { 
+            if ((HP / HPOrig) > .25) { 
                 lowHealth = false;
                 gameManager.instance.getHealthWarning().SetActive(false); // getting rid of low health state if not low anymore
             }
         }
-        if (((float)HP / HPOrig) > .5) { // only heals to half HP
+        if ((HP / HPOrig) > .5) { // only heals to half HP
             HP = (HPOrig / 2); // if HP goes over half, reset to half
             readyToHeal = false; // HEALING OVER
         }
@@ -401,7 +401,7 @@ public class playerMovement : MonoBehaviour, IDamage
     }
 
     IEnumerator noDamageTime() { // time till healing (if no damage was taken)
-        int currentHP = HP;
+        float currentHP = HP;
         yield return new WaitForSeconds(3);
         if (currentHP == HP) { // PLAYER CAN START HEALING (SEE UPDATE())
             stopHealing = false;
@@ -452,7 +452,7 @@ public class playerMovement : MonoBehaviour, IDamage
     public void updatePlayerUI() 
     {
         // Health Info
-        gameManager.instance.getHPBar().fillAmount = (float)HP / HPOrig;
+        gameManager.instance.getHPBar().fillAmount = HP / HPOrig;
         gameManager.instance.getHPText().text = HP.ToString("F0");
 
         // Stamina Info
@@ -612,7 +612,7 @@ public class playerMovement : MonoBehaviour, IDamage
             healCoolDown = heals[0].healCoolDown;
             heals.Remove(heals[0]);
 
-            if (((float)HP / HPOrig) > .25) {
+            if ((HP / HPOrig) > .25) {
                 lowHealth = false;
                 gameManager.instance.getHealthWarning().SetActive(false); // getting rid of low health state if not low anymore
             }
@@ -794,10 +794,10 @@ public class playerMovement : MonoBehaviour, IDamage
 
     // -- GETTERS --
 
-    public int getHP() {
+    public float getHP() {
         return HP;}
 
-    public int getHPOrig() {
+    public float getHPOrig() {
         return HPOrig;}
 
     public int getStamina() {
@@ -834,10 +834,10 @@ public class playerMovement : MonoBehaviour, IDamage
         return (int)damageUpgradeMod;}
 
     // Setters
-    public void setHP(int newHP) {
+    public void setHP(float newHP) {
         HP = newHP;
     }
-    public void setHPOrig(int newHPOrig) {
+    public void setHPOrig(float newHPOrig) {
         HPOrig = newHPOrig;
     }
     public void setAmmo(int newAmmo) {

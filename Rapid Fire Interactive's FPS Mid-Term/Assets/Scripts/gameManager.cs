@@ -146,7 +146,7 @@ public class gameManager : MonoBehaviour {
         }
     }
 
-    public void updateBossBar(Image _bossHealthBar, float bossHP, int _health)
+    public void updateBossBar(Image _bossHealthBar, float bossHP, float _health)
     {
         // Check if the player has entered the boss room
         if (bossRoom.instance.getBossFightState())

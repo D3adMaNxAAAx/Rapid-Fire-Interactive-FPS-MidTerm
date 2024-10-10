@@ -7,7 +7,7 @@ public class damage : MonoBehaviour
 
 
     //Allows switch between damage types
-    [SerializeField] enum damageType { ranged, missle, melee }
+    [SerializeField] enum damageType { ranged, missle, melee, hazard } // fire is hazard
 
     //Modifier field for damage type
     [SerializeField] damageType type;
@@ -18,7 +18,7 @@ public class damage : MonoBehaviour
     [SerializeField] Transform missleTarget;
     [SerializeField] float missleRotationSpeed = 10; // how much the missle will turn to follow player
 
-    [SerializeField] int damageAmount;
+    [SerializeField] float damageAmount;
     [SerializeField] float attackSpeed;
     [SerializeField] int destroyTime; //Object destroy timer
 
@@ -68,6 +68,18 @@ public class damage : MonoBehaviour
         if (type == damageType.ranged || type == damageType.missle)
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerStay(Collider otherObject) {
+        if (otherObject.isTrigger) {
+            return;
+        }
+        if (type == damageType.hazard) { // dealing damage while still in area of effect
+            IDamage toDamage = otherObject.GetComponent<IDamage>();
+            if (otherObject.CompareTag("Player")) { // only damages player
+                toDamage.takeDamage(damageAmount);
+            }
         }
     }
 }
