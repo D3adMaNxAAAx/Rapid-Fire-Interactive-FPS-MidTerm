@@ -117,7 +117,7 @@ public class playerMovement : MonoBehaviour, IDamage
     void Update() {
         if (gameManager.instance.getPauseStatus() == false) {
             movement();
-            StartCoroutine(Dash());
+            DashAll(); // at bottom of file, only does anything if specific key is pressed
 
             if (readyToHeal) {  // HEALING STARTS HERE, READY TO HEAL DETERMINATION STARTS IN TAKEDAMAGE()
                 StartCoroutine(healing());  // recursive method
@@ -295,29 +295,6 @@ public class playerMovement : MonoBehaviour, IDamage
                 isSprinting = false;
             }
         //}
-    }
-
-    IEnumerator Dash() {
-        if (Input.GetButtonDown("Dash")) {
-            if (onDashCooldown == false) {
-                controller.Move(transform.forward * 1.5f);
-                yield return new WaitForSeconds(0.05f);
-                controller.Move(transform.forward * 1.5f);
-                yield return new WaitForSeconds(0.05f);
-                controller.Move(transform.forward * 1.5f);
-                yield return new WaitForSeconds(0.05f);
-                controller.Move(transform.forward * 1.5f);
-                yield return new WaitForSeconds(0.05f);
-                controller.Move(transform.forward * 1.5f);
-                StartCoroutine(dashCooldown()); // can't dash again for 3 seconds
-            }
-        }
-    }
-
-    IEnumerator dashCooldown() {
-        onDashCooldown = true;
-        yield return new WaitForSeconds(3);
-        onDashCooldown = false;
     }
 
     // Shoot Timer
@@ -704,6 +681,117 @@ public class playerMovement : MonoBehaviour, IDamage
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = _gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
+    public void DashAll() {
+        StartCoroutine(DashW());
+        StartCoroutine(DashA());
+        StartCoroutine(DashS());
+        StartCoroutine(DashD());
+    }
+    // 3 vars for each dash directions, w a s d
+    float time1W;
+    float time2W;
+    bool isTapW = false;
+    float time1A;
+    float time2A;
+    bool isTapA = false;
+    float time1S;
+    float time2S;
+    bool isTapS = false;
+    float time1D;
+    float time2D;
+    bool isTapD = false;
+
+    IEnumerator DashW() {
+        if (Input.GetButtonDown("Dash W")) {
+            if (isTapW == true) {
+                time1W = Time.time;
+                isTapW = false;
+                if (onDashCooldown == false && time1W - time2W < 0.2f) { // time that both key pressed need to be done within
+                    for (int i = 1; i <= 4; i++) {
+                        controller.Move(transform.forward * 1.5f);
+                        yield return new WaitForSeconds(0.05f);
+                    }
+                    StartCoroutine(dashCooldown()); // can't dash again for x seconds
+                }
+            }
+        }
+        else {
+            if (isTapW == false) {
+                time2W = Time.time;
+                isTapW = true;
+            }
+        }
+    }
+    IEnumerator DashA() {
+        if (Input.GetButtonDown("Dash A")) {
+            if (isTapA == true) {
+                time1A = Time.time;
+                isTapA = false;
+                if (onDashCooldown == false && time1A - time2A < 0.2f) { // time that both key pressed need to be done within
+                    for (int i = 1; i <= 4; i++) {
+                        controller.Move(-transform.right * 1.5f); // negative right = left
+                        yield return new WaitForSeconds(0.05f);
+                    }
+                    StartCoroutine(dashCooldown()); // can't dash again for x seconds
+                }
+            }
+        }
+        else {
+            if (isTapA == false) {
+                time2A = Time.time;
+                isTapA = true;
+            }
+        }
+    }
+    IEnumerator DashS() {
+        if (Input.GetButtonDown("Dash S")) {
+            if (isTapS == true) {
+                time1S = Time.time;
+                isTapS = false;
+                if (onDashCooldown == false && time1S - time2S < 0.2f) { // time that both key pressed need to be done within
+                    for (int i = 1; i <= 4; i++) {
+                        controller.Move(-transform.forward * 1.5f); // negative forward = backwards
+                        yield return new WaitForSeconds(0.05f);
+                    }
+                    StartCoroutine(dashCooldown()); // can't dash again for x seconds
+                }
+            }
+        }
+        else {
+            if (isTapS == false) {
+                time2S = Time.time;
+                isTapS = true;
+            }
+        }
+    }
+    IEnumerator DashD() {
+        if (Input.GetButtonDown("Dash D")) {
+            if (isTapD == true) {
+                time1D = Time.time;
+                isTapD = false;
+                if (onDashCooldown == false && time1D - time2D < 0.2f) { // time that both key pressed need to be done within
+                    for (int i = 1; i <= 4; i++) {
+                        controller.Move(transform.right * 1.5f);
+                        yield return new WaitForSeconds(0.05f);
+                    }
+                    StartCoroutine(dashCooldown()); // can't dash again for x seconds
+                }
+            }
+        }
+        else {
+            if (isTapD == false) {
+                time2D = Time.time;
+                isTapD = true;
+            }
+        }
+    }
+
+    IEnumerator dashCooldown() {
+        onDashCooldown = true;
+        yield return new WaitForSeconds(2);
+        onDashCooldown = false;
+    }
+
     // -- GETTERS --
 
     public int getHP() {
@@ -771,48 +859,37 @@ public class playerMovement : MonoBehaviour, IDamage
         updatePlayerUI();
     }
     public int getPlayerLevel() {
-        return playerLevel;
-    }
+        return playerLevel;}
 
     public gunStats getCurGun() {
-        return guns[gunPos];
-    }
+        return guns[gunPos];}
 
     public int getSkillPoints() { return skillPoints; }
 
-    // -- SETTERS --
     public void setSpeed(float newSpeed) {
-        speed = newSpeed;
-    }
+        speed = newSpeed;}
 
     public void setStamina(int newStamina) {
-        stamina = newStamina;
-    }
+        stamina = newStamina;}
 
     public void setCoins(int newCoins) {
-        coins = newCoins;
-    }
+        coins = newCoins;}
 
     public void setDamageMod(float newDamageMod) {
-        damageUpgradeMod = newDamageMod;
-    }
+        damageUpgradeMod = newDamageMod;}
 
     public void setXP(int amount) {
         playerXP += amount;
-        levelTracker(); // Check if the player can level up
-    }
+        levelTracker(); }// Check if the player can level up
 
     public void setPlayerLevel(int newPlayerLevel) {
-        playerLevel = newPlayerLevel;
-    }
+        playerLevel = newPlayerLevel;}
 
     public void setSkillPoints(int newSkillPoints) {
-        skillPoints = newSkillPoints;
-    }
+        skillPoints = newSkillPoints;}
 
     public void setDamage(int newDamage) {
-        damage = newDamage;
-    }
+        damage = newDamage;}
 
     public List<gunStats> getGunList() 
         { return guns; }
