@@ -36,23 +36,40 @@ public class playerJournal : MonoBehaviour
     {
         if (Input.GetButtonDown("OpenJournal") && !isOpen)
         {
-            Debug.Log("Opened");
+           openJournal();
+            
+        }
+        else if (Input.GetButtonDown("OpenJournal") && isOpen)
+        {
+           closeJournal();
+        }
+    }
+
+    public void openJournal()
+    {
+        if (!isOpen)
+        {
+            gameManager.instance.displayUI(false);
             gameManager.instance.statePause();
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
             journal.SetActive(true);
             isOpen = !isOpen;
+            
         }
-        else if (Input.GetButtonDown("OpenJournal") && isOpen)
+    }
+    public void closeJournal()
+    {
+        if (isOpen)
         {
             gameManager.instance.stateUnpause();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
             journal.SetActive(false);
+            gameManager.instance.displayUI(true);
             isOpen = !isOpen;
         }
     }
-
     public void menuObj()
     {
         if(menuActive != null)
