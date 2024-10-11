@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class GunInventoryManager : MonoBehaviour
 {
-    [SerializeField] private List<Sprite> gunSlotSprites; 
-    [SerializeField] private List<Text> gunAmmoTexts;
+    [SerializeField] private List<Image> gunSlotImages;
+    [SerializeField] private List<Sprite> gunSlotSprites;    
     [SerializeField] private Color selectedGunColor;
     [SerializeField] private Color defaultGunColor;
 
@@ -15,34 +15,33 @@ public class GunInventoryManager : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < gunSlotSprites.Count; i++)
+        player = FindObjectOfType<playerMovement>();
+
+        for (int i = 0; i < gunSlotImages.Count; i++)
         {
-           
-            gunSlotSprites[i] = null;
-            gunAmmoTexts[i].text = "";
+            gunSlotImages[i].color = defaultGunColor;
+            gunSlotImages[i].sprite = null;
+
         }
     }
 
     public void UpdateGunInventoryUI()
     {
-        List<gunStats> guns = player.getGunList();
-        int selectedGunIndex = player.getGunList().IndexOf(player.getCurGun());
+        List<gunStats> guns = player.getGunList(); 
+        int selectedGunIndex = player.getGunList().IndexOf(player.getCurGun()); 
 
-        for (int i = 0; i < gunSlotSprites.Count; i++)
+        for (int i = 0; i < gunSlotImages.Count; i++)
         {
-            if (i < guns.Count)
+            if (i < guns.Count) 
             {
-                
-                gunSlotSprites[i] = guns[i].gunIcon; 
-
-                // Update the ammo count text
-                gunAmmoTexts[i].text = guns[i].ammoCur.ToString() + " / " + guns[i].ammoMag.ToString();
+                gunSlotImages[i].sprite = guns[i].gunIcon;  
+                gunSlotImages[i].color = i == selectedGunIndex ? selectedGunColor : defaultGunColor; 
             }
             else
             {
-                // Set to default empty sprite if no gun is present
-                gunSlotSprites[i] = null;
-                gunAmmoTexts[i].text = "";
+                
+                gunSlotImages[i].sprite = null;
+                gunSlotImages[i].color = defaultGunColor;
             }
         }
     }

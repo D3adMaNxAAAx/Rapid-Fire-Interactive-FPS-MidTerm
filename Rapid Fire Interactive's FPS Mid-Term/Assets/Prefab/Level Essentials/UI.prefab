@@ -11161,6 +11161,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7033155564513203041}
+  - component: {fileID: 5926474367059758768}
   - component: {fileID: 8790060571553564318}
   - component: {fileID: 1620948512231557536}
   - component: {fileID: 8299928838013716288}
@@ -11192,9 +11193,32 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -605}
+  m_AnchoredPosition: {x: -285, y: -470}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5926474367059758768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2746043650007505415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0de5252c2b5b386458bcf3b20cbc80a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunSlotSprites:
+  - {fileID: 21300000, guid: 5b7532614c5a0534b8c34b86d0b8f03a, type: 3}
+  - {fileID: 21300000, guid: f698f0c93887fa24081dcc206ee17119, type: 3}
+  - {fileID: 21300000, guid: 3c4d23a9c6135704c8deef71ce3cf29a, type: 3}
+  - {fileID: 21300000, guid: e4e7e0b4de585e24ba829f682e63b8a4, type: 3}
+  - {fileID: 21300000, guid: 1ee3bc82408815245868426ab15905d3, type: 3}
+  - {fileID: 21300000, guid: f3dcd0926d96911438192b4e12aefe71, type: 3}
+  - {fileID: 21300000, guid: a94b55fe43e37a04d9d2f3c523e43e68, type: 3}
+  gunAmmoTexts: []
+  selectedGunColor: {r: 0, g: 0, b: 0, a: 0}
+  defaultGunColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!222 &8790060571553564318
 CanvasRenderer:
   m_ObjectHideFlags: 0
