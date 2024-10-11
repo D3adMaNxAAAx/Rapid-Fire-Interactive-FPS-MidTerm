@@ -1397,7 +1397,7 @@ RectTransform:
   m_GameObject: {fileID: 344799262670431632}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4, y: 3, z: 1}
+  m_LocalScale: {x: 2.1, y: 4.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2153610387985553629}
@@ -1406,7 +1406,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 96.7, y: 20.25}
+  m_AnchoredPosition: {x: 142.29999, y: 27}
   m_SizeDelta: {x: 20, y: 55.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9003815189670896926
@@ -9773,7 +9773,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.49056602, g: 0.0128515465, b: 0, a: 1}
+  m_Color: {r: 0.18039216, g: 0.6901961, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -11181,7 +11181,7 @@ RectTransform:
   m_GameObject: {fileID: 2746043650007505415}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.49158, y: 0.11196706, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.09, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3572199428515163905}
@@ -11193,7 +11193,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -285, y: -470}
+  m_AnchoredPosition: {x: 16.5, y: -479.75}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5926474367059758768
@@ -11208,6 +11208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0de5252c2b5b386458bcf3b20cbc80a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gunSlotImages: []
   gunSlotSprites:
   - {fileID: 21300000, guid: 5b7532614c5a0534b8c34b86d0b8f03a, type: 3}
   - {fileID: 21300000, guid: f698f0c93887fa24081dcc206ee17119, type: 3}
@@ -11216,7 +11217,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1ee3bc82408815245868426ab15905d3, type: 3}
   - {fileID: 21300000, guid: f3dcd0926d96911438192b4e12aefe71, type: 3}
   - {fileID: 21300000, guid: a94b55fe43e37a04d9d2f3c523e43e68, type: 3}
-  gunAmmoTexts: []
   selectedGunColor: {r: 0, g: 0, b: 0, a: 0}
   defaultGunColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!222 &8790060571553564318
@@ -25385,7 +25385,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.17864235, g: 0.6901961, b: 0, a: 1}
+  m_Color: {r: 0.4901961, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -29550,7 +29550,7 @@ RectTransform:
   m_GameObject: {fileID: 7606174361904020907}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.3, y: 2.7, z: 1}
+  m_LocalScale: {x: 2, y: 4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8728859992343558893}
@@ -29559,7 +29559,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 84.03058, y: 61.25}
+  m_AnchoredPosition: {x: 122.50818, y: 76.634705}
   m_SizeDelta: {x: 20, y: 58}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3518012177232219003
@@ -29583,7 +29583,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.87993157, g: 0.98742133, b: 0.4564494, a: 0.7176471}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
