@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b63643684d59cf148bb3fcf9317ee454, type: 3}
+  m_Name: Shotgun - SO
+  m_EditorClassIdentifier: 
+  gunModel: {fileID: 2683791570493522586, guid: 51558caaf0a87814f8aa3c99cb349ffd, type: 3}
+  damage: 5
+  fireRate: 1.5
+  bulletDist: 10
+  ammoCur: 40
+  ammoMag: 5
+  ammoMax: 40
+  ammoOrig: 40
+  isSniper: 0
+  isAutomatic: 0
+  isLaser: 0
+  isShotgun: 1
+  hitEffects: {fileID: 7226583673155636403, guid: a2ab56839e1c9504ea9d141e95d0b16b, type: 3}
+  shootSound:
+  - {fileID: 8300000, guid: 77b48069d79c20743a02842750c53ec7, type: 3}
+  audioVolume: 0.3

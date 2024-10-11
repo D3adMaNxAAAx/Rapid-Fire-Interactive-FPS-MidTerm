@@ -15,6 +15,7 @@ public class gunStats : ScriptableObject
     public bool isSniper;
     public bool isAutomatic;
     public bool isLaser;
+    public bool isShotgun;
 
     // -- Gun Visuals --
     public ParticleSystem hitEffects;

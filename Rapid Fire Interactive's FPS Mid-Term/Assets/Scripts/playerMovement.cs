@@ -42,11 +42,12 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject shotFlash;
     [SerializeField] GameObject laserShot; // player shot visual for laser rifle
+    [SerializeField] GameObject shotgunShot; // player shot visual for shotgun
     [SerializeField] LineRenderer laserSight;
-
 
     bool isSniper = false;
     bool isLaser = false;
+    bool isShotgun = false;
 
     [SerializeField] float damage;
     [SerializeField] float fireRate;
@@ -277,11 +278,14 @@ public class playerMovement : MonoBehaviour, IDamage
             if (Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus()) {
                 if (getAmmo() > 0) {
                     StartCoroutine(shoot());
-                    if (isLaser == false) { // laser isn't automatic so only needs to be in this if statement
-                        Instantiate(playerShot, shotFlash.transform.position, Camera.main.transform.rotation);
+                    if (isLaser) { // laser isn't automatic so only needs to be in this if statement
+                        Instantiate(laserShot, shotFlash.transform.position, Camera.main.transform.rotation);
+                    }
+                    else if (isShotgun) { // shotgun isn't automatic so only needs to be in this if statement
+                        Instantiate(shotgunShot, shotFlash.transform.position, Camera.main.transform.rotation); // object to make, position (var Transform), direction object is facing
                     }
                     else {
-                        Instantiate(laserShot, shotFlash.transform.position, Camera.main.transform.rotation);
+                        Instantiate(playerShot, shotFlash.transform.position, Camera.main.transform.rotation);
                     }
                     aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
                 }
@@ -721,6 +725,8 @@ public class playerMovement : MonoBehaviour, IDamage
         fireRate = getCurGun().fireRate;
         isSniper = getCurGun().isSniper;
         isLaser = getCurGun().isLaser;
+        isShotgun = getCurGun().isShotgun;
+        
         if (isLaser) {
             laserSight.enabled = true;
         }
@@ -748,6 +754,7 @@ public class playerMovement : MonoBehaviour, IDamage
         //ammoOrig = _gun.ammoMax;
         isSniper = _gun.isSniper;
         isLaser = _gun.isLaser;
+        isShotgun = _gun.isShotgun;
         if (isLaser) {
             laserSight.enabled = true;
         }
