@@ -194,7 +194,7 @@ public class enemyAI : MonoBehaviour , IDamage
             }
         }
 
-        else if (gameObject.CompareTag("Basic") || gameObject.CompareTag("Light") || gameObject.CompareTag("Ranged Heavy") || gameObject.CompareTag("Challenge")) {
+        else if (gameObject.CompareTag("Basic") || gameObject.CompareTag("Light") || gameObject.CompareTag("Ranged Heavy") || gameObject.CompareTag("Challenge") || gameObject.CompareTag("Demon Golem")) {
             anim.SetTrigger("Shoot");
         }
 
