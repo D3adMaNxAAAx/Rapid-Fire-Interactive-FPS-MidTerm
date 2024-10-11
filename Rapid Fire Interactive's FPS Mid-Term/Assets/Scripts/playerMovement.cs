@@ -41,9 +41,13 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] List<gunStats> guns;
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject shotFlash;
+    [SerializeField] GameObject laserShot; // player shot visual for laser rifle
+    [SerializeField] LineRenderer laserSight;
 
 
     bool isSniper = false;
+    bool isLaser = false;
+
     [SerializeField] float damage;
     [SerializeField] float fireRate;
     [SerializeField] float bulletDistance;
@@ -149,6 +153,13 @@ public class playerMovement : MonoBehaviour, IDamage
         // Check if sprinting -- Drain stamina as the player runs
         if (isSprinting && !isDraining)
             StartCoroutine(staminaDrain());
+
+        if (isLaser) { // laser sight
+            RaycastHit hit;
+            Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, bulletDistance, ~ignoreLayer);
+            laserSight.SetPosition(0, shotFlash.transform.position); // first param in "index", 0 is line start
+            laserSight.SetPosition(1, hit.point); // first param in "index", 1 is line end
+        }
     }
 
     public void spawnPlayer()
@@ -250,32 +261,31 @@ public class playerMovement : MonoBehaviour, IDamage
             reload();
         }
 
-        if (getCurGun().isAutomatic)
-        {
-            if (Input.GetButton("Fire1") && !isShooting && !gameManager.instance.getPauseStatus())
-            {
-                if (getAmmo() > 0)
-                {
+        if (getCurGun().isAutomatic) {
+            if (Input.GetButton("Fire1") && !isShooting && !gameManager.instance.getPauseStatus()) {
+                if (getAmmo() > 0) {
                     StartCoroutine(shoot());
-                    Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation);
+                    Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation); 
+                    aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
                 }
-                else
-                {
+                else {
                     StartCoroutine(AmmoWarningFlash());
                 }
             }
         }
-        else
-        {
-            if (Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus())
-            {
-                if (getAmmo() > 0)
-                {
+        else {
+            if (Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus()) {
+                if (getAmmo() > 0) {
                     StartCoroutine(shoot());
-                    Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation);
+                    if (isLaser == false) { // laser isn't automatic so only needs to be in this if statement
+                        Instantiate(playerShot, shotFlash.transform.position, Camera.main.transform.rotation);
+                    }
+                    else {
+                        Instantiate(laserShot, shotFlash.transform.position, Camera.main.transform.rotation);
+                    }
+                    aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
                 }
-                else
-                {
+                else {
                     StartCoroutine(AmmoWarningFlash());
                 }
             }
@@ -340,8 +350,6 @@ public class playerMovement : MonoBehaviour, IDamage
         // Set bool true at timer begin
         isShooting = true;
         StartCoroutine(shotFlashTimer());
-        // Play the gun's shoot sound
-        aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume);
 
         //Create Raycast
         RaycastHit hit;
@@ -712,6 +720,13 @@ public class playerMovement : MonoBehaviour, IDamage
         bulletDistance = guns[gunPos].bulletDist;
         fireRate = getCurGun().fireRate;
         isSniper = getCurGun().isSniper;
+        isLaser = getCurGun().isLaser;
+        if (isLaser) {
+            laserSight.enabled = true;
+        }
+        else {
+            laserSight.enabled = false;
+        }
         updatePlayerUI();
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = getCurGun().gunModel.GetComponent<MeshFilter>().sharedMesh;
@@ -732,6 +747,13 @@ public class playerMovement : MonoBehaviour, IDamage
         bulletDistance = _gun.bulletDist;
         //ammoOrig = _gun.ammoMax;
         isSniper = _gun.isSniper;
+        isLaser = _gun.isLaser;
+        if (isLaser) {
+            laserSight.enabled = true;
+        }
+        else {
+            laserSight.enabled = false;
+        }
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = _gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = _gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
