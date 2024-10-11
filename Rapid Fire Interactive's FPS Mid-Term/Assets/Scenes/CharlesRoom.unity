@@ -835,8 +835,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7033155564513203041, guid: 3a7a37492a1b2c04e96926d4be5220c0, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -285
+      objectReference: {fileID: 0}
+    - target: {fileID: 7033155564513203041, guid: 3a7a37492a1b2c04e96926d4be5220c0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -430
+      value: -470
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -885,8 +889,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0de5252c2b5b386458bcf3b20cbc80a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gunSlotImages:
-  - {fileID: 0}
+  gunSlotSprites:
+  - {fileID: 21300000, guid: 5b7532614c5a0534b8c34b86d0b8f03a, type: 3}
+  - {fileID: 21300000, guid: f698f0c93887fa24081dcc206ee17119, type: 3}
+  - {fileID: 21300000, guid: 3c4d23a9c6135704c8deef71ce3cf29a, type: 3}
+  - {fileID: 21300000, guid: e4e7e0b4de585e24ba829f682e63b8a4, type: 3}
+  - {fileID: 21300000, guid: 1ee3bc82408815245868426ab15905d3, type: 3}
+  - {fileID: 21300000, guid: f3dcd0926d96911438192b4e12aefe71, type: 3}
+  - {fileID: 21300000, guid: a94b55fe43e37a04d9d2f3c523e43e68, type: 3}
   gunAmmoTexts: []
   selectedGunColor: {r: 0, g: 0, b: 0, a: 0}
   defaultGunColor: {r: 0, g: 0, b: 0, a: 0}

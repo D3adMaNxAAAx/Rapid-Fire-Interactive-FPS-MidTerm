@@ -23,5 +23,5 @@ public class gunStats : ScriptableObject
     public float audioVolume;
 
     // -- Gun Image --
-    public Sprite gunSprite;
+    public Sprite gunIcon;
 }
