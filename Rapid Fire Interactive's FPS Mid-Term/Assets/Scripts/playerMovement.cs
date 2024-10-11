@@ -41,6 +41,8 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] List<gunStats> guns;
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject shotFlash;
+    [SerializeField] GameObject laserShot; // player shot visual for laser rifle
+    [SerializeField] LineRenderer laserSight;
 
 
     bool isSniper = false;
