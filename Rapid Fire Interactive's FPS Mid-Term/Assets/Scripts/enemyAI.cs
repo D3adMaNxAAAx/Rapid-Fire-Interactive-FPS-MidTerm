@@ -189,17 +189,17 @@ public class enemyAI : MonoBehaviour , IDamage
         // Set shooting to true
         isShooting = true;
         if (gameObject.CompareTag("Heavy") || gameObject.CompareTag("Basic Melee")) {
-            if (agent.remainingDistance <= agent.stoppingDistance + 1) { 
+            if (agent.remainingDistance <= agent.stoppingDistance + 1) {
                 anim.SetTrigger("Melee");
                 Debug.Log("hi");
             }
         }
 
-        else if (gameObject.CompareTag("Basic") || gameObject.CompareTag("Light") || gameObject.CompareTag("Challenge"))
+        else if (gameObject.CompareTag("Basic") || gameObject.CompareTag("Light") || gameObject.CompareTag("Ranged Heavy") || gameObject.CompareTag("Challenge")) {
             anim.SetTrigger("Shoot");
+        }
 
-        else if (gameObject.CompareTag("Boss"))
-        {
+        else if (gameObject.CompareTag("Boss")) {
             if (agent.remainingDistance <= agent.stoppingDistance)
                 anim.SetTrigger("Melee");
             else
