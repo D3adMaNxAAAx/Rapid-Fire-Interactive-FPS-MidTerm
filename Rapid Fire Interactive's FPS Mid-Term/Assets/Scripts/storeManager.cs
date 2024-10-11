@@ -111,14 +111,15 @@ public class storeManager : MonoBehaviour
         // Update UI
         updateStoreUI();
     }
-
+    
     void giveAmmo()
     {
         // Precautionary check if the player has a gun
         if (gameManager.instance.getPlayerScript().hasGun())
         {
             // Give the player max ammo as per their purchase & update the UI
-            gameManager.instance.getPlayerScript().setAmmo(gameManager.instance.getPlayerScript().getAmmoOrig());
+            gameManager.instance.getPlayerScript().setAmmo(gameManager.instance.getPlayerScript().getAmmoMag());
+            gameManager.instance.getPlayerScript().setAmmoMax(gameManager.instance.getPlayerScript().getAmmoOrig());
             gameManager.instance.getPlayerScript().updatePlayerUI();
 
             // Update UI
