@@ -191,7 +191,6 @@ public class enemyAI : MonoBehaviour , IDamage
         if (gameObject.CompareTag("Heavy") || gameObject.CompareTag("Basic Melee")) {
             if (agent.remainingDistance <= agent.stoppingDistance + 1) {
                 anim.SetTrigger("Melee");
-                Debug.Log("hi");
             }
         }
 
