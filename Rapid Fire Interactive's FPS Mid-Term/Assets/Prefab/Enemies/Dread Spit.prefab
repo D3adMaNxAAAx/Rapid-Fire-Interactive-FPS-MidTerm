@@ -52,7 +52,7 @@ MonoBehaviour:
   missleTarget: {fileID: 0}
   missleRotationSpeed: 10
   damageAmount: 1
-  attackSpeed: 25
+  attackSpeed: 35
   destroyTime: 3
 --- !u!135 &8796806919602617418
 SphereCollider:
@@ -176,8 +176,8 @@ TrailRenderer:
       m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
-    numCornerVertices: 0
-    numCapVertices: 0
+    numCornerVertices: 6
+    numCapVertices: 6
     alignment: 0
     textureMode: 0
     textureScale: {x: 1, y: 1}

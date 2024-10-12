@@ -18,7 +18,6 @@ public class enemyAI : MonoBehaviour , IDamage
     [SerializeField] Transform shootPos; // Enemy SHoot Point Origin Tracker For Designer
     [SerializeField] Transform ammoSpawn;
     [SerializeField] GameObject ammoDrop; //Ammo Drop prefab
-    ///[SerializeField] Animator animator;
 
     // -- Extra Checks --
     bool isShooting; // Private Tracker For If Enemy Is Shooting 
@@ -194,8 +193,9 @@ public class enemyAI : MonoBehaviour , IDamage
             }
         }
 
-        else if (gameObject.CompareTag("Basic") || gameObject.CompareTag("Light") || gameObject.CompareTag("Ranged Heavy") || gameObject.CompareTag("Challenge")) {
+        else if (gameObject.CompareTag("Basic") || gameObject.CompareTag("Light") || gameObject.CompareTag("Ranged Heavy") || gameObject.CompareTag("Challenge") || (gameObject.CompareTag("Demon Golem"))) {
             anim.SetTrigger("Shoot");
+            // Demon Golem also has melee he does both at once
         }
 
         else if (gameObject.CompareTag("Boss")) {
@@ -303,14 +303,9 @@ public class enemyAI : MonoBehaviour , IDamage
 
     
     // Will flash Enemy mesh on damage taken
-    IEnumerator flashColor()
-    {
+    IEnumerator flashColor() {
         model.material.color = Color.red;
-
-        //Allows Designer to set flash timer 
         yield return new WaitForSeconds(damageFlashTimer);
-
-        //Sets color back to original after timer elapse
         model.material.color = colorOrig;
     }
 
