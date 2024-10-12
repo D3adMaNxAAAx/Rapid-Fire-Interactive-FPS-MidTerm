@@ -75,6 +75,7 @@ public class gameManager : MonoBehaviour {
     // Dynamic Values
     int enemyCount;
     int bossCount; // For when we make boss monster
+    int powerItems;
     float timeScaleOrig; // Tracks & stores original game time scale
     bool isPaused;
 
@@ -479,5 +480,11 @@ public class gameManager : MonoBehaviour {
     public TMP_Text getLivesText() { return livesText; }
 
     public void setLivesText(TMP_Text _livesText) { livesText = _livesText; }
+
+    public int getPowerItems()
+    { return powerItems; }
+
+    public void setPowerItems(int _items)
+    { powerItems += _items; }
 
 }

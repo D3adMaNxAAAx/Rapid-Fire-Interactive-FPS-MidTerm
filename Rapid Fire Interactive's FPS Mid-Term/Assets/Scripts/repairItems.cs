@@ -5,6 +5,7 @@ using UnityEngine;
 public class repairItems : MonoBehaviour
 {
     [SerializeField] GameObject repairObj;
+    [SerializeField] GameObject journalIcon;
     
     [SerializeField] Canvas pickedUpFeedback;
 
@@ -21,7 +22,8 @@ public class repairItems : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isOpen)
+        StartCoroutine(hideFeedback());
     }
 
 
@@ -35,8 +37,18 @@ public class repairItems : MonoBehaviour
             isPickedUp = true;
             pickedUpFeedback.enabled = true;
             isOpen = true;
+            gameManager.instance.setPowerItems(1);
+            journalIcon.SetActive(true);
         }
         else
             return;
+    }
+
+    IEnumerator hideFeedback()
+    {
+        yield return new WaitForSeconds(1.2f);
+        pickedUpFeedback.enabled = false;
+        isOpen = false;
+        
     }
 }
