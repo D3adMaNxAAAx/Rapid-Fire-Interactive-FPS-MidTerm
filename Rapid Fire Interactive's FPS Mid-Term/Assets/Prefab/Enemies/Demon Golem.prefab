@@ -742,8 +742,8 @@ MonoBehaviour:
   ammoSpawn: {fileID: 5009482754907246424}
   ammoDrop: {fileID: 6904497920734926788, guid: 4237d6ffeea48944596bf777dda61238, type: 3}
   viewAngle: 90
-  roamDist: 3
-  roamSpeed: 1
+  roamDist: 1
+  roamSpeed: 0
   roamTimer: 6
   HP: 25
   faceTargetSpeed: 6
@@ -764,7 +764,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 2
+  m_Speed: 3
   m_Acceleration: 32
   avoidancePriority: 50
   m_AngularSpeed: 300
