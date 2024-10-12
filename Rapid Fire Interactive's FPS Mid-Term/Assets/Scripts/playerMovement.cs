@@ -464,6 +464,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
     public void Heal() {
         HP += 3; // HEAL THE PLAYER
+        StartCoroutine(healIndicator()); // flashing screen green
         if (lowHealth == true) {
             if ((HP / HPOrig) > .25) { 
                 lowHealth = false;
@@ -505,6 +506,12 @@ public class playerMovement : MonoBehaviour, IDamage
         gameManager.instance.getDmgFlash().SetActive(true); //gameManager
         yield return new WaitForSeconds(dmgFlashTimer);
         gameManager.instance.getDmgFlash().SetActive(false); //gameManager
+    }
+
+    IEnumerator healIndicator() {
+        gameManager.instance.getHealIndicator().SetActive(true); // flashing screen green when healing
+        yield return new WaitForSeconds(0.1f);
+        gameManager.instance.getHealIndicator().SetActive(false);
     }
 
     // Flash No Ammo
@@ -733,6 +740,7 @@ public class playerMovement : MonoBehaviour, IDamage
             isHealing = true;
 
             HP = Mathf.Min(HP + heals[0].healAmount, HPOrig);
+            StartCoroutine(healIndicator()); // flashing screen green
 
             if (heals[0].healSound != null) {
                 AudioSource.PlayClipAtPoint(heals[0].healSound, transform.position);

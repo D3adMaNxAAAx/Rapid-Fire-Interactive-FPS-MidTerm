@@ -59,6 +59,7 @@ public class gameManager : MonoBehaviour {
     // -- Warnings --
     [Header("-- Popups --")]
     [SerializeField] GameObject damagePanelFlash;
+    [SerializeField] GameObject healIndicator;
     [SerializeField] GameObject ammoWarning;
     [SerializeField] GameObject lowHealthWarning;
     [SerializeField] GameObject checkPointPopup;
@@ -360,6 +361,8 @@ public class gameManager : MonoBehaviour {
     public GameObject getDmgFlash() { return damagePanelFlash; }
 
     public void setDmgFlash(GameObject _dmgPanel) { damagePanelFlash = _dmgPanel; }
+
+    public GameObject getHealIndicator() { return healIndicator; }
 
     public GameObject getAmmoWarning() { return ammoWarning; }
 
