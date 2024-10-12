@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class bossRoom : MonoBehaviour
+public class bossRoom : MonoBehaviour, IInteractable
 {
 
     public static bossRoom instance;
@@ -63,14 +63,40 @@ public class bossRoom : MonoBehaviour
     {
         isOpen = true;
     }
+    
+    public void interact()
+    {
+        gameManager.instance.completeMenu();
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        // Since it will await the player input, use OnTriggerStay.
+        if (other.CompareTag("Player"))
+        {
+            // If interact menu isn't on, turn it on.
+            if (!gameManager.instance.getInteractUI().activeInHierarchy)
+                gameManager.instance.getInteractUI().SetActive(true);
+
+            if (Input.GetButton("Interact"))
+            {
+                interact();
+                gameManager.instance.getInteractUI().SetActive(false);
+            }
+        }
+        else
+            return;
+    }
 
     private void OnTriggerExit(Collider other)
     {
-        //LayerMask a = other.gameObject.layer;
-        //if (other.gameObject.layer == target) //still trying to figure this out
-        //{
-            isOpen = false;
-        //}
+        // This method used to be used for closing the door, but it doesn't work quite right at the moment since the button collider
+        // was remade to be used for interacting. There probably should be some other collider somewhere to check for this.
+        //isOpen = false;
+
+        // Turn off the interact UI if the player isn't within range
+        if (gameManager.instance.getInteractUI().activeInHierarchy)
+            gameManager.instance.getInteractUI().SetActive(false);
     }
 
     //Tell door to open

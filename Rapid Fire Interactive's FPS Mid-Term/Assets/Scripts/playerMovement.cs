@@ -381,7 +381,14 @@ public class playerMovement : MonoBehaviour, IDamage
             else if (hit.collider.GetComponent<bossRoom>() == true)
             {
                 // Debug.Log("Button Hit");
+                // I've (Bryan) decided to keep this as an easter egg.
+                // Because of this, I added a check to see if the interactUI is on so then it'll turn off if the player shoots it.
+                if (gameManager.instance.getInteractUI().activeInHierarchy)
+                    gameManager.instance.getInteractUI().SetActive(false);
+
                 gameManager.instance.completeMenu();
+
+
             }
             else { guns[gunPos].ammoCur--;
                 if (guns[gunPos].hitEffects != null)

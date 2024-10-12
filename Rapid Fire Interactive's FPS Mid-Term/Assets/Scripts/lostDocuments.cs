@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class lostDocuments : MonoBehaviour
+public class lostDocuments : MonoBehaviour, IInteractable
 {
     [SerializeField] GameObject lostDocument;
     [SerializeField] GameObject journalIcon;
@@ -26,20 +26,39 @@ public class lostDocuments : MonoBehaviour
         //interact button for picking up document 
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void interact()
     {
+        Destroy(lostDocument);
+        isPickedUp = true;
+        documentUI.enabled = true;
+        isOpen = true;
+
+        journalIcon.SetActive(true);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        // Since it will await the player input, use OnTriggerStay.
         if (other.CompareTag("Player"))
         {
+            // If interact menu isn't on, turn it on.
+            if (!gameManager.instance.getInteractUI().activeInHierarchy)
+                gameManager.instance.getInteractUI().SetActive(true);
 
-            Destroy(lostDocument);
-            isPickedUp = true;
-            documentUI.enabled = true;
-            isOpen = true;
-           
-            journalIcon.SetActive(true);
+            if (Input.GetButton("Interact"))
+            {
+                interact();
+                gameManager.instance.getInteractUI().SetActive(false);
+            }
         }
         else
             return;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (gameManager.instance.getInteractUI().activeInHierarchy)
+            gameManager.instance.getInteractUI().SetActive(false);
     }
 
     IEnumerator hideFeedback()
