@@ -1016,6 +1016,11 @@ public class playerMovement : MonoBehaviour, IDamage
     public List<gunStats> getGunList()
     { return guns; }
 
+    public AudioSource getAudio()
+    {
+        return aud;
+    }
+
     // Setters
     public void setHP(float newHP) {
         HP = newHP;
@@ -1105,4 +1110,9 @@ public class playerMovement : MonoBehaviour, IDamage
 
     public void setLives(int _lives)
         { lives = _lives; }
+
+    public void setAudio(AudioSource _aud)
+    {
+        aud = _aud;
+    }
 }

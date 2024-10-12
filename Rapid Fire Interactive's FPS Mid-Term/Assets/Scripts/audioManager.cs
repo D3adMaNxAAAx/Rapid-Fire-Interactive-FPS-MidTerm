@@ -30,9 +30,11 @@ public class audioManager : MonoBehaviour
     [Range(0, 1)] [SerializeField] public float audHealVol;
 
     [Header("-- UI Sounds --")]
+    [SerializeField] public AudioClip audButtonHover;
     [SerializeField] public AudioClip audButtonClick;
 
     [Header("-- UI Volume --")]
+    [Range(0, 1)][SerializeField] public float audButtonHoverVol;
     [Range(0, 1)] [SerializeField] public float audButtonClickVol;
 
     void Start()

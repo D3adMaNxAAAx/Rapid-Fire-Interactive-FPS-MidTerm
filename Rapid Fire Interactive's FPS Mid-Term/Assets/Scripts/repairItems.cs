@@ -46,10 +46,6 @@ public class repairItems : MonoBehaviour, IInteractable
             if (!gameManager.instance.getInteractUI().activeInHierarchy)
                 gameManager.instance.getInteractUI().SetActive(true);
 
-            //RaycastHit hit;
-            //if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 50f, LayerMask<Player>))
-            //{ Debug.Log("what!?"); }
-
             if (Input.GetButton("Interact"))
             {
                 interact();

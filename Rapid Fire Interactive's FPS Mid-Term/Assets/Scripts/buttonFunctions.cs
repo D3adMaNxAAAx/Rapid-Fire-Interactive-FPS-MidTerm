@@ -103,4 +103,19 @@ public class buttonFunctions : MonoBehaviour {
         playerMovement.player.spawnPlayer();
         gameManager.instance.stateUnpause();
     }
+
+    // When the player's cursor is over a button
+    public void playHoverSound()
+    {
+        gameManager.instance.getPlayerScript().getAudio().PlayOneShot(audioManager.instance.audButtonHover, audioManager.instance.audButtonHoverVol);
+    }
+
+    // When the player selects a button
+    public void playButtonSound()
+    {
+        gameManager.instance.getPlayerScript().getAudio().PlayOneShot(audioManager.instance.audButtonClick, audioManager.instance.audButtonClickVol);
+    }
+
+    // TO-DO: IMPLEMENT SPECIAL SOUNDS FOR STORE & UPGRADE
+
 }
