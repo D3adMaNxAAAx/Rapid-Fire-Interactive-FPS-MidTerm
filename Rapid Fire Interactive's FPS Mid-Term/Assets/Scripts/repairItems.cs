@@ -5,13 +5,15 @@ using UnityEngine;
 public class repairItems : MonoBehaviour
 {
     [SerializeField] GameObject repairObj;
+    
     [SerializeField] Canvas pickedUpFeedback;
+
 
     bool isOpen;
     bool isPickedUp;
 
-    // Start is called before the first frame update
-    void Start()
+
+    private void Start()
     {
         
     }
@@ -20,5 +22,21 @@ public class repairItems : MonoBehaviour
     void Update()
     {
         
+    }
+
+
+    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+           
+            Destroy(repairObj);
+            isPickedUp = true;
+            pickedUpFeedback.enabled = true;
+            isOpen = true;
+        }
+        else
+            return;
     }
 }
