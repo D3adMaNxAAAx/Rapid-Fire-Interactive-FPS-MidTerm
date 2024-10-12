@@ -45,6 +45,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject timerTracker; // this makes the timer run regardless if its hidden or not
     [SerializeField] Button respawnButton;
     [SerializeField] TMP_Text livesText;
+    [SerializeField] GameObject interactUI; // this makes the timer run regardless if its hidden or not
 
     // -- Game --
     [Header("-- Enemy UI --")]
@@ -492,5 +493,10 @@ public class gameManager : MonoBehaviour {
 
     public void setAmmoReserveText(TMP_Text _ammoReserveText)
     { ammoReserveText = _ammoReserveText; }
+
+    public GameObject getInteractUI() { return interactUI; }
+
+    public void setInteractUI (GameObject _interactUI) 
+    { interactUI = _interactUI; }
 
 }

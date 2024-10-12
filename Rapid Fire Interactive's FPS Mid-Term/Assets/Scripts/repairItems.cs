@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
-public class repairItems : MonoBehaviour
+public class repairItems : MonoBehaviour, IInteractable
 {
     [SerializeField] GameObject repairObj;
     [SerializeField] GameObject journalIcon;
@@ -26,22 +27,39 @@ public class repairItems : MonoBehaviour
         StartCoroutine(hideFeedback());
     }
 
-
-    
-    private void OnTriggerEnter(Collider other)
+    public void interact()
     {
+        Destroy(repairObj);
+        isPickedUp = true;
+        pickedUpFeedback.enabled = true;
+        isOpen = true;
+        gameManager.instance.setPowerItems(1);
+        journalIcon.SetActive(true);
+    }
+    
+    private void OnTriggerStay(Collider other)
+    {
+        // Since it will await the player input, use OnTriggerStay.
         if (other.CompareTag("Player"))
         {
-           
-            Destroy(repairObj);
-            isPickedUp = true;
-            pickedUpFeedback.enabled = true;
-            isOpen = true;
-            gameManager.instance.setPowerItems(1);
-            journalIcon.SetActive(true);
+            // If interact menu isn't on, turn it on.
+            if (!gameManager.instance.getInteractUI().activeInHierarchy)
+                gameManager.instance.getInteractUI().SetActive(true);
+            
+            if (Input.GetButton("Interact"))
+            {
+                interact();
+                gameManager.instance.getInteractUI().SetActive(false);
+            }
         }
         else
             return;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (gameManager.instance.getInteractUI().activeInHierarchy)
+            gameManager.instance.getInteractUI().SetActive(false);
     }
 
     IEnumerator hideFeedback()
