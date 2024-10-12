@@ -21,7 +21,8 @@ public class idBadges : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (isOpen)
+            StartCoroutine(hideFeedback());
     }
 
     private void OnTriggerEnter(Collider other)

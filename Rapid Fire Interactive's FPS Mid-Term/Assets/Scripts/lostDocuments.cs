@@ -21,6 +21,8 @@ public class lostDocuments : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (isOpen)
+            StartCoroutine(hideFeedback());
         //interact button for picking up document 
     }
 
