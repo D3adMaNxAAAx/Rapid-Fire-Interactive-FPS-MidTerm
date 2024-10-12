@@ -5,44 +5,30 @@ using UnityEngine.UI;
 
 public class GunInventoryManager : MonoBehaviour
 {
-    [SerializeField] private List<Image> gunSlotImages;
-    [SerializeField] private List<Sprite> gunSlotSprites;    
-    [SerializeField] private Color selectedGunColor;
-    [SerializeField] private Color defaultGunColor;
+    [SerializeField]  List<Image> gunSlotImages;
 
-    private playerMovement player;
-
-
-    void Start()
+    private void Update()
     {
-        player = FindObjectOfType<playerMovement>();
-
-        for (int i = 0; i < gunSlotImages.Count; i++)
+        if (gameManager.instance.getMenuLoadout().activeInHierarchy == false) ;
         {
-            gunSlotImages[i].color = defaultGunColor;
-            gunSlotImages[i].sprite = null;
-
+            UpdateGunInventoryUI();
+            hotkeyelection();
         }
     }
 
     public void UpdateGunInventoryUI()
     {
-        List<gunStats> guns = player.getGunList(); 
-        int selectedGunIndex = player.getGunList().IndexOf(player.getCurGun()); 
+            List<gunStats> guns = gameManager.instance.getPlayerScript().getGunList();
+     
+            for (int i = 0; i < guns.Count; i++)
+            {
+                gunSlotImages[i].sprite = guns[i].gunIcon;
+            }
+    }
 
-        for (int i = 0; i < gunSlotImages.Count; i++)
-        {
-            if (i < guns.Count) 
-            {
-                gunSlotImages[i].sprite = guns[i].gunIcon;  
-                gunSlotImages[i].color = i == selectedGunIndex ? selectedGunColor : defaultGunColor; 
-            }
-            else
-            {
-                
-                gunSlotImages[i].sprite = null;
-                gunSlotImages[i].color = defaultGunColor;
-            }
-        }
+    public void hotkeyelection()
+    {
+        if (Input.GetButtonDown("Hotkey1"))
+        { gameManager.instance.getPlayerScript().setCurrGun(0); }
     }
 }

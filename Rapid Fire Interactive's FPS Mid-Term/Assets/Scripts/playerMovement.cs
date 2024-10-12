@@ -44,6 +44,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] GameObject laserShot; // player shot visual for laser rifle
     [SerializeField] GameObject shotgunShot; // player shot visual for shotgun
     [SerializeField] LineRenderer laserSight;
+    private GunInventoryManager gunInventoryManager;
 
     bool isSniper = false;
     bool isLaser = false;
@@ -118,6 +119,8 @@ public class playerMovement : MonoBehaviour, IDamage
         updatePlayerUI();
         if (gameManager.instance.getPlayerSpawnPos() != null)
             spawnPlayer();
+
+        gunInventoryManager = FindObjectOfType<GunInventoryManager>();
     }
 
     // Update is called once per frame
@@ -780,6 +783,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 gunPos = guns.Count - 1;
             changeGun();
         }
+        
     }
 
     void changeGun() {
@@ -802,6 +806,9 @@ public class playerMovement : MonoBehaviour, IDamage
         gunModel.GetComponent<MeshFilter>().sharedMesh = getCurGun().gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = getCurGun().gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
+
+    public int getCurrGunIndex()
+    { return gunPos; }
 
     public void getGunStats(gunStats _gun)
     {
@@ -828,6 +835,8 @@ public class playerMovement : MonoBehaviour, IDamage
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = _gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = _gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+
+        FindObjectOfType<GunInventoryManager>().UpdateGunInventoryUI();
     }
 
     public void DashAll() {
@@ -1047,6 +1056,12 @@ public class playerMovement : MonoBehaviour, IDamage
 
     public gunStats getCurGun() {
         return guns[gunPos];}
+
+    public void setCurrGun(int _gunPos)
+    {
+        gunPos = _gunPos;
+        changeGun();
+    }
 
     public int getSkillPoints() { return skillPoints; }
 
