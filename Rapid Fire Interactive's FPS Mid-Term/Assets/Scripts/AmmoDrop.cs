@@ -6,7 +6,7 @@ public class AmmoDrop : MonoBehaviour
 {
     [SerializeField] GameObject ammoDrop;
     [Range(0,100)]
-    [SerializeField] int ammoRefilPercent;
+    [SerializeField] int ammoRefillPercent;
     [SerializeField] float rotateSpeed;
     [SerializeField] bool rotateClockwise;
 
@@ -31,7 +31,7 @@ public class AmmoDrop : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            gameManager.instance.getPlayerScript().ammoPickup(ammoRefilPercent);
+            gameManager.instance.getPlayerScript().ammoPickup(ammoRefillPercent);
             Destroy(ammoDrop);
         }
         else

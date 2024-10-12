@@ -260,6 +260,11 @@ public class playerMovement : MonoBehaviour, IDamage
         if (!isShooting && Input.GetButton("Reload") && guns[gunPos].ammoCur < guns[gunPos].ammoMag)
         {
             reload();
+        } 
+        // Have an additional check if the player has no ammo to auto-reload.
+        else if (guns[gunPos].ammoCur == 0 && guns[gunPos].ammoMax > 0)
+        {
+            reload();
         }
 
         if (getCurGun().isAutomatic) {
@@ -268,6 +273,11 @@ public class playerMovement : MonoBehaviour, IDamage
                     StartCoroutine(shoot());
                     Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation); 
                     aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
+                }
+                // Another check for the player to auto-reload if they attempt to shoot with nothing in their barrel.
+                else if (guns[gunPos].ammoCur == 0 && guns[gunPos].ammoMax > 0)
+                {
+                    reload();
                 }
                 else {
                     StartCoroutine(AmmoWarningFlash());
@@ -530,7 +540,8 @@ public class playerMovement : MonoBehaviour, IDamage
         if (guns.Count > 0)
         {
             gameManager.instance.getAmmoBar().fillAmount = (float)getCurGun().ammoCur / getCurGun().ammoMag;
-            gameManager.instance.getAmmoText().text = getAmmo().ToString("F0") + " / " + getAmmoMax().ToString("F0");
+            gameManager.instance.getAmmoText().text = getAmmo().ToString("F0") + " / " + getAmmoMag().ToString("F0");
+            gameManager.instance.getAmmoReserveText().text = getAmmoMax().ToString("F0");
         }
 
         // XP Info
@@ -557,14 +568,59 @@ public class playerMovement : MonoBehaviour, IDamage
 
     public void ammoPickup(int amount)
     {
+        // Ammo pickups will add ammo to the player's shooting if possible.
+        // If it goes over the mag limit, it'll be added to max instead.
         if (guns.Count > 0)
         {
-            int a = (int)(getAmmoOrig() * (amount / 100f));
-            if (a + getCurGun().ammoCur >= getAmmoOrig())
-                getCurGun().ammoCur = getAmmoOrig();
+            int _ammo = (int)(getAmmoOrig() * (amount / 100f));
+            
+            // Check if the player's ammo reserve isn't already full
+            if (getCurGun().ammoMax < getCurGun().ammoOrig)
+            {
+                // Check if the ammo will go over mag size
+                if (_ammo + getCurGun().ammoCur >= getAmmoMag())
+                {
+                    // Does go over size, will be adding to reserve instead.
+                    // Check if adding to reserve will hit capacity.
+                    if (_ammo + getCurGun().ammoMax >= getAmmoOrig())
+                    {
+                        // Will hit capacity, set max to capacity.
+                        getCurGun().ammoMax = getAmmoOrig();
+
+                        // Add any remaining ammo to mag size as long as it doesn't go over mag
+                        _ammo -= getAmmoOrig() - getAmmoMax();
+
+                        if (_ammo > 0)
+                        {
+                            // Check if it'll go over magazine size
+                            if (_ammo + getCurGun().ammoCur > getCurGun().ammoMag) {
+                                getCurGun().ammoCur = getAmmoMag();
+                            } else
+                            {
+                                // It will not, so just add the leftover ammo.
+                                getCurGun().ammoCur += _ammo;
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        // Will not hit capacity, so add normally.
+                        getCurGun().ammoMax += _ammo;
+                    }
+                }
+                else
+                    // Does not go over mag size, so just add to clip.
+                    getCurGun().ammoCur += _ammo;
+            }
             else
-                getCurGun().ammoCur += a;
+            {
+                // player's reserve is full, set clip to mag size.
+                getCurGun().ammoCur = getCurGun().ammoMag;
+            }
         }
+
+        // Update the UI to show ammo has been restored
         updatePlayerUI();
     }
 

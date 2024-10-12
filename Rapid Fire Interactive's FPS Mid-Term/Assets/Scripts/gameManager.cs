@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Unity.VisualScripting; // for using textmesh pro
 
-public class gameManager : MonoBehaviour { 
+public class gameManager : MonoBehaviour {
 
     public static gameManager instance; // singleton
 
@@ -33,7 +33,8 @@ public class gameManager : MonoBehaviour {
     [SerializeField] TMP_Text XPText;
     [SerializeField] GameObject ammoUI;
     [SerializeField] Image ammoTrackerBar;
-    [SerializeField] TMP_Text ammoText;
+    [SerializeField] TMP_Text ammoText; // This text will include the current ammo loaded & the magazine size.
+    [SerializeField] TMP_Text ammoReserveText; // This text will show the remaining ammo the player has in reserve. (NOT the capacity)
     [SerializeField] Image playerReticle;
     [SerializeField] TMP_Text levelTracker;
     [SerializeField] GameObject sniperScope;
@@ -127,7 +128,7 @@ public class gameManager : MonoBehaviour {
     }
 
     public void statePause() {
-        if(!isPaused)
+        if (!isPaused)
         {
             isPaused = !isPaused; // toggles bool
             Time.timeScale = 0; // pauses everything except UI
@@ -144,8 +145,8 @@ public class gameManager : MonoBehaviour {
             Time.timeScale = timeScaleOrig; //set time scale back to original
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked; // locks cursor position
-            if(menuActive != null)
-            menuActive.SetActive(getPauseStatus()); // Show active menu
+            if (menuActive != null)
+                menuActive.SetActive(getPauseStatus()); // Show active menu
             menuActive = null;
         }
     }
@@ -160,7 +161,7 @@ public class gameManager : MonoBehaviour {
     }
 
     public void updateGameGoal(int _enemyCount, int _bossCount = 0) {
-        enemyCount += _enemyCount ;
+        enemyCount += _enemyCount;
 
         //EnemiesRemainingBar.fillAmount = (float)enemyCount / totalEnemies; TODO: Implement something for totalEnemies.
         EnemiesRemainingCount.text = enemyCount.ToString();
@@ -174,7 +175,7 @@ public class gameManager : MonoBehaviour {
 
         if (enemyCount <= 0 && bossCount <= 0) {
             StartCoroutine(gameWinEasterEgg());
-            
+
         }
     }
 
@@ -203,7 +204,7 @@ public class gameManager : MonoBehaviour {
     public void changeReticle(bool hasIDamage) {
         if (hasIDamage) {
             playerReticle.color = Color.red;
-            playerReticle.rectTransform.sizeDelta = 
+            playerReticle.rectTransform.sizeDelta =
                 new Vector2(reticleSizeOrig.x * 2, reticleSizeOrig.y * 2);
         } else {
             playerReticle.color = Color.green;
@@ -223,26 +224,26 @@ public class gameManager : MonoBehaviour {
     }
 
     public void displayBossBar(bool state) {
-        getBossHP().SetActive(state);}
+        getBossHP().SetActive(state); }
 
-    public void displayPlayerHP(bool state){
+    public void displayPlayerHP(bool state) {
         getHPBar().gameObject.SetActive(state);
-        getHealthUI().gameObject.SetActive(state);}
+        getHealthUI().gameObject.SetActive(state); }
 
-    public void displayAmmoUI(bool state){
-        getAmmoUI().gameObject.SetActive(state);}
+    public void displayAmmoUI(bool state) {
+        getAmmoUI().gameObject.SetActive(state); }
 
     public void displayPlayerStam(bool state) {
         getStamBar().gameObject.SetActive(state);
-        getStamUI().gameObject.SetActive(state);}
+        getStamUI().gameObject.SetActive(state); }
 
-    public void displayXPTracker(bool state){
+    public void displayXPTracker(bool state) {
         getXPBar().gameObject.SetActive(state);
-        getXpUI().gameObject.SetActive(state);}
+        getXpUI().gameObject.SetActive(state); }
 
-    public void displayEnemyCount(bool state){
+    public void displayEnemyCount(bool state) {
         getEnemyRemainCount().gameObject.SetActive(state);
-        getEnemyRemainLabel().gameObject.SetActive(state);}
+        getEnemyRemainLabel().gameObject.SetActive(state); }
 
     public void settingsMenu() {
         menuActive.SetActive(false);
@@ -265,7 +266,7 @@ public class gameManager : MonoBehaviour {
     }
 
     public void nextRoomContinue() {
-        
+
         stateUnpause();
         menuActive = null;
         bossRoom.instance.startNextRoom();
@@ -342,10 +343,10 @@ public class gameManager : MonoBehaviour {
     }
 
     public GameObject getMenuLoadout() {
-        return menuLoadout;}
+        return menuLoadout; }
 
     public GameObject getUpgradeMenu() {
-        return menuUpgrade;}
+        return menuUpgrade; }
 
     public GameObject getPlayerSpawnPos() { return playerSpawnPos; }
 
@@ -364,48 +365,48 @@ public class gameManager : MonoBehaviour {
     public void setAmmoWarning(GameObject _ammoWarning) { ammoWarning = _ammoWarning; }
 
     public TMP_Text getHPText() {
-        return HPText;}
+        return HPText; }
 
     public TMP_Text getStamText() {
-        return stamText;}
+        return stamText; }
 
     public TMP_Text getXPText() {
-        return XPText;}
+        return XPText; }
 
     public GameObject getTimer() {
-        return timer;}
+        return timer; }
 
     public GameObject getTimerTracker() {
-        return timerTracker;}
+        return timerTracker; }
 
     public TMP_Text getAmmoText() {
-        return ammoText;}
+        return ammoText; }
 
     void setHPText(TMP_Text _HPText) {
-        HPText = _HPText;}
+        HPText = _HPText; }
 
     void setStamText(TMP_Text _stamText) {
-        stamText = _stamText;}
+        stamText = _stamText; }
 
     void setXPText(TMP_Text _XPText) {
-        XPText = _XPText;}
+        XPText = _XPText; }
 
     void setAmmoText(TMP_Text _ammoText) {
         ammoText = _ammoText;
     }
 
     public GameObject getAmmoUI() {
-        return ammoUI;}
+        return ammoUI; }
 
     void setAmmoUI(GameObject _ammoUI) {
-        ammoUI = _ammoUI;}
+        ammoUI = _ammoUI; }
 
     public GameObject getHealthWarning() { return lowHealthWarning; }
 
     public void setHealthWarning(GameObject _lowHealthWarning) { lowHealthWarning = _lowHealthWarning; }
 
     public GameObject getSniperScope() {
-        return sniperScope;}
+        return sniperScope; }
 
     public playerMovement getPlayerScript() { return playerScript; }
 
@@ -486,5 +487,10 @@ public class gameManager : MonoBehaviour {
 
     public void setPowerItems(int _items)
     { powerItems += _items; }
+
+    public TMP_Text getAmmoReserveText() { return ammoReserveText; }
+
+    public void setAmmoReserveText(TMP_Text _ammoReserveText)
+    { ammoReserveText = _ammoReserveText; }
 
 }
