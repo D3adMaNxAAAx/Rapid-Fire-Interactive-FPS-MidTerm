@@ -30,5 +30,23 @@ public class GunInventoryManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Hotkey1"))
         { gameManager.instance.getPlayerScript().setCurrGun(0); }
+        if (Input.GetButtonDown("Hotkey2"))
+        { gameManager.instance.getPlayerScript().setCurrGun(1); }
+        if (Input.GetButtonDown("Hotkey3"))
+        { gameManager.instance.getPlayerScript().setCurrGun(2); }
+        if (Input.GetButtonDown("Hotkey4"))
+        { gameManager.instance.getPlayerScript().setCurrGun(3); }
+        if (Input.GetButtonDown("Hotkey5"))
+        { gameManager.instance.getPlayerScript().setCurrGun(4); }
+        if (Input.GetButtonDown("Hotkey6"))
+        { gameManager.instance.getPlayerScript().setCurrGun(5); }
+        if (Input.GetButtonDown("Hotkey7"))
+        { gameManager.instance.getPlayerScript().setCurrGun(6); }
+        if (Input.GetButtonDown("Hotkey8"))
+        { gameManager.instance.getPlayerScript().setCurrGun(7); }
+        if (Input.GetButtonDown("Hotkey9"))
+        { gameManager.instance.getPlayerScript().setCurrGun(8); }
+        if (Input.GetButtonDown("Hotkey10"))
+        { gameManager.instance.getPlayerScript().setCurrGun(9); }
     }
 }
