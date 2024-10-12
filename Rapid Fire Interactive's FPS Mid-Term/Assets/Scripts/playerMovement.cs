@@ -79,6 +79,8 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] float dmgFlashTimer;
     [SerializeField] float ammoWarningTimer;
 
+    [SerializeField] AudioClip healSound;
+
     // -----PRIVATE VARIABLES-----
     // Player movement variables
     Vector3 moveDir;
@@ -464,6 +466,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
     public void Heal() {
         HP += 3; // HEAL THE PLAYER
+        AudioSource.PlayClipAtPoint(healSound, transform.position); // playing heal audio clip
         StartCoroutine(healIndicator()); // flashing screen green
         if (lowHealth == true) {
             if ((HP / HPOrig) > .25) { 
@@ -674,6 +677,7 @@ public class playerMovement : MonoBehaviour, IDamage
         if (grenades.Count > 0)
         {
             GameObject grenadeInstance = Instantiate(grenade, transform.position + transform.forward, Quaternion.identity);
+            AudioSource.PlayClipAtPoint(grenadeStats.pinSound, grenadeInstance.transform.position); // playing audio for taking grenade pin out
 
             Rigidbody rb = grenadeInstance.GetComponent<Rigidbody>(); //throw force 
             if (rb != null)
@@ -684,6 +688,7 @@ public class playerMovement : MonoBehaviour, IDamage
             StartCoroutine(HandleGrenadeExplosion(grenadeInstance));// start explosion count down 
 
             grenades.Remove(grenades[0]);
+            gameManager.instance.getGrenadesUI().text = grenades.Count.ToString();
         }
     }
 
@@ -702,15 +707,11 @@ public class playerMovement : MonoBehaviour, IDamage
             IDamage damageable = nearbyObject.GetComponent<IDamage>();
             if(damageable != null)
             {
-                damageable.takeDamage(grenadeStats.explosionDamage);
+                damageable.takeDamage(grenadeStats.explosionDamage); // grenade does double damage for some reason
             }
         }
 
-        if(grenadeStats.explosionSound != null) // play explosion sound
-        {
-            AudioSource.PlayClipAtPoint(grenadeStats.explosionSound,grenadeInstance.transform.position);
-        }
-
+        AudioSource.PlayClipAtPoint(grenadeStats.explosionSound,grenadeInstance.transform.position);
         Destroy(grenadeInstance);
     }
 
@@ -745,13 +746,12 @@ public class playerMovement : MonoBehaviour, IDamage
             if (heals[0].healSound != null) {
                 AudioSource.PlayClipAtPoint(heals[0].healSound, transform.position);
             }
+            healCoolDown = heals[0].healCoolDown;
+            gameManager.instance.getHealsUI().text = (heals.Count-1).ToString(); // -1 because it hasn't been removed yet
             updatePlayerUI();
 
             yield return new WaitForSeconds(heals[0].healCoolDown);
-
             isHealing = false;
-
-            healCoolDown = heals[0].healCoolDown;
             heals.Remove(heals[0]);
 
             if ((HP / HPOrig) > .25) {
@@ -772,10 +772,12 @@ public class playerMovement : MonoBehaviour, IDamage
 
     public void addToHeals(HealStats newHeal) {
         heals.Add(newHeal);
+        gameManager.instance.getHealsUI().text = heals.Count.ToString();
     }
 
     public void addToGrenades(GrenadeStats newGrenade) {
         grenades.Add(newGrenade);
+        gameManager.instance.getGrenadesUI().text = grenades.Count.ToString();
     }
 
     void selectGun() {

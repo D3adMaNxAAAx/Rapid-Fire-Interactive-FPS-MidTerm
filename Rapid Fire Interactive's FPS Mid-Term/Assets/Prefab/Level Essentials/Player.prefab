@@ -87,6 +87,7 @@ MonoBehaviour:
   toggleSprint: 0
   dmgFlashTimer: 0.05
   ammoWarningTimer: 0.4
+  healSound: {fileID: 8300000, guid: cfce0cea076109f478783201b2a9f57f, type: 3}
 --- !u!33 &1274210567246806318
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -115,7 +116,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4c68079f957c61743a45e9cbbf7e64cc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

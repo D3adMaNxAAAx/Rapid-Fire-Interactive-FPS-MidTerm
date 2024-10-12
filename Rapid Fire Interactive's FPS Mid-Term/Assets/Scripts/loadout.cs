@@ -86,7 +86,6 @@ public class loadout : MonoBehaviour {
 
     public void loadOut1 () {
 
-
         playerMovement.player.getGunList().Clear();
 
         playerMovement.player.getGunStats(AR);
@@ -101,16 +100,11 @@ public class loadout : MonoBehaviour {
         getCnsm2Ld2Img().gameObject.SetActive(false);
         getThrwLd2Img().gameObject.SetActive(false);
 
-
         getPrmLd1Img().gameObject.SetActive(true);
         getSecLd1Img().gameObject.SetActive(true);
         getCnsm1Ld1Img().gameObject.SetActive(true);
         getCnsm2Ld1Img().gameObject.SetActive(true);
         getThrwLd1Img().gameObject.SetActive(true);
-
-
-        
-
     }
 
     public void loadOut2() {
@@ -135,7 +129,6 @@ public class loadout : MonoBehaviour {
         playerMovement.player.addToGrenades(Gernade1);
         playerMovement.player.addToGrenades(Gernade2);
         playerMovement.player.addToHeals(Health1);
-
     }
 
     //click on the primary weapon slot

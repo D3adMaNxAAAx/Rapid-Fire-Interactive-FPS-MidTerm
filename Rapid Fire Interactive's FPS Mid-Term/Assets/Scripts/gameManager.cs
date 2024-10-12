@@ -35,6 +35,8 @@ public class gameManager : MonoBehaviour {
     [SerializeField] Image ammoTrackerBar;
     [SerializeField] TMP_Text ammoText; // This text will include the current ammo loaded & the magazine size.
     [SerializeField] TMP_Text ammoReserveText; // This text will show the remaining ammo the player has in reserve. (NOT the capacity)
+    [SerializeField] TMP_Text healsLeft; // used in playerMovement addToHeals
+    [SerializeField] TMP_Text grenadesLeft; // used in playerMovement addToGrenades
     [SerializeField] Image playerReticle;
     [SerializeField] TMP_Text levelTracker;
     [SerializeField] GameObject sniperScope;
@@ -443,6 +445,9 @@ public class gameManager : MonoBehaviour {
     public void setXPBar(Image newXPBar) { XPBar = newXPBar; }
 
     public Image getXPBar() { return XPBar; }
+
+    public TMP_Text getHealsUI() { return healsLeft; }
+    public TMP_Text getGrenadesUI() { return grenadesLeft; }
 
     public void setBossHP(GameObject newBossHP) { bossHP = newBossHP; }
 
