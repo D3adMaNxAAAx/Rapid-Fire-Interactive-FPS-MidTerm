@@ -584,11 +584,12 @@ public class playerMovement : MonoBehaviour, IDamage
                     // Check if adding to reserve will hit capacity.
                     if (_ammo + getCurGun().ammoMax >= getAmmoOrig())
                     {
+                        // Add any remaining ammo to mag size as long as it doesn't go over mag
+                        _ammo -= getAmmoOrig() - getCurGun().ammoMax;
+
                         // Will hit capacity, set max to capacity.
                         getCurGun().ammoMax = getAmmoOrig();
 
-                        // Add any remaining ammo to mag size as long as it doesn't go over mag
-                        _ammo -= getAmmoOrig() - getAmmoMax();
 
                         if (_ammo > 0)
                         {
