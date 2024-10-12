@@ -6,7 +6,9 @@ public class idBadges : MonoBehaviour
 {
 
     [SerializeField] GameObject badge;
-    [SerializeField] Canvas pickUpFeedback;
+    [SerializeField] GameObject journalIcon;
+
+    [SerializeField] Canvas pickedUpFeedback;
 
     bool isPickedUp;
     bool isOpen;
@@ -20,5 +22,28 @@ public class idBadges : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+
+            Destroy(badge);
+            isPickedUp = true;
+            pickedUpFeedback.enabled = true;
+            isOpen = true;
+            journalIcon.SetActive(true);
+        }
+        else
+            return;
+    }
+
+    IEnumerator hideFeedback()
+    {
+        yield return new WaitForSeconds(1.2f);
+        pickedUpFeedback.enabled = false;
+        isOpen = false;
+
     }
 }
