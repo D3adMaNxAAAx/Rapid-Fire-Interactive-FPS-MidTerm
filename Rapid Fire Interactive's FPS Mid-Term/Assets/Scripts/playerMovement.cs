@@ -138,6 +138,7 @@ public class playerMovement : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update() {
         if (gameManager.instance.getPauseStatus() == false) {
+            HandleCrouch();
             movement();
             DashAll(); // at bottom of file, only does anything if specific key is pressed
 
@@ -158,11 +159,12 @@ public class playerMovement : MonoBehaviour, IDamage
             if (healCoolDown > 0f) {
                 healCoolDown -= Time.deltaTime;
             }
+          
 
             //Working out null ref bug...put on pause for time being
 
-            //if (Input.GetButton("Melee"))
-            //    StartCoroutine(PlayerMelee());
+                //if (Input.GetButton("Melee"))
+                //    StartCoroutine(PlayerMelee());
         }
 
         sprint();
@@ -200,10 +202,13 @@ public class playerMovement : MonoBehaviour, IDamage
             playerVel = Vector3.zero;
             jumpCounter = 0;
         }
+        //crouching
+        float currentSpeed = isCrouching ? crouchSpeed : normalSpeed;
 
         // Movement Controller
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
         controller.Move(moveDir * speed * Time.deltaTime);
+       
 
         // Stamina Recovery
         if (stamina < staminaOrig && !isSprinting && !isRecovering)
@@ -679,6 +684,21 @@ public class playerMovement : MonoBehaviour, IDamage
         updatePlayerUI();
     }
 
+    void HandleCrouch()
+    {
+        if (Input.GetButton("Crouch"))
+        {
+            controller.height = crouchHeight;
+            controller.center = new Vector3(0, crouchHeight / 3, 0);
+            playerCamera.localPosition = new Vector3(0, crouchHeight / 3, 0);
+        }
+        else
+        {
+            controller.height = normalHeight;
+            controller.center = new Vector3(0, normalHeight / 6, 0);
+            playerCamera.localPosition = new Vector3(0, normalHeight / 6, 0);
+        }
+    }
     void throwGrenade()
     {
         if (grenades[0] == null)
