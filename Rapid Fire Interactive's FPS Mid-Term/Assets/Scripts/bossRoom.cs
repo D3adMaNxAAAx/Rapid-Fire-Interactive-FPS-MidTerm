@@ -66,7 +66,7 @@ public class bossRoom : MonoBehaviour, IInteractable
     
     public void interact()
     {
-        gameManager.instance.completeMenu();
+        gameManager.instance.openContinueMenu();
     }
 
     private void OnTriggerStay(Collider other)

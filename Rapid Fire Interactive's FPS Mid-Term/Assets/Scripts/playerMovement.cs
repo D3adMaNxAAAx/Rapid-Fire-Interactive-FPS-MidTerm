@@ -406,7 +406,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 if (gameManager.instance.getInteractUI().activeInHierarchy)
                     gameManager.instance.getInteractUI().SetActive(false);
 
-                gameManager.instance.completeMenu();
+                gameManager.instance.openContinueMenu();
 
 
             }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 using Unity.VisualScripting; // for using textmesh pro
 
@@ -15,7 +16,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-    [SerializeField] GameObject menuComplete;
+    [SerializeField] GameObject menuContinue;
 
     [SerializeField] GameObject menuUpgrade;
     [SerializeField] GameObject menuStore;
@@ -24,6 +25,21 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuOptions;
     [SerializeField] GameObject menuHowTo;
     [SerializeField] GameObject menuControls;
+
+    // First Selected Options (for use when selecting with arrow keys)
+    [Header("-- First Selected Options --")]
+    //[SerializeField] GameObject mainMenuFirst;
+    [SerializeField] GameObject loadoutMenuFirst;
+    [SerializeField] GameObject pauseMenuFirst;
+    [SerializeField] GameObject optionsMenuFirst;
+    [SerializeField] GameObject settingsMenuFirst;
+    [SerializeField] GameObject howToMenuFirst;
+    [SerializeField] GameObject controlsMenuFirst;
+    [SerializeField] GameObject storeMenuFirst;
+    [SerializeField] GameObject upgradeMenuFirst;
+    [SerializeField] GameObject continueMenuFirst;
+    [SerializeField] GameObject loseMenuFirst;
+    [SerializeField] GameObject winMenuFirst;
 
     // -- Player --
     [Header("-- Player UI --")]
@@ -101,6 +117,7 @@ public class gameManager : MonoBehaviour {
         // Pausing game, hididng player background ui, and showing loadout menu
 
         menuActive = menuLoadout;
+        EventSystem.current.SetSelectedGameObject(loadoutMenuFirst); // Set eventsystem selected game object to the button assigned
         displayUI(false);
 
     }
@@ -119,6 +136,7 @@ public class gameManager : MonoBehaviour {
                     statePause();
                     menuActive = menuPause; // Set the pause menu as active menu
                     menuActive.SetActive(getPauseStatus()); // Show active menu
+                    EventSystem.current.SetSelectedGameObject(pauseMenuFirst); // Set eventsystem selected game object to the button assigned
                 }
                 else if (menuActive == menuPause)
                 {
@@ -155,6 +173,7 @@ public class gameManager : MonoBehaviour {
             if (menuActive != null)
                 menuActive.SetActive(getPauseStatus()); // Show active menu
             menuActive = null;
+            EventSystem.current.SetSelectedGameObject(null); // Null out any selected game objects too
         }
     }
 
@@ -256,32 +275,37 @@ public class gameManager : MonoBehaviour {
         menuActive.SetActive(false);
         menuActive = menuSettings;
         menuActive.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(settingsMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
     public void openOptionsMenu() {
         menuActive.SetActive(false);
         menuActive = menuOptions;
         menuActive.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(optionsMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
     public void openHowToMenu() {
         menuActive.SetActive(false);
         menuActive = menuHowTo;
         menuActive.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(howToMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
     public void openControlsMenu() {
         menuActive.SetActive(false);
         menuActive = menuControls;
         menuActive.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(controlsMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
-    public void completeMenu() {
+    public void openContinueMenu() {
         EnemiesRemainingCount.maxVisibleWords = 0;
         EnemiesRemainingLabel.maxVisibleWords = 0;
         statePause();
-        menuActive = menuComplete;
+        menuActive = menuContinue;
         menuActive.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(continueMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
     public void nextRoomContinue() {
@@ -299,6 +323,7 @@ public class gameManager : MonoBehaviour {
         menuActive = menuUpgrade;
         menuActive.SetActive(true);
         upgradeMenu.upgradeUI.setVars();
+        EventSystem.current.SetSelectedGameObject(upgradeMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
     public void storeMenu() {
@@ -307,6 +332,7 @@ public class gameManager : MonoBehaviour {
         storeManager.instance.updateStoreUI();
         menuActive = menuStore;
         menuActive.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(storeMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
     public void newGame()
@@ -330,20 +356,32 @@ public class gameManager : MonoBehaviour {
         else if (menuActive == menuUpgrade)
         {
             menuActive.SetActive(false);
-            completeMenu();
+            openContinueMenu();
         }
         else if (menuActive == menuStore)
         {
             menuActive.SetActive(false);
-            menuActive = menuComplete;
+            menuActive = menuContinue;
             menuActive.SetActive(true);
         }
-        else if (menuActive == menuComplete)
+        else if (menuActive == menuContinue)
         {
             menuActive.SetActive(false);
             stateUnpause();
             menuActive = null;
         }
+
+        if (menuActive == menuPause)
+        {
+            EventSystem.current.SetSelectedGameObject(pauseMenuFirst); // Set eventsystem selected game object to the button assigned
+        } else if (menuActive == menuOptions)
+        {
+            EventSystem.current.SetSelectedGameObject(optionsMenuFirst); // Set eventsystem selected game object to the button assigned
+        } else if (menuActive == menuContinue)
+        {
+            EventSystem.current.SetSelectedGameObject(continueMenuFirst); // Set eventsystem selected game object to the button assigned
+        }
+
     }
     public void scopeZoomIn() {
         if (menuActive == null) { // won't work if there is a menu active
