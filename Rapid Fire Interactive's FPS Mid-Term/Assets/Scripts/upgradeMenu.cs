@@ -67,7 +67,7 @@ public class upgradeMenu : MonoBehaviour {
         // Designated function just in case transactions may be more deliberate
         // Method is called if canAfford returns true so player can afford something
         gameManager.instance.getPlayerScript().setSkillPoints(gameManager.instance.getPlayerScript().getSkillPoints() - _cost);
-
+        playerStats.Stats.upgraded();
         // Update Skill Points text
         playerSkillPoints.text = playerMovement.player.getSkillPoints().ToString();
     }

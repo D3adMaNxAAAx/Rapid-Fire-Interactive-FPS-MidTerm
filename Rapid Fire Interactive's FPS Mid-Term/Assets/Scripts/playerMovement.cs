@@ -373,11 +373,12 @@ public class playerMovement : MonoBehaviour, IDamage
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, bulletDistance, ~ignoreLayer))
         {
             IDamage dmg = hit.collider.GetComponent<IDamage>();
+            guns[gunPos].ammoCur--;
+            playerStats.Stats.gunShot();
 
             if (dmg != null)
             {
                 dmg.takeDamage(damage);
-                guns[gunPos].ammoCur--;
                 if (guns[gunPos].hitEffects != null)
                     Instantiate(guns[gunPos].hitEffects, hit.point, Quaternion.identity);
             }
@@ -393,9 +394,8 @@ public class playerMovement : MonoBehaviour, IDamage
 
 
             }
-            else { guns[gunPos].ammoCur--;
-                if (guns[gunPos].hitEffects != null)
-                    Instantiate(guns[gunPos].hitEffects, hit.point, Quaternion.identity);
+            else if (guns[gunPos].hitEffects != null) { 
+                Instantiate(guns[gunPos].hitEffects, hit.point, Quaternion.identity);
             }
         }
         else { guns[gunPos].ammoCur--; } //had to put this here, there's a bug this was causing where if the bullet isn't hitting anything, it doesn't use ammo.
@@ -418,6 +418,7 @@ public class playerMovement : MonoBehaviour, IDamage
         {
             // Player takes damage
             HP -= amount;
+            playerStats.Stats.attacked(amount);
             stopHealing = true; // STOP HEALING IF DAMAGED
 
             // Play hurt sound for audio indication
@@ -436,12 +437,14 @@ public class playerMovement : MonoBehaviour, IDamage
             {
                 HP = 0; // set HP to 0 for no weirdness in code/visuals
                 if (lives > 0) { lives--; }
+                playerStats.Stats.died();
                 gameManager.instance.youLose();
             }
             else if ((HP / HPOrig) <= .25)
             {
                 lowHealth = true;
                 gameManager.instance.getHealthWarning().SetActive(true);
+                playerStats.Stats.almostDied();
             }
             if ((HP / HPOrig) < .5)
             {
@@ -575,6 +578,7 @@ public class playerMovement : MonoBehaviour, IDamage
         {
             playerLevel++;
             skillPoints++;
+            playerStats.Stats.levelUp();
             playerXP -= playerXPMax; // Reset XP back to zero
             gameManager.instance.getLevelTracker().text = playerLevel.ToString("F0");
             
