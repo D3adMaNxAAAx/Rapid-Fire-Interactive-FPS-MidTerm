@@ -15,7 +15,10 @@ public class playerJournal : MonoBehaviour
     [SerializeField] GameObject _menuStats;
     [SerializeField] GameObject _menuAchievements;
 
+    [SerializeField] Canvas documentUI;
+
     bool isOpen;
+    bool docIsOpen;
     bool objOpen;
     bool itemsOpen;
     bool statsOpen;
@@ -104,5 +107,11 @@ public class playerJournal : MonoBehaviour
         menuActive.SetActive(true);
     }
 
-    
+    public void closeDoc()
+    {
+            documentUI.enabled = false;
+            docIsOpen = false;
+    }
+
+    public void openDoc() { if (!docIsOpen) { documentUI.enabled = true; docIsOpen = true; } }
 }

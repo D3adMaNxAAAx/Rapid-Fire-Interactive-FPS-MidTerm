@@ -10,7 +10,7 @@ public class lostDocuments : MonoBehaviour , IInteractable
     [SerializeField] GameObject journalIcon;
     [SerializeField] GameObject toDestroy;
 
-    [SerializeField] Canvas documentUI;
+    [SerializeField] Canvas pickedUpFeedback;
 
     bool isOpen;
     bool isPickedUp;
@@ -32,7 +32,7 @@ public class lostDocuments : MonoBehaviour , IInteractable
     {
         Destroy(lostDocument);
         isPickedUp = true;
-        documentUI.enabled = true;
+        pickedUpFeedback.enabled = true;
         isOpen = true;
 
         journalIcon.SetActive(true);
@@ -51,9 +51,7 @@ public class lostDocuments : MonoBehaviour , IInteractable
             {
                 interact();
                 gameManager.instance.getInteractUI().SetActive(false);
-                gameManager.instance.statePause();
-                Cursor.visible = true;
-                Cursor.lockState = CursorLockMode.Confined;
+              
             }
         }
         else
@@ -69,23 +67,15 @@ public class lostDocuments : MonoBehaviour , IInteractable
     IEnumerator hideFeedback()
     {
      
-            yield return new WaitForSeconds(20);
-            closeDoc();
-       
-
-    }
-
-    public void closeDoc()
-    { 
-        documentUI.enabled = false;
+        yield return new WaitForSeconds(1.2f);
+        pickedUpFeedback.enabled = false;
         isOpen = false;
-        
-        gameManager.instance.stateUnpause();
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         Destroy(toDestroy);
 
+
     }
+
+    
     //method to pick up document 
     //pickup doc in scene
     //open doc canvas
