@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GunInventoryManager : MonoBehaviour
 {
     [SerializeField]  List<Image> gunSlotImages;
-
+    [SerializeField]  List<TextMeshProUGUI> hotkeyTexts;
     private void Update()
     {
         if (gameManager.instance.getMenuLoadout().activeInHierarchy == false) ;
