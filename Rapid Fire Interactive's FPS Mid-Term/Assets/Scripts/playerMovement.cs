@@ -72,6 +72,14 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] float recoveryMod;  // How quickly stamina points recovers
     [SerializeField] bool toggleSprint;   // Turns sprint on or off
 
+    // --Crouching---
+    [SerializeField] float normalHeight = 2.0f;
+    [SerializeField] float crouchHeight = 1.0f;
+    [SerializeField] float crouchSpeed = 3.0f;
+    [SerializeField] float normalSpeed = 6.0f;
+    [SerializeField] Transform playerCamera;
+
+
     // -- Timer --
     [Header("-- Timers --")]
     [SerializeField] float dmgFlashTimer;
@@ -108,6 +116,7 @@ public class playerMovement : MonoBehaviour, IDamage
     bool onDashCooldown = false;
     bool isHealing;
     bool damageAudioReady = true;
+    bool isCrouching = false;
 
     // Start is called before the first frame update
     void Start() {
