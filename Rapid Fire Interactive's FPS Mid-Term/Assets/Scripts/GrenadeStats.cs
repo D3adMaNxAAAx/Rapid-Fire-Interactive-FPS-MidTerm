@@ -13,6 +13,5 @@ public class GrenadeStats : ScriptableObject
     public AudioClip explosionSound;
     public AudioClip pinSound;
     public float throwForce;
-    public bool inInventory = false;
     //public bool isSticky;
 }

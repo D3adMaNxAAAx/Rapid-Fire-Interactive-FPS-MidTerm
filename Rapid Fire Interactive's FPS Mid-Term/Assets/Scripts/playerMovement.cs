@@ -747,7 +747,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
     //}
 
-    IEnumerator HealPlayer() { // h
+    IEnumerator HealPlayer() { // x
         if (HP != HPOrig) {
             isHealing = true;
 
