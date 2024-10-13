@@ -79,11 +79,12 @@ public class lostDocuments : MonoBehaviour , IInteractable
     { 
         documentUI.enabled = false;
         isOpen = false;
-        Destroy(toDestroy);
+        
         gameManager.instance.stateUnpause();
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false; 
-    
+        Cursor.visible = false;
+        Destroy(toDestroy);
+
     }
     //method to pick up document 
     //pickup doc in scene
