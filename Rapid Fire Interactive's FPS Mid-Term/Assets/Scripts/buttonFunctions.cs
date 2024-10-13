@@ -11,7 +11,6 @@ public class buttonFunctions : MonoBehaviour {
 
     public void restart() {
         playerStats.Stats.Reset();
-        gameManager.instance.getTimerTracker().SetActive(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         gameManager.instance.stateUnpause();
     }
