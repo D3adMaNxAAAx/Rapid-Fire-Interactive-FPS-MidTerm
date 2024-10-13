@@ -14,8 +14,6 @@ public class playerMovement : MonoBehaviour, IDamage
 
     public static playerMovement player; // singleton
 
-    /// maybe add something to UI to indicate healing
-
     // -----MODIFIABLE VARIABLES-----
     // Unity object fields
     [Header("-- Player Components --")]
@@ -96,6 +94,7 @@ public class playerMovement : MonoBehaviour, IDamage
     int playerLevel; // Level
     int gunPos = 0; // Weapon selected
     int speedOrig;  // Original Speed
+    int startingLives;
 
     // Checks
     bool isSprinting;
@@ -112,10 +111,12 @@ public class playerMovement : MonoBehaviour, IDamage
 
     // Start is called before the first frame update
     void Start() {
-        // Variable Initialization
+        /// don't destroy on load
+
         player = this;
         HPOrig = HP;
         staminaOrig = stamina;
+        startingLives = lives;
 
         // Update Player Information & Spawn
         updatePlayerUI();
@@ -168,15 +169,15 @@ public class playerMovement : MonoBehaviour, IDamage
         }
     }
 
-    public void spawnPlayer()
-    {
+    public void spawnPlayer() {
         // Secondary check to make sure the player can only respawn if they have lives.
-        if (lives > 0)
-        {
+        if (lives > 0) {
             controller.enabled = false;
             transform.position = gameManager.instance.getPlayerSpawnPos().transform.position;
             controller.enabled = true;
-
+            if (lives != startingLives) {
+                playerStats.Stats.Reset();
+            }
             HP = HPOrig;
             lowHealth = false;
             gameManager.instance.getHealthWarning().SetActive(false);

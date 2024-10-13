@@ -7,7 +7,7 @@ using System;
 
 public class Timer : MonoBehaviour {
 
-    [SerializeField] TMP_Text timeText;
+    // TMP_Text timerText; in gameManager
     float currentTime = 0;
     TimeSpan time; // will convert long float decimal to just seconds
 
@@ -17,10 +17,11 @@ public class Timer : MonoBehaviour {
         // time will automatically stop when paused because it is using time and TimeScale is set to 0 on pause
         time = TimeSpan.FromSeconds(currentTime);
         if (time.Minutes == 0) {
-            timeText.text = time.Seconds.ToString() + ":" + time.Milliseconds.ToString();
+            gameManager.instance.getTimerText().text = time.Seconds.ToString() + ":" + time.Milliseconds.ToString();
         }
         else {
-            timeText.text = time.Minutes.ToString() + ":" + time.Seconds.ToString() + ":" + time.Milliseconds.ToString();
+            gameManager.instance.getTimerText().text = time.Minutes.ToString() + ":" + time.Seconds.ToString() + ":" + time.Milliseconds.ToString();
         }
+        playerStats.Stats.currentTime(gameManager.instance.getTimerText().text);
     }
 }

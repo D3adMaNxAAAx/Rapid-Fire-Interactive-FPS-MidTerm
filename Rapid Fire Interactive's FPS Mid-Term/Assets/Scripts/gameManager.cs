@@ -45,6 +45,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject xpUI;
     [SerializeField] GameObject timer;
     [SerializeField] GameObject timerTracker; // this makes the timer run regardless if its hidden or not
+    [SerializeField] TMP_Text timerText;
     [SerializeField] Button respawnButton;
     [SerializeField] TMP_Text livesText;
     [SerializeField] GameObject interactUI; // this makes the timer run regardless if its hidden or not
@@ -103,7 +104,7 @@ public class gameManager : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update() { 
 
         if (menuActive != menuLoadout)
         {
@@ -384,6 +385,10 @@ public class gameManager : MonoBehaviour {
 
     public GameObject getTimerTracker() {
         return timerTracker; }
+
+    public TMP_Text getTimerText() {
+        return timerText;
+    }
 
     public TMP_Text getAmmoText() {
         return ammoText; }
