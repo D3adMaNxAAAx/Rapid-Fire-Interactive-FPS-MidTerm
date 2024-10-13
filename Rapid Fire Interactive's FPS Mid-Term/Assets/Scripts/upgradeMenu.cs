@@ -28,7 +28,7 @@ public class upgradeMenu : MonoBehaviour {
     int damageRank = 0;
     int speedRank = 0;
     int staminaRank = 0;
-    float HP;
+    float HPOrig;
     float damageMod = 1;
     float speed;
     int stamina;
@@ -39,10 +39,10 @@ public class upgradeMenu : MonoBehaviour {
     }
 
     public void setVars() { // wouldn't work in start
-        HP = playerMovement.player.getHP();
+        HPOrig = playerMovement.player.getHPOrig();
         speed = playerMovement.player.getSpeed();
         stamina = playerMovement.player.getStamina();
-        healthUpgradeText.text = HP.ToString() + " >> " + (HP + 10).ToString();
+        healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 10).ToString();
         damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.2f).ToString();
         speedUpgradeText.text = speed.ToString() + " >> " + (speed + 1).ToString();
         staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
@@ -80,9 +80,13 @@ public class upgradeMenu : MonoBehaviour {
             makeTransaction(healthUpgradeCost);
             healthRank++;
             healthRankText.text = healthRank.ToString();
-            HP = HP + 10;
-            healthUpgradeText.text = HP.ToString() + " >> " + (HP + 10).ToString();
-            playerMovement.player.setHP(HP);
+            HPOrig = HPOrig + 10;
+            healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 10).ToString();
+            playerMovement.player.setHPOrig(HPOrig);
+
+            // Refill players health by 10 too to accomodate the new HP.
+            playerMovement.player.setHP(playerMovement.player.getHP() + 10);
+
             playerMovement.player.updatePlayerUI();
         }
     }
