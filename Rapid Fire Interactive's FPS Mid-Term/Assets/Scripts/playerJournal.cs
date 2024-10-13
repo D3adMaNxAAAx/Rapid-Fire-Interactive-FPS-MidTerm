@@ -15,7 +15,16 @@ public class playerJournal : MonoBehaviour
     [SerializeField] GameObject _menuStats;
     [SerializeField] GameObject _menuAchievements;
 
-    [SerializeField] Canvas documentUI;
+    [SerializeField] Canvas activeDoc;
+    [SerializeField] Canvas document1UI;
+    [SerializeField] Canvas document2UI;
+    [SerializeField] Canvas document3UI;
+    [SerializeField] Canvas document4UI;
+    [SerializeField] Canvas document5UI;
+    [SerializeField] Canvas document6UI;
+    [SerializeField] Canvas document7UI;
+    [SerializeField] Canvas document8UI;
+    [SerializeField] Canvas document9UI;
 
     bool isOpen;
     bool docIsOpen;
@@ -109,9 +118,18 @@ public class playerJournal : MonoBehaviour
 
     public void closeDoc()
     {
-            documentUI.enabled = false;
+            activeDoc.enabled = false;
             docIsOpen = false;
     }
 
-    public void openDoc() { if (!docIsOpen) { documentUI.enabled = true; docIsOpen = true; } }
+    public void openDoc(Canvas thisDoc) 
+    {
+        if (!docIsOpen )
+        {
+            Debug.Log("DOC is Open");
+            activeDoc = thisDoc;  
+            activeDoc.enabled = true;
+            docIsOpen = true; 
+        } 
+    }
 }

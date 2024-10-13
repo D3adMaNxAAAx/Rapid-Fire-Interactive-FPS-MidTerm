@@ -73,10 +73,10 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] bool toggleSprint;   // Turns sprint on or off
 
     // --Crouching---
-    [SerializeField] float normalHeight = 2.0f;
+    [SerializeField] float normalHeight = 6.0f;
     [SerializeField] float crouchHeight = 1.0f;
-    [SerializeField] float crouchSpeed = 3.0f;
-    [SerializeField] float normalSpeed = 6.0f;
+    //[SerializeField] float crouchSpeed = 1.0f;
+   // [SerializeField] float normalSpeed = 6.0f;
     [SerializeField] Transform playerCamera;
 
 
@@ -126,7 +126,7 @@ public class playerMovement : MonoBehaviour, IDamage
         HPOrig = HP;
         staminaOrig = stamina;
         startingLives = lives;
-
+        speedOrig = (int)speed;
         // Update Player Information & Spawn
         updatePlayerUI();
         if (gameManager.instance.getPlayerSpawnPos() != null)
@@ -138,7 +138,8 @@ public class playerMovement : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update() {
         if (gameManager.instance.getPauseStatus() == false) {
-            HandleCrouch();
+        
+
             movement();
             DashAll(); // at bottom of file, only does anything if specific key is pressed
 
@@ -166,6 +167,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 //if (Input.GetButton("Melee"))
                 //    StartCoroutine(PlayerMelee());
         }
+        HandleCrouch();
 
         sprint();
         // Check if sprinting -- Drain stamina as the player runs
@@ -203,7 +205,7 @@ public class playerMovement : MonoBehaviour, IDamage
             jumpCounter = 0;
         }
         //crouching
-        float currentSpeed = isCrouching ? crouchSpeed : normalSpeed;
+        
 
         // Movement Controller
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
@@ -686,19 +688,27 @@ public class playerMovement : MonoBehaviour, IDamage
 
     void HandleCrouch()
     {
-        if (Input.GetButton("Crouch"))
+        if (Input.GetButtonDown("Crouch"))  
         {
-            controller.height = crouchHeight;
-            controller.center = new Vector3(0, crouchHeight / 3, 0);
-            playerCamera.localPosition = new Vector3(0, crouchHeight / 3, 0);
-        }
-        else
-        {
-            controller.height = normalHeight;
-            controller.center = new Vector3(0, normalHeight / 6, 0);
-            playerCamera.localPosition = new Vector3(0, normalHeight / 6, 0);
+            isCrouching = !isCrouching;  // Toggle crouch state
+
+            if (isCrouching)
+            {
+                controller.height = crouchHeight;  
+                controller.center = new Vector3(0, crouchHeight / 2, 0);  
+                playerCamera.localPosition = new Vector3(0, crouchHeight / 2, 0);  
+               speed = speedOrig / 2f;  // Reduce speed while crouching
+            }
+            else
+            {
+                controller.height = normalHeight;  
+                controller.center = new Vector3(0, normalHeight / 2, 0);  
+                playerCamera.localPosition = new Vector3(0, normalHeight / 2, 0);  // Reset camera position
+               speed = speedOrig;  // Restore original speed
+            }
         }
     }
+  
     void throwGrenade()
     {
         if (grenades[0] == null)
