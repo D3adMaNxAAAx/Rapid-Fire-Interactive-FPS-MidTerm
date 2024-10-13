@@ -103,4 +103,6 @@ public class playerJournal : MonoBehaviour
         menuActive = _menuAchievements;
         menuActive.SetActive(true);
     }
+
+    
 }

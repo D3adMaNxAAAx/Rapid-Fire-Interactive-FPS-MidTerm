@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class repairItems : MonoBehaviour, IInteractable
 {
     [SerializeField] GameObject repairObj;
     [SerializeField] GameObject journalIcon;
-    
+    [SerializeField] GameObject toDestroy;
+
     [SerializeField] Canvas pickedUpFeedback;
 
 
@@ -43,7 +45,7 @@ public class repairItems : MonoBehaviour, IInteractable
         if (other.CompareTag("Player"))
         {
             // If interact menu isn't on, turn it on.
-            if (!gameManager.instance.getInteractUI().activeInHierarchy)
+            if (!gameManager.instance.getInteractUI().activeInHierarchy && !repairObj.IsDestroyed())
                 gameManager.instance.getInteractUI().SetActive(true);
 
             if (Input.GetButton("Interact"))
@@ -65,8 +67,11 @@ public class repairItems : MonoBehaviour, IInteractable
     IEnumerator hideFeedback()
     {
         yield return new WaitForSeconds(1.2f);
+        
         pickedUpFeedback.enabled = false;
         isOpen = false;
+        Destroy(toDestroy);
+
         
     }
 }

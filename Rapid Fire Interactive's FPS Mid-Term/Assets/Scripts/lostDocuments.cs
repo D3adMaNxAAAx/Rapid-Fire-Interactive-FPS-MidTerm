@@ -1,19 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class lostDocuments : MonoBehaviour, IInteractable
+public class lostDocuments : MonoBehaviour , IInteractable
 {
     [SerializeField] GameObject lostDocument;
     [SerializeField] GameObject journalIcon;
+    [SerializeField] GameObject toDestroy;
 
     [SerializeField] Canvas documentUI;
 
     bool isOpen;
     bool isPickedUp;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         
     }
@@ -42,13 +44,16 @@ public class lostDocuments : MonoBehaviour, IInteractable
         if (other.CompareTag("Player"))
         {
             // If interact menu isn't on, turn it on.
-            if (!gameManager.instance.getInteractUI().activeInHierarchy)
+            if (!gameManager.instance.getInteractUI().activeInHierarchy && !lostDocument.IsDestroyed())
                 gameManager.instance.getInteractUI().SetActive(true);
 
             if (Input.GetButton("Interact"))
             {
                 interact();
                 gameManager.instance.getInteractUI().SetActive(false);
+                gameManager.instance.statePause();
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.Confined;
             }
         }
         else
@@ -63,12 +68,23 @@ public class lostDocuments : MonoBehaviour, IInteractable
 
     IEnumerator hideFeedback()
     {
-        yield return new WaitForSeconds(20);
-        documentUI.enabled = false;
-        isOpen = false;
+     
+            yield return new WaitForSeconds(20);
+            closeDoc();
+       
 
     }
 
+    public void closeDoc()
+    { 
+        documentUI.enabled = false;
+        isOpen = false;
+        Destroy(toDestroy);
+        gameManager.instance.stateUnpause();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false; 
+    
+    }
     //method to pick up document 
     //pickup doc in scene
     //open doc canvas
