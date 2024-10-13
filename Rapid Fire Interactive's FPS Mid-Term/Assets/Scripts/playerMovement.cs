@@ -741,7 +741,16 @@ public class playerMovement : MonoBehaviour, IDamage
         {
             Instantiate(grenadeStats.explosionEffect,grenadeInstance.transform.position, Quaternion.identity);
         }
-       
+
+        if (CameraShake.instance != null)
+        {
+            // Trigger the shake with intensity 0.7 and duration 0.3 seconds
+            CameraShake.instance.TriggerShake(0.7f, 0.3f);
+        }
+        else
+        {
+            Debug.LogWarning("CameraShake instance not found.");
+        }
         Collider[] colliders = Physics.OverlapSphere(grenadeInstance.transform.position,grenadeStats.explosionRadius); // damage thing around in explosion
         foreach(Collider nearbyObject in colliders)
         {
