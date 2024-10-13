@@ -4,6 +4,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+// TODO: Make the game unpaused while using storeManager so timers can be used!
+
 public class storeManager : MonoBehaviour
 {
     // Singleton
@@ -16,7 +18,8 @@ public class storeManager : MonoBehaviour
     [SerializeField] TMP_Text healthCostText;
     [SerializeField] TMP_Text ammoCostText;
     [SerializeField] TMP_Text playerCoinsText;
-    
+    [SerializeField] TMP_Text transactionStatus;
+
     // Store Costs
     [Header("-- Store Modifiers --")]
     [SerializeField] float flashMod;
@@ -37,12 +40,7 @@ public class storeManager : MonoBehaviour
         ammoColorOrig = ammoCostText.color;
     }
 
-    void Update()
-    {
-        // Debug for now
-        //if (gameManager.instance.getPlayerScript().hasGun())
-        //    updateStoreUI();
-    }
+    // No update needed.
 
     // Public methods for external store functions -- these will call internal store functions as necessary
     // Update the store UI as the player interacts with it
@@ -56,28 +54,42 @@ public class storeManager : MonoBehaviour
     // Buy Button Methods
     public void onHealthPurchase()
     {
-        // Check if player can afford health
-        if (canAfford(healthCost))
+        // Check if player can afford health & isn't at max HP.
+        if (canAfford(healthCost) && gameManager.instance.getPlayerScript().getHP() < gameManager.instance.getPlayerScript().getHPOrig())
         {
             // Player can, so make transaction and give health.
             makeTransaction(healthCost);
             giveHealth();
+
+            // Display that the transaction was successful.
+            //displayTransactionStatus(true);
         }
-        
-        // else transaction failed
+        else
+        {
+            // Transaction could not go through.
+            //displayTransactionStatus(false);
+        }
     }
 
     public void onAmmoPurchase()
     {
-        // Check if player can afford ammo
-        if (canAfford(ammoCost))
+        // Check if player can afford ammo & isn't already at max ammo
+        if (canAfford(ammoCost) 
+            && (gameManager.instance.getPlayerScript().getCurGun().ammoMax < gameManager.instance.getPlayerScript().getCurGun().ammoOrig
+            || gameManager.instance.getPlayerScript().getCurGun().ammoCur < gameManager.instance.getPlayerScript().getCurGun().ammoMag))
         {
-            // Player can, so make transaction and give health.
+            // Player can, so make transaction and give ammo.
             makeTransaction(ammoCost);
             giveAmmo();
+
+            // Display that the transaction was successful.
+            //displayTransactionStatus(true);
+        } 
+        else
+        {
+            // Transaction could not go through.
+            //displayTransactionStatus(false);
         }
-        
-        // else transaction failed
     }
 
     // Private methods for internal store functions
@@ -101,6 +113,43 @@ public class storeManager : MonoBehaviour
        gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() - _cost);
     }
 
+    IEnumerator displayTransactionStatus(bool status)
+    {
+        // Turn the transaction status text on.
+        transactionStatus.gameObject.SetActive(true);
+
+        if (status)
+        {
+            // status is good
+            transactionStatus.text = "Purchase Successful!";
+
+            // green for extra feedback
+            transactionStatus.color = Color.green;
+        } else
+        {
+            // Transaction failed
+            // Check why the player cannot do the transaction and set text to reason
+            if (!canAfford(healthCost))
+            {
+                transactionStatus.text = "Not enough coins!";
+                Debug.Log("lol ur broke");
+            }
+            else if (gameManager.instance.getPlayerScript().getHP() == gameManager.instance.getPlayerScript().getHPOrig())
+            {
+                Debug.Log("why are you dumb");
+                transactionStatus.text = "Already full!";
+            }
+
+            // Set color to red for extra feedback.
+            transactionStatus.color = Color.red;
+        }
+        
+        yield return new WaitForSeconds(2f);
+
+        // Timer is up, turn off text
+        transactionStatus.gameObject.SetActive(false);
+    }
+
     // Methods to give the player what they purchased
     void giveHealth()
     {
@@ -117,12 +166,16 @@ public class storeManager : MonoBehaviour
         // Precautionary check if the player has a gun
         if (gameManager.instance.getPlayerScript().hasGun())
         {
-            // Give the player max ammo as per their purchase & update the UI
-            gameManager.instance.getPlayerScript().setAmmo(gameManager.instance.getPlayerScript().getAmmoMag());
-            gameManager.instance.getPlayerScript().setAmmoMax(gameManager.instance.getPlayerScript().getAmmoOrig());
+            // Range-based loop that will go through the players gun inventory and give max ammo.
+            foreach (gunStats gun in gameManager.instance.getPlayerScript().getGunList())
+            {
+                // Give the player max ammo as per their purchase & update the UI
+                gun.ammoCur = gun.ammoMag;
+                gun.ammoMax = gun.ammoOrig;
+            }
+            
+            // Update UIs
             gameManager.instance.getPlayerScript().updatePlayerUI();
-
-            // Update UI
             updateStoreUI();
         }
     }
