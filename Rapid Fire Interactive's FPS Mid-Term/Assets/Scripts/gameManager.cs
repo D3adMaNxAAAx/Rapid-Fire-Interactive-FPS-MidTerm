@@ -211,6 +211,7 @@ public class gameManager : MonoBehaviour {
         statePause();
         menuActive = menuWin; // set active menu to win menu
         menuActive.SetActive(true); // Show active menu
+        EventSystem.current.SetSelectedGameObject(winMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
     public void youLose() {
@@ -221,6 +222,7 @@ public class gameManager : MonoBehaviour {
         }
         menuActive = menuLose; // set active menu to lose menu
         menuActive.SetActive(true); // Show active menu
+        EventSystem.current.SetSelectedGameObject(loseMenuFirst); // Set eventsystem selected game object to the button assigned
 
         // Since text is now active, update it.
         getLivesText().text = getPlayerScript().getLives().ToString();
