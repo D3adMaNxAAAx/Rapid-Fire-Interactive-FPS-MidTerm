@@ -36,6 +36,22 @@ public class playerStats : MonoBehaviour {
         /// yo = yoyo = yoyoyo = 0;
     }
 
+    public void enemyKilled() {
+        enemiesKilled++;
+    }
+
+    public void enemyHeadShot() {
+        headShots++;
+    }
+
+    public void attack(float damage) {
+        damageDealt += damage;
+    }
+
+    public void attacked(float damage) {
+        damageRecieved += damage;
+    }
+
     public void collectableFound() {
         collectablesFound++;
     }
@@ -48,10 +64,9 @@ public class playerStats : MonoBehaviour {
     public int getEnemiesKilled() { return enemiesKilled; }
     // public void getHeadShots() { return headShots; }
 
-    public float getCollectablesFound() {
+    /*public float getCollectablesFound() {
         percentFound3 = collectablesFound / maxCollectables;
-        return percentFound3; }
-
+        return percentFound3; }*/
     // getters
 
 }

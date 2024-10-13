@@ -175,9 +175,6 @@ public class playerMovement : MonoBehaviour, IDamage
             controller.enabled = false;
             transform.position = gameManager.instance.getPlayerSpawnPos().transform.position;
             controller.enabled = true;
-            if (lives != startingLives) {
-                playerStats.Stats.Reset();
-            }
             HP = HPOrig;
             lowHealth = false;
             gameManager.instance.getHealthWarning().SetActive(false);
