@@ -19,6 +19,14 @@ public class buttonFunctions : MonoBehaviour {
         gameManager.instance.openOptionsMenu();
     }
 
+    public void HowTo() {
+        gameManager.instance.openHowToMenu();
+    }
+
+    public void ContorlsMenu() {
+        gameManager.instance.openControlsMenu();
+    }
+
     public void settings() {
         gameManager.instance.settingsMenu();
     }

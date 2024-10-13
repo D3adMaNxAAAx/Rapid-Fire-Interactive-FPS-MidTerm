@@ -22,6 +22,8 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuLoadout;
     [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject menuOptions;
+    [SerializeField] GameObject menuHowTo;
+    [SerializeField] GameObject menuControls;
 
     // -- Player --
     [Header("-- Player UI --")]
@@ -262,6 +264,18 @@ public class gameManager : MonoBehaviour {
         menuActive.SetActive(true);
     }
 
+    public void openHowToMenu() {
+        menuActive.SetActive(false);
+        menuActive = menuHowTo;
+        menuActive.SetActive(true);
+    }
+
+    public void openControlsMenu() {
+        menuActive.SetActive(false);
+        menuActive = menuControls;
+        menuActive.SetActive(true);
+    }
+
     public void completeMenu() {
         EnemiesRemainingCount.maxVisibleWords = 0;
         EnemiesRemainingLabel.maxVisibleWords = 0;
@@ -308,7 +322,7 @@ public class gameManager : MonoBehaviour {
             menuActive = menuPause;
             menuActive.SetActive(true);
         }
-        else if (menuActive == menuSettings) {
+        else if (menuActive == menuSettings || menuActive == menuHowTo || menuActive == menuControls) {
             menuActive.SetActive(false);
             menuActive = menuOptions;
             menuActive.SetActive(true);

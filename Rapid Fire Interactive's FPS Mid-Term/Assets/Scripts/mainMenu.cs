@@ -7,6 +7,7 @@ public class mainMenu : MonoBehaviour
 {
 
     [SerializeField] GameObject menuOptions;
+    [SerializeField] GameObject menuSettings;
 
     public void startGame()
     {
@@ -19,6 +20,16 @@ public class mainMenu : MonoBehaviour
 
     public void optionsBack() {
         menuOptions.SetActive(false);
+    }
+
+    public void settingsMenu() {
+        menuOptions.SetActive(false);
+        menuSettings.SetActive(true);
+    }
+
+    public void settingsBack() {
+        menuSettings.SetActive(false);
+        menuOptions.SetActive(true);
     }
 
     public void quitGame()
