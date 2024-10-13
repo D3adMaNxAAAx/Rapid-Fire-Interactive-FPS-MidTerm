@@ -111,6 +111,7 @@ public class storeManager : MonoBehaviour
         // Designated function just in case transactions may be more deliberate
         // Method is called if canAfford returns true so player can afford something
        gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() - _cost);
+        playerStats.Stats.purchased();
     }
 
     IEnumerator displayTransactionStatus(bool status)

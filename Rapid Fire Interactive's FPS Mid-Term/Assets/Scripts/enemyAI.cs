@@ -245,6 +245,7 @@ public class enemyAI : MonoBehaviour , IDamage
     {    
         // Deduct HP on damage recieved
         HP -= _amount;
+        playerStats.Stats.attack(_amount);
         isRoaming = false;
 
         if (type == enemyType.boss) {
@@ -271,9 +272,7 @@ public class enemyAI : MonoBehaviour , IDamage
             }
             // Tells Game manager to take 1 enemy out of game goal enemy total
             gameManager.instance.updateGameGoal(-1);
-
-            
-
+            playerStats.Stats.enemyKilled();
             // Update UI
             gameManager.instance.getPlayerScript().updatePlayerUI();
 
@@ -294,7 +293,9 @@ public class enemyAI : MonoBehaviour , IDamage
             {
                 // Give the player XP & coins for defeating the enemy
                 gameManager.instance.getPlayerScript().setXP(getEnemyXP()); // setXP will ADD the amount given.
+                playerStats.Stats.gotXP(getEnemyXP());
                 gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() + getEnemyCoins()); // Add coins to player amount.
+                playerStats.Stats.gotMoney(getEnemyCoins());
                 Destroy(gameObject);
             }
             gameManager.instance.getPlayerScript().updatePlayerUI();
