@@ -37,28 +37,40 @@ public class playerStats : MonoBehaviour {
     }
 
     public void enemyKilled() {
-        enemiesKilled++;
-    }
+        enemiesKilled++; }
 
     public void enemyHeadShot() {
-        headShots++;
-    }
+        headShots++; }
 
     public void attack(float damage) {
-        damageDealt += damage;
-    }
+        damageDealt += damage; }
 
     public void attacked(float damage) {
-        damageRecieved += damage;
-    }
+        damageRecieved += damage; }
+
+    public void levelUp() {
+        maxLevel++; }
+
+    public void gotXP(int xp) {
+        totalXP += xp; }
+
+    public void gotMoney(int money) {
+        totalMoney += money; }
+
+
+
+
+
+
+
+
+
 
     public void collectableFound() {
-        collectablesFound++;
-    }
+        collectablesFound++; }
 
     public void currentTime(string time) {
-        completionTime = time;
-    }
+        completionTime = time; }
 
     // getters
     public int getEnemiesKilled() { return enemiesKilled; }

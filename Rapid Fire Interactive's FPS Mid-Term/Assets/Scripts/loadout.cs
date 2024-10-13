@@ -12,7 +12,7 @@ public class loadout : MonoBehaviour {
     [SerializeField] gunStats AR;
     [SerializeField] gunStats Sniper;
     [SerializeField] gunStats HandCannon;
-    [SerializeField] gunStats Pistol;
+    [SerializeField] gunStats Shotgun;
     [SerializeField] HealStats Health1;
     [SerializeField] HealStats Health2;
     [SerializeField] GrenadeStats Gernade1;
@@ -112,7 +112,7 @@ public class loadout : MonoBehaviour {
         playerMovement.player.getGunList().Clear();
 
         playerMovement.player.getGunStats(Sniper);
-        playerMovement.player.getGunStats(Pistol);
+        playerMovement.player.getGunStats(Shotgun);
 
         getPrmLd1Img().gameObject.SetActive(false);
         getSecLd1Img().gameObject.SetActive(false);
