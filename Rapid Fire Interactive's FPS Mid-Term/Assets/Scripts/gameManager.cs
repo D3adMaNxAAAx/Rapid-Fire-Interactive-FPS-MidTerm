@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
-using Unity.VisualScripting; // for using textmesh pro
+using Unity.VisualScripting;
 
 public class gameManager : MonoBehaviour {
 
@@ -60,6 +60,8 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject sniperScope;
     [SerializeField] GameObject stamUI;
     [SerializeField] GameObject hpUI;
+    [SerializeField] GameObject buffUI;
+    [SerializeField] Image buffIcon;
     [SerializeField] GameObject xpUI;
     [SerializeField] GameObject timer;
     [SerializeField] GameObject timerTracker; // this makes the timer run regardless if its hidden or not
@@ -546,6 +548,10 @@ public class gameManager : MonoBehaviour {
     public GameObject getStamUI() { return stamUI; }
 
     public GameObject getHealthUI() { return hpUI; }
+
+    public GameObject getBuffUI() { return buffUI; }
+
+    public Image getBuffIcon() { return buffIcon; }
 
     public GameObject getXpUI() { return xpUI; }
 

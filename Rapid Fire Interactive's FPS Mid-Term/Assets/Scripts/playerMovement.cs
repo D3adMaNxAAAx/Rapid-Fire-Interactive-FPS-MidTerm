@@ -97,6 +97,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
     // Trackers
     float HPOrig; // HP
+    float damageBuffMult = 1;
     int playerXP; // XP
     int staminaOrig; // Stamina
     int playerLevel; // Level
@@ -117,6 +118,7 @@ public class playerMovement : MonoBehaviour, IDamage
     bool isHealing;
     bool damageAudioReady = true;
     bool isCrouching = false;
+    bool infiniteStam = false;
 
     // Start is called before the first frame update
     void Start() {
@@ -481,7 +483,7 @@ public class playerMovement : MonoBehaviour, IDamage
         shotFlash.SetActive(false);
     }
 
-    public void Heal() {
+    public void Heal(bool buff) { // if true, it is a buff and should not be recursive or follow the half health limit
         HP += 3; // HEAL THE PLAYER
         AudioSource.PlayClipAtPoint(healSound, transform.position); // playing heal audio clip
         StartCoroutine(healIndicator()); // flashing screen green
@@ -491,19 +493,26 @@ public class playerMovement : MonoBehaviour, IDamage
                 gameManager.instance.getHealthWarning().SetActive(false); // getting rid of low health state if not low anymore
             }
         }
-        if ((HP / HPOrig) > .5) { // only heals to half HP
-            HP = (HPOrig / 2); // if HP goes over half, reset to half
-            readyToHeal = false; // HEALING OVER
+        if (buff == false) {
+            if ((HP / HPOrig) > .5) { // only heals to half HP
+                HP = (HPOrig / 2); // if HP goes over half, reset to half
+                readyToHeal = false; // HEALING OVER
+            }
+            else {
+                StartCoroutine(healing()); // KEEP HEALING IF NOT AT HALF HP (RECURSION)
+            }
         }
         else {
-            StartCoroutine(healing()); // KEEP HEALING IF NOT AT HALF HP (RECURSION)
+            if (HP >= HPOrig) {
+                HP = HPOrig;
+            }
         }
     }
 
     IEnumerator healing() {
         if (stopHealing == false) { // stopping healing if interupted
             yield return new WaitForSeconds(1);
-            Heal();
+            Heal(false);
             updatePlayerUI(); // updating health bar
         }
     }
@@ -542,14 +551,61 @@ public class playerMovement : MonoBehaviour, IDamage
         gameManager.instance.getAmmoWarning().SetActive(false); //gameManager
     }
 
+    public void callBuff(int buff, Sprite icon) { // a seperate method is needed to call the Coroutine because if the pickup calls it directly it won't work after being destoryed
+        if (buff == 1) {
+            gameManager.instance.getBuffUI().SetActive(true);
+            gameManager.instance.getBuffIcon().sprite = icon;
+            StartCoroutine(damageBuff());
+        }
+        else if (buff == 2) {
+            gameManager.instance.getBuffUI().SetActive(true);
+            gameManager.instance.getBuffIcon().sprite = icon;
+            StartCoroutine(healBuff());
+        }
+        else if (buff == 3) { // shield
+            gameManager.instance.getBuffUI().SetActive(true);
+            gameManager.instance.getBuffIcon().sprite = icon;
+
+        }
+        else if (buff == 4) {
+            gameManager.instance.getBuffUI().SetActive(true);
+            gameManager.instance.getBuffIcon().sprite = icon;
+            StartCoroutine(staminaBuff());
+        }
+    }
+
+    IEnumerator damageBuff() {
+        damageBuffMult = 1.5f;
+        yield return new WaitForSeconds(10);
+        damageBuffMult = 1;
+        gameManager.instance.getBuffUI().SetActive(false);
+    }
+
+    IEnumerator healBuff() {
+        for (int i = 1; i <= 5; i++) {
+            Heal(true);
+            updatePlayerUI();
+            yield return new WaitForSeconds(1);
+        }
+        gameManager.instance.getBuffUI().SetActive(false);
+    }
+
+    IEnumerator staminaBuff() {
+        infiniteStam = true;
+        yield return new WaitForSeconds(5);
+        infiniteStam = false;
+        gameManager.instance.getBuffUI().SetActive(false);
+    }
+
     // Drain stamina as player runs
-    IEnumerator staminaDrain()
-    {
-        isDraining = true;
-        stamina--;
-        updatePlayerUI();
-        yield return new WaitForSeconds(drainMod);
-        isDraining = false;
+    IEnumerator staminaDrain() {
+        if (infiniteStam == false) {
+            isDraining = true;
+            stamina--;
+            updatePlayerUI();
+            yield return new WaitForSeconds(drainMod);
+            isDraining = false;
+        }
     }
 
     // Recover stamina as player walks
@@ -604,63 +660,46 @@ public class playerMovement : MonoBehaviour, IDamage
         }
     }
 
-    public void ammoPickup(int amount)
-    {
+    public void ammoPickup(int amount) {
         // Ammo pickups will add ammo to the player's shooting if possible.
         // If it goes over the mag limit, it'll be added to max instead.
-        if (guns.Count > 0)
-        {
+        if (guns.Count > 0) {
             int _ammo = (int)(getAmmoOrig() * (amount / 100f));
-            
             // Check if the player's ammo reserve isn't already full
-            if (getCurGun().ammoMax < getCurGun().ammoOrig)
-            {
+            if (getCurGun().ammoMax < getCurGun().ammoOrig) {
                 // Check if the ammo will go over mag size
-                if (_ammo + getCurGun().ammoCur >= getAmmoMag())
-                {
+                if (_ammo + getCurGun().ammoCur >= getAmmoMag()) {
                     // Does go over size, will be adding to reserve instead.
                     // Check if adding to reserve will hit capacity.
-                    if (_ammo + getCurGun().ammoMax >= getAmmoOrig())
-                    {
+                    if (_ammo + getCurGun().ammoMax >= getAmmoOrig()) {
                         // Add any remaining ammo to mag size as long as it doesn't go over mag
                         _ammo -= getAmmoOrig() - getCurGun().ammoMax;
-
                         // Will hit capacity, set max to capacity.
                         getCurGun().ammoMax = getAmmoOrig();
 
-
-                        if (_ammo > 0)
-                        {
+                        if (_ammo > 0) {
                             // Check if it'll go over magazine size
                             if (_ammo + getCurGun().ammoCur > getCurGun().ammoMag) {
                                 getCurGun().ammoCur = getAmmoMag();
-                            } else
-                            {
+                            }
+                            else {
                                 // It will not, so just add the leftover ammo.
                                 getCurGun().ammoCur += _ammo;
                             }
                         }
-
                     }
-                    else
-                    {
-                        // Will not hit capacity, so add normally.
-                        getCurGun().ammoMax += _ammo;
+                    else {
+                        getCurGun().ammoMax += _ammo; // Will not hit capacity, so add normally.
                     }
                 }
                 else
-                    // Does not go over mag size, so just add to clip.
-                    getCurGun().ammoCur += _ammo;
+                    getCurGun().ammoCur += _ammo; // Does not go over mag size, so just add to clip.
             }
-            else
-            {
-                // player's reserve is full, set clip to mag size.
-                getCurGun().ammoCur = getCurGun().ammoMag;
+            else {
+                getCurGun().ammoCur = getCurGun().ammoMag; // player's reserve is full, set clip to mag size.
             }
         }
-
-        // Update the UI to show ammo has been restored
-        updatePlayerUI();
+        updatePlayerUI(); // Update the UI to show ammo has been restored
     }
 
     public void toggleSprintOn()
