@@ -757,7 +757,7 @@ public class playerMovement : MonoBehaviour, IDamage
             IDamage damageable = nearbyObject.GetComponent<IDamage>();
             if(damageable != null)
             {
-                damageable.takeDamage(grenadeStats.explosionDamage); // grenade does double damage for some reason
+                damageable.takeDamage(grenadeStats.explosionDamage); // grenade does double damage to player
             }
         }
 
