@@ -35,7 +35,7 @@ public class repairItems : MonoBehaviour, IInteractable
         isPickedUp = true;
         pickedUpFeedback.enabled = true;
         isOpen = true;
-        gameManager.instance.setPowerItems(1);
+        
         journalIcon.SetActive(true);
     }
     
@@ -67,7 +67,7 @@ public class repairItems : MonoBehaviour, IInteractable
     IEnumerator hideFeedback()
     {
         yield return new WaitForSeconds(1.2f);
-        
+        gameManager.instance.setPowerItems(1);
         pickedUpFeedback.enabled = false;
         isOpen = false;
         Destroy(toDestroy);
