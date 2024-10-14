@@ -179,10 +179,13 @@ public class gameManager : MonoBehaviour {
 
     public void updateBossBar(Image _bossHealthBar, float bossHP, float _health)
     {
+        if (bossRoom.instance != null)
         // Check if the player has entered the boss room
-        if (bossRoom.instance.getBossFightState())
         {
-            _bossHealthBar.fillAmount = bossHP / _health;
+            if (bossRoom.instance.getBossFightState())
+            {
+                _bossHealthBar.fillAmount = bossHP / _health;
+            }
         }
     }
 
@@ -199,9 +202,13 @@ public class gameManager : MonoBehaviour {
             enemyCount -= bossCount;
         }
 
-        if (enemyCount <= 0 && bossCount <= 0) {
-            StartCoroutine(gameWinEasterEgg());
+        if (bossRoom.instance != null)
+        {
+            if (enemyCount <= 0 && bossCount <= 0)
+            {
+                StartCoroutine(gameWinEasterEgg());
 
+            }
         }
     }
 
