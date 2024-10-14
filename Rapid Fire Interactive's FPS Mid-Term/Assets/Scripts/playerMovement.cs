@@ -797,6 +797,12 @@ public class playerMovement : MonoBehaviour, IDamage
             if(damageable != null)
             {
                 damageable.takeDamage(grenadeStats.explosionDamage); // grenade does double damage to player
+
+                
+                BurningEffect burningEffect = nearbyObject.gameObject.AddComponent<BurningEffect>();
+                burningEffect.duration = 5f;  // Set the duration for the burn effect
+                burningEffect.ApplyEffect(nearbyObject.gameObject);
+
             }
         }
 

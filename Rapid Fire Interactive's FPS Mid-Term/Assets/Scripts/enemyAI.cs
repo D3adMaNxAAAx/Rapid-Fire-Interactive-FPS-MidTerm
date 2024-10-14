@@ -13,7 +13,7 @@ public class enemyAI : MonoBehaviour , IDamage
     [SerializeField] Renderer model; // Allows Designer Communication to Model's Renderer
     [SerializeField] Animator anim; //Sets animation animator controller
     [Range(1,20)][SerializeField] int animSpeedTrans;
-    [SerializeField] NavMeshAgent agent; // Allows Designer Communication To NavMeshAgent Component 
+    [SerializeField] public NavMeshAgent agent; // Allows Designer Communication To NavMeshAgent Component 
     [SerializeField] Transform headPos; // Enemy Head Position Tracker(Line Of Sight) For Designer
     [SerializeField] Transform shootPos; // Enemy SHoot Point Origin Tracker For Designer
     [SerializeField] Transform ammoSpawn;
@@ -61,6 +61,7 @@ public class enemyAI : MonoBehaviour , IDamage
     float bossHP; // tracks boss hp for boss fight progress bar
     float OGSpeed;
     int dropRNG;
+    private List<StatusEffects> activeEffects = new List<StatusEffects>();
 
     // Start is called before the first frame update
     void Start()
@@ -228,8 +229,10 @@ public class enemyAI : MonoBehaviour , IDamage
     {
         meleeCol.enabled = false;
     }
-    
+
    
+
+
 
 
     // Tell AI to face player 
@@ -267,7 +270,9 @@ public class enemyAI : MonoBehaviour , IDamage
         gameManager.instance.updateBossBar(gameManager.instance.getBossHPBar(), bossHP, HPOrig);
 
         agent.SetDestination(gameManager.instance.getPlayer().transform.position); // makes enemys go to player
-        
+
+       
+
         // Check if enemy is dead
         if (HP <= 0)
         {
@@ -306,6 +311,25 @@ public class enemyAI : MonoBehaviour , IDamage
             }
             gameManager.instance.getPlayerScript().updatePlayerUI();
         }
+    }
+
+    public void takeDamage(float amount, StatusEffects effect)
+    {
+        takeDamage(amount); // Call the base takeDamage method
+
+        if (effect != null)
+        {
+            ApplyStatusEffect(effect);
+        }
+    }
+
+    private void ApplyStatusEffect(StatusEffects effect)
+    {
+        StatusEffects newEffect = gameObject.AddComponent(effect.GetType()) as StatusEffects;
+        newEffect.duration = effect.duration;
+        newEffect.ApplyEffect(gameObject);
+
+          activeEffects.Add(newEffect);
     }
     private void PlayHitSound()
     {

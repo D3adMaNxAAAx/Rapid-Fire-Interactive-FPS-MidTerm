@@ -2,18 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StatusEffects : MonoBehaviour
+public abstract class StatusEffects : MonoBehaviour
 {
-    /*public float duration;  // How long the effect lasts
+    public float duration;  // How long the effect lasts
     protected float timer;  // Tracks time since the effect was applied
-    public abstract void ApplyEffect(GameObject target);  // Apply effect logic
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
+    // Abstract method: must be implemented by derived classes
+    public abstract void ApplyEffect(GameObject target);
+
+    // Virtual method to allow subclasses to override the default behavior
     public virtual void UpdateEffect()
     {
         timer += Time.deltaTime;
@@ -27,8 +24,9 @@ public class StatusEffects : MonoBehaviour
     {
         Destroy(this);  // Remove effect from the object
     }
+}
 
-    public class SlownessEffect : StatusEffects
+public class SlownessEffect : StatusEffects
     {
         public float slowAmount = 0.5f;  // How much to slow the target
 
@@ -117,6 +115,5 @@ public class StatusEffects : MonoBehaviour
             }
         }
 
-    }*/
+    }
 
-}
