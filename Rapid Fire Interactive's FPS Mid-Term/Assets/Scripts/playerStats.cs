@@ -27,8 +27,7 @@ public class playerStats : MonoBehaviour {
     // stats being tracked
 
     void Start() {
-        /// don't destroy on load
-
+        DontDestroyOnLoad(gameObject); // this script will stay between scenes
         Stats = this;
     }
 
