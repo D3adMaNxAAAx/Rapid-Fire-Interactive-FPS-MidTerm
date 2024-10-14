@@ -164,6 +164,9 @@ public class lightFlicker : MonoBehaviour
                 StartCoroutine(getNewNumber());
             flickerLight();
             setFlicker(true);
+
+            //checkpoint door id badge scanner on
+            //setCheckpointAccess(true);
             
         }
         if (pwrLvl == 2)
@@ -176,7 +179,8 @@ public class lightFlicker : MonoBehaviour
         }
         if (pwrLvl == 3)
         {
-
+            //elevator on 
+            //setElevatorAccess(true);
         }
     }
 }
