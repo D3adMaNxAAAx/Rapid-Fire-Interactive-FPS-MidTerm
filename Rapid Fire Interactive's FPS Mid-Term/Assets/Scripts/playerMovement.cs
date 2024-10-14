@@ -887,7 +887,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
     void changeGun() {
         float damTemp = guns[gunPos].damage * damageUpgradeMod;
-        damage = (int)damTemp;
+        damage = damTemp;
         bulletDistance = guns[gunPos].bulletDist;
         fireRate = getCurGun().fireRate;
         isSniper = getCurGun().isSniper;
