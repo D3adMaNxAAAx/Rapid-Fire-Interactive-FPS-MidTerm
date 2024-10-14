@@ -18,6 +18,8 @@ public class enemyAI : MonoBehaviour , IDamage
     [SerializeField] Transform shootPos; // Enemy SHoot Point Origin Tracker For Designer
     [SerializeField] Transform ammoSpawn;
     [SerializeField] GameObject ammoDrop; //Ammo Drop prefab
+    [SerializeField] AudioClip hitClip;
+    [SerializeField] float hitVolume = 1.0f;
 
     // -- Extra Checks --
     bool isShooting; // Private Tracker For If Enemy Is Shooting 
@@ -248,6 +250,8 @@ public class enemyAI : MonoBehaviour , IDamage
         playerStats.Stats.attack(_amount);
         isRoaming = false;
 
+        PlayHitSound();
+
         if (type == enemyType.boss) {
             bossHP -= _amount;
         }
@@ -301,14 +305,21 @@ public class enemyAI : MonoBehaviour , IDamage
             gameManager.instance.getPlayerScript().updatePlayerUI();
         }
     }
-
-    
-    // Will flash Enemy mesh on damage taken
-    IEnumerator flashColor() {
-        model.material.color = Color.red;
-        yield return new WaitForSeconds(damageFlashTimer);
-        model.material.color = colorOrig;
+    private void PlayHitSound()
+    {
+        if (hitClip != null)
+        {
+            // Play the clip at the enemy's position
+            AudioSource.PlayClipAtPoint(hitClip, transform.position, hitVolume);
+        }
     }
+
+     // Will flash Enemy mesh on damage taken
+     IEnumerator flashColor() {
+     model.material.color = Color.red;
+     yield return new WaitForSeconds(damageFlashTimer);
+     model.material.color = colorOrig;
+     }
 
     // Gives other classes access to enemy xp value
     public int getEnemyXP()
