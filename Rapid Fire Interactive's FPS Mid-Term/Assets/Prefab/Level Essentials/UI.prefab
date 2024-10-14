@@ -37461,6 +37461,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58ace39b02c44c34788fdaf258ec8230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuMusic: {fileID: 8300000, guid: 49e779580e56b4044b4a9552beefc18a, type: 3}
+  levelMusic: {fileID: 8300000, guid: da482a21d56d36445a104658a19694dd, type: 3}
+  bossMusic: {fileID: 8300000, guid: e30e9dda75ddb2649b1190b21011d8e8, type: 3}
   audSteps:
   - {fileID: 8300000, guid: a4e6a78e965ed7c4ab3be2ed53c8eaf8, type: 3}
   - {fileID: 8300000, guid: 5aa9cc5a224c6c449ab3f9807a8751f7, type: 3}
@@ -37482,15 +37485,18 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 437e7473eab454548acf9d7416f8b2d2, type: 3}
   - {fileID: 8300000, guid: 56ac4585f1d6aa44e8e4b49cccdfb8f1, type: 3}
   - {fileID: 8300000, guid: e7443484e9e5b7e43809b7913a755517, type: 3}
+  audEnemySteps: []
   audStepVol: 0.1
   audJumpVol: 0.5
   audHurtVol: 0.35
-  audEnemySteps: []
-  audEnemyStepVol: 0.5
   audHeal: {fileID: 8300000, guid: 88871fe463f058f48993e0a94964e09b, type: 3}
-  audHealVol: 0.5
   audButtonHover: {fileID: 8300000, guid: 6fb8e2414ba5b6c49adabcf9e538091b, type: 3}
   audButtonClick: {fileID: 8300000, guid: a1bf6825de593ba4494cb2eda5126c9f, type: 3}
+  menuMusicVol: 0
+  levelMusicVol: 0
+  bossMusicVol: 0
+  audEnemyStepVol: 0.5
+  audHealVol: 0.5
   audButtonHoverVol: 0.5
   audButtonClickVol: 0.5
 --- !u!1 &8590656097271040100
