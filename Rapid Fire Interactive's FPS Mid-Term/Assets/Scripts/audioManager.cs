@@ -7,34 +7,47 @@ public class audioManager : MonoBehaviour
 {
     public static audioManager instance; // Singleton
 
+    // -- Audio Clips --
+    [Header("-- Game Music --")]
+    [SerializeField] public AudioClip menuMusic;
+    [SerializeField] public AudioClip levelMusic;
+    [SerializeField] public AudioClip bossMusic;
+
     [Header("-- Player Sounds --")]
     [SerializeField] public AudioClip[] audSteps;
     [SerializeField] public AudioClip[] audJump;
     [SerializeField] public AudioClip[] audHurt;
 
-    [Header("-- Player Volume --")]
-    [Range(0, 1)] [SerializeField] public float audStepVol;
-    [Range(0, 1)][SerializeField] public float audJumpVol;
-    [Range(0, 1)][SerializeField] public float audHurtVol;
-
     [Header("-- Enemy Sounds --")]
     [SerializeField] public AudioClip[] audEnemySteps;
 
-    [Header("-- Enemy Volume --")]
-    [Range(0, 1)] [SerializeField] public float audEnemyStepVol;
+    [Header("-- Player Volume --")]
+    [Range(0, 1)] [SerializeField] public float audStepVol;
+    [Range(0, 1)] [SerializeField] public float audJumpVol;
+    [Range(0, 1)] [SerializeField] public float audHurtVol;
 
     [Header("-- Game Sounds --")]
     [SerializeField] public AudioClip audHeal;
-
-    [Header("-- Game Volume --")]
-    [Range(0, 1)] [SerializeField] public float audHealVol;
 
     [Header("-- UI Sounds --")]
     [SerializeField] public AudioClip audButtonHover;
     [SerializeField] public AudioClip audButtonClick;
 
+    // -- Volumes --
+
+    [Header("-- Game Music Volume --")]
+    [Range(0, 1)] [SerializeField] public float menuMusicVol;
+    [Range(0, 1)] [SerializeField] public float levelMusicVol;
+    [Range(0, 1)] [SerializeField] public float bossMusicVol;
+
+    [Header("-- Enemy Volume --")]
+    [Range(0, 1)] [SerializeField] public float audEnemyStepVol;
+
+    [Header("-- Game Volume --")]
+    [Range(0, 1)] [SerializeField] public float audHealVol;
+
     [Header("-- UI Volume --")]
-    [Range(0, 1)][SerializeField] public float audButtonHoverVol;
+    [Range(0, 1)] [SerializeField] public float audButtonHoverVol;
     [Range(0, 1)] [SerializeField] public float audButtonClickVol;
 
     void Start()
