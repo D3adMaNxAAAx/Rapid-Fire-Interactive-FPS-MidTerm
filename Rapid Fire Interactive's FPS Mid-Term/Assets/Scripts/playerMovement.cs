@@ -396,7 +396,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
             if (dmg != null)
             {
-                dmg.takeDamage(damage);
+                dmg.takeDamage((damage * damageBuffMult));
                 if (guns[gunPos].hitEffects != null)
                     Instantiate(guns[gunPos].hitEffects, hit.point, Quaternion.identity);
             }

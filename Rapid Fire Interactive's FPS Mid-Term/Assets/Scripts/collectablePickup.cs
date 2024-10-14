@@ -16,8 +16,8 @@ public class NewBehaviourScript : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider otherObject) {
-        AudioSource.PlayClipAtPoint(pickUpA, transform.position);
         if (otherObject.CompareTag("Player")) {
+            AudioSource.PlayClipAtPoint(pickUpA, transform.position);
             if (type == objectType.secret) {
                 /// track this
             }
@@ -28,7 +28,7 @@ public class NewBehaviourScript : MonoBehaviour {
                 gameManager.instance.getPlayerScript().callBuff(1, buffIcon); // 10 seconds of 1.5x damage
             }
             else if (type == objectType.shieldBuff) {
-                /// impliment
+                gameManager.instance.getPlayerScript().callBuff(3, buffIcon); /// impliment
             }
             else if (type == objectType.staminaBuff) {
                 gameManager.instance.getPlayerScript().callBuff(4, buffIcon); // 10 seconds of 1.5x damage

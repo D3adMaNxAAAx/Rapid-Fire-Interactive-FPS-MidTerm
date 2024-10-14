@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class StatusEffects : MonoBehaviour
 {
-    public float duration;  // How long the effect lasts
+    /*public float duration;  // How long the effect lasts
     protected float timer;  // Tracks time since the effect was applied
     public abstract void ApplyEffect(GameObject target);  // Apply effect logic
     // Start is called before the first frame update
@@ -117,6 +117,6 @@ public class StatusEffects : MonoBehaviour
             }
         }
 
-    }
+    }*/
 
 }
