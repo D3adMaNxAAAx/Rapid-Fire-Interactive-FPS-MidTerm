@@ -20,8 +20,10 @@ public class enemyAI : MonoBehaviour , IDamage
     [SerializeField] GameObject ammoDrop; //Ammo Drop prefab
     [SerializeField] AudioClip hitClip;
     [SerializeField] float hitVolume = 1.0f;
+    [SerializeField] float soundCooldown = 2.0f; //cooldown on hit sound 
 
     // -- Extra Checks --
+    bool canPlaySound = true; // Tracks if the sound can be played
     bool isShooting; // Private Tracker For If Enemy Is Shooting 
     bool playerInRange; // Tracker of if player is in range of enemy detection radius
     Vector3 playerDir; // Tracks player Direction for AI rotation and player in range
@@ -313,9 +315,15 @@ public class enemyAI : MonoBehaviour , IDamage
             AudioSource.PlayClipAtPoint(hitClip, transform.position, hitVolume);
         }
     }
+    private IEnumerator SoundCooldown()
+    {
+        canPlaySound = false; // Disable sound playing
+        yield return new WaitForSeconds(soundCooldown); // Wait for the cooldown period
+        canPlaySound = true; // Re-enable sound playing
+    }
 
-     // Will flash Enemy mesh on damage taken
-     IEnumerator flashColor() {
+    // Will flash Enemy mesh on damage taken
+    IEnumerator flashColor() {
      model.material.color = Color.red;
      yield return new WaitForSeconds(damageFlashTimer);
      model.material.color = colorOrig;
