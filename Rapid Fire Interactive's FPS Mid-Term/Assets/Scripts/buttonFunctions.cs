@@ -24,6 +24,10 @@ public class buttonFunctions : MonoBehaviour {
         gameManager.instance.openHowToMenu();
     }
 
+    public void Tips() {
+        gameManager.instance.openTipsMenu();
+    }
+
     public void ContorlsMenu() {
         gameManager.instance.openControlsMenu();
     }

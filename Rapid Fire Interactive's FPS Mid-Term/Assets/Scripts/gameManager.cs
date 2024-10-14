@@ -24,6 +24,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject menuOptions;
     [SerializeField] GameObject menuHowTo;
+    [SerializeField] GameObject menuTips;
     [SerializeField] GameObject menuControls;
 
     // First Selected Options (for use when selecting with arrow keys)
@@ -34,6 +35,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject optionsMenuFirst;
     [SerializeField] GameObject settingsMenuFirst;
     [SerializeField] GameObject howToMenuFirst;
+    [SerializeField] GameObject tipsMenuFirst;
     [SerializeField] GameObject controlsMenuFirst;
     [SerializeField] GameObject storeMenuFirst;
     [SerializeField] GameObject upgradeMenuFirst;
@@ -282,6 +284,7 @@ public class gameManager : MonoBehaviour {
         getEnemyRemainCount().gameObject.SetActive(state);
         getEnemyRemainLabel().gameObject.SetActive(state); }
 
+    /// each menu needs another GameObject var nameMenuFirst for arrow key support in the menus, drag the first button in that menu into this slot in gameManager
     public void settingsMenu() {
         menuActive.SetActive(false);
         menuActive = menuSettings;
@@ -301,6 +304,13 @@ public class gameManager : MonoBehaviour {
         menuActive = menuHowTo;
         menuActive.SetActive(true);
         EventSystem.current.SetSelectedGameObject(howToMenuFirst); // Set eventsystem selected game object to the button assigned
+    }
+
+    public void openTipsMenu() {
+        menuActive.SetActive(false);
+        menuActive = menuTips;
+        menuActive.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(tipsMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
     public void openControlsMenu() {
@@ -380,6 +390,11 @@ public class gameManager : MonoBehaviour {
             menuActive.SetActive(false);
             stateUnpause();
             menuActive = null;
+        }
+        else if (menuActive == menuTips) {
+            menuActive.SetActive(false);
+            menuActive = menuHowTo;
+            menuActive.SetActive(true);
         }
 
         if (menuActive == menuPause)
