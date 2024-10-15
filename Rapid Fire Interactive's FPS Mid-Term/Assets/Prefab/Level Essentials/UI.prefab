@@ -40779,6 +40779,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Controls Menu
       objectReference: {fileID: 0}
+    - target: {fileID: 714105785383891640, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4698953774433734679, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
       propertyPath: m_Delegates.Array.size
       value: 2
@@ -40819,9 +40823,67 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 4836403412900469700, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
+      propertyPath: m_text
+      value: Controls
+      objectReference: {fileID: 0}
+    - target: {fileID: 5242942613034417562, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -25.75
+      objectReference: {fileID: 0}
     - target: {fileID: 5535065071316071896, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
       propertyPath: m_Name
       value: Controls
+      objectReference: {fileID: 0}
+    - target: {fileID: 5828989389215805882, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.13777778
+      objectReference: {fileID: 0}
+    - target: {fileID: 5828989389215805882, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.13777778
+      objectReference: {fileID: 0}
+    - target: {fileID: 5828989389215805882, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6790430040221370044, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
+      propertyPath: m_text
+      value: "Use the mouse to look around\n\nUse WASD to move your character, hold
+        shift to sprint\n\nDouble tap a movement key to dash in that direction\n\nUse
+        Space to jump, ctrl to crouch\n\nUse Q and E to peak around things\n\nUse
+        right to click to zoom / focus your weapon \n\nUse left click to shoot your
+        weapon, R to reload\n\nUse the scroll wheel or 1-5 keys to switch weapons\n\nHit
+        F to interact with things (pickup item, open door)\n\nHit X to use a health
+        potion, G to throw a grenade\n\nHit Escape to pause\n\n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6790430040221370044, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
+      propertyPath: m_fontSize
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 6790430040221370044, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
+      propertyPath: m_margin.w
+      value: -211.22992
+      objectReference: {fileID: 0}
+    - target: {fileID: 6790430040221370044, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
+      propertyPath: m_margin.x
+      value: -348.52792
+      objectReference: {fileID: 0}
+    - target: {fileID: 6790430040221370044, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
+      propertyPath: m_margin.y
+      value: -291.56763
+      objectReference: {fileID: 0}
+    - target: {fileID: 6790430040221370044, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
+      propertyPath: m_margin.z
+      value: -337.4215
+      objectReference: {fileID: 0}
+    - target: {fileID: 6790430040221370044, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
+      propertyPath: m_lineSpacing
+      value: -25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6790430040221370044, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 8116576711531143345, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
       propertyPath: m_Navigation.m_Mode
@@ -41152,6 +41214,12 @@ PrefabInstance:
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5419414718669471974}
+    - target: {fileID: 3608485284339707248, guid: 82b6c0493b68fd240bccd5b42a9cc219, type: 3}
+      propertyPath: m_text
+      value: 'Helpful Tips
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 4457773236827374444, guid: 82b6c0493b68fd240bccd5b42a9cc219, type: 3}
       propertyPath: m_Name
       value: Tips
