@@ -4138,9 +4138,9 @@ RectTransform:
   - {fileID: 3682791101505699640}
   m_Father: {fileID: 4628919983508715894}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -182}
+  m_AnchorMin: {x: 0.5, y: 0.24777779}
+  m_AnchorMax: {x: 0.5, y: 0.24777779}
+  m_AnchoredPosition: {x: 0, y: 10.5}
   m_SizeDelta: {x: 250, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6342818556038123360
@@ -9353,7 +9353,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.16147916, y: 0.044000003}
   m_AnchorMax: {x: 0.16147916, y: 0.044000003}
-  m_AnchoredPosition: {x: 0.1899414, y: -0.4199829}
+  m_AnchoredPosition: {x: 0.1899414, y: -0.41992188}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1999912809027446926
@@ -40899,6 +40899,49 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 5419414718669471974}
+    - target: {fileID: 2443496984076289806, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.1588889
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443496984076289806, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.1588889
+      objectReference: {fileID: 0}
+    - target: {fileID: 2443496984076289806, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400716193469362184, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
+      propertyPath: m_text
+      value: 'Welcome to Monster Slasher Inc. You will have to battle through a creepy
+        warehouse infested with tons monsters to try and put a stop to the evil monster
+        overlord''s plans to destroy the world.
+
+        The power has been shut
+        off and you need to find the missing power objects to restore power. As you
+        restore the power, you will gain access to new things to help you become
+        more powerful. There are also ID badges that can be used to access safe areas
+        that will serve as check points and some free chests of loot. There are many
+        items throughout the warehouse to help you defeat the monsters. After fighting
+        through the first warehouse, you will be taken to a second and more gaurded
+        warehouse. At the end, you will find where the evil boss resides. Goodluck'
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400716193469362184, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
+      propertyPath: m_margin.w
+      value: -339.07184
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400716193469362184, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
+      propertyPath: m_margin.x
+      value: -445.6781
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400716193469362184, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
+      propertyPath: m_margin.y
+      value: -80.03558
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400716193469362184, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
+      propertyPath: m_margin.z
+      value: -448.6687
+      objectReference: {fileID: 0}
     - target: {fileID: 3475574908631328419, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
       propertyPath: m_Delegates.Array.size
       value: 2
@@ -40938,6 +40981,10 @@ PrefabInstance:
     - target: {fileID: 3475574908631328419, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
       propertyPath: m_Delegates.Array.data[1].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4165581165648743214, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 205.75
       objectReference: {fileID: 0}
     - target: {fileID: 8245646046576140240, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
       propertyPath: m_Pivot.x
@@ -41025,7 +41072,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8711283384182768652, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -41061,10 +41108,54 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 5419414718669471974}
+    - target: {fileID: 3400716193469362184, guid: 82b6c0493b68fd240bccd5b42a9cc219, type: 3}
+      propertyPath: m_text
+      value: "Choose your loadout wisely. You can get more guns during the game,
+        but not the ones you don't select. \nHide when you are low on health. Your
+        health will slowly regenerate up to half health as long as you aren't taking
+        damage.\nThere are optional lost documents to find, which will further explain
+        how you got into this situation.\nFind guns and power ups in the warehouse,
+        as well as coins and XP from enemies to use in the shop and upgrade menu.\nThere
+        are 3 levels to the warehouse power, each requiring 3 power objects. Level
+        1 have the lights start to turn on. Level 2 the lights fully come on and
+        the store menu becomes available. Level 3 the upgrade menu becomes available.\nTry
+        to seperate the monsters. They are incredibly stupid and have bad eye sight.\nPower
+        Ups:\nAttack: Damage increased by 1.5x for 10 seconds\nHealth: Health regenerates
+        6 HP a second for 5 seconds\nStamina: Stamina does not drain for 5 seconds\nShield:
+        Temporary extra health (50) for 10 seconds"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400716193469362184, guid: 82b6c0493b68fd240bccd5b42a9cc219, type: 3}
+      propertyPath: m_fontSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400716193469362184, guid: 82b6c0493b68fd240bccd5b42a9cc219, type: 3}
+      propertyPath: m_margin.w
+      value: -227.27881
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400716193469362184, guid: 82b6c0493b68fd240bccd5b42a9cc219, type: 3}
+      propertyPath: m_margin.x
+      value: -445.6947
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400716193469362184, guid: 82b6c0493b68fd240bccd5b42a9cc219, type: 3}
+      propertyPath: m_margin.y
+      value: -285.84412
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400716193469362184, guid: 82b6c0493b68fd240bccd5b42a9cc219, type: 3}
+      propertyPath: m_margin.z
+      value: -448.24146
+      objectReference: {fileID: 0}
+    - target: {fileID: 3400716193469362184, guid: 82b6c0493b68fd240bccd5b42a9cc219, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 3475574908631328419, guid: 82b6c0493b68fd240bccd5b42a9cc219, type: 3}
       propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 5419414718669471974}
+    - target: {fileID: 4457773236827374444, guid: 82b6c0493b68fd240bccd5b42a9cc219, type: 3}
+      propertyPath: m_Name
+      value: Tips
+      objectReference: {fileID: 0}
     - target: {fileID: 8245646046576140240, guid: 82b6c0493b68fd240bccd5b42a9cc219, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
