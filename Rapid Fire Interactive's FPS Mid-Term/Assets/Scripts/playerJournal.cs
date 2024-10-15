@@ -55,6 +55,7 @@ public class playerJournal : MonoBehaviour
 
     private void Awake()
     {
+        DontDestroyOnLoad(gameObject);
         journal.SetActive(false);
         isOpen = false;
     }

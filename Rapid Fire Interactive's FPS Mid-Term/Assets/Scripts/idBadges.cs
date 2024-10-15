@@ -15,9 +15,9 @@ public class idBadges : MonoBehaviour, IInteractable
     bool isPickedUp;
     bool isOpen;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame

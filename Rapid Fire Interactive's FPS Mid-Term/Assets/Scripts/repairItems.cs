@@ -17,9 +17,9 @@ public class repairItems : MonoBehaviour, IInteractable
     bool isPickedUp;
 
 
-    private void Start()
+    private void Awake()
     {
-        
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
