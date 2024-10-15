@@ -63,6 +63,8 @@ public class enemyAI : MonoBehaviour , IDamage
     int dropRNG;
     private List<StatusEffects> activeEffects = new List<StatusEffects>();
 
+    bool isDead;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -270,14 +272,15 @@ public class enemyAI : MonoBehaviour , IDamage
         //updateBossHealth();
         gameManager.instance.updateBossBar(gameManager.instance.getBossHPBar(), bossHP, HPOrig);
 
-        agent.SetDestination(gameManager.instance.getPlayer().transform.position); // makes enemys go to player
+        if (HP > 0)
+            agent.SetDestination(gameManager.instance.getPlayer().transform.position); // makes enemys go to player
 
        
 
         // Check if enemy is dead
-        if (HP <= 0)
+        if (HP <= 0 && !isDead)
         {
-
+            isDead = true;
             if (agent.gameObject.CompareTag("Boss"))
             {
                 anim.SetTrigger("Dead");

@@ -44,6 +44,7 @@ public class elevator : MonoBehaviour, IInteractable
                 StartCoroutine(closeDoor());
             }
         }
+        setPower(playerStats.Stats.getPowerObjects());
     }
     public void setPower(int amount)
     {
@@ -111,7 +112,7 @@ public class elevator : MonoBehaviour, IInteractable
     }
     IEnumerator closeDoor()
     {
-        Debug.Log("closing door");
+        //Debug.Log("closing door");
         float a = Time.deltaTime * 3;
         //Use of Lerp to get smooth door movement
         elevDoor.transform.position = Vector3.Lerp(elevDoor.transform.position, doorPos, a);
@@ -124,11 +125,8 @@ public class elevator : MonoBehaviour, IInteractable
             movingScene = true;
             yield return new WaitForSeconds(3f);
             SceneManager.LoadScene(sceneNum, LoadSceneMode.Single);
+            gameManager.instance.getInteractUI().SetActive(false);
         }
-    }
-    public void setPowerLevel(int power)
-    {
-        powerAmount = power;
     }
     public void disableDoorBool()
     {

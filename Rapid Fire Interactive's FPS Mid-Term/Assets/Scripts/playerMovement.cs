@@ -201,6 +201,7 @@ public class playerMovement : MonoBehaviour, IDamage
         if (lives > 0) {
             controller.enabled = false;
             transform.position = gameManager.instance.getPlayerSpawnPos().transform.position;
+            transform.rotation = gameManager.instance.getPlayerSpawnPos().transform.rotation;
             controller.enabled = true;
             HP = HPOrig;
             lowHealth = false;

@@ -64,7 +64,6 @@ public class lightFlicker : MonoBehaviour
                 StartCoroutine(getNewNumber());
             flickerLight();
         }
-
         else if (powerSys != null && isOn == true)
             powerStages();
 
@@ -85,7 +84,7 @@ public class lightFlicker : MonoBehaviour
 
     IEnumerator lightAction()
     {
-        if (lightSys == null)
+        if (lightSys == null && doFlicker)
         {
             isFlickering = true;
             light.intensity = 0f;
@@ -164,30 +163,34 @@ public class lightFlicker : MonoBehaviour
     
     void powerStages()
     {
-        if (pwrLvl == 1)
+        if (powerSys != null)
         {
-            setRandFlickSpd(UnityEngine.Random.Range(0.2f, 1.5f));
-            if (!getWait())
-                StartCoroutine(getNewNumber());
-            flickerLight();
-            setFlicker(true);
-
-            //checkpoint door id badge scanner on
-            //setCheckpointAccess(true);
-            
-        }
-        if (pwrLvl == 2)
-        {
-            setFlicker(false);
-            for (int i = 0; i < lightCount - 1; ++i)
+            if (pwrLvl == 1)
             {
-                lights[i].enabled = true;
+                setRandFlickSpd(UnityEngine.Random.Range(0.2f, 1.5f));
+                if (!getWait())
+                    StartCoroutine(getNewNumber());
+                flickerLight();
+                setFlicker(true);
+
+                //checkpoint door id badge scanner on
+                //setCheckpointAccess(true);
+
             }
-        }
-        if (pwrLvl == 3)
-        {
-            //elevator on 
-            //setElevatorAccess(true);
+            if (pwrLvl == 2)
+            {
+                setFlicker(false);
+                for (int i = 0; i < lightCount - 1; ++i)
+                {
+                    lights[i].enabled = true;
+                }
+            }
+            if (pwrLvl == 3)
+            {
+                //elevator on 
+                //setElevatorAccess(true);
+
+            }
         }
     }
 }

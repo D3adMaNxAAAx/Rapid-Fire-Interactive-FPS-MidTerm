@@ -37,7 +37,8 @@ public class repairItems : MonoBehaviour, IInteractable
         pickedUpFeedback.enabled = true;
         isOpen = true;
         
-        journalIcon.SetActive(true);
+        if (journalIcon != null)
+            journalIcon.SetActive(true);
     }
     
     private void OnTriggerStay(Collider other)
