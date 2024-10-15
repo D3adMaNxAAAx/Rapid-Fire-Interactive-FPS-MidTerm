@@ -210,15 +210,18 @@ public class gameManager : MonoBehaviour {
         {
             if (enemyCount <= 0 && bossCount <= 0)
             {
-                StartCoroutine(gameWinEasterEgg());
-
+                StartCoroutine(preWinMenuThings());
+                youWin();
             }
         }
     }
 
-    IEnumerator gameWinEasterEgg()
-    {
-        yield return new WaitForSeconds(.5f);
+    public IEnumerator preWinMenuThings() {
+        AudioSource.PlayClipAtPoint(audioManager.instance.VictoryA, player.transform.position);
+        yield return new WaitForSeconds(3); // waitings for boss thumbs up after death
+    }
+
+    void youWin() {
         statePause();
         menuActive = menuWin; // set active menu to win menu
         menuActive.SetActive(true); // Show active menu

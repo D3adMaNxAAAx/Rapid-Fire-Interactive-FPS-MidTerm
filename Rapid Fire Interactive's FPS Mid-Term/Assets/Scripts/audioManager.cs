@@ -27,7 +27,8 @@ public class audioManager : MonoBehaviour
     [Range(0, 1)] [SerializeField] public float audHurtVol;
 
     [Header("-- Game Sounds --")]
-    [SerializeField] public AudioClip audHeal;
+    [SerializeField] public AudioClip VictoryA;
+    [SerializeField] public AudioClip audHeal; // I think there is already an audio in playerMovement for this?
 
     [Header("-- UI Sounds --")]
     [SerializeField] public AudioClip audButtonHover;
