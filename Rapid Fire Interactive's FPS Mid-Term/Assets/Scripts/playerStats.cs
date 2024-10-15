@@ -22,7 +22,7 @@ public class playerStats : MonoBehaviour {
     int shopItemsPurchased;
     string completionTime = "N/A";
     int powerObjectsFound; float percentFound1; int maxPowerObjects = 9;
-    int notesFound; float percentFound2; int maxNotes = 10; /// prob needs to be changed
+    int docsFound; float percentFound2; int maxDocs = 9;
     int collectablesFound; float percentFound3; int maxCollectables = 10; // if implemented
     // stats being tracked
 
@@ -32,7 +32,7 @@ public class playerStats : MonoBehaviour {
     }
 
     public void Reset() { // reseting all tracked stats to 0
-        enemiesKilled = headShots = maxLevel = totalXP = totalMoney = deaths = nearDeaths = ammoUsed = upgradesPurchased = shopItemsPurchased = powerObjectsFound = notesFound = collectablesFound = 0;
+        enemiesKilled = headShots = maxLevel = totalXP = totalMoney = deaths = nearDeaths = ammoUsed = upgradesPurchased = shopItemsPurchased = powerObjectsFound = docsFound = collectablesFound = 0;
         damageDealt = damageTaken = 0;
         completionTime = "N/A";
     }
@@ -40,7 +40,7 @@ public class playerStats : MonoBehaviour {
     public void enemyKilled() {
         enemiesKilled++; }
 
-    public void enemyHeadShot() { /// needs to be implemented
+    public void enemyHeadShot() { // needs to be implemented
         headShots++; }
 
     public void attack(float damage) {
@@ -77,16 +77,16 @@ public class playerStats : MonoBehaviour {
         completionTime = time;
     }
 
-    public void objectFound() { /// needs to be implemented
+    public void objectFound() {
         powerObjectsFound++; }
 
-    public void noteFound() { /// needs to be implemented
-        notesFound++; }
+    public void docFound() {
+        docsFound++; }
 
-    public void collectableFound() { /// needs to be implemented
+    public void collectableFound() { // needs to be implemented
         collectablesFound++; }
 
-    // getters
+    // getters (for displaying)
     public int getEnemiesKilled() { return enemiesKilled; }
     // public void getHeadShots() { return headShots; }
     public float getDamageDealt() { return damageDealt; }
@@ -101,7 +101,7 @@ public class playerStats : MonoBehaviour {
     public int getShopPurchases() { return shopItemsPurchased; }
     public string getTimeTaken() { return completionTime; }
     public int getPowerObjects() { return powerObjectsFound; }
-    public int getNotesFound() { return notesFound; }
+    public int getNotesFound() { return docsFound; }
     /*public float getCollectablesFound() {
         percentFound3 = collectablesFound / maxCollectables;
         return percentFound3; }*/

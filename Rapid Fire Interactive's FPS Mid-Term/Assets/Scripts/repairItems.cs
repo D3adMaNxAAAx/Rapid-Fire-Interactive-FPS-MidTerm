@@ -33,6 +33,7 @@ public class repairItems : MonoBehaviour, IInteractable
     {
         Destroy(repairObj);
         isPickedUp = true;
+        playerStats.Stats.objectFound();
         pickedUpFeedback.enabled = true;
         isOpen = true;
         

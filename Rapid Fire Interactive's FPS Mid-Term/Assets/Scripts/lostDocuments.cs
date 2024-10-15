@@ -32,6 +32,7 @@ public class lostDocuments : MonoBehaviour , IInteractable
     {
         Destroy(lostDocument);
         isPickedUp = true;
+        playerStats.Stats.docFound();
         pickedUpFeedback.enabled = true;
         isOpen = true;
 
