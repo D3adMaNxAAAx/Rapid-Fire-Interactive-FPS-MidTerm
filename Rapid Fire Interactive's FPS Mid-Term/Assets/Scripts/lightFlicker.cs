@@ -137,6 +137,7 @@ public class lightFlicker : MonoBehaviour
 
             if (gameManager.instance.getPowerItems() == 3)
             {
+                safeRoom.instance.setSafeAccess(true);
                 pwrLvl = 1;
                 isOn = true;
                 if (playerStats.Stats.getPWRLevel() < 1)

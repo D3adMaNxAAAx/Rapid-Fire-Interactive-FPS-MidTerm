@@ -445,7 +445,7 @@ public class playerMovement : MonoBehaviour, IDamage
     public void takeDamage(float amount)
     {
         // Further prevention from additional damage that may trigger things like lives lost multiple times or negative HP values.
-        if (HP > 0)
+        if (HP > 0 && safeRoom.instance.getSafeState())
         {
             // Player takes damage
             HP -= amount;
