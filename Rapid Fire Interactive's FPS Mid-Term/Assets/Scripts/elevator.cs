@@ -8,7 +8,11 @@ public class elevator : MonoBehaviour, IInteractable
     [SerializeField] GameObject elevCallButton;
     [SerializeField] GameObject elevNextLevel;
     [SerializeField] GameObject elevDoor;
-
+    [Range(0,20)][SerializeField] int requiredPower = 0;
+    [SerializeField] bool moveToScene;
+    [SerializeField] bool killObjective;
+    
+    int sceneNum;
     int powerAmount;
     Vector3 doorPos;
     Vector3 doorMovePos;
@@ -18,6 +22,8 @@ public class elevator : MonoBehaviour, IInteractable
     // Start is called before the first frame update
     void Start()
     {
+        if (moveToScene)
+            sceneNum = SceneManager.GetActiveScene().buildIndex + 1;
         if (elevDoor != null)
         {
             doorPos = elevDoor.transform.position;
@@ -53,13 +59,27 @@ public class elevator : MonoBehaviour, IInteractable
         }
         else if (elevCallButton != null)
         {
-            if (powerAmount >= 0) // this needs to be set to whatever the amount of power we need
+            if (!killObjective)
             {
-                isDoor = true;
+                if (powerAmount >= requiredPower) // this needs to be set to whatever the amount of power we need
+                {
+                    isDoor = true;
+                }
+                else
+                {
+                    Debug.Log("Not Enough Power");
+                }
             }
             else
             {
-                Debug.Log("Not Enough Power");
+                if (gameManager.instance.getEnemyCount() <= 0)
+                {
+                    isDoor = true;
+                }
+                else
+                {
+                    Debug.Log("Must remove all enemies to proceed");
+                }
             }
         }
     }
@@ -68,12 +88,20 @@ public class elevator : MonoBehaviour, IInteractable
     {
         if (other.CompareTag("Player"))
         {
+            if (!gameManager.instance.getInteractUI().activeInHierarchy)
+                gameManager.instance.getInteractUI().SetActive(true);
             if (Input.GetButton("Interact"))
             {
                 interact();
             }
         }
     }
+    
+    private void OnTriggerExit(Collider other)
+    {
+        gameManager.instance.getInteractUI().SetActive(false);
+    }
+
     IEnumerator openDoor()
     {
         float a = Time.deltaTime * 3f;
@@ -89,17 +117,21 @@ public class elevator : MonoBehaviour, IInteractable
         elevDoor.transform.position = Vector3.Lerp(elevDoor.transform.position, doorPos, a);
         yield return null;
     }
-    public void disableDoorBool()
-    {
-        isDoor = false;
-    }
     IEnumerator nextScene()
     {
-        if (!movingScene)
+        if (!movingScene && moveToScene)
         {
             movingScene = true;
             yield return new WaitForSeconds(3f);
-            SceneManager.LoadScene("MainScene", LoadSceneMode.Single);
+            SceneManager.LoadScene(sceneNum, LoadSceneMode.Single);
         }
+    }
+    public void setPowerLevel(int power)
+    {
+        powerAmount = power;
+    }
+    public void disableDoorBool()
+    {
+        isDoor = false;
     }
 }
