@@ -64,8 +64,8 @@ public class terminals : MonoBehaviour
             gameManager.instance.statePause();
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
-            menuActive = menuMain;
-            menuActive.SetActive(true);
+            
+            menuMain.SetActive(true);
             isOpen = !isOpen;
 
         }
@@ -73,16 +73,16 @@ public class terminals : MonoBehaviour
 
     public void closeTerminal()
     {
-        if (isOpen)
-        {
-            gameManager.instance.stateUnpause();
+       
+        
+        menuMain.SetActive(false);
+        gameManager.instance.stateUnpause();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            menuActive.SetActive(false);
-            menuMain.gameObject.SetActive(false);
+            
             gameManager.instance.displayUI(true);
             isOpen = !isOpen;
-        }
+        
     }
 
     public void openUpgrades()
