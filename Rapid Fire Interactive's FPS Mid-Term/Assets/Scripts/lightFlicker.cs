@@ -31,8 +31,6 @@ public class lightFlicker : MonoBehaviour
 
     private void Awake()
     {
-
-        DontDestroyOnLoad(gameObject);
         if (lightSys == null)
         {
             _light = this.gameObject.GetComponentInChildren<Light>();
