@@ -95,6 +95,11 @@ public class gameManager : MonoBehaviour {
     [SerializeField] playerMovement playerScript; // Tracks playerController field
     [SerializeField] GameObject playerSpawnPos;
 
+    [SerializeField] TMP_Text completionTime;
+    [SerializeField] TMP_Text enemiesKilled;
+    [SerializeField] TMP_Text deaths;
+    [SerializeField] TMP_Text playerLevel;
+
     // Reticle Variables
     Vector2 reticleSize; // so the player can adjust reticle size through settings & also to change it to and from.
     Vector2 reticleSizeOrig;
@@ -225,6 +230,10 @@ public class gameManager : MonoBehaviour {
         statePause();
         menuActive = menuWin; // set active menu to win menu
         menuActive.SetActive(true); // Show active menu
+        completionTime.text = playerStats.Stats.getTimeTaken();
+        enemiesKilled.text = playerStats.Stats.getEnemiesKilled().ToString();
+        deaths.text = playerStats.Stats.getDeaths().ToString();
+        playerLevel.text = playerStats.Stats.getTotalXP().ToString(); /// actually total xp not max level because it goes down when you use it, should track total level too
         EventSystem.current.SetSelectedGameObject(winMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
