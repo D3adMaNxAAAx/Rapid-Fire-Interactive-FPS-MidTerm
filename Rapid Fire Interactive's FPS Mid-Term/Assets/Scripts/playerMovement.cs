@@ -141,6 +141,7 @@ public class playerMovement : MonoBehaviour, IDamage
     void Update() {
         if (gameManager.instance.getPauseStatus() == false) {
         
+            if (Input.GetButton("Kill")) { takeDamage(999); }
 
             movement();
             DashAll(); // at bottom of file, only does anything if specific key is pressed

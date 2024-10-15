@@ -1,39 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class bossRoom : MonoBehaviour, IInteractable
+public class doorControllerManual : MonoBehaviour, IInteractable
 {
+    // Using safeRoom as a reference
 
-    public static bossRoom instance;
-    //tracks door button
-    [SerializeField] GameObject doorButton;
+    // Member Fields
+    // Singleton
+    public static doorControllerManual instance;
 
-    //tracks door trying to open
+    // Door Variables
+    [Header("-- Door Variables --")]
     [SerializeField] GameObject activeDoor;
 
-    //Tell door where to move on open
+    [Header("-- Open Information --")]
     [SerializeField] float doorMoveX;
     [SerializeField] float doorMoveY;
     [SerializeField] float doorMoveZ;
     [SerializeField] float timeToOpen;
 
-    // Bool for boss fight state
-    bool isFightingBoss = false;
-
-
-    //add ui element to gameManager to tell player to click button to move on to next room when all enemies are killed in current room
-
-    //add functionality for button position click in and click out
-    //add button click sound 
-    //add door open sound
-
     Vector3 openPos;
     Vector3 closePos;
 
-    float a; //This will be used as our door's timer that links to real time
-
+    // Checks / Bools
     bool isOpen;
 
 
@@ -41,27 +31,22 @@ public class bossRoom : MonoBehaviour, IInteractable
     void Start()
     {
         instance = this;
-        closePos = activeDoor.transform.position;
+        closePos = activeDoor.transform.position; // Grab door position on load to set as close position
         openPos = new Vector3(closePos.x + doorMoveX, closePos.y + doorMoveY, closePos.z + doorMoveZ);
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Check if the door is open
+        // Check if the door has been opened
         if (isOpen) { StartCoroutine(openDoor()); }
         else { StartCoroutine(closeDoor()); }
     }
 
-    // Move on to next room
-    public void startNextRoom()
-    {
-        isOpen = true;
-    }
-    
     public void interact()
     {
-        gameManager.instance.openContinueMenu();
+        // Player pressed button, open door.
+        isOpen = true;
     }
 
     private void OnTriggerStay(Collider other)
@@ -75,8 +60,8 @@ public class bossRoom : MonoBehaviour, IInteractable
 
             if (Input.GetButton("Interact"))
             {
-                gameManager.instance.getInteractUI().SetActive(false);
                 interact();
+                gameManager.instance.getInteractUI().SetActive(false);
             }
         }
         else
@@ -90,42 +75,31 @@ public class bossRoom : MonoBehaviour, IInteractable
             gameManager.instance.getInteractUI().SetActive(false);
     }
 
-    // Tell door to open
+    // Door Methods to Open & Close
     public IEnumerator openDoor()
-    { 
-        //activeDoor.transform.position = openPos;
+    {
         if (activeDoor.transform.position != openPos)
         {
-            a = Time.deltaTime * timeToOpen;
-            activeDoor.transform.position = Vector3.Lerp(activeDoor.transform.position, openPos, a);
-            isFightingBoss = true;
+            float smoothOpen = Time.deltaTime * timeToOpen;
+            activeDoor.transform.position = Vector3.Lerp(activeDoor.transform.position, openPos, smoothOpen);
         }
         yield return null;
     }
 
-    // tell door to close
     public IEnumerator closeDoor()
-    { 
-        //activeDoor.transform.position = closePos;
+    {
         if (activeDoor.transform.position != closePos)
         {
-            a = Time.deltaTime * timeToOpen;
-            activeDoor.transform.position = Vector3.Lerp(activeDoor.transform.position, closePos, a);
+            float smoothOpen = Time.deltaTime * timeToOpen;
+            activeDoor.transform.position = Vector3.Lerp(activeDoor.transform.position, closePos, smoothOpen);
+            isOpen = false;
         }
         yield return null;
     }
 
-    // Getter & Setter
-    public bool getBossFightState()
-    {
-        return isFightingBoss;
-    }
-
-    public void setBossFightState(bool _state)
-    { isFightingBoss = _state; }
-    
+    // Getter
     public bool getDoorStatus() { return isOpen; }
 
+    // Setter
     public void setDoorStatus(bool _state) { isOpen = _state; }
-
 }
