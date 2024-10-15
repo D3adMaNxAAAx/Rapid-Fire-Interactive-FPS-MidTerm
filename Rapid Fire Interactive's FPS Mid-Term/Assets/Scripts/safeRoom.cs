@@ -43,13 +43,12 @@ public class safeRoom : MonoBehaviour, IInteractable
     void Update()
     {
         // Check if the door has been opened
-        if (isOpen && safeAccess) { StartCoroutine(openDoor()); }
+        if (isOpen) { StartCoroutine(openDoor()); }
         else { StartCoroutine(closeDoor()); }
     }
 
     public void interact()
     {
-        if(playerStats.Stats.getBadgesFound() >= 3)
         // Player pressed button, open door.
         isOpen = true;
     }
@@ -87,7 +86,7 @@ public class safeRoom : MonoBehaviour, IInteractable
         {
             float smoothOpen = Time.deltaTime * timeToOpen;
             activeDoor.transform.position = Vector3.Lerp(activeDoor.transform.position, openPos, smoothOpen);
-            isSafe = false;
+            isSafe = true;
         }
         yield return null;
     }
@@ -105,7 +104,7 @@ public class safeRoom : MonoBehaviour, IInteractable
             // (Could maybe be a feature? Some games do this.)
             if (isSafe) { gameManager.instance.setPlayerSpawnPos(safeSpawnPos); }
 
-            isSafe = true;
+            isSafe = false;
             isOpen = false;
         }
 
