@@ -159,7 +159,15 @@ public class playerJournal : MonoBehaviour
         } 
     }
 
+    public void AddDocumentToJournal(int docNumber)
+    {
+        GameObject docEntry = _menuItems.transform.Find($"Lost Documents/Doc {docNumber}").gameObject;
 
+        if (docEntry != null)
+        {
+            docEntry.SetActive(true);  
+        }
+    }
     void currentMoneyCounter()
     {
         currentMoney.text = gameManager.instance.getPlayerScript().getCoins().ToString("F0");

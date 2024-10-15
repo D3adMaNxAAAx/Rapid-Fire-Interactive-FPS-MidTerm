@@ -11,6 +11,8 @@ public class lostDocuments : MonoBehaviour , IInteractable
     [SerializeField] GameObject toDestroy;
 
     [SerializeField] Canvas pickedUpFeedback;
+    [SerializeField] Canvas documentUI;
+   
 
     bool isOpen;
     bool isPickedUp;
@@ -37,6 +39,9 @@ public class lostDocuments : MonoBehaviour , IInteractable
         isOpen = true;
 
         journalIcon.SetActive(true);
+       
+        playerJournal journal = FindObjectOfType<playerJournal>();
+        journal.AddDocumentToJournal(GetDocumentNumber());
     }
 
     private void OnTriggerStay(Collider other)
@@ -77,7 +82,14 @@ public class lostDocuments : MonoBehaviour , IInteractable
 
     }
 
-    
+    private int GetDocumentNumber()
+    {
+        string docName = gameObject.name.Replace("Lost Doc ", ""); 
+        int.TryParse(docName, out int docNumber);
+        return docNumber;
+    }
+
+
     //method to pick up document 
     //pickup doc in scene
     //open doc canvas
