@@ -76,6 +76,7 @@ public class enemyAI : MonoBehaviour , IDamage
             bossHP = HP;
 
         // Tell gameManager To update game goal that an enemy has been added to gameGoal
+        if (gameManager.instance != null)
         gameManager.instance.updateGameGoal(1);
 
         stoppingDistOrig = agent.stoppingDistance;

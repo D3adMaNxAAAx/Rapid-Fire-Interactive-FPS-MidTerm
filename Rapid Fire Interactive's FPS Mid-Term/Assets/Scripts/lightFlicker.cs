@@ -34,7 +34,8 @@ public class lightFlicker : MonoBehaviour
         if (lightSys == null)
         {
             light = this.gameObject.GetComponentInChildren<Light>();
-            lightIntensity = light.intensity;
+            if (light != null)
+                lightIntensity = light.intensity;
         }
         else if (lightSys != null)
         { 

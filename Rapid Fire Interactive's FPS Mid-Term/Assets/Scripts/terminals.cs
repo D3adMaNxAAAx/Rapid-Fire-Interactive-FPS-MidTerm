@@ -34,6 +34,7 @@ public class terminals : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (playerStats.Stats != null)
         if (playerStats.Stats.getPWRLevel() > 2 && !isOn)
         { terminalScreenLight.gameObject.SetActive(true);
             isOn = true;

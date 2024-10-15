@@ -12,7 +12,10 @@ public class buttonFunctions : MonoBehaviour {
     public void restart() {
         playerStats.Stats.Reset();
         gameManager.instance.getTimerTracker().SetActive(false);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Destroy(uiManager.manager.gameObject);
+        Destroy(playerMovement.player.gameObject);
+        Destroy(playerStats.Stats.gameObject);
+        SceneManager.LoadScene(1, LoadSceneMode.Single);
         gameManager.instance.stateUnpause();
     }
 
@@ -58,31 +61,39 @@ public class buttonFunctions : MonoBehaviour {
     }
 
     public void invertY() {
+        if (CameraMovement.state != null)
         CameraMovement.state.invert();
 
     }
 
     bool timerOn = true;
-    public void toggleTimer() {
-        timerOn = !timerOn;
-        gameManager.instance.getTimer().SetActive(timerOn);
+    public void toggleTimer()
+    {
+        if (gameManager.instance != null)
+        {
+            timerOn = !timerOn;
+            gameManager.instance.getTimer().SetActive(timerOn);
+        }
     }
 
     public void back() {
+        if (gameManager.instance != null)
         gameManager.instance.backButton();
     }
 
     public void toggleSprint()
     {
-        if (playerMovement.player.getStamina() >= (playerMovement.player.getStaminaOrig() / 2))
-        {
-            playerMovement.player.toggleSprintOn();
+        if (playerMovement.player != null)
+            if (playerMovement.player.getStamina() >= (playerMovement.player.getStaminaOrig() / 2))
+            {
+                playerMovement.player.toggleSprintOn();
 
-        }
+            }
 
     }
 
     public void toggleZoom() {
+        if (CameraMovement.state != null)
         CameraMovement.state.autoZoom();
     }
 

@@ -28,9 +28,14 @@ public class playerStats : MonoBehaviour {
     int collectablesFound; float percentFound3; int maxCollectables = 10; // if implemented
     // stats being tracked
 
-    void Start() {
-        DontDestroyOnLoad(gameObject); // this script will stay between scenes
-        Stats = this;
+    void Awake() {
+        if (Stats == null){
+            DontDestroyOnLoad(gameObject); // this script will stay between scenes
+            Stats = this;
+        }
+        else if(Stats != null){
+            Destroy(this.gameObject);
+        }
     }
 
     public void Reset() { // reseting all tracked stats to 0

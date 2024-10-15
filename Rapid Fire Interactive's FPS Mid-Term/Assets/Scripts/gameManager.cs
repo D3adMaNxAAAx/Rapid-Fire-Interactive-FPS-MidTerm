@@ -114,8 +114,7 @@ public class gameManager : MonoBehaviour {
 
     // Start is called before the first frame update, awake is before start
     void Awake() {
-
-        instance = this; // making instance of this class (singleton)
+        instance = this;// making instance of this class (singleton)
         timeScaleOrig = Time.timeScale; // Setting time scale on game awake to set scale 
         reticleColorOrig = playerReticle.color;
         reticleSizeOrig = playerReticle.rectTransform.sizeDelta;
@@ -182,6 +181,7 @@ public class gameManager : MonoBehaviour {
             if (menuActive != null)
                 menuActive.SetActive(getPauseStatus()); // Show active menu
             menuActive = null;
+            if (EventSystem.current != null)
             EventSystem.current.SetSelectedGameObject(null); // Null out any selected game objects too
         }
     }

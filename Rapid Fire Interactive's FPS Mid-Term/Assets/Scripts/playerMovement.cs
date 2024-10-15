@@ -120,11 +120,22 @@ public class playerMovement : MonoBehaviour, IDamage
     bool isCrouching = false;
     bool infiniteStam = false;
 
+    private void Awake()
+    {
+        if (player == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            player = this;
+        }
+        else if (player != null)
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
     // Start is called before the first frame update
     void Start() {
         /// don't destroy on load
-
-        player = this;
         HPOrig = HP;
         staminaOrig = stamina;
         startingLives = lives;
