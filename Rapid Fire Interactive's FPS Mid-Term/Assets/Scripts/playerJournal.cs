@@ -44,6 +44,8 @@ public class playerJournal : MonoBehaviour
     [SerializeField] TMP_Text playerLevelStat;
     [SerializeField] TMP_Text powerLevelCount;
 
+    [SerializeField] TMP_Text currentMoney;
+
     bool isOpen;
     bool docIsOpen;
     bool objOpen;
@@ -60,6 +62,7 @@ public class playerJournal : MonoBehaviour
     void Update()
     {
        toggleJournal();
+        currentMoneyCounter();
         if (_menuStats.gameObject.activeInHierarchy)
             updateJournalStats();
 
@@ -156,9 +159,14 @@ public class playerJournal : MonoBehaviour
         } 
     }
 
+
+    void currentMoneyCounter()
+    {
+        currentMoney.text = gameManager.instance.getPlayerScript().getCoins().ToString("F0");
+    }
     void updateJournalStats()
     {
-        Debug.Log("UPDATING");
+       
         healthStat.text = gameManager.instance.getPlayerScript().getHPOrig().ToString("F0");
         stamStat.text = gameManager.instance.getPlayerScript().getStaminaOrig().ToString("F0");
         speedStat.text = gameManager.instance.getPlayerScript().getSpeed().ToString("F0");
