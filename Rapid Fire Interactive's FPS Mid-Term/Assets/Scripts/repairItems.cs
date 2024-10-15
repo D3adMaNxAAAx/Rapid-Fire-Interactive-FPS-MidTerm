@@ -33,7 +33,7 @@ public class repairItems : MonoBehaviour, IInteractable
     {
         Destroy(repairObj);
         isPickedUp = true;
-        playerStats.Stats.objectFound();
+        
         pickedUpFeedback.enabled = true;
         isOpen = true;
         
@@ -69,6 +69,7 @@ public class repairItems : MonoBehaviour, IInteractable
     {
         yield return new WaitForSeconds(1.2f);
         gameManager.instance.setPowerItems(1);
+        playerStats.Stats.objectFound();
         pickedUpFeedback.enabled = false;
         isOpen = false;
         Destroy(toDestroy);

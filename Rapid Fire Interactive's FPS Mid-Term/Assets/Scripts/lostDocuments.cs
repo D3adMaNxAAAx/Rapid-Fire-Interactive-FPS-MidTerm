@@ -32,7 +32,7 @@ public class lostDocuments : MonoBehaviour , IInteractable
     {
         Destroy(lostDocument);
         isPickedUp = true;
-        playerStats.Stats.docFound();
+        
         pickedUpFeedback.enabled = true;
         isOpen = true;
 
@@ -71,6 +71,7 @@ public class lostDocuments : MonoBehaviour , IInteractable
         yield return new WaitForSeconds(1.2f);
         pickedUpFeedback.enabled = false;
         isOpen = false;
+        playerStats.Stats.docFound();
         Destroy(toDestroy);
 
 

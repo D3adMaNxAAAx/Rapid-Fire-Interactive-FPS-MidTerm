@@ -13,6 +13,7 @@ public class playerStats : MonoBehaviour {
     float damageDealt; 
     float damageTaken; 
     int maxLevel;
+    int pwrLvl;
     int totalXP; 
     int totalMoney;
     int deaths; 
@@ -21,6 +22,7 @@ public class playerStats : MonoBehaviour {
     int upgradesPurchased;
     int shopItemsPurchased;
     string completionTime = "N/A";
+    int idBadgesFound;
     int powerObjectsFound; float percentFound1; int maxPowerObjects = 9;
     int docsFound; float percentFound2; int maxDocs = 9;
     int collectablesFound; float percentFound3; int maxCollectables = 10; // if implemented
@@ -51,6 +53,8 @@ public class playerStats : MonoBehaviour {
 
     public void levelUp() {
         maxLevel++; }
+    public void pwrLevel() {
+        pwrLvl++; }
 
     public void gotXP(int xp) {
         totalXP += xp; }
@@ -80,6 +84,9 @@ public class playerStats : MonoBehaviour {
     public void objectFound() {
         powerObjectsFound++; }
 
+    public void idBadgeFound() {
+        idBadgesFound++; }
+
     public void docFound() {
         docsFound++; }
 
@@ -92,6 +99,7 @@ public class playerStats : MonoBehaviour {
     public float getDamageDealt() { return damageDealt; }
     public float getDamageTaken() { return damageTaken; }
     public int getLevel() { return maxLevel; }
+    public int getPWRLevel() { return pwrLvl; }
     public int getTotalXP() { return totalXP; }
     public int getTotalMoney() { return totalMoney; }
     public int getDeaths() { return deaths; }
@@ -102,6 +110,7 @@ public class playerStats : MonoBehaviour {
     public string getTimeTaken() { return completionTime; }
     public int getPowerObjects() { return powerObjectsFound; }
     public int getNotesFound() { return docsFound; }
+    public int getBadgesFound() { return idBadgesFound; }
     /*public float getCollectablesFound() {
         percentFound3 = collectablesFound / maxCollectables;
         return percentFound3; }*/
