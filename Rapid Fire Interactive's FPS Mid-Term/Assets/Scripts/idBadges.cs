@@ -33,7 +33,9 @@ public class idBadges : MonoBehaviour, IInteractable
         isPickedUp = true;
         pickedUpFeedback.enabled = true;
         isOpen = true;
-        journalIcon.SetActive(true);
+
+        if (journalIcon != null)
+            journalIcon.SetActive(true);
 
     }
 

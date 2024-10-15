@@ -11,12 +11,12 @@ public class lightFlicker : MonoBehaviour
     [Range(1, 100)] [SerializeField] float percentFlicker;
     [SerializeField] GameObject lightSys = null;
     [SerializeField] GameObject powerSys = null;
-    new Light light;
-    [SerializeField] new Light[] lights = null;
+    Light _light; // This was previously named light which was the same name of a variable it was inheriting from.
+    [SerializeField] Light[] lights = null;
     float randNum;
     float randFlickSpeed;
     float lightIntensity;
-    new float[] lightsIntensity;
+    float[] lightsIntensity;
     
     bool isFlickering = false;
     bool waitBool = false;
@@ -33,9 +33,9 @@ public class lightFlicker : MonoBehaviour
     {
         if (lightSys == null)
         {
-            light = this.gameObject.GetComponentInChildren<Light>();
-            if (light != null)
-                lightIntensity = light.intensity;
+            _light = this.gameObject.GetComponentInChildren<Light>();
+            if (_light != null)
+                lightIntensity = _light.intensity;
         }
         else if (lightSys != null)
         { 
@@ -87,9 +87,9 @@ public class lightFlicker : MonoBehaviour
         if (lightSys == null && doFlicker)
         {
             isFlickering = true;
-            light.intensity = 0f;
+            _light.intensity = 0f;
             yield return new WaitForSeconds(randFlickSpeed);
-            light.intensity = lightIntensity;
+            _light.intensity = lightIntensity;
             yield return new WaitForSeconds(0.5f);
             isFlickering = false;
         }

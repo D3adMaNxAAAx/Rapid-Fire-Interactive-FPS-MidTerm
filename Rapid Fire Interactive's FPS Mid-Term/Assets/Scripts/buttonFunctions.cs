@@ -10,11 +10,20 @@ public class buttonFunctions : MonoBehaviour {
     }
 
     public void restart() {
-        playerStats.Stats.Reset();
+        if (playerStats.Stats != null)
+            playerStats.Stats.Reset();
+        
         gameManager.instance.getTimerTracker().SetActive(false);
-        Destroy(uiManager.manager.gameObject);
-        Destroy(playerMovement.player.gameObject);
-        Destroy(playerStats.Stats.gameObject);
+        
+        if (uiManager.manager != null)
+            Destroy(uiManager.manager.gameObject);
+        
+        if (playerMovement.player != null)
+            Destroy(playerMovement.player.gameObject);
+        
+        if (playerStats.Stats != null)
+            Destroy(playerStats.Stats.gameObject);
+        
         SceneManager.LoadScene(1, LoadSceneMode.Single);
         gameManager.instance.stateUnpause();
     }

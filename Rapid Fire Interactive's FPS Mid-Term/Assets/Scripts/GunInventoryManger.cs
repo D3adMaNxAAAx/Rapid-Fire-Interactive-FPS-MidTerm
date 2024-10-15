@@ -10,7 +10,7 @@ public class GunInventoryManager : MonoBehaviour
     [SerializeField]  List<TextMeshProUGUI> hotkeyTexts;
     private void Update()
     {
-        if (gameManager.instance.getMenuLoadout().activeInHierarchy == false) ;
+        if (gameManager.instance.getMenuLoadout().activeInHierarchy == false)
         {
             UpdateGunInventoryUI();
             hotkeyelection();

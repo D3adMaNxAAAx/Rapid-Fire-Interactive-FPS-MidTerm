@@ -140,6 +140,9 @@ public class gameManager : MonoBehaviour {
                 scopeZoomOut();
                 if (menuActive == null)
                 {
+                    // Turn off the interact UI if paused
+                    if (getInteractUI().activeInHierarchy)
+                        getInteractUI().SetActive(false);
 
                     statePause();
                     menuActive = menuPause; // Set the pause menu as active menu

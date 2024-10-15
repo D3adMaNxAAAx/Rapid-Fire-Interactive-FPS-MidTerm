@@ -38,7 +38,8 @@ public class lostDocuments : MonoBehaviour , IInteractable
         pickedUpFeedback.enabled = true;
         isOpen = true;
 
-        journalIcon.SetActive(true);
+        if (journalIcon != null)
+            journalIcon.SetActive(true);
        
         playerJournal journal = FindObjectOfType<playerJournal>();
         journal.AddDocumentToJournal(GetDocumentNumber());
