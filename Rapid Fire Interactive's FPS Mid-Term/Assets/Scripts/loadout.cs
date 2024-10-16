@@ -86,6 +86,9 @@ public class loadout : MonoBehaviour {
 
     public void loadOut1 () {
 
+        playerMovement.player.removeFromGrenades();
+        playerMovement.player.removeFromHeals();
+
         playerMovement.player.getGunList().Clear();
 
         playerMovement.player.getGunStats(AR);
@@ -108,6 +111,8 @@ public class loadout : MonoBehaviour {
     }
 
     public void loadOut2() {
+        playerMovement.player.removeFromGrenades();
+        playerMovement.player.removeFromHeals();
 
         playerMovement.player.getGunList().Clear();
 

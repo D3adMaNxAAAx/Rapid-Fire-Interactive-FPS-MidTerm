@@ -297,6 +297,7 @@ GameObject:
   - component: {fileID: 643592928222739993}
   - component: {fileID: 7016827826599043653}
   - component: {fileID: 1897029869745271726}
+  - component: {fileID: 1050340557420550018}
   m_Layer: 0
   m_Name: Power System
   m_TagString: Untagged
@@ -411,6 +412,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3, y: 2, z: 5.4587784}
   m_Center: {x: -2, y: 1, z: 0}
+--- !u!64 &1050340557420550018
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6116088504397443159}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1285911531693381174, guid: 68f8e423c54fe6843beb658fb2ceae30, type: 3}
 --- !u!1 &6266029836333264383
 GameObject:
   m_ObjectHideFlags: 0

@@ -229,7 +229,8 @@ MonoBehaviour:
   elevCallButton: {fileID: 5759209716801960851}
   elevNextLevel: {fileID: 0}
   elevDoor: {fileID: 400518473541828490}
-  requiredPower: 0
+  moveToScene: 1
+  killObjective: 0
 --- !u!1 &6938234164471710808
 GameObject:
   m_ObjectHideFlags: 0
@@ -497,7 +498,8 @@ MonoBehaviour:
   elevCallButton: {fileID: 5759209716801960851}
   elevNextLevel: {fileID: 9103400867824485476}
   elevDoor: {fileID: 0}
-  requiredPower: 0
+  moveToScene: 1
+  killObjective: 0
 --- !u!1001 &934551996208667418
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -512,7 +514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5521846848861899153, guid: fa552ed3292cd5d4eb90300d5e3da586, type: 3}
       propertyPath: m_VersionIndex
-      value: 14
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6176396657931689521, guid: fa552ed3292cd5d4eb90300d5e3da586, type: 3}
       propertyPath: m_LocalScale.x
@@ -598,7 +600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5521846848861899153, guid: fa552ed3292cd5d4eb90300d5e3da586, type: 3}
       propertyPath: m_VersionIndex
-      value: 14
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6176396657931689521, guid: fa552ed3292cd5d4eb90300d5e3da586, type: 3}
       propertyPath: m_LocalScale.x
@@ -684,7 +686,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5521846848861899153, guid: fa552ed3292cd5d4eb90300d5e3da586, type: 3}
       propertyPath: m_VersionIndex
-      value: 14
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6176396657931689521, guid: fa552ed3292cd5d4eb90300d5e3da586, type: 3}
       propertyPath: m_LocalScale.x
@@ -774,7 +776,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5521846848861899153, guid: fa552ed3292cd5d4eb90300d5e3da586, type: 3}
       propertyPath: m_VersionIndex
-      value: 14
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6176396657931689521, guid: fa552ed3292cd5d4eb90300d5e3da586, type: 3}
       propertyPath: m_LocalScale.x
@@ -869,7 +871,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5521846848861899153, guid: fa552ed3292cd5d4eb90300d5e3da586, type: 3}
       propertyPath: m_VersionIndex
-      value: 14
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 6176396657931689521, guid: fa552ed3292cd5d4eb90300d5e3da586, type: 3}
       propertyPath: m_LocalScale.x

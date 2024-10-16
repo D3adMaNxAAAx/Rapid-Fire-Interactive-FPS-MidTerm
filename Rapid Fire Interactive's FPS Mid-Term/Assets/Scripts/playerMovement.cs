@@ -887,6 +887,15 @@ public class playerMovement : MonoBehaviour, IDamage
     public void addToGrenades(GrenadeStats newGrenade) {
         grenades.Add(newGrenade);
         gameManager.instance.getGrenadesUI().text = grenades.Count.ToString();
+
+    }public void removeFromHeals() {
+        heals.Clear();
+        gameManager.instance.getHealsUI().text = heals.Count.ToString();
+    }
+
+    public void removeFromGrenades() {
+        grenades.Clear();
+        gameManager.instance.getGrenadesUI().text = grenades.Count.ToString();
     }
 
     void selectGun() {
