@@ -24,8 +24,8 @@ public class lightFlicker : MonoBehaviour
 
     int pwrLvl;
     bool isOn;
-   
 
+    bool safeAccess;
 
 
 
@@ -173,8 +173,8 @@ public class lightFlicker : MonoBehaviour
                 flickerLight();
                 setFlicker(true);
 
-                //checkpoint door id badge scanner on
-                //setCheckpointAccess(true);
+                if(!safeRoom.instance.getSafeAccess())
+                safeRoom.instance.setSafeAccess(true);
 
             }
             if (pwrLvl == 2)
