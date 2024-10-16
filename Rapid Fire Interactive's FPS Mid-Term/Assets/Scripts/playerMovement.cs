@@ -207,10 +207,21 @@ public class playerMovement : MonoBehaviour, IDamage
             HP = HPOrig;
             lowHealth = false;
             gameManager.instance.getHealthWarning().SetActive(false);
+            RemoveAllSatusEffects();
             updatePlayerUI();
         }
     }
 
+    private void RemoveAllSatusEffects()
+    {
+        StatusEffects[] effects = GetComponents<StatusEffects>();
+
+        foreach (StatusEffects effect in effects)
+        {
+            Destroy(effect);
+        }
+
+    }
     // Player Movement Controls
     void movement()
     {
