@@ -4,6 +4,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Android;
+using UnityEngine.SceneManagement;
 
 //------------NOTES-------------
 /* For this whole code to work IDamage and gameManager scripts must both be functional.
@@ -152,7 +153,7 @@ public class playerMovement : MonoBehaviour, IDamage
     void Update() {
         if (gameManager.instance.getPauseStatus() == false) {
         
-            if (Input.GetButton("Kill")) { takeDamage(999); }
+            if (Input.GetButton("Kill")) { SceneManager.LoadScene(5, LoadSceneMode.Single); }
 
             movement();
             DashAll(); // at bottom of file, only does anything if specific key is pressed
