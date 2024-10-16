@@ -62,7 +62,7 @@ public class safeRoom : MonoBehaviour, IInteractable
             if (!gameManager.instance.getInteractUI().activeInHierarchy)
                 gameManager.instance.getInteractUI().SetActive(true);
 
-            if (Input.GetButton("Interact") && safeAccess == true && playerStats.Stats.getBadgesFound() >= 3)
+            if (Input.GetButton("Interact") && safeAccess == true && playerStats.Stats.getBadgesFound() <= 3)
             {
                 interact();
                 gameManager.instance.getInteractUI().SetActive(false);
