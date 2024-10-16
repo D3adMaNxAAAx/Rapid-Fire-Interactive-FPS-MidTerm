@@ -8,10 +8,11 @@ public class elevator : MonoBehaviour, IInteractable
     [SerializeField] GameObject elevCallButton;
     [SerializeField] GameObject elevNextLevel;
     [SerializeField] GameObject elevDoor;
-    [Range(0,20)][SerializeField] int requiredPower = 0;
+    //[Range(0,20)][SerializeField] int requiredPower = 0;
     [SerializeField] bool moveToScene;
     [SerializeField] bool killObjective;
-    
+
+    int requiredPower = 3;
     int sceneNum;
     int powerAmount;
     Vector3 doorPos;
@@ -44,7 +45,7 @@ public class elevator : MonoBehaviour, IInteractable
                 StartCoroutine(closeDoor());
             }
         }
-        setPower(playerStats.Stats.getPowerObjects());
+        setPower(playerStats.Stats.getPWRLevel());
     }
     public void setPower(int amount)
     {
@@ -62,14 +63,14 @@ public class elevator : MonoBehaviour, IInteractable
         {
             if (!killObjective)
             {
-                if (powerAmount >= requiredPower) // this needs to be set to whatever the amount of power we need
+                if (powerAmount >= requiredPower ) // this needs to be set to whatever the amount of power we need
                 {
                     isDoor = true;
                 }
-                else
-                {
-                    Debug.Log("Not Enough Power");
-                }
+                //else
+                //{
+                //    Debug.Log("Not Enough Power");
+                //}
             }
             else
             {
@@ -77,10 +78,10 @@ public class elevator : MonoBehaviour, IInteractable
                 {
                     isDoor = true;
                 }
-                else
-                {
-                    Debug.Log("Must remove all enemies to proceed");
-                }
+                //else
+                //{
+                //    Debug.Log("Must remove all enemies to proceed");
+                //}
             }
         }
     }
