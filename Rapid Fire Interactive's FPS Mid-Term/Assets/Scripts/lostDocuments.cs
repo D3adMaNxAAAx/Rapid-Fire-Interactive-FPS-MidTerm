@@ -3,19 +3,26 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class lostDocuments : MonoBehaviour , IInteractable
 {
     [SerializeField] GameObject lostDocument;
     [SerializeField] GameObject journalIcon;
-    [SerializeField] GameObject toDestroy;
+    
 
     [SerializeField] Canvas pickedUpFeedback;
-    [SerializeField] Canvas documentUI;
+    [SerializeField] Image docOpened;
+
+    [SerializeField] GameObject closeButton;
+
+    [SerializeField] Image activeDoc;
+    
    
 
     bool isOpen;
     bool isPickedUp;
+    bool docOpen;
     // Start is called before the first frame update
     void Awake()
     {
@@ -34,6 +41,7 @@ public class lostDocuments : MonoBehaviour , IInteractable
     {
         Destroy(lostDocument);
         isPickedUp = true;
+        this.gameObject.GetComponent<BoxCollider>().enabled = false;
         
         pickedUpFeedback.enabled = true;
         isOpen = true;
@@ -41,8 +49,7 @@ public class lostDocuments : MonoBehaviour , IInteractable
         if (journalIcon != null)
             journalIcon.SetActive(true);
        
-        playerJournal journal = FindObjectOfType<playerJournal>();
-        journal.AddDocumentToJournal(GetDocumentNumber());
+        
     }
 
     private void OnTriggerStay(Collider other)
@@ -78,16 +85,31 @@ public class lostDocuments : MonoBehaviour , IInteractable
         pickedUpFeedback.enabled = false;
         isOpen = false;
         playerStats.Stats.docFound();
-        Destroy(toDestroy);
+        
 
 
     }
 
-    private int GetDocumentNumber()
+    public void openDoc()
     {
-        string docName = gameObject.name.Replace("Lost Doc ", ""); 
-        int.TryParse(docName, out int docNumber);
-        return docNumber;
+        
+        if (journalIcon.gameObject.activeInHierarchy && activeDoc == null)
+        {
+            docOpened.gameObject.SetActive(true);
+            closeButton.gameObject.SetActive(true);
+            docOpen = true;
+            activeDoc = docOpened;
+        }
+        
+    }
+
+    public void closeDoc()
+    {
+        activeDoc.gameObject.SetActive(false); 
+        activeDoc = null;
+        docOpen = false;
+        closeButton.gameObject.SetActive(false);
+        
     }
 
 
