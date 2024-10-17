@@ -40,6 +40,10 @@ public class buttonFunctions : MonoBehaviour {
         gameManager.instance.openTipsMenu();
     }
 
+    public void Stats() {
+        gameManager.instance.openStatsMenu();
+    }
+
     public void ContorlsMenu() {
         gameManager.instance.openControlsMenu();
     }
@@ -54,7 +58,6 @@ public class buttonFunctions : MonoBehaviour {
 
     public void continueGame() {
         gameManager.instance.nextRoomContinue();
-
     }
 
     public void storeMenu() {

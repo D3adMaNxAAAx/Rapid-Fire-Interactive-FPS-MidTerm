@@ -19,8 +19,8 @@ public class playerStats : MonoBehaviour {
     int deaths; 
     int nearDeaths; 
     int ammoUsed; 
-    int upgradesPurchased;
-    int shopItemsPurchased;
+    int upgradesPurchased; // not shown
+    int shopItemsPurchased; // not shown
     string completionTime = "N/A";
     int idBadgesFound;
     int powerObjectsFound; float percentFound1; int maxPowerObjects = 9;
@@ -58,6 +58,7 @@ public class playerStats : MonoBehaviour {
 
     public void levelUp() {
         maxLevel++; }
+
     public void pwrLevel() {
         pwrLvl++; }
 
@@ -100,7 +101,7 @@ public class playerStats : MonoBehaviour {
 
     // getters (for displaying)
     public int getEnemiesKilled() { return enemiesKilled; }
-    // public void getHeadShots() { return headShots; }
+    public int getHeadShots() { return headShots; }
     public float getDamageDealt() { return damageDealt; }
     public float getDamageTaken() { return damageTaken; }
     public int getLevel() { return maxLevel; }
@@ -116,8 +117,8 @@ public class playerStats : MonoBehaviour {
     public int getPowerObjects() { return powerObjectsFound; }
     public int getNotesFound() { return docsFound; }
     public int getBadgesFound() { return idBadgesFound; }
-    /*public float getCollectablesFound() {
+    public float getCollectablesFound() {
         percentFound3 = collectablesFound / maxCollectables;
-        return percentFound3; }*/
+        return percentFound3; }
     // getters
 }

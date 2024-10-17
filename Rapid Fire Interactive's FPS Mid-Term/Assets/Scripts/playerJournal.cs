@@ -44,6 +44,13 @@ public class playerJournal : MonoBehaviour
     [SerializeField] TMP_Text playerLevelStat;
     [SerializeField] TMP_Text powerLevelCount;
 
+    // new stats being shown:
+    [SerializeField] TMP_Text enemiesKilled;
+    [SerializeField] TMP_Text damageDealt;
+    [SerializeField] TMP_Text damageReceived;
+    [SerializeField] TMP_Text secretsFound;
+    [SerializeField] TMP_Text headShots;
+
     [SerializeField] TMP_Text currentMoney;
 
     bool isOpen;
@@ -66,6 +73,34 @@ public class playerJournal : MonoBehaviour
         if (_menuStats.gameObject.activeInHierarchy)
             updateJournalStats();
 
+    }
+
+    void currentMoneyCounter() {
+        currentMoney.text = gameManager.instance.getPlayerScript().getCoins().ToString("F0");
+    }
+    void updateJournalStats() {
+
+        healthStat.text = gameManager.instance.getPlayerScript().getHPOrig().ToString("F0");
+        stamStat.text = gameManager.instance.getPlayerScript().getStaminaOrig().ToString("F0");
+        speedStat.text = gameManager.instance.getPlayerScript().getSpeed().ToString("F0");
+        dmgStat.text = gameManager.instance.getPlayerScript().getDamage().ToString("F0");
+        xpStat.text = gameManager.instance.getPlayerScript().getXP().ToString("F0");
+        repairToolHeld.text = playerStats.Stats.getPowerObjects().ToString("F0");
+        lostDocsHeld.text = playerStats.Stats.getNotesFound().ToString("F0");
+        idBadgesHeld.text = playerStats.Stats.getBadgesFound().ToString("F0");
+        playerDeathCount.text = playerStats.Stats.getDeaths().ToString("F0");
+        playerNearDeathCount.text = playerStats.Stats.getNearDeaths().ToString("F0");
+        playerShotsFiredCount.text = playerStats.Stats.getAmmoUsed().ToString("F0");
+        totalMoneyEarnedCount.text = playerStats.Stats.getTotalMoney().ToString("F0");
+        totalXPEarnedCount.text = playerStats.Stats.getTotalXP().ToString("F0");
+        playerLevelStat.text = playerStats.Stats.getLevel().ToString("F0");
+        powerLevelCount.text = playerStats.Stats.getPWRLevel().ToString("F0");
+
+        enemiesKilled.text = playerStats.Stats.getEnemiesKilled().ToString("F0");
+        damageDealt.text = playerStats.Stats.getDamageDealt().ToString("F0");
+        damageReceived.text = playerStats.Stats.getDamageTaken().ToString("F0");
+        secretsFound.text = playerStats.Stats.getCollectablesFound().ToString("F0");
+        headShots.text = playerStats.Stats.getHeadShots().ToString("F0");
     }
 
     void toggleJournal()
@@ -158,29 +193,4 @@ public class playerJournal : MonoBehaviour
     //        docIsOpen = true; 
     //    } 
     //}
-
-    
-    void currentMoneyCounter()
-    {
-        currentMoney.text = gameManager.instance.getPlayerScript().getCoins().ToString("F0");
-    }
-    void updateJournalStats()
-    {
-       
-        healthStat.text = gameManager.instance.getPlayerScript().getHPOrig().ToString("F0");
-        stamStat.text = gameManager.instance.getPlayerScript().getStaminaOrig().ToString("F0");
-        speedStat.text = gameManager.instance.getPlayerScript().getSpeed().ToString("F0");
-        dmgStat.text = gameManager.instance.getPlayerScript().getDamage().ToString("F0");
-        xpStat.text = gameManager.instance.getPlayerScript().getXP().ToString("F0");
-        repairToolHeld.text = playerStats.Stats.getPowerObjects().ToString("F0");
-        lostDocsHeld.text = playerStats.Stats.getNotesFound().ToString("F0");
-        idBadgesHeld.text = playerStats.Stats.getBadgesFound().ToString("F0");
-        playerDeathCount.text = playerStats.Stats.getDeaths().ToString("F0");
-        playerNearDeathCount.text = playerStats.Stats.getNearDeaths().ToString("F0");
-        playerShotsFiredCount.text = playerStats.Stats.getAmmoUsed().ToString("F0");
-        totalMoneyEarnedCount.text = playerStats.Stats.getTotalMoney().ToString("F0");
-        totalXPEarnedCount.text = playerStats.Stats.getTotalXP().ToString("F0");
-        playerLevelStat.text =  playerStats.Stats.getLevel().ToString("F0");
-        powerLevelCount.text = playerStats.Stats.getPWRLevel().ToString("F0");
-    }
 }

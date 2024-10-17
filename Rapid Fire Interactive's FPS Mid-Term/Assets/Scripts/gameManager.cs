@@ -26,6 +26,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuHowTo;
     [SerializeField] GameObject menuTips;
     [SerializeField] GameObject menuControls;
+    [SerializeField] GameObject menuStats;
 
     // First Selected Options (for use when selecting with arrow keys)
     [Header("-- First Selected Options --")]
@@ -42,6 +43,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject continueMenuFirst;
     [SerializeField] GameObject loseMenuFirst;
     [SerializeField] GameObject winMenuFirst;
+    [SerializeField] GameObject statsMenuFirst;
 
     // -- Player --
     [Header("-- Player UI --")]
@@ -236,7 +238,7 @@ public class gameManager : MonoBehaviour {
         completionTime.text = playerStats.Stats.getTimeTaken();
         enemiesKilled.text = playerStats.Stats.getEnemiesKilled().ToString();
         deaths.text = playerStats.Stats.getDeaths().ToString();
-        playerLevel.text = playerStats.Stats.getTotalXP().ToString(); /// actually total xp not max level because it goes down when you use it, should track total level too
+        playerLevel.text = playerStats.Stats.getLevel().ToString(); 
         EventSystem.current.SetSelectedGameObject(winMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
@@ -344,6 +346,13 @@ public class gameManager : MonoBehaviour {
         EventSystem.current.SetSelectedGameObject(continueMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
+    public void openStatsMenu() {
+        menuActive.SetActive(false);
+        menuActive = menuStats;
+        menuActive.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(statsMenuFirst); // Set eventsystem selected game object to the button assigned
+    }
+
     public void nextRoomContinue() {
 
         stateUnpause();
@@ -417,6 +426,11 @@ public class gameManager : MonoBehaviour {
         else if (menuActive == menuTips) {
             menuActive.SetActive(false);
             menuActive = menuHowTo;
+            menuActive.SetActive(true);
+        }
+        else if (menuActive == menuStats) {
+            menuActive.SetActive(false);
+            menuActive = menuWin;
             menuActive.SetActive(true);
         }
 
