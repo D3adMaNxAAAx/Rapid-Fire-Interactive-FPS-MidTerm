@@ -33,6 +33,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] int playerXPMax;
     [SerializeField] int lives;
     [SerializeField] int skillPoints;
+    [SerializeField] float criticalHealthThreshold = 0.1f;
     float damageUpgradeMod = 1;  // keep set = to 1, so damage can be upgraded (can just change damage var because it changes when swapping guns)
 
     // Player Default Weapon Mods
@@ -465,7 +466,33 @@ public class playerMovement : MonoBehaviour, IDamage
         if (HP > 0)
         {
             // Player takes damage
-            HP -= amount;
+            float criticalHealthThreshold = 0.1f;
+            bool isCriticalHealth = HP <= HPOrig * criticalHealthThreshold;
+
+            if (isCriticalHealth)
+            {
+                // Reduce damage by half when in critical health
+                amount *= 0.5f;
+
+                // If the player's HP is already 1 or the damage is still lethal, let the player die
+                if (HP == 1)
+                {
+                    HP -= amount; // Allow the player to die if they take further damage while at 1 HP
+                }
+                else if (amount >= HP)
+                {
+                    HP = 1;  // Leave the player at 1 HP temporarily
+                }
+                else
+                {
+                    HP -= amount;
+                }
+            }
+            else
+            {
+                
+                HP -= amount;
+            }
             playerStats.Stats.attacked(amount);
             stopHealing = true; // STOP HEALING IF DAMAGED
 
