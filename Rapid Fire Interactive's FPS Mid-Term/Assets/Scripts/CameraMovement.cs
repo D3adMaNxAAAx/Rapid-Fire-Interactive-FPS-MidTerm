@@ -7,37 +7,44 @@ using UnityEngine.UI;
 
 public class CameraMovement : MonoBehaviour
 {
-    public static CameraMovement state;
+    public static CameraMovement state; // singleton
+
     //Sensitivity settings 
     [SerializeField] private Slider sensitivitySlider;
     
-    [SerializeField] private int sens = 300;
-    int zoomSens;
+    [SerializeField] int sens = 300;
     int startingSens;
   
-    [SerializeField] private int lockVertMin, lockVertMax;
-    [SerializeField] private bool invertY;
+    [SerializeField] int lockVertMin, lockVertMax;
+    [SerializeField] bool invertY;
 
     //zoom settings
-    [SerializeField] private float normalFOV = 70f;
-    [SerializeField] private float aimingFOV = 40f;
-    [SerializeField] private float zoomSpeed = 60f;
-    [SerializeField] private bool snapZoom = false;
+    [SerializeField] float normalFOV = 70f;
+    [SerializeField] float aimingFOV = 40f;
+    [SerializeField] float zoomSpeed = 60f;
+    [SerializeField] bool snapZoom = false;
 
     //leaning settings
-    [SerializeField] private float leanAngle = 30f;
-    [SerializeField] private float leanSpeed = 10f;
-    [SerializeField] private float LeanOffSet = 0.8f;
+    [SerializeField] float leanAngle = 30f;
+    [SerializeField] float leanSpeed = 10f;
+    [SerializeField] float LeanOffSet = 0.8f;
     private float currentLeanAngle = 0f;
     private Vector3 OrigCameraPos;
 
    
  
 
-    private bool isAiming;
-    private Camera cam;
-    private float rotX;
+    bool isAiming;
+    bool sniperZoom = false;
+    Camera cam;
+    float rotX;
 
+    public Camera getCam() {
+        return cam;
+    }
+    public float getZoomFOV() {
+        return normalFOV;
+    }
     public int GetSens()
     {
         return sens;
@@ -105,7 +112,6 @@ public class CameraMovement : MonoBehaviour
         cam.fieldOfView = normalFOV;
         OrigCameraPos = transform.localPosition;
         startingSens = sens;
-        zoomSens = sens / 2;
 
         sensitivitySlider.value = sens;
         sensitivitySlider.onValueChanged.AddListener(AdjustSensitivity);
@@ -113,10 +119,13 @@ public class CameraMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-
-        sens = (int)sensitivitySlider.value;
+    void Update() {
+        if (!sniperZoom) {
+            sens = (int)sensitivitySlider.value; /// this should not be in update, it should only be called when the slider is changed
+        }
+        else {
+            sens = ((int)sensitivitySlider.value) / 2; /// this should not be in update, it should only be called when the slider is changed
+        }
 
         float mouseY = Input.GetAxis("Mouse Y") * sens * Time.deltaTime;
         float mouseX = Input.GetAxis("Mouse X") * sens * Time.deltaTime;
@@ -148,14 +157,16 @@ public class CameraMovement : MonoBehaviour
                     }
                 }
                 else { // sniper zoom
+                    sniperZoom = true;
                     cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, 20, 999);
-                    sens = zoomSens;
-                    gameManager.instance.scopeZoomIn();
+                    sens = (sens / 2);
+                    gameManager.instance.scopeZoomIn(); // handles showing scope, gun model, camera zoom
                 }
             }
         }
         else {
             isAiming = false;
+            sniperZoom = false;
             if (snapZoom) {
                 cam.fieldOfView = normalFOV; //snap back to normal Fov
             }
@@ -164,7 +175,7 @@ public class CameraMovement : MonoBehaviour
                 cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, normalFOV, zoomSpeed * Time.deltaTime);
             }
             sens = startingSens;
-            gameManager.instance.scopeZoomOut();
+            gameManager.instance.scopeZoomOut(); // handles showing scope, gun model, camera zoom
         }
     }
 

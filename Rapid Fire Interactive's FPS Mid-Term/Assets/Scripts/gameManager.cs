@@ -73,6 +73,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] Button respawnButton;
     [SerializeField] TMP_Text livesText;
     [SerializeField] GameObject interactUI; // this makes the timer run regardless if its hidden or not
+    [SerializeField] GameObject startFailMessage;
 
     // -- Game --
     [Header("-- Enemy UI --")]
@@ -166,8 +167,8 @@ public class gameManager : MonoBehaviour {
     }
 
     public void statePause() {
-        if (!isPaused)
-        {
+        if (!isPaused) {
+            scopeZoomOut();
             isPaused = !isPaused; // toggles bool
             Time.timeScale = 0; // pauses everything except UI
             Cursor.visible = true;
@@ -232,6 +233,7 @@ public class gameManager : MonoBehaviour {
     }
 
     void youWin() {
+        menuActive.SetActive(false);
         statePause();
         menuActive = menuWin; // set active menu to win menu
         menuActive.SetActive(true); // Show active menu
@@ -243,6 +245,7 @@ public class gameManager : MonoBehaviour {
     }
 
     public void youLose() {
+        menuActive.SetActive(false);
         statePause();
         if (getPlayerScript().getLives() <= 0)
         {
@@ -388,11 +391,16 @@ public class gameManager : MonoBehaviour {
         EventSystem.current.SetSelectedGameObject(storeMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
-    public void newGame()
-    {
-        stateUnpause();
-        timerTracker.SetActive(true);
-        displayUI(true);
+    public void newGame() {
+        if (playerMovement.player.getGunList().Count > 0) {
+            startFailMessage.SetActive(false);
+            stateUnpause();
+            timerTracker.SetActive(true);
+            displayUI(true);
+        }
+        else {
+            startFailMessage.SetActive(true);
+        }
     }
 
     public void backButton() {
@@ -451,6 +459,7 @@ public class gameManager : MonoBehaviour {
             menuActive = sniperScope;
             getPlayerScript().getGunModel().SetActive(false);
             getSniperScope().SetActive(true);
+            CameraMovement.state.getCam().fieldOfView = 20;
         }
     }
 
@@ -459,6 +468,7 @@ public class gameManager : MonoBehaviour {
             menuActive = null;
             getPlayerScript().getGunModel().SetActive(true);
             getSniperScope().SetActive(false);
+            CameraMovement.state.getCam().fieldOfView = CameraMovement.state.getZoomFOV();
         }
     }
 
