@@ -19,8 +19,8 @@ public class playerStats : MonoBehaviour {
     int deaths; 
     int nearDeaths; 
     int ammoUsed; 
-    int upgradesPurchased; // not shown
-    int shopItemsPurchased; // not shown
+    int upgradesPurchased; 
+    int shopItemsPurchased; 
     string completionTime = "N/A";
     int idBadgesFound;
     int powerObjectsFound; float percentFound1; int maxPowerObjects = 9;
