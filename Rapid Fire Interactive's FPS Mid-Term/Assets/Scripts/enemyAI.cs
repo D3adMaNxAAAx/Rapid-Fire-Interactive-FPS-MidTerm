@@ -20,7 +20,7 @@ public class enemyAI : MonoBehaviour , IDamage
     [SerializeField] GameObject ammoDrop; //Ammo Drop prefab
     [SerializeField] AudioClip hitClip;
     [SerializeField] float hitVolume = 1.0f;
-    [SerializeField] float soundCooldown = 2.0f; //cooldown on hit sound 
+    [SerializeField] float soundCooldown = 4.0f; //cooldown on hit sound 
 
     // -- Extra Checks --
     bool canPlaySound = true; // Tracks if the sound can be played
@@ -258,7 +258,12 @@ public class enemyAI : MonoBehaviour , IDamage
         playerStats.Stats.attack(_amount);
         isRoaming = false;
 
-        PlayHitSound();
+        if (canPlaySound)
+        {
+            PlayHitSound();
+            StartCoroutine(SoundCooldown());
+        }
+       
 
         if (type == enemyType.boss) {
             bossHP -= _amount;
