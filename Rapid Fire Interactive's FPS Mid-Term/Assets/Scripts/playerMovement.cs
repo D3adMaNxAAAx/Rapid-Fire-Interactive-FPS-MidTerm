@@ -81,6 +81,10 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] Transform playerCamera;
 
 
+    //HitBox
+    [SerializeField] float hitboxHeightMultiplier = 0.9f;
+    [SerializeField] float hitboxWidthMultiplier = 0.9f; 
+
     // -- Timer --
     [Header("-- Timers --")]
     [SerializeField] float dmgFlashTimer;
@@ -762,6 +766,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 controller.height = crouchHeight;  
                 controller.center = new Vector3(0, crouchHeight / 4, 0);
                 playerCamera.localPosition = new Vector3(0, crouchHeight * 0.75f, 0);
+
                 speed = speedOrig / 2f;  // Reduce speed while crouching
             }
             else
@@ -773,7 +778,13 @@ public class playerMovement : MonoBehaviour, IDamage
             }
         }
     }
-  
+    void AdjustHitbox(float baseHeight)
+    {
+        controller.height = baseHeight * hitboxHeightMultiplier;  // Adjust height
+        controller.radius = controller.radius * hitboxWidthMultiplier;  // Adjust width
+        controller.center = new Vector3(0, controller.height / 2, 0);  // Adjust center
+    }
+
     void throwGrenade()
     {
         if (grenades[0] == null)
