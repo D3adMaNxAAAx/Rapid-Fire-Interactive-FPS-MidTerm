@@ -10,7 +10,7 @@ public class CameraMovement : MonoBehaviour
     public static CameraMovement state; // singleton
 
     //Sensitivity settings 
-    [SerializeField] private Slider sensitivitySlider;
+    [SerializeField] Slider sensitivitySlider;
     
     [SerializeField] int sens = 300;
     int startingSens;
@@ -28,11 +28,8 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] float leanAngle = 30f;
     [SerializeField] float leanSpeed = 10f;
     [SerializeField] float LeanOffSet = 0.8f;
-    private float currentLeanAngle = 0f;
-    private Vector3 OrigCameraPos;
-
-   
- 
+    float currentLeanAngle = 0f;
+    Vector3 OrigCameraPos;
 
     bool isAiming;
     bool sniperZoom = false;
