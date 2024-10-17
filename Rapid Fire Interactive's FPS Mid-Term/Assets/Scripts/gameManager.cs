@@ -233,7 +233,9 @@ public class gameManager : MonoBehaviour {
     }
 
     void youWin() {
-        menuActive.SetActive(false);
+        if (menuActive != null) {
+            menuActive.SetActive(false);
+        }
         statePause();
         menuActive = menuWin; // set active menu to win menu
         menuActive.SetActive(true); // Show active menu
@@ -245,7 +247,9 @@ public class gameManager : MonoBehaviour {
     }
 
     public void youLose() {
-        menuActive.SetActive(false);
+        if (menuActive != null) {
+            menuActive.SetActive(false);
+        }
         statePause();
         if (getPlayerScript().getLives() <= 0)
         {
