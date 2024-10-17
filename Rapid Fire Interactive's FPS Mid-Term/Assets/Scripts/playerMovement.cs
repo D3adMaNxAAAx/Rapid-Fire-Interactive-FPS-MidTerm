@@ -428,6 +428,16 @@ public class playerMovement : MonoBehaviour, IDamage
             if (dmg != null)
             {
                 dmg.takeDamage((damage * damageBuffMult));
+               
+                if (guns[gunPos].isSniper || guns[gunPos].isShotgun)
+                {
+                    // Get the source position (where the shot is coming from)
+                    Vector3 sourcePosition = transform.position;
+
+                    // Apply knockback using the enemy's takeDamage method with the sourcePosition
+                    dmg.takeDamage(damage, sourcePosition);
+                }
+
                 if (guns[gunPos].hitEffects != null)
                     Instantiate(guns[gunPos].hitEffects, hit.point, Quaternion.identity);
             }
@@ -526,6 +536,20 @@ public class playerMovement : MonoBehaviour, IDamage
                 StartCoroutine(noDamageTime()); // TIMER FOR WHEN PLAYER CAN START TO HEAL
             }
         }
+    }
+    public void takeDamage(float amount, Vector3 sourcePosition)
+    {
+        takeDamage(amount);
+        ApplyKnockback(sourcePosition);
+
+    }
+    private void ApplyKnockback(Vector3 sourcePosition)
+    {
+        Vector3 knockbackDirection = (transform.position - sourcePosition).normalized;
+        float knockbackForce = 5f;  
+
+        
+        controller.Move(knockbackDirection * knockbackForce * Time.deltaTime);
     }
 
     IEnumerator damageAudioCooldown() { // so player doesnt go UH AH UH AH ER UMF UH AH every half second

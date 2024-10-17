@@ -21,6 +21,9 @@ public class enemyAI : MonoBehaviour , IDamage
     [SerializeField] AudioClip hitClip;
     [SerializeField] float hitVolume = 1.0f;
     [SerializeField] float soundCooldown = 4.0f; //cooldown on hit sound 
+    [SerializeField] float knockbackForce = 5f;  // Amount of force applied during knockback
+    [SerializeField] float knockbackDuration = 0.2f;  // Duration of the knockback effect
+
 
     // -- Extra Checks --
     bool canPlaySound = true; // Tracks if the sound can be played
@@ -322,7 +325,7 @@ public class enemyAI : MonoBehaviour , IDamage
         }
     }
 
-    public void takeDamage(float amount, StatusEffects effect)
+    public void takeDamage(float amount, Vector3 sourcePosition, StatusEffects effect = null)
     {
         takeDamage(amount); // Call the base takeDamage method
 
@@ -330,6 +333,25 @@ public class enemyAI : MonoBehaviour , IDamage
         {
             ApplyStatusEffect(effect);
         }
+        ApplyKnockback(sourcePosition);
+    }
+    public void takeDamage(float amount, Vector3 sourcePosition)
+    {
+        // Apply basic damage logic
+        takeDamage(amount);
+
+        // Apply knockback using the enemy's position
+        ApplyKnockback(sourcePosition);
+    }
+
+    private void ApplyKnockback(Vector3 sourcePosition)
+    {
+        
+        Vector3 knockbackDirection = (transform.position - sourcePosition).normalized;
+
+       
+        float knockbackForce = 5f;
+        agent.velocity += knockbackDirection * knockbackForce;
     }
 
     private void ApplyStatusEffect(StatusEffects effect)
