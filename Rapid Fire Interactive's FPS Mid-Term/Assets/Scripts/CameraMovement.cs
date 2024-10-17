@@ -39,7 +39,7 @@ public class CameraMovement : MonoBehaviour
     public Camera getCam() {
         return cam;
     }
-    public float getZoomFOV() {
+    public float getNormalFOV() {
         return normalFOV;
     }
     public int GetSens()

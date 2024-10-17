@@ -468,7 +468,7 @@ public class gameManager : MonoBehaviour {
             menuActive = null;
             getPlayerScript().getGunModel().SetActive(true);
             getSniperScope().SetActive(false);
-            CameraMovement.state.getCam().fieldOfView = CameraMovement.state.getZoomFOV();
+            CameraMovement.state.getCam().fieldOfView = CameraMovement.state.getNormalFOV();
         }
     }
 
