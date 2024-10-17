@@ -156,6 +156,7 @@ public class playerMovement : MonoBehaviour, IDamage
             if (Input.GetButton("Kill")) { SceneManager.LoadScene(5, LoadSceneMode.Single); }
 
             movement();
+            HandleCrouch();
             DashAll(); // at bottom of file, only does anything if specific key is pressed
 
             if (readyToHeal) {  // HEALING STARTS HERE, READY TO HEAL DETERMINATION STARTS IN TAKEDAMAGE()
@@ -182,7 +183,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 //if (Input.GetButton("Melee"))
                 //    StartCoroutine(PlayerMelee());
         }
-        HandleCrouch();
+      
 
         sprint();
         // Check if sprinting -- Drain stamina as the player runs
@@ -759,15 +760,15 @@ public class playerMovement : MonoBehaviour, IDamage
             if (isCrouching)
             {
                 controller.height = crouchHeight;  
-                controller.center = new Vector3(0, crouchHeight / 2, 0);  
-                playerCamera.localPosition = new Vector3(0, crouchHeight / 2, 0);  
-               speed = speedOrig / 2f;  // Reduce speed while crouching
+                controller.center = new Vector3(0, crouchHeight / 4, 0);
+                playerCamera.localPosition = new Vector3(0, crouchHeight * 0.75f, 0);
+                speed = speedOrig / 2f;  // Reduce speed while crouching
             }
             else
             {
                 controller.height = normalHeight;  
-                controller.center = new Vector3(0, normalHeight / 2, 0);  
-                playerCamera.localPosition = new Vector3(0, normalHeight / 2, 0);  // Reset camera position
+                controller.center = new Vector3(0, normalHeight / 6, 0);
+                playerCamera.localPosition = new Vector3(0, normalHeight * 0.75f, 0); ;  // Reset camera position
                speed = speedOrig;  // Restore original speed
             }
         }
