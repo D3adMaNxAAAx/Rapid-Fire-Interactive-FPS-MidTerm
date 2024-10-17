@@ -12629,7 +12629,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1300, y: 900}
+  m_SizeDelta: {x: 1300, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &788261740782139315
 CanvasRenderer:
@@ -21379,7 +21379,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.13777778}
   m_AnchorMax: {x: 0.5, y: 0.13777778}
-  m_AnchoredPosition: {x: 0, y: -1}
+  m_AnchoredPosition: {x: 0, y: -7.527771}
   m_SizeDelta: {x: 250, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6794295064169214554
@@ -39942,7 +39942,7 @@ MonoBehaviour:
     to click to zoom / focus your weapon \n\nUse left click to shoot your weapon,
     R to reload\n\nUse the scroll wheel or 1-5 keys to switch weapons\n\nHit F to
     interact with things (pickup item, open door)\n\nHit X to use a health potion,
-    G to throw a grenade\n\nHit Escape to pause\n\n"
+    G to throw a grenade\n\nHit Escape to pause, tab to open player journal\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -42026,6 +42026,7 @@ RectTransform:
   - {fileID: 4653852614539569371}
   - {fileID: 3029958833125829258}
   - {fileID: 7709517993221644345}
+  - {fileID: 8103849498232703613}
   - {fileID: 1791281255745102322}
   - {fileID: 3364534798784240744}
   - {fileID: 6307443541392245469}
@@ -42048,7 +42049,6 @@ RectTransform:
   - {fileID: 3956983384703730801}
   - {fileID: 3605579574903860833}
   - {fileID: 5021206059765916341}
-  - {fileID: 8103849498232703613}
   - {fileID: 203443476253827564}
   - {fileID: 8419397888229245541}
   - {fileID: 1239069429990476984}
@@ -49509,7 +49509,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -92, y: -34}
+  m_AnchoredPosition: {x: -92, y: -90.75}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3225400589036556015
