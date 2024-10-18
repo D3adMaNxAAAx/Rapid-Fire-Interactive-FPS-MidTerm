@@ -65,6 +65,7 @@ MonoBehaviour:
   playerXPMax: 10
   lives: 3
   skillPoints: 0
+  criticalHealthThreshold: 0.1
   guns: []
   gunModel: {fileID: 8347418103555859136}
   shotFlash: {fileID: 8003970111949719129}
@@ -74,6 +75,7 @@ MonoBehaviour:
   damage: 1
   fireRate: 0.4
   bulletDistance: 25
+  headShotMult: 1.5
   grenades: []
   grenade: {fileID: 1666907183475564130, guid: cdf11c09e9ecf7446bab81d249de101c, type: 3}
   grenadeStats: {fileID: 11400000, guid: 97ba14f077da2264bb4743fc5222a169, type: 2}
@@ -89,6 +91,8 @@ MonoBehaviour:
   normalHeight: 2
   crouchHeight: 1
   playerCamera: {fileID: 903615749931522099}
+  hitboxHeightMultiplier: 0.9
+  hitboxWidthMultiplier: 0.9
   dmgFlashTimer: 0.05
   ammoWarningTimer: 0.4
   healSound: {fileID: 8300000, guid: cfce0cea076109f478783201b2a9f57f, type: 3}

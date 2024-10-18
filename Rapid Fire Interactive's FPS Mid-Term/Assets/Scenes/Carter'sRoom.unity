@@ -719,6 +719,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Demon Golem
       objectReference: {fileID: 0}
+    - target: {fileID: 7025534213581070707, guid: f3a6f97ed28f3874d833f622ae67f27c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8344763055088587771, guid: f3a6f97ed28f3874d833f622ae67f27c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 70.1
@@ -879,7 +883,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7527460772358525862, guid: 0d7b402dcd3308e41aaeb7f7afba5a54, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1207,6 +1211,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy - Basic
       objectReference: {fileID: 0}
+    - target: {fileID: 7527460772358525862, guid: 76de3a747ac5a56468c76b426dbfb6dc, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1226,7 +1234,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4718135934885928384, guid: 799c5e5ac96999c45885e96ba6beb010, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6441444880123951943, guid: 799c5e5ac96999c45885e96ba6beb010, type: 3}
       propertyPath: m_LocalPosition.x
