@@ -203,10 +203,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy-Ranged Heavy
       objectReference: {fileID: 0}
-    - target: {fileID: 1976139769632855763, guid: c616396378266c74fbd41360a5ee4d6b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2855513741353969487, guid: c616396378266c74fbd41360a5ee4d6b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 53.786644
@@ -719,10 +715,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Demon Golem
       objectReference: {fileID: 0}
-    - target: {fileID: 7025534213581070707, guid: f3a6f97ed28f3874d833f622ae67f27c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8344763055088587771, guid: f3a6f97ed28f3874d833f622ae67f27c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 70.1
@@ -779,10 +771,6 @@ PrefabInstance:
     - target: {fileID: 1976139769632855763, guid: 964fbb38242d59545ba298a00d80a94d, type: 3}
       propertyPath: m_Name
       value: Enemy-Heavy
-      objectReference: {fileID: 0}
-    - target: {fileID: 1976139769632855763, guid: 964fbb38242d59545ba298a00d80a94d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2855513741353969487, guid: 964fbb38242d59545ba298a00d80a94d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -879,11 +867,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7527460772358525862, guid: 0d7b402dcd3308e41aaeb7f7afba5a54, type: 3}
       propertyPath: m_Name
-      value: Enemy - Basic Melee
-      objectReference: {fileID: 0}
-    - target: {fileID: 7527460772358525862, guid: 0d7b402dcd3308e41aaeb7f7afba5a54, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      value: Enemy - Medium Melee
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -906,6 +890,10 @@ PrefabInstance:
     - target: {fileID: 745863159438391413, guid: b0ba9c3fe5b9ce341ba39bd02d0658d4, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 1698244836736258489, guid: b0ba9c3fe5b9ce341ba39bd02d0658d4, type: 3}
+      propertyPath: headShotMult
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 4888439365048006944, guid: b0ba9c3fe5b9ce341ba39bd02d0658d4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1080,10 +1068,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy - Light
       objectReference: {fileID: 0}
-    - target: {fileID: 5246833290263862146, guid: 8180a3a029f993d48ab2c0d55a82a939, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1209,11 +1193,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7527460772358525862, guid: 76de3a747ac5a56468c76b426dbfb6dc, type: 3}
       propertyPath: m_Name
-      value: Enemy - Basic
-      objectReference: {fileID: 0}
-    - target: {fileID: 7527460772358525862, guid: 76de3a747ac5a56468c76b426dbfb6dc, type: 3}
-      propertyPath: m_IsActive
-      value: 1
+      value: Enemy - Medium
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1231,10 +1211,6 @@ PrefabInstance:
     - target: {fileID: 4718135934885928384, guid: 799c5e5ac96999c45885e96ba6beb010, type: 3}
       propertyPath: m_Name
       value: Enemy - Challenge
-      objectReference: {fileID: 0}
-    - target: {fileID: 4718135934885928384, guid: 799c5e5ac96999c45885e96ba6beb010, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6441444880123951943, guid: 799c5e5ac96999c45885e96ba6beb010, type: 3}
       propertyPath: m_LocalPosition.x

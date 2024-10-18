@@ -431,13 +431,15 @@ GameObject:
   - component: {fileID: 3136025754483489140}
   - component: {fileID: 2478449606372114272}
   - component: {fileID: 2141348410770550419}
+  - component: {fileID: 4960881703019099573}
+  - component: {fileID: 8837416346018604893}
   m_Layer: 7
   m_Name: Enemy-Heavy
   m_TagString: Heavy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2855513741353969487
 Transform:
   m_ObjectHideFlags: 0
@@ -480,6 +482,10 @@ MonoBehaviour:
   hitClip: {fileID: 8300000, guid: a4366158371c9514cae30cfff454dcb2, type: 3}
   hitVolume: 1
   soundCooldown: 4
+  knockbackForce: 5
+  knockbackDuration: 0.2
+  miniBossheadCollider: {fileID: 0}
+  enemyHeadCollider: {fileID: 8837416346018604893}
   viewAngle: 90
   roamDist: 10
   roamSpeed: 3
@@ -556,9 +562,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 2
+  m_Height: 1.7
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!135 &2141348410770550419
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -580,6 +586,52 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &4960881703019099573
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976139769632855763}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Height: 0.8
+  m_Direction: 0
+  m_Center: {x: 0, y: 1.6, z: 1}
+--- !u!136 &8837416346018604893
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976139769632855763}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.23
+  m_Height: 0.25
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.65, z: 0.35}
 --- !u!1 &2049913419548452060
 GameObject:
   m_ObjectHideFlags: 0
