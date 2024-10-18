@@ -134,24 +134,23 @@ public class lightFlicker : MonoBehaviour
         if (other.CompareTag("Player"))
         {
 
-
-            if (gameManager.instance.getPowerItems() == 3)
+            if (gameManager.instance.getPowerItems() >= 9)
             {
-                pwrLvl = 1;
-                isOn = true;
-                if (playerStats.Stats.getPWRLevel() < 1)
+                pwrLvl = 3;
+                if (playerStats.Stats.getPWRLevel() == 2)
                     playerStats.Stats.pwrLevel();
             }
-            if (gameManager.instance.getPowerItems() == 6)
+            else if (gameManager.instance.getPowerItems() >= 6)
             {
                 pwrLvl = 2;
                 if (playerStats.Stats.getPWRLevel() == 1)
                     playerStats.Stats.pwrLevel();
             }
-            if (gameManager.instance.getPowerItems() == 9)
+            else if (gameManager.instance.getPowerItems() >= 3)
             {
-                pwrLvl = 3;
-                if (playerStats.Stats.getPWRLevel() == 2)
+                pwrLvl = 1;
+                isOn = true;
+                if (playerStats.Stats.getPWRLevel() < 1)
                     playerStats.Stats.pwrLevel();
             }
             else
