@@ -129,6 +129,7 @@ public class playerMovement : MonoBehaviour, IDamage
     bool damageAudioReady = true;
     bool isCrouching = false;
     bool infiniteStam = false;
+    bool isCriticalHealth;
 
     private void Awake()
     {
@@ -482,17 +483,18 @@ public class playerMovement : MonoBehaviour, IDamage
     }
 
     // Player Damage Controller
-    public void takeDamage(float amount)
-    {
-        // Further prevention from additional damage that may trigger things like lives lost multiple times or negative HP values.
-        if (HP > 0)
-        {
+    public void takeDamage(float amount) {
+        if (HP > 0) { // Further prevention from additional damage that may trigger things like lives lost multiple times or negative HP values.
             // Player takes damage
-            float criticalHealthThreshold = 0.1f;
-            bool isCriticalHealth = HP <= HPOrig * criticalHealthThreshold;
-
-            if (isCriticalHealth)
-            {
+            criticalHealthThreshold = 0.1f;
+            isCriticalHealth = HP <= HPOrig * criticalHealthThreshold;
+            if (shieldOn) {
+                shieldHP -= amount;
+                if (shieldHP <= 0) {
+                    setShieldOff();
+                }
+            }
+            else if (isCriticalHealth) {
                 // Reduce damage by half when in critical health
                 amount *= 0.5f;
 
@@ -510,8 +512,7 @@ public class playerMovement : MonoBehaviour, IDamage
                     HP -= amount;
                 }
             }
-            else
-            {
+            else {
                 
                 HP -= amount;
             }
@@ -725,17 +726,17 @@ public class playerMovement : MonoBehaviour, IDamage
         isRecovering = false;
     }
 
-    // Update information on the UI
-    public void updatePlayerUI() 
-    {
+    public void updatePlayerUI() { // Update information on the UI
         // Health Info
         gameManager.instance.getHPBar().fillAmount = HP / HPOrig;
         gameManager.instance.getHPText().text = HP.ToString("F0");
-
+        if (shieldOn) {
+            gameManager.instance.getShieldText().text = shieldHP.ToString("F0");
+            gameManager.instance.getShieldBarImage().fillAmount = shieldHP / 25;
+        }
         // Stamina Info
         gameManager.instance.getStamBar().fillAmount = (float)stamina / staminaOrig;
         gameManager.instance.getStamText().text = stamina.ToString("F0");
-
         // Attack Info
         if (guns.Count > 0)
         {
@@ -743,7 +744,6 @@ public class playerMovement : MonoBehaviour, IDamage
             gameManager.instance.getAmmoText().text = getAmmo().ToString("F0") + " / " + getAmmoMag().ToString("F0");
             gameManager.instance.getAmmoReserveText().text = getAmmoMax().ToString("F0");
         }
-
         // XP Info
         gameManager.instance.getXPBar().fillAmount = (float)playerXP / playerXPMax;
         gameManager.instance.getXPText().text = playerXP.ToString("F0") + " / " + playerXPMax.ToString("F0");

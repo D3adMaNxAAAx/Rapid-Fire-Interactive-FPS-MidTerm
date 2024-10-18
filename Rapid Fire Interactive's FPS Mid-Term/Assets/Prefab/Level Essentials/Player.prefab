@@ -59,7 +59,7 @@ MonoBehaviour:
     m_Bits: 8
   playerShot: {fileID: 1026084026005163015, guid: 5a5514817e4d047408b83980d6775a8e, type: 3}
   HP: 100
-  speed: 8
+  speed: 10
   stamina: 50
   coins: 0
   playerXPMax: 10
@@ -81,7 +81,7 @@ MonoBehaviour:
   grenadeStats: {fileID: 11400000, guid: 97ba14f077da2264bb4743fc5222a169, type: 2}
   heals: []
   healCoolDown: 3
-  speedMod: 2.5
+  speedMod: 2
   maxJumps: 1
   jumpSpeed: 12
   gravity: 32
@@ -555,7 +555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f316b3b7dfc229e41be14f5cd545b6c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivitySlider: {fileID: 0}
+  sensitivitySlider: {fileID: 7329277867592090631, guid: 3141261dcdf34f04187177af5ee1437f, type: 3}
   sens: 300
   lockVertMin: -90
   lockVertMax: 90
@@ -650,8 +650,8 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.33
-  m_Range: 13.62
+  m_Intensity: 1.5
+  m_Range: 17.5
   m_SpotAngle: 55
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
