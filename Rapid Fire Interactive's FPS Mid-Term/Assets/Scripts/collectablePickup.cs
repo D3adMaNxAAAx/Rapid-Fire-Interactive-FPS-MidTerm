@@ -28,7 +28,7 @@ public class NewBehaviourScript : MonoBehaviour {
                 gameManager.instance.getPlayerScript().callBuff(1, buffIcon); // 10 seconds of 1.5x damage
             }
             else if (type == objectType.shieldBuff) {
-                gameManager.instance.getPlayerScript().callBuff(3, buffIcon); /// impliment
+                gameManager.instance.getPlayerScript().callBuff(3, buffIcon); // 10 seconds of 25 extra health (shield)
             }
             else if (type == objectType.staminaBuff) {
                 gameManager.instance.getPlayerScript().callBuff(4, buffIcon); // 10 seconds of 1.5x damage

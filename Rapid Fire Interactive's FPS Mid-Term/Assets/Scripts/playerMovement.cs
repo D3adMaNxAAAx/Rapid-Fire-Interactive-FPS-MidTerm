@@ -112,6 +112,9 @@ public class playerMovement : MonoBehaviour, IDamage
     int speedOrig;  // Original Speed
     int startingLives;
 
+    bool shieldOn = false;
+    float shieldHP = 25;
+
     // Checks
     bool isSprinting;
     bool isShooting;
@@ -652,10 +655,10 @@ public class playerMovement : MonoBehaviour, IDamage
             gameManager.instance.getBuffIcon().sprite = icon;
             StartCoroutine(healBuff());
         }
-        else if (buff == 3) { // shield
+        else if (buff == 3) {
             gameManager.instance.getBuffUI().SetActive(true);
             gameManager.instance.getBuffIcon().sprite = icon;
-
+            StartCoroutine(shieldBuff());
         }
         else if (buff == 4) {
             gameManager.instance.getBuffUI().SetActive(true);
@@ -678,6 +681,20 @@ public class playerMovement : MonoBehaviour, IDamage
             yield return new WaitForSeconds(1);
         }
         gameManager.instance.getBuffUI().SetActive(false);
+    }
+
+    IEnumerator shieldBuff() {
+        gameManager.instance.getShieldBar().SetActive(true);
+        shieldOn = true;
+        yield return new WaitForSeconds(10);
+        setShieldOff();
+    }
+
+    public void setShieldOff() {
+        shieldOn = false;
+        shieldHP = 50;
+        gameManager.instance.getBuffUI().SetActive(false);
+        gameManager.instance.getShieldBar().SetActive(false);
     }
 
     IEnumerator staminaBuff() {

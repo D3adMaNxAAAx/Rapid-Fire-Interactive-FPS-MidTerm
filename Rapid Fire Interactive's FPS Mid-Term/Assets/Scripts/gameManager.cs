@@ -49,6 +49,9 @@ public class gameManager : MonoBehaviour {
     [Header("-- Player UI --")]
     [SerializeField] Image HPBar;
     [SerializeField] TMP_Text HPText;
+    [SerializeField] Image shieldBarImage;
+    [SerializeField] GameObject shieldBar;
+    [SerializeField] TMP_Text ShieldHPText;
     [SerializeField] Image stamBar;
     [SerializeField] TMP_Text stamText;
     [SerializeField] Image XPBar;
@@ -247,6 +250,7 @@ public class gameManager : MonoBehaviour {
     }
 
     public void youLose() {
+        playerMovement.player.setShieldOff();
         if (menuActive != null) {
             menuActive.SetActive(false);
         }
@@ -575,6 +579,10 @@ public class gameManager : MonoBehaviour {
     public void setHPBar(Image newHPBar) { HPBar = newHPBar; }
 
     public Image getHPBar() { return HPBar; }
+
+    public GameObject getShieldBar() { return shieldBar; }
+    public Image getShieldBarImage() { return shieldBarImage; }
+    public TMP_Text getShieldText() { return ShieldHPText; }
 
     public void setXPBar(Image newXPBar) { XPBar = newXPBar; }
 
