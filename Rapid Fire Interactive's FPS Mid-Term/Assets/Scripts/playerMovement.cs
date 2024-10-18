@@ -53,6 +53,7 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] float damage;
     [SerializeField] float fireRate;
     [SerializeField] float bulletDistance;
+    [Range(0f,3f)][SerializeField] float headShotMult;
     //[SerializeField] int ammo;
     //[SerializeField] float bulletSpeed; // Is here if we wanna change to use bullets
     [SerializeField] List<GrenadeStats> grenades;
@@ -431,7 +432,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 { dmg.takeDamage((damage * damageBuffMult)); }
 
                 else 
-                { dmg.takeDamage((damage * damageBuffMult) * 1.25f); }
+                { dmg.takeDamage((damage * damageBuffMult) * headShotMult); }
                
                 if (guns[gunPos].isSniper || guns[gunPos].isShotgun)
                 {
