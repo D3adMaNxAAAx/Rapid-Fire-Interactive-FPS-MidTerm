@@ -1030,7 +1030,7 @@ public class playerMovement : MonoBehaviour, IDamage
             laserSight.enabled = false;
         }
         updatePlayerUI();
-
+        gunFlashColor.gunFlash.changeColor((int)guns[gunPos].color);
         gunModel.GetComponent<MeshFilter>().sharedMesh = getCurGun().gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = getCurGun().gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
@@ -1060,7 +1060,7 @@ public class playerMovement : MonoBehaviour, IDamage
         else {
             laserSight.enabled = false;
         }
-
+        gunFlashColor.gunFlash.changeColor((int)_gun.color);
         gunModel.GetComponent<MeshFilter>().sharedMesh = _gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = _gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
 

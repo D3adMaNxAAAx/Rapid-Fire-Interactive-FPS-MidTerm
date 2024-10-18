@@ -21,6 +21,8 @@ public class gunStats : ScriptableObject
     public ParticleSystem hitEffects;
     public AudioClip[] shootSound;
     public float audioVolume;
+    public gunColor color;
+    public enum gunColor { red = 1, blue = 2, green = 3, orange = 4 }
 
     // -- Gun Image --
     public Sprite gunIcon;
