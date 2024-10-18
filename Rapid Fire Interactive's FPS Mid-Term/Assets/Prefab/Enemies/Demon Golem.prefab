@@ -697,13 +697,14 @@ GameObject:
   - component: {fileID: 345277249890942319}
   - component: {fileID: 7259665180067259760}
   - component: {fileID: 4607750887814964690}
+  - component: {fileID: 844604575250289273}
   m_Layer: 0
   m_Name: Demon Golem
   m_TagString: Demon Golem
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8344763055088587771
 Transform:
   m_ObjectHideFlags: 0
@@ -743,6 +744,11 @@ MonoBehaviour:
   ammoDrop: {fileID: 6904497920734926788, guid: 4237d6ffeea48944596bf777dda61238, type: 3}
   hitClip: {fileID: 8300000, guid: bdb798b20d5ac2f438f3a562f4150019, type: 3}
   hitVolume: 1
+  soundCooldown: 4
+  knockbackForce: 5
+  knockbackDuration: 0.2
+  miniBossheadCollider: {fileID: 844604575250289273}
+  enemyHeadCollider: {fileID: 0}
   viewAngle: 90
   roamDist: 1
   roamSpeed: 0
@@ -839,8 +845,29 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 4.8, z: 3}
-  m_Center: {x: 0, y: 2.5, z: -0.4}
+  m_Size: {x: 4, y: 3, z: 3}
+  m_Center: {x: 0, y: 1.5, z: -0.4}
+--- !u!65 &844604575250289273
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7025534213581070707}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.5, y: 1.75, z: 2}
+  m_Center: {x: 0, y: 4, z: 1}
 --- !u!1 &7364546329209249585
 GameObject:
   m_ObjectHideFlags: 0

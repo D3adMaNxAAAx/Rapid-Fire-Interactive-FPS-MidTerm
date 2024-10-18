@@ -24,6 +24,11 @@ public class enemyAI : MonoBehaviour , IDamage
     [SerializeField] float knockbackForce = 5f;  // Amount of force applied during knockback
     [SerializeField] float knockbackDuration = 0.2f;  // Duration of the knockback effect
 
+    [SerializeField] BoxCollider miniBossheadCollider = null;
+    [SerializeField] CapsuleCollider enemyHeadCollider = null;
+
+    static BoxCollider miniBossheadColl;
+    static CapsuleCollider enemyHeadColl;
 
     // -- Extra Checks --
     bool canPlaySound = true; // Tracks if the sound can be played
@@ -86,6 +91,9 @@ public class enemyAI : MonoBehaviour , IDamage
 
         stoppingDistOrig = agent.stoppingDistance;
         startingPos = transform.position;
+
+        miniBossheadColl = miniBossheadCollider;
+        enemyHeadColl = enemyHeadCollider;
         
     }
 
@@ -257,6 +265,8 @@ public class enemyAI : MonoBehaviour , IDamage
     public void takeDamage(float _amount)
     {    
         // Deduct HP on damage recieved
+
+
         HP -= _amount;
         playerStats.Stats.attack(_amount);
         isRoaming = false;
@@ -407,4 +417,11 @@ public class enemyAI : MonoBehaviour , IDamage
     // Setter for Enemy HP from other classes
     public void setEnemyHP(int _hp)
     { HP = _hp; }
+
+
+   static public BoxCollider getMiniBossHeadCollider()
+    { return miniBossheadColl; }
+    static public CapsuleCollider getEnemyHeadCollider()
+    { return enemyHeadColl; }
+  
 }

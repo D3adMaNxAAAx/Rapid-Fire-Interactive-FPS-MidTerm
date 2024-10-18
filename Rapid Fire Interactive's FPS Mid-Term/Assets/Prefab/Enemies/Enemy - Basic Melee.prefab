@@ -2160,6 +2160,7 @@ GameObject:
   - component: {fileID: 2796280326670444001}
   - component: {fileID: 2530623224691265501}
   - component: {fileID: 1520275731239686166}
+  - component: {fileID: 4621684625058716344}
   m_Layer: 0
   m_Name: Enemy - Basic Melee
   m_TagString: Basic Melee
@@ -2206,6 +2207,13 @@ MonoBehaviour:
   shootPos: {fileID: 3707495947698878448}
   ammoSpawn: {fileID: 1444203283190422857}
   ammoDrop: {fileID: 6904497920734926788, guid: 4237d6ffeea48944596bf777dda61238, type: 3}
+  hitClip: {fileID: 0}
+  hitVolume: 1
+  soundCooldown: 4
+  knockbackForce: 5
+  knockbackDuration: 0.2
+  miniBossheadCollider: {fileID: 0}
+  enemyHeadCollider: {fileID: 4621684625058716344}
   viewAngle: 90
   roamDist: 4
   roamSpeed: 2
@@ -2282,9 +2290,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 1.75
+  m_Height: 1.45
   m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!135 &1520275731239686166
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2306,6 +2314,29 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 25
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &4621684625058716344
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527460772358525862}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Height: 0.25
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.55, z: 0.27}
 --- !u!1 &7555584135077691479
 GameObject:
   m_ObjectHideFlags: 0

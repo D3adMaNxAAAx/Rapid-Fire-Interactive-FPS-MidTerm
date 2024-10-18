@@ -427,7 +427,11 @@ public class playerMovement : MonoBehaviour, IDamage
 
             if (dmg != null)
             {
-                dmg.takeDamage((damage * damageBuffMult));
+                if (hit.collider != enemyAI.getMiniBossHeadCollider() && hit.collider != enemyAI.getEnemyHeadCollider())
+                { dmg.takeDamage((damage * damageBuffMult)); }
+
+                else 
+                { dmg.takeDamage((damage * damageBuffMult) * 1.25f); }
                
                 if (guns[gunPos].isSniper || guns[gunPos].isShotgun)
                 {

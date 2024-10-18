@@ -2086,13 +2086,14 @@ GameObject:
   - component: {fileID: 2796280326670444001}
   - component: {fileID: 2530623224691265501}
   - component: {fileID: 1520275731239686166}
+  - component: {fileID: 8848041171568096009}
   m_Layer: 0
   m_Name: Enemy - Basic
   m_TagString: Basic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3731423939730648109
 Transform:
   m_ObjectHideFlags: 0
@@ -2135,6 +2136,10 @@ MonoBehaviour:
   hitClip: {fileID: 8300000, guid: 0547b940dba4d964e9e447af1dc0759a, type: 3}
   hitVolume: 3
   soundCooldown: 4
+  knockbackForce: 5
+  knockbackDuration: 0.2
+  miniBossheadCollider: {fileID: 0}
+  enemyHeadCollider: {fileID: 8848041171568096009}
   viewAngle: 90
   roamDist: 6
   roamSpeed: 3
@@ -2210,10 +2215,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.75
+  m_Radius: 0.25
+  m_Height: 1.5
   m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
+  m_Center: {x: 0, y: 0.7, z: 0}
 --- !u!135 &1520275731239686166
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2235,6 +2240,29 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!136 &8848041171568096009
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7527460772358525862}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.25
+  m_Height: 0.25
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.65, z: 0.2}
 --- !u!1 &7555584135077691479
 GameObject:
   m_ObjectHideFlags: 0
