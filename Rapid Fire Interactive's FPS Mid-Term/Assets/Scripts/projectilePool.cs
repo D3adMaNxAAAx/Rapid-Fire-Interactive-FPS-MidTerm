@@ -47,8 +47,10 @@ public class projectilePool : MonoBehaviour { // second class
         foreach(ObjectPool tempObjectPool in objectPoolsArray) {
             if (tempObjectPool.objectType == searchType) { 
                 foundObject = tempObjectPool;
+                return foundObject; // pool type that matches the searched projectile type
             }
         }
-        return foundObject; // pool type that matches the searched projectile type
+        // else
+        return null;
     }
 }

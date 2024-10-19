@@ -354,7 +354,6 @@ public class playerMovement : MonoBehaviour, IDamage
             if (Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus()) {
                 if (getAmmo() > 0) {
                     StartCoroutine(shoot());
-
                     //Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation); // OG method
                     GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // setting bullet object to newProjectile
                     // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile

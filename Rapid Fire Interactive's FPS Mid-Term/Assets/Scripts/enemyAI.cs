@@ -214,6 +214,7 @@ public class enemyAI : MonoBehaviour , IDamage
     private projectilePool objectPool; // object pool class instance initialized in start I think, array of object pools
     public ObjectType projectileType; // for object pooling / recycling, ObjectType is enum in damage script, initialized in start by getting damage script and getting enum type
     int Dtime; // initialized in start by getting damage script and getting destroy time
+    bool firstShot = true;
 
     IEnumerator shoot() {
         // Set shooting to true
@@ -236,14 +237,19 @@ public class enemyAI : MonoBehaviour , IDamage
                 anim.SetTrigger("Shoot");
         }
         if (rangedAttack != null) {
-            //Instantiate(rangedAttack, shootPos.position, rotation); // OG method
-            GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // setting bullet object to newProjectile
-            // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile
-            newProjectile.transform.position = shootPos.position;
-            newProjectile.transform.rotation = rotation;
-            newProjectile.GetComponent<Rigidbody>().velocity = (playerDir.normalized) * (rangedAttack.GetComponent<damage>().getAttackSpeed()); // accessing damage script and getting bullet speed
-            newProjectile.SetActive(true); // turning object on (it is set off when added to object pool)
-            StartCoroutine(addObjectToPool(newProjectile)); // projectile is added to pool if it collides (see damage script), or if bullet "destory" time is hit
+            if (firstShot) { // first shot for enemies was being weird so first shot is normal and still put in objectPool
+                Instantiate(rangedAttack, shootPos.position, rotation); // OG method
+                firstShot = false;
+            }
+            else {
+                GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // setting bullet object to newProjectile
+                                                                                             // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile
+                newProjectile.transform.position = shootPos.position;
+                newProjectile.transform.rotation = rotation;
+                newProjectile.GetComponent<Rigidbody>().velocity = (playerDir.normalized) * (rangedAttack.GetComponent<damage>().getAttackSpeed()); // accessing damage script and getting bullet speed
+                newProjectile.SetActive(true); // turning object on (it is set off when added to object pool)
+                StartCoroutine(addObjectToPool(newProjectile)); // projectile is added to pool if it collides (see damage script), or if bullet "destory" time is hit
+            }
         }
         yield return new WaitForSeconds(shootRate); // Timer setting shootRate time
         isShooting = false;

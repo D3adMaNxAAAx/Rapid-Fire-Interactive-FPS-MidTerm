@@ -69,8 +69,6 @@ MonoBehaviour:
   guns: []
   gunModel: {fileID: 8347418103555859136}
   shotFlash: {fileID: 8003970111949719129}
-  laserShot: {fileID: 1026084026005163015, guid: 12570a8136a6b5f46b304e8f3cc3049a, type: 3}
-  shotgunShot: {fileID: 1026084026005163015, guid: b1d82b920549e4f4ea4050a534fedff4, type: 3}
   laserSight: {fileID: 4691113019804941331}
   damage: 1
   fireRate: 0.4
@@ -96,6 +94,7 @@ MonoBehaviour:
   dmgFlashTimer: 0.05
   ammoWarningTimer: 0.4
   healSound: {fileID: 8300000, guid: cfce0cea076109f478783201b2a9f57f, type: 3}
+  projectileType: 0
 --- !u!33 &1274210567246806318
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -651,7 +650,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1.5
-  m_Range: 17.5
+  m_Range: 20
   m_SpotAngle: 55
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
