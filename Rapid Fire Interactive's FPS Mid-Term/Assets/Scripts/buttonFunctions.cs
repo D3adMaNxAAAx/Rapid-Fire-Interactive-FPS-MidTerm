@@ -5,6 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour {
 
+    public void confirm()
+    {
+        Debug.Log("Confirm");
+    }
+
+    public void cancel()
+    {
+        Debug.Log("Cancel");
+    }
+
     public void resume() {
         gameManager.instance.stateUnpause();
     }
