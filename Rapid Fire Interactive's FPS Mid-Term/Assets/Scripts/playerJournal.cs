@@ -183,14 +183,9 @@ public class playerJournal : MonoBehaviour
             docIsOpen = false;
     }
 
-    //public void openDoc(Canvas thisDoc) 
-    //{
-    //    if (!docIsOpen )
-    //    {
-           
-    //        activeDoc = thisDoc;  
-    //        activeDoc.enabled = true;
-    //        docIsOpen = true; 
-    //    } 
-    //}
+    public void updateObjectives()
+    {
+        
+    }
+  
 }

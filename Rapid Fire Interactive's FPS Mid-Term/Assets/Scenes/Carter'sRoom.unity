@@ -203,6 +203,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy-Ranged Heavy
       objectReference: {fileID: 0}
+    - target: {fileID: 1976139769632855763, guid: c616396378266c74fbd41360a5ee4d6b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2855513741353969487, guid: c616396378266c74fbd41360a5ee4d6b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 53.786644
@@ -715,6 +719,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Demon Golem
       objectReference: {fileID: 0}
+    - target: {fileID: 7025534213581070707, guid: f3a6f97ed28f3874d833f622ae67f27c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8344763055088587771, guid: f3a6f97ed28f3874d833f622ae67f27c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 70.1
@@ -772,6 +780,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy-Heavy
       objectReference: {fileID: 0}
+    - target: {fileID: 1976139769632855763, guid: 964fbb38242d59545ba298a00d80a94d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2855513741353969487, guid: 964fbb38242d59545ba298a00d80a94d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 63.1
@@ -825,6 +837,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2530623224691265501, guid: 0d7b402dcd3308e41aaeb7f7afba5a54, type: 3}
+      propertyPath: m_Height
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2530623224691265501, guid: 0d7b402dcd3308e41aaeb7f7afba5a54, type: 3}
+      propertyPath: m_Center.y
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3731423939730648109, guid: 0d7b402dcd3308e41aaeb7f7afba5a54, type: 3}
       propertyPath: m_LocalPosition.x
       value: 42.9
@@ -864,6 +884,14 @@ PrefabInstance:
     - target: {fileID: 3731423939730648109, guid: 0d7b402dcd3308e41aaeb7f7afba5a54, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621684625058716344, guid: 0d7b402dcd3308e41aaeb7f7afba5a54, type: 3}
+      propertyPath: m_Height
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621684625058716344, guid: 0d7b402dcd3308e41aaeb7f7afba5a54, type: 3}
+      propertyPath: m_Center.y
+      value: 1.3
       objectReference: {fileID: 0}
     - target: {fileID: 7527460772358525862, guid: 0d7b402dcd3308e41aaeb7f7afba5a54, type: 3}
       propertyPath: m_Name
@@ -1068,6 +1096,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy - Light
       objectReference: {fileID: 0}
+    - target: {fileID: 5246833290263862146, guid: 8180a3a029f993d48ab2c0d55a82a939, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1211,6 +1243,10 @@ PrefabInstance:
     - target: {fileID: 4718135934885928384, guid: 799c5e5ac96999c45885e96ba6beb010, type: 3}
       propertyPath: m_Name
       value: Enemy - Challenge
+      objectReference: {fileID: 0}
+    - target: {fileID: 4718135934885928384, guid: 799c5e5ac96999c45885e96ba6beb010, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6441444880123951943, guid: 799c5e5ac96999c45885e96ba6beb010, type: 3}
       propertyPath: m_LocalPosition.x

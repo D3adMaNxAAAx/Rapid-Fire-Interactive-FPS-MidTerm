@@ -1765,6 +1765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
+  projectileType: 0
   rb: {fileID: 0}
   missleTarget: {fileID: 0}
   missleRotationSpeed: 0
@@ -2162,12 +2163,12 @@ GameObject:
   - component: {fileID: 1520275731239686166}
   - component: {fileID: 4621684625058716344}
   m_Layer: 0
-  m_Name: Enemy - Basic Melee
+  m_Name: Enemy - Medium Melee
   m_TagString: Basic Melee
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3731423939730648109
 Transform:
   m_ObjectHideFlags: 0
@@ -2177,7 +2178,7 @@ Transform:
   m_GameObject: {fileID: 7527460772358525862}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 54.621998, y: 0, z: -39.53034}
+  m_LocalPosition: {x: 42.9, y: 0, z: -39.53034}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2290,9 +2291,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Height: 1.45
+  m_Height: 1.2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.7, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!135 &1520275731239686166
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2334,9 +2335,9 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2
-  m_Height: 0.25
+  m_Height: 0.7
   m_Direction: 1
-  m_Center: {x: 0, y: 1.55, z: 0.27}
+  m_Center: {x: 0, y: 1.3, z: 0.27}
 --- !u!1 &7555584135077691479
 GameObject:
   m_ObjectHideFlags: 0
