@@ -57,7 +57,10 @@ public class lightFlicker : MonoBehaviour, IInteractable
             flickerLight();
         }
         else if (powerSys != null && isOn == true)
+        {
             powerStages();
+        }
+            
     }
 
     public void flickerLight()
@@ -119,7 +122,6 @@ public class lightFlicker : MonoBehaviour, IInteractable
 
     public void interact()
     {
-        
         if (gameManager.instance.getPowerItems() >= 9)
         {
             pwrLvl = 3;
@@ -135,12 +137,15 @@ public class lightFlicker : MonoBehaviour, IInteractable
         else if (gameManager.instance.getPowerItems() >= 3)
         {
             pwrLvl = 1;
-            isOn = true;
             if (playerStats.Stats.getPWRLevel() < 1)
                 playerStats.Stats.pwrLevel();
         }
         else
             return;
+
+        // Need to do powerStages to update booleans and the power stage.
+        if (powerSys != null)
+            powerStages();
     }
 
     private void OnTriggerStay(Collider other)
@@ -186,15 +191,27 @@ public class lightFlicker : MonoBehaviour, IInteractable
 
             if (pwrLvl == 3)
             {
+                // Copied pwr lvl 1 code just for an indicator that it's actually working.
+                // Feel free to change this later.
+                setRandFlickSpd(UnityEngine.Random.Range(0.2f, 1.5f));
+                if (!getWait())
+                    StartCoroutine(getNewNumber());
+                flickerLight();
+                setFlicker(true);
+
                 //elevator on 
                 //setElevatorAccess(true);
-
             }
 
+            // Check the power level and update things accordingly.
             if (pwrLvl >= 1) 
             {
+                // Grant access to the safe
                 if (!safeRoom.instance.getSafeAccess())
                     safeRoom.instance.setSafeAccess(true);
+
+                // Things will now turn on like the safe room door.
+                isOn = true;
             }
         }
     }
