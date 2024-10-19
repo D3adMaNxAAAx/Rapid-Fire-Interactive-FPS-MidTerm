@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 
 public enum ObjectType { ARShot, HandCannonShot, LaserShot, PistolShot, ShottyShot, SniperShot, SMGShot, 
-BossShot, DreadSpit, FatDreadSpit, FatSeeker, MassiveDreadShot, Seeker } // these are set in damage
+BossShot, DreadSpit, FatDreadSpit, FatSeeker, MassiveDreadShot, Seeker } // these are set in damage script on bullets in unity
 
 [System.Serializable]
 
@@ -28,12 +28,12 @@ public class projectilePool : MonoBehaviour { // second class
     }
 
     public void addToPool(ObjectType projectileType, GameObject usedProjectile) {
-        findProjectilePool(projectileType).objectQueue.Enqueue(usedProjectile);
-        usedProjectile.SetActive(false);
+        findProjectilePool(projectileType).objectQueue.Enqueue(usedProjectile); // add to pool
+        usedProjectile.SetActive(false); // hide object while in pool
     }
 
     public GameObject getProjectileFromPool(ObjectType projectileType) {
-        ObjectPool currentPool = findProjectilePool(projectileType);
+        ObjectPool currentPool = findProjectilePool(projectileType); // current pool now is the pool that holds the searched for type of projectile
         if (currentPool.objectQueue.Count > 0) { // if there is an object in the pool, use it
             return currentPool.objectQueue.Dequeue();
         }
@@ -42,13 +42,13 @@ public class projectilePool : MonoBehaviour { // second class
         }
     }
 
-    private ObjectPool findProjectilePool(ObjectType searchType) {
+    public ObjectPool findProjectilePool(ObjectType searchType) {
         ObjectPool foundObject = null;
         foreach(ObjectPool tempObjectPool in objectPoolsArray) {
             if (tempObjectPool.objectType == searchType) { 
                 foundObject = tempObjectPool;
             }
         }
-        return foundObject;
+        return foundObject; // pool type that matches the searched projectile type
     }
 }

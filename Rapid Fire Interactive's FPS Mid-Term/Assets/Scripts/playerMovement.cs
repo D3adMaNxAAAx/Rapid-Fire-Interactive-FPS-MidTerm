@@ -306,9 +306,9 @@ public class playerMovement : MonoBehaviour, IDamage
         isStepping = false;
     }
 
-    private projectilePool objectPool;
+    private projectilePool objectPool; // object pool class instance initialized in start I think, array of object pools
     public ObjectType projectileType; // for object pooling / recycling, ObjectType is enum in projectilePool script
-    // something something done in start
+    int Dtime;
 
     void shootGun() {
         // Check if the player is not shooting & if they pressed the reload button mapped in input manager
@@ -327,12 +327,15 @@ public class playerMovement : MonoBehaviour, IDamage
                 if (getAmmo() > 0) {
                     StartCoroutine(shoot());
 
-                    GameObject newProjectile = objectPool.getProjectileFromPool(projectileType);
-                    newProjectile.transform.position = playerCamera.transform.position;
+                    //Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation); // OG method
+                    GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // making bullet object
+                    // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile
+                    newProjectile.transform.position = playerCamera.transform.position; // player camera needs to be used instead of Camera.main (I don't know why)
                     newProjectile.transform.rotation = playerCamera.transform.rotation;
-                    newProjectile.GetComponent<Rigidbody>().velocity = playerCamera.transform.forward * 50;
-                    newProjectile.SetActive(true);
-                    StartCoroutine(addObjectToPool(newProjectile));
+                    newProjectile.GetComponent<Rigidbody>().velocity = playerCamera.transform.forward * (playerShot.GetComponent<damage>().getAttackSpeed()); // accessing damage script and getting bullet speed
+                    newProjectile.SetActive(true); // turning object on (it is set off when added to object pool)
+                    Dtime = playerShot.GetComponent<damage>().getDTime(); // accessing damage class and getting the bullet destory time
+                    StartCoroutine(addObjectToPool(projectileType, newProjectile, Dtime)); // projectile is added to pool if it collides (see damage script), or if bullet "destory" time is hit
 
                     aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
                 }
@@ -352,12 +355,14 @@ public class playerMovement : MonoBehaviour, IDamage
                     StartCoroutine(shoot());
 
                     //Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation); // OG method
-                    GameObject newProjectile = objectPool.getProjectileFromPool(projectileType);
-                    newProjectile.transform.position = playerCamera.transform.position;
+                    GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // making bullet object
+                    // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile
+                    newProjectile.transform.position = playerCamera.transform.position; // player camera needs to be used instead of Camera.main (I don't know why)
                     newProjectile.transform.rotation = playerCamera.transform.rotation;
-                    newProjectile.GetComponent<Rigidbody>().velocity = playerCamera.transform.forward * 50;
-                    newProjectile.SetActive(true);
-                    StartCoroutine(addObjectToPool(newProjectile));
+                    newProjectile.GetComponent<Rigidbody>().velocity = playerCamera.transform.forward * (playerShot.GetComponent<damage>().getAttackSpeed()); // accessing damage script and getting bullet speed
+                    newProjectile.SetActive(true); // turning object on (it is set off when added to object pool)
+                    Dtime = playerShot.GetComponent<damage>().getDTime(); // accessing damage class and getting the bullet destory time
+                    StartCoroutine(addObjectToPool(projectileType, newProjectile, Dtime)); // projectile is added to pool if it collides (see damage script), or if bullet "destory" time is hit
 
                     aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
                 }
@@ -368,9 +373,9 @@ public class playerMovement : MonoBehaviour, IDamage
         }
     }
 
-    IEnumerator addObjectToPool(GameObject projectile) {
-        yield return new WaitForSeconds(2);
-        objectPool.addToPool(projectileType, projectile);
+    IEnumerator addObjectToPool(ObjectType type, GameObject projectile, int Dtime) { // adding projectile to the pool that matches its type
+        yield return new WaitForSeconds(Dtime-1); // I have no idea why but its adding extra time
+        objectPool.addToPool(type, projectile);
     }
 
     void reload()
@@ -1033,7 +1038,7 @@ public class playerMovement : MonoBehaviour, IDamage
         updatePlayerUI();
         playerShot = guns[gunPos].projectile;
         gunFlashColor.gunFlash.changeColor((int)guns[gunPos].color);
-        projectileType = playerShot.GetComponent<damage>().getProjectileType();
+        projectileType = playerShot.GetComponent<damage>().getProjectileType(); // accessing damage script and getting enum type
         gunModel.GetComponent<MeshFilter>().sharedMesh = getCurGun().gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = getCurGun().gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
@@ -1065,7 +1070,7 @@ public class playerMovement : MonoBehaviour, IDamage
         }
         gunFlashColor.gunFlash.changeColor((int)_gun.color);
         playerShot = _gun.projectile;
-        projectileType = playerShot.GetComponent<damage>().getProjectileType();
+        projectileType = playerShot.GetComponent<damage>().getProjectileType(); // accessing damage script and getting enum type
         gunModel.GetComponent<MeshFilter>().sharedMesh = _gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = _gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
 
