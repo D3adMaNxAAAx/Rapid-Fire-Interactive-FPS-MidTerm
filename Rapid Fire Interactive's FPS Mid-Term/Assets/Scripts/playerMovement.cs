@@ -144,17 +144,17 @@ public class playerMovement : MonoBehaviour, IDamage
 
     // Start is called before the first frame update
     void Start() {
-        /// don't destroy on load
         HPOrig = HP;
         staminaOrig = stamina;
         startingLives = lives;
         speedOrig = (int)speed;
-        // Update Player Information & Spawn
         updatePlayerUI();
-        if (gameManager.instance.getPlayerSpawnPos() != null)
+        if (gameManager.instance.getPlayerSpawnPos() != null) {
             spawnPlayer();
+        }
 
         gunInventoryManager = FindObjectOfType<GunInventoryManager>();
+        objectPool = FindObjectOfType<projectilePool>();
     }
 
     // Update is called once per frame
@@ -306,10 +306,12 @@ public class playerMovement : MonoBehaviour, IDamage
         isStepping = false;
     }
 
+    private projectilePool objectPool;
+    public ObjectType projectileType; // for object pooling / recycling, ObjectType is enum in projectilePool script
+    // something something done in start
+
     void shootGun() {
-        // Reload
         // Check if the player is not shooting & if they pressed the reload button mapped in input manager
-        // Also have an additional check if they aren't at max already.
         if (!isShooting && Input.GetButton("Reload") && guns[gunPos].ammoCur < guns[gunPos].ammoMag)
         {
             reload();
@@ -324,7 +326,14 @@ public class playerMovement : MonoBehaviour, IDamage
             if (Input.GetButton("Fire1") && !isShooting && !gameManager.instance.getPauseStatus()) {
                 if (getAmmo() > 0) {
                     StartCoroutine(shoot());
+
                     Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation); 
+                    GameObject newProjectile = objectPool.getProjectileFromPool(projectileType);
+                    newProjectile.transform.position = Camera.main.transform.position;
+                    newProjectile.transform.rotation = Camera.main.transform.rotation;  
+                    newProjectile.GetComponent<Rigidbody>().velocity = transform.forward * 50;
+                    newProjectile.SetActive(true);
+
                     aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
                 }
                 // Another check for the player to auto-reload if they attempt to shoot with nothing in their barrel.
@@ -372,29 +381,6 @@ public class playerMovement : MonoBehaviour, IDamage
 
         // Update the UI for confirmation
         updatePlayerUI();
-    }
-
-    // Sprint Movement Func
-    void sprint() {
-            // Check if the player has stamina to sprint
-            if (Input.GetButtonDown("Sprint") && stamina > 0)
-            {
-                speed *= speedMod;
-                isSprinting = true;
-            }
-            else if (stamina <= 0 && isSprinting)
-            {
-                // Stop sprinting if shift is up or player doesn't have stamina.
-                speed /= speedMod;
-                isSprinting = false;
-            }
-            else if (Input.GetButtonUp("Sprint") && isSprinting)
-            {
-                // This is a preventative measure for a bug that permanently decreases the player speed if
-                // they run out of stamina while running and let go of shift.
-                speed /= speedMod;
-                isSprinting = false;
-            }
     }
 
     // Shoot Timer
@@ -684,6 +670,25 @@ public class playerMovement : MonoBehaviour, IDamage
         yield return new WaitForSeconds(5);
         infiniteStam = false;
         gameManager.instance.getBuffUI().SetActive(false);
+    }
+
+    void sprint() {
+        // Check if the player has stamina to sprint
+        if (Input.GetButtonDown("Sprint") && stamina > 0) {
+            speed *= speedMod;
+            isSprinting = true;
+        }
+        else if (stamina <= 0 && isSprinting) {
+            // Stop sprinting if shift is up or player doesn't have stamina.
+            speed /= speedMod;
+            isSprinting = false;
+        }
+        else if (Input.GetButtonUp("Sprint") && isSprinting) {
+            // This is a preventative measure for a bug that permanently decreases the player speed if
+            // they run out of stamina while running and let go of shift.
+            speed /= speedMod;
+            isSprinting = false;
+        }
     }
 
     // Drain stamina as player runs

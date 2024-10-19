@@ -4,7 +4,7 @@ using UnityEngine;
 
 [System.Serializable]
 
-public enum ObjectType { aRShot } // these are set in damage
+public enum ObjectType { aRShot, stopIt } // these are set in damage
 
 [System.Serializable]
 
@@ -41,7 +41,7 @@ public class projectilePool : MonoBehaviour { // second class
         }
     }
 
-    private ObjectPool findProjectilePool (ObjectType searchType) {
+    private ObjectPool findProjectilePool(ObjectType searchType) {
         ObjectPool foundObject = null;
         foreach(ObjectPool tempObjectPool in objectPoolsArray) {
             if (tempObjectPool.objectType == searchType) { 

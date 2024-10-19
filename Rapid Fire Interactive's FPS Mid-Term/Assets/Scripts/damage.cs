@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
-public class damage : MonoBehaviour
-{
-
+public class damage : MonoBehaviour {
 
     //Allows switch between damage types
     [SerializeField] enum damageType { ranged, missle, melee, hazard } // fire is hazard
     [SerializeField] damageType type;
 
     [SerializeField] ObjectType projectileType; // for object pooling / recycling, ObjectType is enum in projectilePool script
+    projectilePool objectPool; // for object pooling / recycling
 
     //RigidBody component Field tracker, Allows to add velocity to range attacks
     [SerializeField] Rigidbody rb;
@@ -25,17 +25,26 @@ public class damage : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        // Check if ranged attack and give velocity
+        objectPool = FindObjectOfType<projectilePool>();
         if (type == damageType.ranged) {
             // Give velocity to ranged attack 
             rb.velocity = transform.forward * attackSpeed;
-            Destroy(gameObject, destroyTime);
+
+            //Destroy(gameObject, destroyTime);
+            StartCoroutine(addObjectToPool());
         }
 
         if (type == damageType.missle) { // enemySeaking projectile
             missleTarget = gameManager.instance.getPlayer().transform; // getting player position
-            Destroy(gameObject, destroyTime);
+
+            //Destroy(gameObject, destroyTime);
+            StartCoroutine(addObjectToPool());
         }
+    }
+
+    IEnumerator addObjectToPool() {
+        yield return new WaitForSeconds(destroyTime);
+        objectPool.addToPool(projectileType, this.gameObject);
     }
 
     void Update() {
@@ -64,10 +73,11 @@ public class damage : MonoBehaviour
 
         }
 
-        // if it isnt an object that takes damage and damageType was ranged destroy damage inflicting object
-        if (type == damageType.ranged || type == damageType.missle)
-        {
-            Destroy(gameObject);
+        // if it isnt an object that takes damage and damageType was ranged, destroy damage inflicting object
+        if (type == damageType.ranged || type == damageType.missle) {
+            //Destroy(gameObject);
+            objectPool.addToPool(projectileType, this.gameObject);
+
         }
     }
 
