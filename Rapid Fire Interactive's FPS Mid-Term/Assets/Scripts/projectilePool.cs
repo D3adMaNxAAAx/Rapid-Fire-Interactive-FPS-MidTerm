@@ -4,7 +4,8 @@ using UnityEngine;
 
 [System.Serializable]
 
-public enum ObjectType { aRShot, stopIt } // these are set in damage
+public enum ObjectType { ARShot, HandCannonShot, LaserShot, PistolShot, ShottyShot, SniperShot, SMGShot, 
+BossShot, DreadSpit, FatDreadSpit, FatSeeker, MassiveDreadShot, Seeker } // these are set in damage
 
 [System.Serializable]
 
@@ -27,8 +28,8 @@ public class projectilePool : MonoBehaviour { // second class
     }
 
     public void addToPool(ObjectType projectileType, GameObject usedProjectile) {
-        usedProjectile.SetActive(false);
         findProjectilePool(projectileType).objectQueue.Enqueue(usedProjectile);
+        usedProjectile.SetActive(false);
     }
 
     public GameObject getProjectileFromPool(ObjectType projectileType) {

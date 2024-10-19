@@ -327,12 +327,12 @@ public class playerMovement : MonoBehaviour, IDamage
                 if (getAmmo() > 0) {
                     StartCoroutine(shoot());
 
-                    Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation); 
                     GameObject newProjectile = objectPool.getProjectileFromPool(projectileType);
-                    newProjectile.transform.position = Camera.main.transform.position;
-                    newProjectile.transform.rotation = Camera.main.transform.rotation;  
-                    newProjectile.GetComponent<Rigidbody>().velocity = transform.forward * 50;
+                    newProjectile.transform.position = playerCamera.transform.position;
+                    newProjectile.transform.rotation = playerCamera.transform.rotation;
+                    newProjectile.GetComponent<Rigidbody>().velocity = playerCamera.transform.forward * 50;
                     newProjectile.SetActive(true);
+                    StartCoroutine(addObjectToPool(newProjectile));
 
                     aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
                 }
@@ -350,7 +350,15 @@ public class playerMovement : MonoBehaviour, IDamage
             if (Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus()) {
                 if (getAmmo() > 0) {
                     StartCoroutine(shoot());
-                    Instantiate(playerShot, shotFlash.transform.position, Camera.main.transform.rotation);
+
+                    //Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation); // OG method
+                    GameObject newProjectile = objectPool.getProjectileFromPool(projectileType);
+                    newProjectile.transform.position = playerCamera.transform.position;
+                    newProjectile.transform.rotation = playerCamera.transform.rotation;
+                    newProjectile.GetComponent<Rigidbody>().velocity = playerCamera.transform.forward * 50;
+                    newProjectile.SetActive(true);
+                    StartCoroutine(addObjectToPool(newProjectile));
+
                     aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
                 }
                 else {
@@ -358,6 +366,11 @@ public class playerMovement : MonoBehaviour, IDamage
                 }
             }
         }
+    }
+
+    IEnumerator addObjectToPool(GameObject projectile) {
+        yield return new WaitForSeconds(2);
+        objectPool.addToPool(projectileType, projectile);
     }
 
     void reload()
@@ -1020,6 +1033,7 @@ public class playerMovement : MonoBehaviour, IDamage
         updatePlayerUI();
         playerShot = guns[gunPos].projectile;
         gunFlashColor.gunFlash.changeColor((int)guns[gunPos].color);
+        projectileType = playerShot.GetComponent<damage>().getProjectileType();
         gunModel.GetComponent<MeshFilter>().sharedMesh = getCurGun().gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = getCurGun().gunModel.GetComponent<MeshRenderer>().sharedMaterial;
     }
@@ -1051,6 +1065,7 @@ public class playerMovement : MonoBehaviour, IDamage
         }
         gunFlashColor.gunFlash.changeColor((int)_gun.color);
         playerShot = _gun.projectile;
+        projectileType = playerShot.GetComponent<damage>().getProjectileType();
         gunModel.GetComponent<MeshFilter>().sharedMesh = _gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = _gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
 

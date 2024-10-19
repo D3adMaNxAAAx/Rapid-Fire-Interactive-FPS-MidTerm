@@ -12,6 +12,10 @@ public class damage : MonoBehaviour {
     [SerializeField] ObjectType projectileType; // for object pooling / recycling, ObjectType is enum in projectilePool script
     projectilePool objectPool; // for object pooling / recycling
 
+    public ObjectType getProjectileType() {
+        return projectileType;
+    }
+
     //RigidBody component Field tracker, Allows to add velocity to range attacks
     [SerializeField] Rigidbody rb;
 
@@ -30,19 +34,17 @@ public class damage : MonoBehaviour {
             // Give velocity to ranged attack 
             rb.velocity = transform.forward * attackSpeed;
 
-            //Destroy(gameObject, destroyTime);
-            StartCoroutine(addObjectToPool());
+            // object is being added to pool and turned off (see playerMovement shoot method)
         }
 
         if (type == damageType.missle) { // enemySeaking projectile
             missleTarget = gameManager.instance.getPlayer().transform; // getting player position
 
-            //Destroy(gameObject, destroyTime);
-            StartCoroutine(addObjectToPool());
+            // object is being added to pool and turned off (see playerMovement shoot method)
         }
     }
 
-    IEnumerator addObjectToPool() {
+    public IEnumerator addObjectToPool() {
         yield return new WaitForSeconds(destroyTime);
         objectPool.addToPool(projectileType, this.gameObject);
     }
@@ -75,9 +77,8 @@ public class damage : MonoBehaviour {
 
         // if it isnt an object that takes damage and damageType was ranged, destroy damage inflicting object
         if (type == damageType.ranged || type == damageType.missle) {
-            //Destroy(gameObject);
-            objectPool.addToPool(projectileType, this.gameObject);
 
+            objectPool.addToPool(projectileType, this.gameObject);
         }
     }
 
