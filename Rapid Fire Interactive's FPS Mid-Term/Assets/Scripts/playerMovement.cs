@@ -41,8 +41,6 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] List<gunStats> guns;
     [SerializeField] GameObject gunModel;
     [SerializeField] GameObject shotFlash;
-    [SerializeField] GameObject laserShot; // player shot visual for laser rifle
-    [SerializeField] GameObject shotgunShot; // player shot visual for shotgun
     [SerializeField] LineRenderer laserSight;
     private GunInventoryManager gunInventoryManager;
 
@@ -345,15 +343,7 @@ public class playerMovement : MonoBehaviour, IDamage
             if (Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus()) {
                 if (getAmmo() > 0) {
                     StartCoroutine(shoot());
-                    if (isLaser) { // laser isn't automatic so only needs to be in this if statement
-                        Instantiate(laserShot, shotFlash.transform.position, Camera.main.transform.rotation);
-                    }
-                    else if (isShotgun) { // shotgun isn't automatic so only needs to be in this if statement
-                        Instantiate(shotgunShot, shotFlash.transform.position, Camera.main.transform.rotation); // object to make, position (var Transform), direction object is facing
-                    }
-                    else {
-                        Instantiate(playerShot, shotFlash.transform.position, Camera.main.transform.rotation);
-                    }
+                    Instantiate(playerShot, shotFlash.transform.position, Camera.main.transform.rotation);
                     aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
                 }
                 else {
@@ -387,12 +377,7 @@ public class playerMovement : MonoBehaviour, IDamage
     }
 
     // Sprint Movement Func
-    void sprint()
-    {
-        // TODO: Make sprinting only happen on the ground. I commented out the check for the isGrounded because this
-        // is still buggy & needs to be properly implemented into the checks. Ask Adam for help?
-        //if (controller.isGrounded)
-        //{
+    void sprint() {
             // Check if the player has stamina to sprint
             if (Input.GetButtonDown("Sprint") && stamina > 0)
             {
@@ -412,7 +397,6 @@ public class playerMovement : MonoBehaviour, IDamage
                 speed /= speedMod;
                 isSprinting = false;
             }
-        //}
     }
 
     // Shoot Timer
@@ -435,11 +419,10 @@ public class playerMovement : MonoBehaviour, IDamage
                 if (hit.collider != enemyAI.getMiniBossHeadCollider() && hit.collider != enemyAI.getEnemyHeadCollider())
                 { dmg.takeDamage((damage * damageBuffMult)); }
 
-                else 
-                {
+                else { // headshot
                     dmg.takeDamage((damage * damageBuffMult) * headShotMult);
                     playerStats.Stats.enemyHeadShot();
-                
+                    Debug.Log("Headshot!");
                 }
                
                 if (guns[gunPos].isSniper || guns[gunPos].isShotgun)
@@ -708,11 +691,13 @@ public class playerMovement : MonoBehaviour, IDamage
     // Drain stamina as player runs
     IEnumerator staminaDrain() {
         if (infiniteStam == false) {
-            isDraining = true;
-            stamina--;
-            updatePlayerUI();
-            yield return new WaitForSeconds(drainMod);
-            isDraining = false;
+            if (controller.isGrounded && moveDir.magnitude > 0.25f) { // checking if player is not in air amd there is movement input
+                isDraining = true;
+                stamina--;
+                updatePlayerUI();
+                yield return new WaitForSeconds(drainMod);
+                isDraining = false;
+            }
         }
     }
 
@@ -1030,6 +1015,7 @@ public class playerMovement : MonoBehaviour, IDamage
             laserSight.enabled = false;
         }
         updatePlayerUI();
+        playerShot = guns[gunPos].projectile;
         gunFlashColor.gunFlash.changeColor((int)guns[gunPos].color);
         gunModel.GetComponent<MeshFilter>().sharedMesh = getCurGun().gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = getCurGun().gunModel.GetComponent<MeshRenderer>().sharedMaterial;
@@ -1061,6 +1047,7 @@ public class playerMovement : MonoBehaviour, IDamage
             laserSight.enabled = false;
         }
         gunFlashColor.gunFlash.changeColor((int)_gun.color);
+        playerShot = _gun.projectile;
         gunModel.GetComponent<MeshFilter>().sharedMesh = _gun.gunModel.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = _gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
 
