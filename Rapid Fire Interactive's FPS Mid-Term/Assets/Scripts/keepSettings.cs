@@ -66,7 +66,10 @@ public class keepSettings : MonoBehaviour
 
     public void settingUpdate()
     {
-        
+        if (CameraMovement.state != null)
+        {
+            CameraMovement.state.SetSens((int)sens);
+        }
     }
     public void inverBool(bool tick)
     {
