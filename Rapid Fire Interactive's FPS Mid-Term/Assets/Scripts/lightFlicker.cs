@@ -5,7 +5,9 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class lightFlicker : MonoBehaviour
+
+// Despite the name of this script, it is also the main way that the power system works! Therefore, it must be interactable!
+public class lightFlicker : MonoBehaviour, IInteractable
 {
     [SerializeField] bool doFlicker = false;
     [Range(1, 100)] [SerializeField] float percentFlicker;
@@ -17,17 +19,12 @@ public class lightFlicker : MonoBehaviour
     float randFlickSpeed;
     float lightIntensity;
     float[] lightsIntensity;
-    
     bool isFlickering = false;
     bool waitBool = false;
     int lightCount;
-
     int pwrLvl;
     bool isOn;
-
     bool safeAccess;
-
-
 
     private void Awake()
     {
@@ -39,24 +36,19 @@ public class lightFlicker : MonoBehaviour
         }
         else if (lightSys != null)
         { 
-        lights = lightSys.gameObject.GetComponentsInChildren<Light>();
-        lightCount = lights.Count();
+            lights = lightSys.gameObject.GetComponentsInChildren<Light>();
+            lightCount = lights.Count();
 
             for (int i = 0; i < lightCount - 1; ++i)
             {
                 lights[i].enabled = false;
             }
-          
-
         }
-        
     }
 
     // Update is called once per frame
     void Update()
     {
-      
-
         if (powerSys == null)
         {
             randFlickSpeed = UnityEngine.Random.Range(0.2f, 1.5f);
@@ -66,9 +58,6 @@ public class lightFlicker : MonoBehaviour
         }
         else if (powerSys != null && isOn == true)
             powerStages();
-
-        
-       
     }
 
     public void flickerLight()
@@ -128,38 +117,51 @@ public class lightFlicker : MonoBehaviour
     public void setFlicker(bool flicker)
     { doFlicker = flicker; }
 
-
-    private void OnTriggerEnter(Collider other)
+    public void interact()
     {
+        
+        if (gameManager.instance.getPowerItems() >= 9)
+        {
+            pwrLvl = 3;
+            if (playerStats.Stats.getPWRLevel() == 2)
+                playerStats.Stats.pwrLevel();
+        }
+        else if (gameManager.instance.getPowerItems() >= 6)
+        {
+            pwrLvl = 2;
+            if (playerStats.Stats.getPWRLevel() == 1)
+                playerStats.Stats.pwrLevel();
+        }
+        else if (gameManager.instance.getPowerItems() >= 3)
+        {
+            pwrLvl = 1;
+            isOn = true;
+            if (playerStats.Stats.getPWRLevel() < 1)
+                playerStats.Stats.pwrLevel();
+        }
+        else
+            return;
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        // If interact menu isn't on, turn it on.
+        if (!gameManager.instance.getInteractUI().activeInHierarchy)
+            gameManager.instance.getInteractUI().SetActive(true);
+
         if (other.CompareTag("Player"))
         {
-
-            if (gameManager.instance.getPowerItems() >= 9)
-            {
-                pwrLvl = 3;
-                if (playerStats.Stats.getPWRLevel() == 2)
-                    playerStats.Stats.pwrLevel();
-            }
-            else if (gameManager.instance.getPowerItems() >= 6)
-            {
-                pwrLvl = 2;
-                if (playerStats.Stats.getPWRLevel() == 1)
-                    playerStats.Stats.pwrLevel();
-            }
-            else if (gameManager.instance.getPowerItems() >= 3)
-            {
-                pwrLvl = 1;
-                isOn = true;
-                if (playerStats.Stats.getPWRLevel() < 1)
-                    playerStats.Stats.pwrLevel();
-            }
-            else
-                return;
-
-
+            if (Input.GetButton("Interact")) { interact(); }
         }
     }
-    
+
+    private void OnTriggerExit(Collider other)
+    {
+        // Turn off the interact UI if the player isn't within range
+        if (gameManager.instance.getInteractUI().activeInHierarchy)
+            gameManager.instance.getInteractUI().SetActive(false);
+    }
+
     void powerStages()
     {
         if (powerSys != null)
@@ -171,11 +173,8 @@ public class lightFlicker : MonoBehaviour
                     StartCoroutine(getNewNumber());
                 flickerLight();
                 setFlicker(true);
-
-                if(!safeRoom.instance.getSafeAccess())
-                safeRoom.instance.setSafeAccess(true);
-
             }
+
             if (pwrLvl == 2)
             {
                 setFlicker(false);
@@ -184,11 +183,18 @@ public class lightFlicker : MonoBehaviour
                     lights[i].enabled = true;
                 }
             }
+
             if (pwrLvl == 3)
             {
                 //elevator on 
                 //setElevatorAccess(true);
 
+            }
+
+            if (pwrLvl >= 1) 
+            {
+                if (!safeRoom.instance.getSafeAccess())
+                    safeRoom.instance.setSafeAccess(true);
             }
         }
     }
