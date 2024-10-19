@@ -306,6 +306,7 @@ public class playerMovement : MonoBehaviour, IDamage
         isStepping = false;
     }
 
+
     private projectilePool objectPool; // object pool class instance initialized in start I think, array of object pools
     public ObjectType projectileType; // for object pooling / recycling, ObjectType is enum in projectilePool script
     int Dtime;
@@ -328,7 +329,7 @@ public class playerMovement : MonoBehaviour, IDamage
                     StartCoroutine(shoot());
 
                     //Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation); // OG method
-                    GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // making bullet object
+                    GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // setting bullet object to newProjectile
                     // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile
                     newProjectile.transform.position = playerCamera.transform.position; // player camera needs to be used instead of Camera.main (I don't know why)
                     newProjectile.transform.rotation = playerCamera.transform.rotation;
@@ -355,7 +356,7 @@ public class playerMovement : MonoBehaviour, IDamage
                     StartCoroutine(shoot());
 
                     //Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation); // OG method
-                    GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // making bullet object
+                    GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // setting bullet object to newProjectile
                     // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile
                     newProjectile.transform.position = playerCamera.transform.position; // player camera needs to be used instead of Camera.main (I don't know why)
                     newProjectile.transform.rotation = playerCamera.transform.rotation;

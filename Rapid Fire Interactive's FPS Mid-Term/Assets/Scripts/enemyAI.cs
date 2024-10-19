@@ -94,7 +94,12 @@ public class enemyAI : MonoBehaviour , IDamage
 
         miniBossheadColl = miniBossheadCollider;
         enemyHeadColl = enemyHeadCollider;
-        
+
+        if (rangedAttack != null) {
+            objectPool = FindObjectOfType<projectilePool>();
+            Dtime = rangedAttack.GetComponent<damage>().getDTime();
+            projectileType = rangedAttack.GetComponent<damage>().getProjectileType();
+        }
     }
 
     // Update is called once per frame
@@ -203,6 +208,11 @@ public class enemyAI : MonoBehaviour , IDamage
         aCoRoutine = null;
     }
 
+
+    private projectilePool objectPool; // object pool class instance initialized in start I think, array of object pools
+    public ObjectType projectileType; // for object pooling / recycling, ObjectType is enum in damage script, initialized in start by getting damage script and getting enum type
+    int Dtime; // initialized in start by getting damage script and getting destroy time
+
     IEnumerator shoot() {
         // Set shooting to true
         isShooting = true;
@@ -223,16 +233,23 @@ public class enemyAI : MonoBehaviour , IDamage
             else
                 anim.SetTrigger("Shoot");
         }
-        if(rangedAttack != null)
-        // Create our bullet and fire from the shootPos of Enemy 
-            Instantiate(rangedAttack, shootPos.position, transform.rotation);
-        /// this needs to be changed to make during the shoot animation
-
-        // Timer setting shootRate time
-        yield return new WaitForSeconds(shootRate);
-
-        // Set shooting back to false
+        if (rangedAttack != null) {
+            //Instantiate(rangedAttack, shootPos.position, rotation); // OG method
+            GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // setting bullet object to newProjectile
+            // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile
+            newProjectile.transform.position = shootPos.position;
+            newProjectile.transform.rotation = rotation;
+            newProjectile.GetComponent<Rigidbody>().velocity = (playerDir.normalized) * (rangedAttack.GetComponent<damage>().getAttackSpeed()); // accessing damage script and getting bullet speed
+            newProjectile.SetActive(true); // turning object on (it is set off when added to object pool)
+            StartCoroutine(addObjectToPool(newProjectile)); // projectile is added to pool if it collides (see damage script), or if bullet "destory" time is hit
+        }
+        yield return new WaitForSeconds(shootRate); // Timer setting shootRate time
         isShooting = false;
+    }
+
+    IEnumerator addObjectToPool(GameObject projectile) { // adding projectile to the pool that matches its type
+        yield return new WaitForSeconds(Dtime); // I have no idea why but its adding extra time
+        objectPool.addToPool(projectileType, projectile);
     }
 
     public void meleeOn()
@@ -244,17 +261,18 @@ public class enemyAI : MonoBehaviour , IDamage
         meleeCol.enabled = false;
     }
 
-   
+    Quaternion rotation; // for the enemiesShot, does not affect their look direction
 
-
-
-
-    // Tell AI to face player 
-    // Quaterions used becasue we must rotate enemy velocity direction to always face current target
+    // Tell AI to face player, Quaterions used becasue we must rotate enemy velocity direction to always face current target
     void faceTarget() {
 
-        if (agent.CompareTag("Light"))
-            transform.rotation = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
+        /*if (agent.CompareTag("Light")) {
+            transform.rotation = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
+        }*/
+
+        rotation = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z)); // using Y axis direction
+
+        //transform.rotation = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z)); // does not use Y axis direction (just goes forward)
 
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z)); // Create a rotation object to store direction to face (Direction of player)
         // Telling AI to transform(Move) in rotation direaction of set destions position in time and rotate at the desired speed set to be frame rate INDEPENDENT
