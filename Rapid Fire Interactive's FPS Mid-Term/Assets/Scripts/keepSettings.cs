@@ -41,6 +41,7 @@ public class keepSettings : MonoBehaviour
         if (settingMenu == null)
         {
             setDefaults();
+            settingMenu.SetActive(false);
         }
         else
         {
@@ -83,7 +84,7 @@ public class keepSettings : MonoBehaviour
         }
         if (playerMovement.player != null)
         {
-
+            playerMovement.player.setSprintBool(sprintToggle);
         }
     }
 

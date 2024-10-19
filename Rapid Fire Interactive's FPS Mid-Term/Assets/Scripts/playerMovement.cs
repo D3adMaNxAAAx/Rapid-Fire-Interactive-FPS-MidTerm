@@ -1323,4 +1323,8 @@ public class playerMovement : MonoBehaviour, IDamage
     {
         aud = _aud;
     }
+    public void setSprintBool(bool value)
+    {
+        toggleSprint = value;
+    }
 }
