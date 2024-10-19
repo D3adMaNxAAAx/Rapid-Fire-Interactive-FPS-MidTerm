@@ -4,7 +4,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour {
-
+    string stateIndex;
+    private void Start()
+    {
+        stateIndex = SceneManager.GetActiveScene().name;
+        if (stateIndex == "MainMenu")
+            stateIndex = "Level 1";
+    }
     public void confirm()
     {
         Debug.Log("Confirm");
@@ -34,7 +40,7 @@ public class buttonFunctions : MonoBehaviour {
         if (playerStats.Stats != null)
             Destroy(playerStats.Stats.gameObject);
         
-        SceneManager.LoadScene(1, LoadSceneMode.Single);
+        SceneManager.LoadScene(stateIndex, LoadSceneMode.Single);
         gameManager.instance.stateUnpause();
     }
 

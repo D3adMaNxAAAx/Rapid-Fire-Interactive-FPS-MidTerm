@@ -12,8 +12,8 @@ public class CameraMovement : MonoBehaviour
     //Sensitivity settings 
     [SerializeField] Slider sensitivitySlider;
     
-    [SerializeField] int sens = 300;
-    int startingSens;
+    [SerializeField] float sens = 300f;
+    float startingSens;
   
     [SerializeField] int lockVertMin, lockVertMax;
     [SerializeField] bool invertY;
@@ -35,67 +35,6 @@ public class CameraMovement : MonoBehaviour
     bool sniperZoom = false;
     Camera cam;
     float rotX;
-
-    public Camera getCam() {
-        return cam;
-    }
-    public float getNormalFOV() {
-        return normalFOV;
-    }
-    public int GetSens()
-    {
-        return sens;
-    }
-    public void SetSens(int value)
-    {
-        sens = value;
-    }
-    public int GetLockMin()
-    {
-        return lockVertMin;
-    }
-    public void SetVertMin(int value)
-    {
-        lockVertMin = Mathf.Clamp(value, -90, 90);
-    }
-    public int GetVertMax()
-    {
-        return lockVertMax;
-    }
-    public void SetVetMax(int value)
-    {
-        lockVertMax = Mathf.Clamp(value, -90, 90);
-    }
-    public float GetLeanAngle()
-    {
-        return leanAngle;
-    }
-    public void SetLeanAngle(float value)
-    {
-        leanAngle = Mathf.Clamp(value, 0, 90);
-    }
-    public float GetLeanSpeed()
-    {
-        return leanSpeed;
-    }
-    public void SetLeanSpeed(float value)
-    {
-        leanSpeed = Mathf.Max(value, 0);  
-    }
-    public bool GetInvertY()
-    {
-        return invertY;
-    }
-    public void SetInvertY(bool value)
-    {
-        invertY = value;
-    }
-
-    public void AdjustSensitivity(float value)
-    {
-        sens = (int)value;
-        Debug.Log("Sensitivity adjusted to: " + sens);
-    }
    
     // Start is called before the first frame update
     void Start()
@@ -204,16 +143,83 @@ public class CameraMovement : MonoBehaviour
 
     public void invert()
     {
-       
         invertY = !invertY;
-       
-
     }
-
 
     public void autoZoom()
     {
         snapZoom = !snapZoom;
     }
-   
+
+    public Camera getCam()
+    {
+        return cam;
+    }
+    public float getNormalFOV()
+    {
+        return normalFOV;
+    }
+    public float GetSens()
+    {
+        return sens;
+    }
+    public void SetSens(float value)
+    {
+        sens = value;
+    }
+    public int GetLockMin()
+    {
+        return lockVertMin;
+    }
+    public void SetVertMin(int value)
+    {
+        lockVertMin = Mathf.Clamp(value, -90, 90);
+    }
+    public int GetVertMax()
+    {
+        return lockVertMax;
+    }
+    public void SetVetMax(int value)
+    {
+        lockVertMax = Mathf.Clamp(value, -90, 90);
+    }
+    public float GetLeanAngle()
+    {
+        return leanAngle;
+    }
+    public void SetLeanAngle(float value)
+    {
+        leanAngle = Mathf.Clamp(value, 0, 90);
+    }
+    public float GetLeanSpeed()
+    {
+        return leanSpeed;
+    }
+    public void SetLeanSpeed(float value)
+    {
+        leanSpeed = Mathf.Max(value, 0);
+    }
+    public bool GetInvertY()
+    {
+        return invertY;
+    }
+    public void SetInvertY(bool value)
+    {
+        invertY = value;
+    }
+
+    public void AdjustSensitivity(float value)
+    {
+        sens = (int)value;
+        Debug.Log("Sensitivity adjusted to: " + sens);
+    }
+
+    public bool getZoomSnap()
+    {
+        return snapZoom;
+    }
+    public void setZoomeSnap(bool value)
+    {
+        snapZoom = value;
+    }
 }

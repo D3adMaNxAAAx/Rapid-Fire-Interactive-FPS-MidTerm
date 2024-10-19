@@ -8,10 +8,10 @@ public class keepSettings : MonoBehaviour
     public static keepSettings gameSettings;
 
     [SerializeField] GameObject settingMenu;
-    //[SerializeField] bool inverBool;
-    //[SerializeField] GameObject togSprinBool;
-    //[SerializeField] GameObject togTimeBool;
-    //[SerializeField] GameObject togFocus;
+    [SerializeField] Toggle inverBool;
+    [SerializeField] Toggle togSprinBool;
+    [SerializeField] Toggle togTimeBool;
+    [SerializeField] Toggle togFocus;
     [SerializeField] Slider sensSlider;
     [SerializeField] Slider musicSlider;
     [SerializeField] Slider sfxVolume;
@@ -42,6 +42,11 @@ public class keepSettings : MonoBehaviour
         {
             setDefaults();
         }
+        else
+        {
+            getSettingsUpdate();
+            settingUpdate();
+        }
         
     }
     public void setDefaults()
@@ -49,16 +54,20 @@ public class keepSettings : MonoBehaviour
         settingMenu = GameObject.Find("Settings Menu");
         if (settingMenu != null)
         {
+            inverBool = GameObject.Find("Invert Y").GetComponent<Toggle>();
+            togSprinBool = GameObject.Find("Toggle Sprint").GetComponent<Toggle>();
+            togTimeBool = GameObject.Find("Toggle Timer").GetComponent<Toggle>();
+            togFocus = GameObject.Find("Toggle Focus").GetComponent<Toggle>();
             sensSlider = GameObject.Find("Sensitivity ").GetComponent<Slider>();
             musicSlider = GameObject.Find("Volume (Music)").GetComponent<Slider>();
             sfxVolume = GameObject.Find("Volume (SFX)").GetComponent<Slider>();
+            inverBool.isOn = invertY;
+            togSprinBool.isOn = sprintToggle;
+            togTimeBool.isOn = timerTog;
+            togFocus.isOn = focusTog;
             sensSlider.value = sens;
             musicSlider.value = mus;
             sfxVolume.value = sfx;
-            GameObject.Find("Invert Y").GetComponent<Toggle>().isOn = invertY;
-            GameObject.Find("Toggle Sprint").GetComponent<Toggle>().isOn = sprintToggle;
-            GameObject.Find("Toggle Timer").GetComponent<Toggle>().isOn = timerTog;
-            GameObject.Find("Toggle Focus").GetComponent<Toggle>().isOn = focusTog;
         }
         else
             return;
@@ -68,24 +77,25 @@ public class keepSettings : MonoBehaviour
     {
         if (CameraMovement.state != null)
         {
-            CameraMovement.state.SetSens((int)sens);
+            CameraMovement.state.SetSens(sens);
+            CameraMovement.state.SetInvertY(invertY);
+            CameraMovement.state.setZoomeSnap(focusTog);
+        }
+        if (playerMovement.player != null)
+        {
+
         }
     }
-    public void inverBool(bool tick)
+
+    private void getSettingsUpdate()
     {
-        invertY = tick;
-    }
-    public void togSprinBool(bool tick)
-    {
-        sprintToggle = tick;
-    }
-    public void togTimeBool(bool tick)
-    {
-        timerTog = tick;
-    }
-    public void togFocus(bool tick)
-    {
-        focusTog = tick;
+        invertY = inverBool.isOn;
+        sprintToggle = togSprinBool.isOn;
+        timerTog = togTimeBool.isOn;
+        focusTog = togFocus.isOn;
+        sens = sensSlider.value;
+        mus = musicSlider.value;
+        sfx = sfxVolume.value;
     }
     public void setSens(float value)
     {
