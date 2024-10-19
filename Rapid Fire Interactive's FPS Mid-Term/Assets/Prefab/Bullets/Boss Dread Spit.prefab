@@ -49,12 +49,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
+  projectileType: 7
   rb: {fileID: 480077600912443003}
   missleTarget: {fileID: 0}
   missleRotationSpeed: 10
   damageAmount: 3
   attackSpeed: 35
-  destroyTime: 5
+  destroyTime: 3
 --- !u!135 &8796806919602617418
 SphereCollider:
   m_ObjectHideFlags: 0
