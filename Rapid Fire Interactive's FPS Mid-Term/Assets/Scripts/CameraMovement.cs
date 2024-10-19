@@ -174,7 +174,7 @@ public class CameraMovement : MonoBehaviour
             sens = startingSens;
             gameManager.instance.scopeZoomOut(); // handles showing scope, gun model, camera zoom
         }
-        sens = (int)keepSettings.gameSettings.getSens();
+        //sens = (int)keepSettings.gameSettings.getSens();
     }
 
     void HandleLeaning()

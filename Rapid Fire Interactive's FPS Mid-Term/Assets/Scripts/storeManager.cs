@@ -17,14 +17,20 @@ public class storeManager : MonoBehaviour
     [SerializeField] TMP_Text ammoText;
     [SerializeField] TMP_Text healthCostText;
     [SerializeField] TMP_Text ammoCostText;
+    [SerializeField] TMP_Text laserRifleCostText;
     [SerializeField] TMP_Text playerCoinsText;
     [SerializeField] TMP_Text transactionStatus;
+
+    [Header("-- Store Weapons --")]
+    [SerializeField] gunStats laserRifle; // This might be able to be made as a generalized weapon to sell variable
 
     // Store Costs
     [Header("-- Store Modifiers --")]
     [SerializeField] float flashMod;
     [SerializeField] int healthCost;
     [SerializeField] int ammoCost;
+    [SerializeField] int laserRifleCost;
+
     // Memory
     Color healthColorOrig;
     Color ammoColorOrig;
@@ -49,6 +55,7 @@ public class storeManager : MonoBehaviour
         updateCoinsDisplay();
         updateHealthDisplay();
         updateAmmoDisplay();
+        updateLaserRifleDisplay();
     }
 
     // Buy Button Methods
@@ -85,6 +92,37 @@ public class storeManager : MonoBehaviour
             // Display that the transaction was successful.
             //displayTransactionStatus(true);
         } 
+        else
+        {
+            // Transaction could not go through.
+            //displayTransactionStatus(false);
+        }
+    }
+
+    public void onLaserRiflePurchase()
+    {
+        // (maybe account for a case where the player has a full loadout)
+        // Check if player can afford the laser rifle & doesn't already have it
+        bool hasLaserRifle = false;
+        
+        foreach (gunStats gun in gameManager.instance.getPlayerScript().getGunList())
+        {
+            if (gun.isLaser)
+            {
+                hasLaserRifle = true;
+                break;
+            }
+        }
+
+        if (canAfford(laserRifleCost) && !hasLaserRifle)
+        {
+            // Player can, so make transaction and give health.
+            makeTransaction(laserRifleCost);
+            giveLaserRifle();
+
+            // Display that the transaction was successful.
+            //displayTransactionStatus(true);
+        }
         else
         {
             // Transaction could not go through.
@@ -181,6 +219,25 @@ public class storeManager : MonoBehaviour
         }
     }
 
+    void giveLaserRifle()
+    {
+        // Precautionary check to make sure the player doesn't have a full loadout.
+        // Check if they have less than 5 guns
+        if (gameManager.instance.getPlayerScript().getGunList().Count < 5)
+        {
+            gameManager.instance.getPlayerScript().getGunStats(laserRifle);
+        }
+        // Otherwise, override the last gun with the laser rifle (FOR NOW)
+        else
+        {
+            gameManager.instance.getPlayerScript().getGunList()[gameManager.instance.getPlayerScript().getGunList().Count - 1] = laserRifle;
+        }
+
+        // Update UIs
+        gameManager.instance.getPlayerScript().updatePlayerUI();
+        updateStoreUI();
+    }
+
     // UI Display methods
     void updateCoinsDisplay()
     {
@@ -239,5 +296,23 @@ public class storeManager : MonoBehaviour
             ammoText.color = Color.red;
             ammoCostText.color = Color.red;
         }
+    }
+
+    void updateLaserRifleDisplay()
+    {
+        // Laser Rifle Cost
+        laserRifleCostText.text = "Cost: " + laserRifleCost.ToString("F0");
+
+        // Append Coin or Coins at the end
+        if (laserRifleCost == 1)
+            laserRifleCostText.text += " coin";
+        else
+            laserRifleCostText.text += " coins";
+
+        // Color the cost text green/red depending on if the player can afford it
+        if (canAfford(healthCost))
+            laserRifleCostText.color = Color.green;
+        else
+            laserRifleCostText.color = Color.red;
     }
 }

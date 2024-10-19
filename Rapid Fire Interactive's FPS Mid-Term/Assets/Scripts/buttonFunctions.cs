@@ -135,6 +135,11 @@ public class buttonFunctions : MonoBehaviour {
         storeManager.instance.onAmmoPurchase();
     }
 
+    public void laserRiflePurchase()
+    {
+        storeManager.instance.onLaserRiflePurchase();
+    }
+
     public void Respawn()
     {
         playerMovement.player.spawnPlayer();
