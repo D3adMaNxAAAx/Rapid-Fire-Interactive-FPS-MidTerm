@@ -153,7 +153,9 @@ public class enemyAI : MonoBehaviour , IDamage
                     faceTarget(); //face player
                 }
                 if (!isShooting) {
-                    StartCoroutine(shoot());
+                    if (angleToPlayer <= (viewAngle / 3)) { // enemies always shoots and hits you even if not fully rotated to you yet so nerfing view angle for when shooting at player
+                        StartCoroutine(shoot());
+                    }
                 }
                 //reset ai stopping dist
                 agent.stoppingDistance = stoppingDistOrig;
@@ -266,13 +268,7 @@ public class enemyAI : MonoBehaviour , IDamage
     // Tell AI to face player, Quaterions used becasue we must rotate enemy velocity direction to always face current target
     void faceTarget() {
 
-        /*if (agent.CompareTag("Light")) {
-            transform.rotation = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
-        }*/
-
         rotation = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z)); // using Y axis direction
-
-        //transform.rotation = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z)); // does not use Y axis direction (just goes forward)
 
         Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z)); // Create a rotation object to store direction to face (Direction of player)
         // Telling AI to transform(Move) in rotation direaction of set destions position in time and rotate at the desired speed set to be frame rate INDEPENDENT
