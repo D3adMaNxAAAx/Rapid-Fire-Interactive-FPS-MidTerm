@@ -8,9 +8,9 @@ public class damage : MonoBehaviour
 
     //Allows switch between damage types
     [SerializeField] enum damageType { ranged, missle, melee, hazard } // fire is hazard
-
-    //Modifier field for damage type
     [SerializeField] damageType type;
+
+    [SerializeField] ObjectType projectileType; // for object pooling / recycling, ObjectType is enum in projectilePool script
 
     //RigidBody component Field tracker, Allows to add velocity to range attacks
     [SerializeField] Rigidbody rb;

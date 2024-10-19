@@ -240,9 +240,7 @@ public class playerMovement : MonoBehaviour, IDamage
             playerVel = Vector3.zero;
             jumpCounter = 0;
         }
-        //crouching
         
-
         // Movement Controller
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
         controller.Move(moveDir * speed * Time.deltaTime);
