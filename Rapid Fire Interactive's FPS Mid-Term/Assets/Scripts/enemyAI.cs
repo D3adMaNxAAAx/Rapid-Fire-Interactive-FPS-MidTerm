@@ -5,8 +5,8 @@ using Unity.Properties;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class enemyAI : MonoBehaviour , IDamage
-{
+public class enemyAI : MonoBehaviour , IDamage {
+
     [SerializeField] enum enemyType { basic, challenge, boss } // Allows selection of enemy type
     [Header("----- Components -----")]
     [SerializeField] enemyType type; // Tracks which type of enemy in play
@@ -27,8 +27,8 @@ public class enemyAI : MonoBehaviour , IDamage
     [SerializeField] BoxCollider miniBossheadCollider = null;
     [SerializeField] CapsuleCollider enemyHeadCollider = null;
 
-    static BoxCollider miniBossheadColl;
-    static CapsuleCollider enemyHeadColl;
+    BoxCollider miniBossheadColl;
+    CapsuleCollider enemyHeadColl;
 
     // -- Extra Checks --
     bool canPlaySound = true; // Tracks if the sound can be played
@@ -76,8 +76,8 @@ public class enemyAI : MonoBehaviour , IDamage
     bool sawPlayer = false;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
+
         // Assign variables that need to be set at enemy creation
         colorOrig = model.material.color; // Sets our Models original color on scene start
         HPOrig = HP; // Set orginal hp value on scene open for enemy
@@ -516,9 +516,9 @@ public class enemyAI : MonoBehaviour , IDamage
     { HP = _hp; }
 
 
-   static public BoxCollider getMiniBossHeadCollider()
+    public BoxCollider getMiniBossHeadCollider()
     { return miniBossheadColl; }
-    static public CapsuleCollider getEnemyHeadCollider()
+    public CapsuleCollider getEnemyHeadCollider()
     { return enemyHeadColl; }
   
 }
