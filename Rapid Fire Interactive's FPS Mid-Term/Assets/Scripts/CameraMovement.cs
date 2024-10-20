@@ -28,14 +28,16 @@ public class CameraMovement : MonoBehaviour
     [SerializeField] float leanAngle = 30f;
     [SerializeField] float leanSpeed = 10f;
     [SerializeField] float LeanOffSet = 0.8f;
+    
     float currentLeanAngle = 0f;
     Vector3 OrigCameraPos;
-
-    bool isAiming;
     bool sniperZoom = false;
     Camera cam;
     float rotX;
-   
+
+    // Unused Variables
+    //bool isAiming;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -82,7 +84,7 @@ public class CameraMovement : MonoBehaviour
         //AimLogic
         if (Input.GetMouseButton(1)) {
             if (gameManager.instance.getPauseStatus() == false) {
-                isAiming = true;
+                //isAiming = true;
                 if (gameManager.instance.getPlayerScript().getIsSniper() == false) {
                     if (snapZoom) {
                         cam.fieldOfView = aimingFOV; //if snap Zoom Enabled zoom instantly
@@ -101,7 +103,7 @@ public class CameraMovement : MonoBehaviour
             }
         }
         else {
-            isAiming = false;
+            //isAiming = false;
             sniperZoom = false;
             if (snapZoom) {
                 cam.fieldOfView = normalFOV; //snap back to normal Fov

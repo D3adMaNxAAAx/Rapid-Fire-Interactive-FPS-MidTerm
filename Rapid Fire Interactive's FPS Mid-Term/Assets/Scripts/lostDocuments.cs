@@ -9,20 +9,16 @@ public class lostDocuments : MonoBehaviour , IInteractable
 {
     [SerializeField] GameObject lostDocument;
     [SerializeField] GameObject journalIcon;
-    
-
     [SerializeField] Canvas pickedUpFeedback;
     [SerializeField] Image docOpened;
-
     [SerializeField] GameObject closeButton;
-
     [SerializeField] Image activeDoc;
-    
-   
-
     bool isOpen;
-    bool isPickedUp;
-    bool docOpen;
+
+    // Unused variables
+    // bool isPickedUp;
+    // bool docOpen;
+    
     // Start is called before the first frame update
     void Awake()
     {
@@ -40,7 +36,7 @@ public class lostDocuments : MonoBehaviour , IInteractable
     public void interact()
     {
         Destroy(lostDocument);
-        isPickedUp = true;
+        //isPickedUp = true;
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
         
         pickedUpFeedback.enabled = true;
@@ -97,7 +93,7 @@ public class lostDocuments : MonoBehaviour , IInteractable
         {
             docOpened.gameObject.SetActive(true);
             closeButton.gameObject.SetActive(true);
-            docOpen = true;
+            //docOpen = true;
             activeDoc = docOpened;
         }
         
@@ -107,7 +103,7 @@ public class lostDocuments : MonoBehaviour , IInteractable
     {
         activeDoc.gameObject.SetActive(false); 
         activeDoc = null;
-        docOpen = false;
+        //docOpen = false;
         closeButton.gameObject.SetActive(false);
         
     }

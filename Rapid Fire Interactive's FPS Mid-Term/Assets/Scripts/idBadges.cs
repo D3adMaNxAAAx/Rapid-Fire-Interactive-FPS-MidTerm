@@ -9,11 +9,13 @@ public class idBadges : MonoBehaviour, IInteractable
     [SerializeField] GameObject badge;
     [SerializeField] GameObject journalIcon;
     [SerializeField] GameObject toDestroy;
-
     [SerializeField] Canvas pickedUpFeedback;
 
-    bool isPickedUp;
     bool isOpen;
+
+    // Unused Variables
+    //bool isPickedUp;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +32,7 @@ public class idBadges : MonoBehaviour, IInteractable
     public void interact()
     {
         Destroy(badge);
-        isPickedUp = true;
+        //isPickedUp = true;
         pickedUpFeedback.enabled = true;
         isOpen = true;
 

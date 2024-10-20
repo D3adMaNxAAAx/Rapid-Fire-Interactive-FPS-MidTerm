@@ -66,6 +66,14 @@ public class safeRoom : MonoBehaviour, IInteractable
             {
                 interact();
                 gameManager.instance.getInteractUI().SetActive(false);
+            } 
+            else if (Input.GetButton("Interact") && !safeAccess)
+            {
+                StartCoroutine(flashPowerWarning());
+            } 
+            else if (Input.GetButton("Interact") && playerStats.Stats.getBadgesFound() < 3)
+            {
+                StartCoroutine(flashIDWarning());
             }
         }
         else
@@ -109,6 +117,21 @@ public class safeRoom : MonoBehaviour, IInteractable
         }
 
         yield return null;
+    }
+    public IEnumerator flashPowerWarning()
+    {
+        gameManager.instance.getIDBadgeWarningText().gameObject.SetActive(true);
+        gameManager.instance.getIDBadgeWarningText().text = "Power Level 1 needed!";
+        yield return new WaitForSeconds(0.75f);
+        gameManager.instance.getIDBadgeWarningText().gameObject.SetActive(false);
+    }
+
+    public IEnumerator flashIDWarning()
+    {
+        gameManager.instance.getIDBadgeWarningText().gameObject.SetActive(true);
+        gameManager.instance.getIDBadgeWarningText().text = "3 ID Badges Needed!";
+        yield return new WaitForSeconds(0.75f);
+        gameManager.instance.getIDBadgeWarningText().gameObject.SetActive(false);
     }
 
     // Getters

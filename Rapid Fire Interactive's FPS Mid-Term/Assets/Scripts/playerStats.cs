@@ -23,9 +23,14 @@ public class playerStats : MonoBehaviour {
     int shopItemsPurchased; 
     string completionTime = "N/A";
     int idBadgesFound;
-    int powerObjectsFound; float percentFound1; int maxPowerObjects = 9;
-    int docsFound; float percentFound2; int maxDocs = 9;
+    int powerObjectsFound; 
+    int docsFound; 
     int collectablesFound; float percentFound3; int maxCollectables = 10; // if implemented
+
+    // unused stats
+    //float percentFound1; int maxPowerObjects = 9; // in relation to powerObjectsFound
+    //float percentFound2; int maxDocs = 9; // in relation to docsFound
+
     // stats being tracked
 
     void Awake() {
@@ -59,8 +64,8 @@ public class playerStats : MonoBehaviour {
     public void levelUp() {
         maxLevel++; }
 
-    public void pwrLevel() {
-        pwrLvl++; }
+    public void pwrLevel(int _pwrLevel) {
+        pwrLvl = _pwrLevel; }
 
     public void gotXP(int xp) {
         totalXP += xp; }

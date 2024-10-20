@@ -54,11 +54,13 @@ public class playerJournal : MonoBehaviour
     [SerializeField] TMP_Text currentMoney;
 
     bool isOpen;
-    bool docIsOpen;
-    bool objOpen;
-    bool itemsOpen;
-    bool statsOpen;
-    bool achieveOpen;
+
+    // Unused Variables
+    //bool docIsOpen;
+    //bool objOpen;
+    //bool itemsOpen;
+    //bool statsOpen;
+    //bool achieveOpen;
 
     private void Awake()
     {
@@ -180,7 +182,7 @@ public class playerJournal : MonoBehaviour
     public void closeDoc()
     {
             activeDoc.enabled = false;
-            docIsOpen = false;
+            //docIsOpen = false;
     }
 
     public void updateObjectives()

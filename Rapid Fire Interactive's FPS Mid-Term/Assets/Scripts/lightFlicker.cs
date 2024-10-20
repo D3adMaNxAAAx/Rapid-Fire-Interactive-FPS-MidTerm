@@ -122,26 +122,13 @@ public class lightFlicker : MonoBehaviour, IInteractable
 
     public void interact()
     {
-        if (gameManager.instance.getPowerItems() >= 9)
+        int calcPwrLvl = (int)Math.Floor((double)gameManager.instance.getPowerItems() / 3);
+        if (calcPwrLvl > 0)
         {
-            pwrLvl = 3;
-            if (playerStats.Stats.getPWRLevel() == 2)
-                playerStats.Stats.pwrLevel();
+            pwrLvl = calcPwrLvl;
+            playerStats.Stats.pwrLevel(calcPwrLvl);
         }
-        else if (gameManager.instance.getPowerItems() >= 6)
-        {
-            pwrLvl = 2;
-            if (playerStats.Stats.getPWRLevel() == 1)
-                playerStats.Stats.pwrLevel();
-        }
-        else if (gameManager.instance.getPowerItems() >= 3)
-        {
-            pwrLvl = 1;
-            if (playerStats.Stats.getPWRLevel() < 1)
-                playerStats.Stats.pwrLevel();
-        }
-        else
-            return;
+        else return;
 
         // Need to do powerStages to update booleans and the power stage.
         if (powerSys != null)

@@ -9,12 +9,11 @@ public class repairItems : MonoBehaviour, IInteractable
     [SerializeField] GameObject repairObj;
     [SerializeField] GameObject journalIcon;
     [SerializeField] GameObject toDestroy;
-
     [SerializeField] Canvas pickedUpFeedback;
-
-
     bool isOpen;
-    bool isPickedUp;
+    
+    // Unused Variables
+    //bool isPickedUp;
 
 
     private void Start()
@@ -32,7 +31,7 @@ public class repairItems : MonoBehaviour, IInteractable
     public void interact()
     {
         Destroy(repairObj);
-        isPickedUp = true;
+        //isPickedUp = true;
         
         pickedUpFeedback.enabled = true;
         isOpen = true;

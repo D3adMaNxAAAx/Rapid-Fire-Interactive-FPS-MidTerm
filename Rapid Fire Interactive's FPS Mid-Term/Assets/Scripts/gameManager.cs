@@ -30,7 +30,7 @@ public class gameManager : MonoBehaviour {
 
     // First Selected Options (for use when selecting with arrow keys)
     [Header("-- First Selected Options --")]
-    //[SerializeField] GameObject mainMenuFirst;
+    [SerializeField] GameObject mainMenuFirst;
     [SerializeField] GameObject loadoutMenuFirst;
     [SerializeField] GameObject pauseMenuFirst;
     [SerializeField] GameObject optionsMenuFirst;
@@ -94,6 +94,8 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject ammoWarning;
     [SerializeField] GameObject lowHealthWarning;
     [SerializeField] GameObject checkPointPopup;
+    [SerializeField] TMP_Text idBadgeLvlWarning;
+    [SerializeField] TMP_Text pwrLvlWarning;
 
     // -- Objects --
     [Header("-- Game Components --")]
@@ -652,5 +654,25 @@ public class gameManager : MonoBehaviour {
 
     public void setInteractUI (GameObject _interactUI) 
     { interactUI = _interactUI; }
+
+    public TMP_Text getIDBadgeWarningText()
+    {
+        return idBadgeLvlWarning;
+    }
+
+    public void setIDBadgeWarningText(TMP_Text _idBadgeWarningText)
+    {
+        idBadgeLvlWarning = _idBadgeWarningText;
+    }
+
+    public TMP_Text getPwrLvlWarningText()
+    {
+        return pwrLvlWarning;
+    }
+
+    public void setPwrLvlWarningText(TMP_Text _pwrLevelWarningText)
+    {
+        pwrLvlWarning = _pwrLevelWarningText;
+    }
 
 }
