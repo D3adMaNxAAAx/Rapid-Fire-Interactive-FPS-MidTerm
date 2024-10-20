@@ -11,14 +11,29 @@ public class buttonFunctions : MonoBehaviour {
         if (stateIndex == "MainMenu")
             stateIndex = "Level 1";
     }
-    public void confirm()
+    public void confirmRestart()
     {
-        Debug.Log("Confirm");
+        if (playerStats.Stats != null)
+            playerStats.Stats.Reset();
+
+        gameManager.instance.getTimerTracker().SetActive(false);
+
+        if (uiManager.manager != null)
+            Destroy(uiManager.manager.gameObject);
+
+        if (playerMovement.player != null)
+            Destroy(playerMovement.player.gameObject);
+
+        if (playerStats.Stats != null)
+            Destroy(playerStats.Stats.gameObject);
+
+        SceneManager.LoadScene(stateIndex, LoadSceneMode.Single);
+        gameManager.instance.stateUnpause();
     }
 
     public void cancel()
     {
-        Debug.Log("Cancel");
+        back();
     }
 
     public void resume() {
@@ -26,22 +41,7 @@ public class buttonFunctions : MonoBehaviour {
     }
 
     public void restart() {
-        if (playerStats.Stats != null)
-            playerStats.Stats.Reset();
-        
-        gameManager.instance.getTimerTracker().SetActive(false);
-        
-        if (uiManager.manager != null)
-            Destroy(uiManager.manager.gameObject);
-        
-        if (playerMovement.player != null)
-            Destroy(playerMovement.player.gameObject);
-        
-        if (playerStats.Stats != null)
-            Destroy(playerStats.Stats.gameObject);
-        
-        SceneManager.LoadScene(stateIndex, LoadSceneMode.Single);
-        gameManager.instance.stateUnpause();
+        gameManager.instance.openConfirmationMenu();
     }
 
     public void options() {
@@ -60,12 +60,12 @@ public class buttonFunctions : MonoBehaviour {
         gameManager.instance.openStatsMenu();
     }
 
-    public void ContorlsMenu() {
+    public void ControlsMenu() {
         gameManager.instance.openControlsMenu();
     }
 
     public void settings() {
-        gameManager.instance.settingsMenu();
+        gameManager.instance.openSettingsMenu();
     }
 
     public void onUpgradeMenu() {
@@ -77,7 +77,7 @@ public class buttonFunctions : MonoBehaviour {
     }
 
     public void storeMenu() {
-        gameManager.instance.storeMenu();
+        gameManager.instance.openStoreMenu();
     }
 
     public void quit() {
@@ -106,7 +106,7 @@ public class buttonFunctions : MonoBehaviour {
 
     public void back() {
         if (gameManager.instance != null)
-        gameManager.instance.backButton();
+            gameManager.instance.backButton();
     }
 
     public void toggleSprint()
