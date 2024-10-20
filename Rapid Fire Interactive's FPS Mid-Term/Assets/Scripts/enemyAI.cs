@@ -72,6 +72,8 @@ public class enemyAI : MonoBehaviour , IDamage
     private List<StatusEffects> activeEffects = new List<StatusEffects>();
 
     bool isDead;
+    bool seesPlayer = false;
+    bool sawPlayer = false;
 
     // Start is called before the first frame update
     void Start()
@@ -116,10 +118,13 @@ public class enemyAI : MonoBehaviour , IDamage
 
         dropRNG = Random.Range(0, 100);
 
-        if (playerInRange && !canSeePlayer())
-        {
-
-            if (!isRoaming && agent.remainingDistance < .05f && aCoRoutine == null)
+        seesPlayer = canSeePlayer();
+        if (playerInRange && !seesPlayer) { // can't see player
+            if (sawPlayer) { // but did see player before
+                StartCoroutine(turnToPlayer());
+                Debug.Log("hi i saw you");
+            }
+            else if (!isRoaming && agent.remainingDistance < .05f && aCoRoutine == null)
                 aCoRoutine = StartCoroutine(roam());
 
         }
@@ -128,11 +133,16 @@ public class enemyAI : MonoBehaviour , IDamage
                aCoRoutine = StartCoroutine(roam());
                 
         }
-
+        sawPlayer = seesPlayer;
     }
 
-    bool canSeePlayer()
-    {
+    IEnumerator turnToPlayer() { // actually going to player, rotating wasn't working
+        yield return new WaitForSeconds(0.5f);
+        lastSeenPlayerPosition = gameManager.instance.getPlayer().transform.position;
+        agent.SetDestination(lastSeenPlayerPosition); // makes enemys go to player
+    }
+
+    bool canSeePlayer() {
         // Setting direction of where player is in relation to enemy location when within detection rang
         playerDir = gameManager.instance.getPlayer().transform.position - headPos.position;
 
@@ -166,6 +176,17 @@ public class enemyAI : MonoBehaviour , IDamage
         agent.stoppingDistance = 0;
         agent.speed = roamSpeed;
         return false;   
+    }
+
+    Quaternion rotation; // for the enemiesShot, does not affect their look direction
+
+    void faceTarget() { // Tell AI to face player, Quaterions used becasue we must rotate enemy velocity direction to always face current target
+
+        rotation = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z)); // using Y axis direction
+
+        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z)); // Create a rotation object to store direction to face (Direction of player)
+        // Telling AI to transform(Move) in rotation direaction of set destions position in time and rotate at the desired speed set to be frame rate INDEPENDENT
+        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
 
     // Trigger Enter for inRange method to tell Ai seek player because he is now in range
@@ -267,18 +288,6 @@ public class enemyAI : MonoBehaviour , IDamage
     public void meleeOff()
     {
         meleeCol.enabled = false;
-    }
-
-    Quaternion rotation; // for the enemiesShot, does not affect their look direction
-
-    // Tell AI to face player, Quaterions used becasue we must rotate enemy velocity direction to always face current target
-    void faceTarget() {
-
-        rotation = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z)); // using Y axis direction
-
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z)); // Create a rotation object to store direction to face (Direction of player)
-        // Telling AI to transform(Move) in rotation direaction of set destions position in time and rotate at the desired speed set to be frame rate INDEPENDENT
-        transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
 
     // Calling our takeDamage method from interface class IDamage
