@@ -17,7 +17,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuContinue;
-
+    [SerializeField] GameObject menuConfirmation;
     [SerializeField] GameObject menuUpgrade;
     [SerializeField] GameObject menuStore;
     [SerializeField] GameObject menuLoadout;
@@ -30,10 +30,10 @@ public class gameManager : MonoBehaviour {
 
     // First Selected Options (for use when selecting with arrow keys)
     [Header("-- First Selected Options --")]
-    [SerializeField] GameObject mainMenuFirst;
     [SerializeField] GameObject loadoutMenuFirst;
     [SerializeField] GameObject pauseMenuFirst;
     [SerializeField] GameObject optionsMenuFirst;
+    [SerializeField] GameObject confirmationMenuFirst;
     [SerializeField] GameObject settingsMenuFirst;
     [SerializeField] GameObject howToMenuFirst;
     [SerializeField] GameObject tipsMenuFirst;
@@ -94,8 +94,11 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject ammoWarning;
     [SerializeField] GameObject lowHealthWarning;
     [SerializeField] GameObject checkPointPopup;
+    [SerializeField] GameObject powerLevelPopup;
+    [SerializeField] TMP_Text powerLevelText;
     [SerializeField] TMP_Text idBadgeLvlWarning;
     [SerializeField] TMP_Text pwrLvlWarning;
+    [SerializeField] TMP_Text repairWarning;
 
     // -- Objects --
     [Header("-- Game Components --")]
@@ -315,11 +318,19 @@ public class gameManager : MonoBehaviour {
         getEnemyRemainLabel().gameObject.SetActive(state); }
 
     /// each menu needs another GameObject var nameMenuFirst for arrow key support in the menus, drag the first button in that menu into this slot in gameManager
-    public void settingsMenu() {
+    public void openSettingsMenu() {
         menuActive.SetActive(false);
         menuActive = menuSettings;
         menuActive.SetActive(true);
         EventSystem.current.SetSelectedGameObject(settingsMenuFirst); // Set eventsystem selected game object to the button assigned
+    }
+
+    public void openConfirmationMenu()
+    {
+        menuActive.SetActive(false);
+        menuActive = menuConfirmation;
+        menuActive.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(confirmationMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
     public void openOptionsMenu() {
@@ -392,7 +403,7 @@ public class gameManager : MonoBehaviour {
         EventSystem.current.SetSelectedGameObject(upgradeMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
-    public void storeMenu() {
+    public void openStoreMenu() {
         menuActive.SetActive(false);
         // Update the store before it is displayed
         storeManager.instance.updateStoreUI();
@@ -451,14 +462,22 @@ public class gameManager : MonoBehaviour {
             menuActive = menuWin;
             menuActive.SetActive(true);
         }
+        else if (menuActive == menuConfirmation)
+        {
+            menuActive.SetActive(false);
+            menuActive = menuPause;
+            menuActive.SetActive(true);
+        }
 
         if (menuActive == menuPause)
         {
             EventSystem.current.SetSelectedGameObject(pauseMenuFirst); // Set eventsystem selected game object to the button assigned
-        } else if (menuActive == menuOptions)
+        } 
+        else if (menuActive == menuOptions)
         {
             EventSystem.current.SetSelectedGameObject(optionsMenuFirst); // Set eventsystem selected game object to the button assigned
-        } else if (menuActive == menuContinue)
+        } 
+        else if (menuActive == menuContinue)
         {
             EventSystem.current.SetSelectedGameObject(continueMenuFirst); // Set eventsystem selected game object to the button assigned
         }
@@ -655,24 +674,64 @@ public class gameManager : MonoBehaviour {
     public void setInteractUI (GameObject _interactUI) 
     { interactUI = _interactUI; }
 
-    public TMP_Text getIDBadgeWarningText()
+    public TMP_Text getIDBadgeWarning()
     {
         return idBadgeLvlWarning;
     }
 
-    public void setIDBadgeWarningText(TMP_Text _idBadgeWarningText)
+    public void setIDBadgeWarning(TMP_Text _idBadgeWarningText)
     {
         idBadgeLvlWarning = _idBadgeWarningText;
     }
 
-    public TMP_Text getPwrLvlWarningText()
+    public TMP_Text getPwrLvlWarning()
     {
         return pwrLvlWarning;
     }
 
-    public void setPwrLvlWarningText(TMP_Text _pwrLevelWarningText)
+    public void setPwrLvlWarning(TMP_Text _pwrLevelWarningText)
     {
         pwrLvlWarning = _pwrLevelWarningText;
+    }
+
+    public TMP_Text getRepairWarning()
+    {
+        return repairWarning;
+    }
+
+    public void setRepairWarning(TMP_Text _repairWarningText)
+    {
+        repairWarning = _repairWarningText;
+    }
+
+    public GameObject getPowerLevelPopup()
+    {
+        return powerLevelPopup;
+    }
+
+    public void setRepairWarning(GameObject _powerLevelPopup)
+    {
+        powerLevelPopup = _powerLevelPopup;
+    }
+
+    public TMP_Text getPowerLevelText()
+    {
+        return powerLevelText;
+    }
+
+    public void setPowerLevelText(TMP_Text _powerLevelText)
+    {
+        powerLevelText = _powerLevelText;
+    }
+
+    public GameObject getConfirmationMenu()
+    {
+        return menuConfirmation;
+    }
+
+    public void setConfirmationMenu(GameObject _confirmationMenu)
+    {
+        menuConfirmation = _confirmationMenu;
     }
 
 }

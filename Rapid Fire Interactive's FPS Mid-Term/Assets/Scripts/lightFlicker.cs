@@ -5,7 +5,6 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-
 // Despite the name of this script, it is also the main way that the power system works! Therefore, it must be interactable!
 public class lightFlicker : MonoBehaviour, IInteractable
 {
@@ -60,7 +59,6 @@ public class lightFlicker : MonoBehaviour, IInteractable
         {
             powerStages();
         }
-            
     }
 
     public void flickerLight()
@@ -72,43 +70,6 @@ public class lightFlicker : MonoBehaviour, IInteractable
                 StartCoroutine(lightAction());
             }
         }
-    }
-
-    IEnumerator lightAction()
-    {
-        if (lightSys == null && doFlicker)
-        {
-            isFlickering = true;
-            _light.intensity = 0f;
-            yield return new WaitForSeconds(randFlickSpeed);
-            _light.intensity = lightIntensity;
-            yield return new WaitForSeconds(0.5f);
-            isFlickering = false;
-        }
-        else 
-        {
-            isFlickering = true;
-            for (int i = 0; i < lights.Count(); ++i)
-            {
-                lights[i].enabled = true;
-                
-               
-            }
-            yield return new WaitForSeconds(randFlickSpeed);
-            for (int i = 0; i < lights.Count(); ++i)
-            {
-                lights[i].enabled = false;
-            }
-            yield return new WaitForSeconds(0.5f);
-            isFlickering = false;
-        }
-    }
-    public IEnumerator getNewNumber()
-    {
-        waitBool = true;
-        randNum = UnityEngine.Random.Range(0f, 100f);
-        yield return new WaitForSeconds(1f);
-        waitBool = false;
     }
 
     public bool getWait()
@@ -123,12 +84,22 @@ public class lightFlicker : MonoBehaviour, IInteractable
     public void interact()
     {
         int calcPwrLvl = (int)Math.Floor((double)gameManager.instance.getPowerItems() / 3);
-        if (calcPwrLvl > 0)
+
+        // Only fire off this method if the player has found enough for the next power level
+        if (calcPwrLvl > playerStats.Stats.getPWRLevel())
         {
+            // Set pwrLvl to new pwrLvl
             pwrLvl = calcPwrLvl;
             playerStats.Stats.pwrLevel(calcPwrLvl);
+
+            // Show the power popup
+            StartCoroutine(flashPowerPopup());
+
+        } else
+        {
+            if (calcPwrLvl < 3)
+                StartCoroutine(flashRepair(remainingItems()));
         }
-        else return;
 
         // Need to do powerStages to update booleans and the power stage.
         if (powerSys != null)
@@ -152,6 +123,19 @@ public class lightFlicker : MonoBehaviour, IInteractable
         // Turn off the interact UI if the player isn't within range
         if (gameManager.instance.getInteractUI().activeInHierarchy)
             gameManager.instance.getInteractUI().SetActive(false);
+    }
+
+    int remainingItems()
+    {
+        int result = 0;
+
+        if (gameManager.instance.getPowerItems() != 0)
+            // Use the modulo since it's not 0.
+            result = 3 - (gameManager.instance.getPowerItems() % 3);
+        else
+            result = 3;
+        
+        return result;
     }
 
     void powerStages()
@@ -200,6 +184,67 @@ public class lightFlicker : MonoBehaviour, IInteractable
                 // Things will now turn on like the safe room door.
                 isOn = true;
             }
+        }
+    }
+
+    public IEnumerator getNewNumber()
+    {
+        waitBool = true;
+        randNum = UnityEngine.Random.Range(0f, 100f);
+        yield return new WaitForSeconds(1f);
+        waitBool = false;
+    }
+
+    public IEnumerator flashRepair(int _remainingItems)
+    {
+        gameManager.instance.getRepairWarning().gameObject.SetActive(true);
+        if (_remainingItems == 1)
+        {
+            gameManager.instance.getRepairWarning().text = _remainingItems.ToString("F0") + " Repair Item needed until next power level!";
+        } else
+        {
+            gameManager.instance.getRepairWarning().text = _remainingItems.ToString("F0") + " Repair Items needed until next power level!";
+
+        }
+        yield return new WaitForSeconds(1f);
+        gameManager.instance.getRepairWarning().gameObject.SetActive(false);
+    }
+
+    public IEnumerator flashPowerPopup()
+    {
+        gameManager.instance.getPowerLevelPopup().SetActive(true);
+        gameManager.instance.getPowerLevelText().text = "Level " + pwrLvl.ToString();
+        yield return new WaitForSeconds(1f);
+        gameManager.instance.getPowerLevelPopup().SetActive(false);
+    }
+
+    IEnumerator lightAction()
+    {
+        if (lightSys == null && doFlicker)
+        {
+            isFlickering = true;
+            _light.intensity = 0f;
+            yield return new WaitForSeconds(randFlickSpeed);
+            _light.intensity = lightIntensity;
+            yield return new WaitForSeconds(0.5f);
+            isFlickering = false;
+        }
+        else
+        {
+            isFlickering = true;
+            for (int i = 0; i < lights.Count(); ++i)
+            {
+                lights[i].enabled = true;
+
+
+            }
+            yield return new WaitForSeconds(randFlickSpeed);
+            for (int i = 0; i < lights.Count(); ++i)
+            {
+                lights[i].enabled = false;
+            }
+            yield return new WaitForSeconds(0.5f);
+            isFlickering = false;
         }
     }
 }

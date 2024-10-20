@@ -118,20 +118,21 @@ public class safeRoom : MonoBehaviour, IInteractable
 
         yield return null;
     }
+
     public IEnumerator flashPowerWarning()
     {
-        gameManager.instance.getIDBadgeWarningText().gameObject.SetActive(true);
-        gameManager.instance.getIDBadgeWarningText().text = "Power Level 1 needed!";
+        gameManager.instance.getIDBadgeWarning().gameObject.SetActive(true);
+        gameManager.instance.getIDBadgeWarning().text = "Power Level 1 needed!";
         yield return new WaitForSeconds(0.75f);
-        gameManager.instance.getIDBadgeWarningText().gameObject.SetActive(false);
+        gameManager.instance.getIDBadgeWarning().gameObject.SetActive(false);
     }
 
     public IEnumerator flashIDWarning()
     {
-        gameManager.instance.getIDBadgeWarningText().gameObject.SetActive(true);
-        gameManager.instance.getIDBadgeWarningText().text = "3 ID Badges Needed!";
+        gameManager.instance.getIDBadgeWarning().gameObject.SetActive(true);
+        gameManager.instance.getIDBadgeWarning().text = "3 ID Badges Needed!";
         yield return new WaitForSeconds(0.75f);
-        gameManager.instance.getIDBadgeWarningText().gameObject.SetActive(false);
+        gameManager.instance.getIDBadgeWarning().gameObject.SetActive(false);
     }
 
     // Getters

@@ -53,24 +53,34 @@ public class SlownessEffect : StatusEffects
     public class BurningEffect : StatusEffects
     {
         public float damagePerSecond = 5f;
+        public float playerDamageMultiplier = 0.5f;
 
-        public override void ApplyEffect(GameObject target)
-        {
-            StartCoroutine(InflictBurn(target));
-        }
+    public override void ApplyEffect(GameObject target)
+    {
+        StartCoroutine(InflictBurn(target));
+    }
 
         private IEnumerator InflictBurn(GameObject target)
+    {
+        while (timer < duration)
         {
-            while (timer < duration)
+            if (target.TryGetComponent(out IDamage damageable))
             {
-                if (target.TryGetComponent(out IDamage damageable))
+                float actualDamage = damagePerSecond;
+
+                // Apply different damage if the target is a player
+                if (target.CompareTag("Player"))
                 {
-                    damageable.takeDamage(damagePerSecond);
+                    actualDamage *= playerDamageMultiplier;  // Reduce damage for player
                 }
-                yield return new WaitForSeconds(1f);
+
+                damageable.takeDamage(actualDamage);
             }
+
+            yield return new WaitForSeconds(1f);  // Inflict damage every second
         }
     }
+}
 
     public class ToxicEffect : StatusEffects
     {
@@ -94,26 +104,44 @@ public class SlownessEffect : StatusEffects
         }
     }
 
-    public class BleedingEffect : StatusEffects
-    {
-        public float damagePerTick = 3f;
+   public class BleedingEffect : StatusEffects
+   {
+        public float damagePerTick = 3f;  // Set this to a smaller value since bleeding should be mild damage over time
 
         public override void ApplyEffect(GameObject target)
         {
-            StartCoroutine(InflictBleed(target));
+        StartCoroutine(InflictBleed(target));
         }
 
-        private IEnumerator InflictBleed(GameObject target)
+         private IEnumerator InflictBleed(GameObject target)
         {
+        // Reset the timer when the effect is applied
+            timer = 0f;
+
+        // Continue to inflict bleed damage until the duration is reached
             while (timer < duration)
             {
                 if (target.TryGetComponent(out IDamage damageable))
                 {
-                    damageable.takeDamage(damagePerTick);
+                // Inflict small periodic damage on the player
+                damageable.takeDamage(damagePerTick);
                 }
-                yield return new WaitForSeconds(1.5f);
-            }
-        }
 
-    }
+            // Wait for the next tick
+            yield return new WaitForSeconds(1f);
+
+            // Update the timer to check if the duration has passed
+            timer += 1f;
+            }
+
+        // When the duration is up, end the bleeding effect
+        EndEffect();
+   }
+
+        public override void EndEffect()
+        {
+        // You can add any cleanup code here if needed
+        base.EndEffect();
+        }
+}
 

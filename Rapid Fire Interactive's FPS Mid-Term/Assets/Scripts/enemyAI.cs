@@ -5,8 +5,8 @@ using Unity.Properties;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class enemyAI : MonoBehaviour , IDamage
-{
+public class enemyAI : MonoBehaviour , IDamage {
+
     [SerializeField] enum enemyType { basic, challenge, boss } // Allows selection of enemy type
     [Header("----- Components -----")]
     [SerializeField] enemyType type; // Tracks which type of enemy in play
@@ -27,8 +27,8 @@ public class enemyAI : MonoBehaviour , IDamage
     [SerializeField] BoxCollider miniBossheadCollider = null;
     [SerializeField] CapsuleCollider enemyHeadCollider = null;
 
-    static BoxCollider miniBossheadColl;
-    static CapsuleCollider enemyHeadColl;
+    BoxCollider miniBossheadColl;
+    CapsuleCollider enemyHeadColl;
 
     // -- Extra Checks --
     bool canPlaySound = true; // Tracks if the sound can be played
@@ -76,8 +76,8 @@ public class enemyAI : MonoBehaviour , IDamage
     bool sawPlayer = false;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
+
         // Assign variables that need to be set at enemy creation
         colorOrig = model.material.color; // Sets our Models original color on scene start
         HPOrig = HP; // Set orginal hp value on scene open for enemy
@@ -119,27 +119,36 @@ public class enemyAI : MonoBehaviour , IDamage
         dropRNG = Random.Range(0, 100);
 
         seesPlayer = canSeePlayer();
-        if (playerInRange && !seesPlayer) { // can't see player
-            if (sawPlayer) { // but did see player before
-                StartCoroutine(turnToPlayer());
-                Debug.Log("hi i saw you");
-            }
-            else if (!isRoaming && agent.remainingDistance < .05f && aCoRoutine == null)
-                aCoRoutine = StartCoroutine(roam());
+        if (!isDead)
+        {
+            if (playerInRange && !seesPlayer)
+            { // can't see player
+                if (sawPlayer)
+                { // but did see player before
+                    StartCoroutine(turnToPlayer());
+                    Debug.Log("hi i saw you");
+                }
+                else if (!isRoaming && agent.remainingDistance < .05f && aCoRoutine == null)
+                    aCoRoutine = StartCoroutine(roam());
 
-        }
-        else if (!playerInRange) {
-            if (!playerInRange && agent.remainingDistance < .05f && aCoRoutine == null)
-               aCoRoutine = StartCoroutine(roam());
-                
+            }
+            else if (!playerInRange)
+            {
+                if (!playerInRange && agent.remainingDistance < .05f && aCoRoutine == null)
+                    aCoRoutine = StartCoroutine(roam());
+
+            }
         }
         sawPlayer = seesPlayer;
     }
 
     IEnumerator turnToPlayer() { // actually going to player, rotating wasn't working
-        yield return new WaitForSeconds(0.5f);
-        lastSeenPlayerPosition = gameManager.instance.getPlayer().transform.position;
-        agent.SetDestination(lastSeenPlayerPosition); // makes enemys go to player
+        if (!isDead)
+        {
+            yield return new WaitForSeconds(0.5f);
+            lastSeenPlayerPosition = gameManager.instance.getPlayer().transform.position;
+            agent.SetDestination(lastSeenPlayerPosition); // makes enemys go to player
+        }
     }
 
     bool canSeePlayer() {
@@ -154,23 +163,31 @@ public class enemyAI : MonoBehaviour , IDamage
 
         RaycastHit hit; //Tracks ray for enemy line of sight 
 
-        if (Physics.Raycast(headPos.position, playerDir, out hit)) {
-            //if ray hits player and player is within view cone
-            if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle) {
-                lastSeenPlayerPosition = gameManager.instance.getPlayer().transform.position;
-                agent.SetDestination(lastSeenPlayerPosition); // makes enemys go to player
-                if (agent.remainingDistance <= agent.stoppingDistance) { // when enemy is within stopping distance of player
-                    faceTarget(); //face player
-                }
-                if (!isShooting) {
-                    if (angleToPlayer <= (viewAngle / 3)) { // enemies always shoots and hits you even if not fully rotated to you yet so nerfing view angle for when shooting at player
-                        StartCoroutine(shoot());
+        if (!isDead)
+        {
+            if (Physics.Raycast(headPos.position, playerDir, out hit))
+            {
+                //if ray hits player and player is within view cone
+                if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
+                {
+                    lastSeenPlayerPosition = gameManager.instance.getPlayer().transform.position;
+                    agent.SetDestination(lastSeenPlayerPosition); // makes enemys go to player
+                    if (agent.remainingDistance <= agent.stoppingDistance)
+                    { // when enemy is within stopping distance of player
+                        faceTarget(); //face player
                     }
+                    if (!isShooting)
+                    {
+                        if (angleToPlayer <= (viewAngle / 3))
+                        { // enemies always shoots and hits you even if not fully rotated to you yet so nerfing view angle for when shooting at player
+                            StartCoroutine(shoot());
+                        }
+                    }
+                    //reset ai stopping dist
+                    agent.stoppingDistance = stoppingDistOrig;
+                    agent.speed = OGSpeed;
+                    return true;
                 }
-                //reset ai stopping dist
-                agent.stoppingDistance = stoppingDistOrig;
-                agent.speed = OGSpeed;
-                return true;
             }
         }
         agent.stoppingDistance = 0;
@@ -499,9 +516,9 @@ public class enemyAI : MonoBehaviour , IDamage
     { HP = _hp; }
 
 
-   static public BoxCollider getMiniBossHeadCollider()
+    public BoxCollider getMiniBossHeadCollider()
     { return miniBossheadColl; }
-    static public CapsuleCollider getEnemyHeadCollider()
+    public CapsuleCollider getEnemyHeadCollider()
     { return enemyHeadColl; }
   
 }
