@@ -56,13 +56,8 @@ public class SlownessEffect : StatusEffects
         public float playerDamageMultiplier = 0.5f;
 
     public override void ApplyEffect(GameObject target)
-        {
-        BurningEffect burningEffect = target.AddComponent<BurningEffect>();
-        burningEffect.duration = 3f;  // Set the duration to 3 seconds
-        burningEffect.damagePerSecond = 5f;  // Set damage amount as desired
-        burningEffect.playerDamageMultiplier = 0.5f;  // Set player damage multiplier as desired
-
-        burningEffect.ApplyEffect(target);
+    {
+        StartCoroutine(InflictBurn(target));
     }
 
         private IEnumerator InflictBurn(GameObject target)
