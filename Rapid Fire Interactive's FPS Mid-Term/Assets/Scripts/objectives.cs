@@ -6,8 +6,10 @@ using UnityEngine;
 [CreateAssetMenu]
 public class objectives : ScriptableObject
 {
+    public enum objectiveType { goHere, collectThis, killThese};
+    
     public string objective;
 
-    bool isCompleted;
+    public bool isCompleted;
     
 }
