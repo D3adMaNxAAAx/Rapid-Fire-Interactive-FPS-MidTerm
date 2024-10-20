@@ -419,9 +419,10 @@ public class playerMovement : MonoBehaviour, IDamage
                 if (hit.collider != hit.collider.GetComponent<enemyAI>().getMiniBossHeadCollider() && hit.collider != hit.collider.GetComponent<enemyAI>().getEnemyHeadCollider()) {
                     dmg.takeDamage((damage * damageBuffMult)); 
                 }
-
+                
                 else { // headshot
                     dmg.takeDamage((damage * damageBuffMult) * headShotMult);
+                    AudioSource.PlayClipAtPoint(audioManager.instance.headShotA, controller.transform.position, 0.5f);
                     playerStats.Stats.enemyHeadShot();
                     Debug.Log("Headshot!");
                 }

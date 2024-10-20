@@ -17,6 +17,7 @@ public class audioManager : MonoBehaviour
     [SerializeField] public AudioClip[] audSteps;
     [SerializeField] public AudioClip[] audJump;
     [SerializeField] public AudioClip[] audHurt;
+    [SerializeField] public AudioClip headShotA;
 
     [Header("-- Enemy Sounds --")]
     [SerializeField] public AudioClip[] audEnemySteps;
