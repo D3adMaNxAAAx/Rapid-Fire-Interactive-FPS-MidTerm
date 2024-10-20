@@ -328,6 +328,12 @@ public class enemyAI : MonoBehaviour , IDamage
         if (HP <= 0 && !isDead)
         {
             isDead = true;
+
+            agent.isStopped = true; // Stop the NavMeshAgent's movement
+            agent.velocity = Vector3.zero; 
+
+            StartCoroutine(HandleFadeOut());
+
             if (agent.gameObject.CompareTag("Boss"))
             {
                 anim.SetTrigger("Dead");
@@ -363,6 +369,44 @@ public class enemyAI : MonoBehaviour , IDamage
             gameManager.instance.getPlayerScript().updatePlayerUI();
         }
     }
+
+    private IEnumerator HandleFadeOut()
+    {
+        // Wait for a brief moment before starting the fade-out effect 
+        yield return new WaitForSeconds(0.5f);
+
+        // Duration for fading effect
+        float fadeDuration = 3f;
+        float elapsed = 0f;
+
+        // Get all the materials of the model's renderers to change their alpha values
+        Renderer[] renderers = model.GetComponentsInChildren<Renderer>();
+        List<Material> materials = new List<Material>();
+
+        foreach (Renderer rend in renderers)
+        {
+            materials.AddRange(rend.materials);
+        }
+
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, elapsed / fadeDuration);
+
+            // Update all materials' colors with the new alpha
+            foreach (Material mat in materials)
+            {
+                Color originalColor = mat.color;
+                mat.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+            }
+
+            yield return null;
+        }
+
+        // Destroy the object after the fade-out effect is complete
+        Destroy(gameObject);
+    }
+    
 
     public void takeDamage(float amount, Vector3 sourcePosition, StatusEffects effect = null)
     {
