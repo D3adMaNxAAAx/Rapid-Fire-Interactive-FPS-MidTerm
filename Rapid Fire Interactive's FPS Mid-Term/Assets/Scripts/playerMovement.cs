@@ -410,16 +410,15 @@ public class playerMovement : MonoBehaviour, IDamage
 
         //Create Raycast
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, bulletDistance, ~ignoreLayer))
-        {
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, bulletDistance, ~ignoreLayer)) {
             IDamage dmg = hit.collider.GetComponent<IDamage>();
             guns[gunPos].ammoCur--;
             playerStats.Stats.gunShot();
 
-            if (dmg != null)
-            {
-                if (hit.collider != enemyAI.getMiniBossHeadCollider() && hit.collider != enemyAI.getEnemyHeadCollider())
-                { dmg.takeDamage((damage * damageBuffMult)); }
+            if (dmg != null) {
+                if (hit.collider != hit.collider.GetComponent<enemyAI>().getMiniBossHeadCollider() && hit.collider != hit.collider.GetComponent<enemyAI>().getEnemyHeadCollider()) {
+                    dmg.takeDamage((damage * damageBuffMult)); 
+                }
 
                 else { // headshot
                     dmg.takeDamage((damage * damageBuffMult) * headShotMult);
