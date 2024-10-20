@@ -53,24 +53,39 @@ public class SlownessEffect : StatusEffects
     public class BurningEffect : StatusEffects
     {
         public float damagePerSecond = 5f;
+        public float playerDamageMultiplier = 0.5f;
 
-        public override void ApplyEffect(GameObject target)
+    public override void ApplyEffect(GameObject target)
         {
-            StartCoroutine(InflictBurn(target));
-        }
+        BurningEffect burningEffect = target.AddComponent<BurningEffect>();
+        burningEffect.duration = 3f;  // Set the duration to 3 seconds
+        burningEffect.damagePerSecond = 5f;  // Set damage amount as desired
+        burningEffect.playerDamageMultiplier = 0.5f;  // Set player damage multiplier as desired
+
+        burningEffect.ApplyEffect(target);
+    }
 
         private IEnumerator InflictBurn(GameObject target)
+    {
+        while (timer < duration)
         {
-            while (timer < duration)
+            if (target.TryGetComponent(out IDamage damageable))
             {
-                if (target.TryGetComponent(out IDamage damageable))
+                float actualDamage = damagePerSecond;
+
+                // Apply different damage if the target is a player
+                if (target.CompareTag("Player"))
                 {
-                    damageable.takeDamage(damagePerSecond);
+                    actualDamage *= playerDamageMultiplier;  // Reduce damage for player
                 }
-                yield return new WaitForSeconds(1f);
+
+                damageable.takeDamage(actualDamage);
             }
+
+            yield return new WaitForSeconds(1f);  // Inflict damage every second
         }
     }
+}
 
     public class ToxicEffect : StatusEffects
     {
