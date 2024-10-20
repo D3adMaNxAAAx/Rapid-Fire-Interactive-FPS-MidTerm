@@ -504,6 +504,11 @@ public class playerMovement : MonoBehaviour, IDamage
             playerStats.Stats.attacked(amount);
             stopHealing = true; // STOP HEALING IF DAMAGED
 
+            if (amount > 3) // If the damage taken exceeds 3, apply the bleeding effect
+            {
+                ApplyBleedingEffect(gameObject);
+            }
+
             // Play hurt sound for audio indication
             if (damageAudioReady)
             {
@@ -533,6 +538,19 @@ public class playerMovement : MonoBehaviour, IDamage
             {
                 StartCoroutine(noDamageTime()); // TIMER FOR WHEN PLAYER CAN START TO HEAL
             }
+        }
+    }
+
+    public void ApplyBleedingEffect(GameObject target)
+    {
+        // Check if the player already has a BleedingEffect to avoid stacking
+        if (target.GetComponent<BleedingEffect>() == null)
+        {
+            // Add the bleeding effect and configure it
+            BleedingEffect bleedingEffect = target.AddComponent<BleedingEffect>();
+            bleedingEffect.duration = 5f;  // Bleeding duration in seconds
+            bleedingEffect.damagePerTick = 1f;  // Mild damage per tick
+            bleedingEffect.ApplyEffect(target);
         }
     }
     public void takeDamage(float amount, Vector3 sourcePosition)
