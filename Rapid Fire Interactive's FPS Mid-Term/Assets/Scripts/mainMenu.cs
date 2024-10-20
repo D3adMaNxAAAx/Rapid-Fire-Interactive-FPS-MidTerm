@@ -9,6 +9,9 @@ public class mainMenu : MonoBehaviour
     [SerializeField] GameObject menuOptions;
     [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject mainSceneStuff;
+    [SerializeField] GameObject controlsMenu;
+    [SerializeField] GameObject howToPlayMenu;
+    private GameObject currentMenu;
 
     public void startGame()
     {
@@ -30,6 +33,24 @@ public class mainMenu : MonoBehaviour
 
     public void settingsBack() {
         menuSettings.SetActive(false);
+        menuOptions.SetActive(true);
+    }
+
+    public void controlMenu()
+    {
+        menuOptions.SetActive(false);
+        controlsMenu.SetActive(true);
+        currentMenu = controlsMenu;
+    }
+    public void howToPlay()
+    {
+        menuOptions.SetActive(false);
+        howToPlayMenu.SetActive(true);
+        currentMenu = howToPlayMenu;
+    }
+    public void backButton()
+    {
+        currentMenu.SetActive(false);
         menuOptions.SetActive(true);
     }
 
