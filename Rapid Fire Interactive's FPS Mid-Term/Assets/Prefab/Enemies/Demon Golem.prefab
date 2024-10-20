@@ -705,7 +705,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8344763055088587771
 Transform:
   m_ObjectHideFlags: 0
@@ -763,6 +763,7 @@ MonoBehaviour:
   meleeCol: {fileID: 9024587465115303424}
   shootRate: 1
   damageFlashTimer: 0.25
+  projectileType: 11
 --- !u!195 &101420454915926346
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -26,6 +26,12 @@ public class damage : MonoBehaviour {
     [SerializeField] float attackSpeed;
     [SerializeField] int destroyTime; //Object destroy timer
 
+    public float getAttackSpeed() {
+        return attackSpeed;
+    }
+    public int getDTime() {
+        return destroyTime;
+    }
 
     // Start is called before the first frame update
     void Start() {
@@ -42,11 +48,6 @@ public class damage : MonoBehaviour {
 
             // object is being added to pool and turned off (see playerMovement shoot method)
         }
-    }
-
-    public IEnumerator addObjectToPool() {
-        yield return new WaitForSeconds(destroyTime);
-        objectPool.addToPool(projectileType, this.gameObject);
     }
 
     void Update() {
@@ -78,7 +79,7 @@ public class damage : MonoBehaviour {
         // if it isnt an object that takes damage and damageType was ranged, destroy damage inflicting object
         if (type == damageType.ranged || type == damageType.missle) {
 
-            objectPool.addToPool(projectileType, this.gameObject);
+            objectPool.addToPool(projectileType, this.gameObject); // object is not being destory, instead being turned off and added to correct object pool
         }
     }
 
