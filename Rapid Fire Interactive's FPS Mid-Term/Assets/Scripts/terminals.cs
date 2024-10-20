@@ -74,10 +74,10 @@ public class terminals : MonoBehaviour
 
     public IEnumerator flashWarning()
     {
-        gameManager.instance.getPwrLvlWarningText().gameObject.SetActive(true);
-        gameManager.instance.getPwrLvlWarningText().text = "Power Level 2 needed!";
+        gameManager.instance.getPwrLvlWarning().gameObject.SetActive(true);
+        gameManager.instance.getPwrLvlWarning().text = "Power Level 2 needed!";
         yield return new WaitForSeconds(0.75f);
-        gameManager.instance.getPwrLvlWarningText().gameObject.SetActive(false);
+        gameManager.instance.getPwrLvlWarning().gameObject.SetActive(false);
     }
 
     public void openTerminal() 

@@ -94,8 +94,11 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject ammoWarning;
     [SerializeField] GameObject lowHealthWarning;
     [SerializeField] GameObject checkPointPopup;
+    [SerializeField] GameObject powerLevelPopup;
+    [SerializeField] TMP_Text powerLevelText;
     [SerializeField] TMP_Text idBadgeLvlWarning;
     [SerializeField] TMP_Text pwrLvlWarning;
+    [SerializeField] TMP_Text repairWarning;
 
     // -- Objects --
     [Header("-- Game Components --")]
@@ -655,24 +658,54 @@ public class gameManager : MonoBehaviour {
     public void setInteractUI (GameObject _interactUI) 
     { interactUI = _interactUI; }
 
-    public TMP_Text getIDBadgeWarningText()
+    public TMP_Text getIDBadgeWarning()
     {
         return idBadgeLvlWarning;
     }
 
-    public void setIDBadgeWarningText(TMP_Text _idBadgeWarningText)
+    public void setIDBadgeWarning(TMP_Text _idBadgeWarningText)
     {
         idBadgeLvlWarning = _idBadgeWarningText;
     }
 
-    public TMP_Text getPwrLvlWarningText()
+    public TMP_Text getPwrLvlWarning()
     {
         return pwrLvlWarning;
     }
 
-    public void setPwrLvlWarningText(TMP_Text _pwrLevelWarningText)
+    public void setPwrLvlWarning(TMP_Text _pwrLevelWarningText)
     {
         pwrLvlWarning = _pwrLevelWarningText;
+    }
+
+    public TMP_Text getRepairWarning()
+    {
+        return repairWarning;
+    }
+
+    public void setRepairWarning(TMP_Text _repairWarningText)
+    {
+        repairWarning = _repairWarningText;
+    }
+
+    public GameObject getPowerLevelPopup()
+    {
+        return powerLevelPopup;
+    }
+
+    public void setRepairWarning(GameObject _powerLevelPopup)
+    {
+        powerLevelPopup = _powerLevelPopup;
+    }
+
+    public TMP_Text getPowerLevelText()
+    {
+        return powerLevelText;
+    }
+
+    public void setPowerLevelText(TMP_Text _powerLevelText)
+    {
+        powerLevelText = _powerLevelText;
     }
 
 }

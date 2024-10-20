@@ -33,6 +33,7 @@ public class idBadges : MonoBehaviour, IInteractable
     {
         Destroy(badge);
         //isPickedUp = true;
+        playerStats.Stats.idBadgeFound();
         pickedUpFeedback.enabled = true;
         isOpen = true;
 
@@ -71,7 +72,6 @@ public class idBadges : MonoBehaviour, IInteractable
         yield return new WaitForSeconds(1.2f);
         pickedUpFeedback.enabled = false;
         isOpen = false;
-        playerStats.Stats.idBadgeFound();
         Destroy(toDestroy);
 
 

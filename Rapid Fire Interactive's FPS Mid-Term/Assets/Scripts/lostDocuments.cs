@@ -18,12 +18,6 @@ public class lostDocuments : MonoBehaviour , IInteractable
     // Unused variables
     // bool isPickedUp;
     // bool docOpen;
-    
-    // Start is called before the first frame update
-    void Awake()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -36,6 +30,8 @@ public class lostDocuments : MonoBehaviour , IInteractable
     public void interact()
     {
         Destroy(lostDocument);
+        playerStats.Stats.docFound();
+
         //isPickedUp = true;
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
         
@@ -44,8 +40,6 @@ public class lostDocuments : MonoBehaviour , IInteractable
 
         if (journalIcon != null)
             journalIcon.SetActive(true);
-       
-        
     }
 
     private void OnTriggerStay(Collider other)
@@ -80,10 +74,6 @@ public class lostDocuments : MonoBehaviour , IInteractable
         yield return new WaitForSeconds(1.2f);
         pickedUpFeedback.enabled = false;
         isOpen = false;
-        playerStats.Stats.docFound();
-        
-
-
     }
 
     public void openDoc()
@@ -108,12 +98,9 @@ public class lostDocuments : MonoBehaviour , IInteractable
         
     }
 
-
     //method to pick up document 
     //pickup doc in scene
     //open doc canvas
     //close doc canvas
     //add doc to journal
-
-
 }

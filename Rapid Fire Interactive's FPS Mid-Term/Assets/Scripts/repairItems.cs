@@ -15,17 +15,11 @@ public class repairItems : MonoBehaviour, IInteractable
     // Unused Variables
     //bool isPickedUp;
 
-
-    private void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
         if (isOpen)
-        StartCoroutine(hideFeedback());
+            StartCoroutine(hideFeedback());
     }
 
     public void interact()
@@ -35,7 +29,8 @@ public class repairItems : MonoBehaviour, IInteractable
         
         pickedUpFeedback.enabled = true;
         isOpen = true;
-        
+        gameManager.instance.setPowerItems(1);
+
         if (journalIcon != null)
             journalIcon.SetActive(true);
     }
@@ -43,7 +38,7 @@ public class repairItems : MonoBehaviour, IInteractable
     private void OnTriggerStay(Collider other)
     {
         // Since it will await the player input, use OnTriggerStay.
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !repairObj.IsDestroyed())
         {
             // If interact menu isn't on, turn it on.
             if (!gameManager.instance.getInteractUI().activeInHierarchy && !repairObj.IsDestroyed())
@@ -68,12 +63,9 @@ public class repairItems : MonoBehaviour, IInteractable
     IEnumerator hideFeedback()
     {
         yield return new WaitForSeconds(1.2f);
-        gameManager.instance.setPowerItems(1);
         playerStats.Stats.objectFound();
         pickedUpFeedback.enabled = false;
         isOpen = false;
         Destroy(toDestroy);
-
-        
     }
 }
