@@ -952,6 +952,10 @@ public class playerMovement : MonoBehaviour, IDamage
                 burningEffect.duration = 5f;  // Set the duration for the burn effect
                 burningEffect.ApplyEffect(nearbyObject.gameObject);
 
+                BleedingEffect bleedingEffect = nearbyObject.gameObject.AddComponent<BleedingEffect>();
+                bleedingEffect.duration = 5f;  // Set the duration for the bleed effect
+                bleedingEffect.ApplyEffect(nearbyObject.gameObject);
+
             }
         }
 
