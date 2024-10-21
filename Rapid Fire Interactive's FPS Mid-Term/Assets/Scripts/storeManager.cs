@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +22,15 @@ public class storeManager : MonoBehaviour
     [SerializeField] TMP_Text playerCoinsText;
     [SerializeField] TMP_Text transactionStatus;
 
+    [Header("-- Terminal Store Information --")]
+    [SerializeField] TMP_Text t_healthText;
+    [SerializeField] TMP_Text t_ammoText;
+    [SerializeField] TMP_Text t_healthCostText;
+    [SerializeField] TMP_Text t_ammoCostText;
+    [SerializeField] TMP_Text t_laserRifleCostText;
+    [SerializeField] TMP_Text t_playerCoinsText;
+    [SerializeField] TMP_Text t_transactionStatus;
+
     [Header("-- Store Weapons --")]
     [SerializeField] gunStats laserRifle; // This might be able to be made as a generalized weapon to sell variable
 
@@ -34,6 +44,7 @@ public class storeManager : MonoBehaviour
     // Memory
     Color healthColorOrig;
     Color ammoColorOrig;
+    bool terminal;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +55,11 @@ public class storeManager : MonoBehaviour
         // Remember the original color of the text
         healthColorOrig = healthCostText.color;
         ammoColorOrig = ammoCostText.color;
+    }
+
+    public void setTerminalStatus(bool _state)
+    {
+        terminal = _state;
     }
 
     // No update needed.
@@ -67,15 +83,9 @@ public class storeManager : MonoBehaviour
             // Player can, so make transaction and give health.
             makeTransaction(healthCost);
             giveHealth();
-
-            // Display that the transaction was successful.
-            //displayTransactionStatus(true);
+            // Successful Transaction
         }
-        else
-        {
-            // Transaction could not go through.
-            //displayTransactionStatus(false);
-        }
+        else { /* Unsuccessful */ }
     }
 
     public void onAmmoPurchase()
@@ -88,15 +98,9 @@ public class storeManager : MonoBehaviour
             // Player can, so make transaction and give ammo.
             makeTransaction(ammoCost);
             giveAmmo();
-
-            // Display that the transaction was successful.
-            //displayTransactionStatus(true);
-        } 
-        else
-        {
-            // Transaction could not go through.
-            //displayTransactionStatus(false);
+            // Successful Transaction
         }
+        else { /* Unsuccessful */ }
     }
 
     public void onLaserRiflePurchase()
@@ -119,15 +123,9 @@ public class storeManager : MonoBehaviour
             // Player can, so make transaction and give health.
             makeTransaction(laserRifleCost);
             giveLaserRifle();
-
-            // Display that the transaction was successful.
-            //displayTransactionStatus(true);
+            // Successful Transaction
         }
-        else
-        {
-            // Transaction could not go through.
-            //displayTransactionStatus(false);
-        }
+        else { /* Unsuccessful */ }
     }
 
     // Private methods for internal store functions
@@ -148,45 +146,82 @@ public class storeManager : MonoBehaviour
     {
         // Designated function just in case transactions may be more deliberate
         // Method is called if canAfford returns true so player can afford something
-       gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() - _cost);
+        gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() - _cost);
         playerStats.Stats.purchased();
     }
 
     IEnumerator displayTransactionStatus(bool status)
     {
-        // Turn the transaction status text on.
-        transactionStatus.gameObject.SetActive(true);
-
-        if (status)
+        if (!terminal)
         {
-            // status is good
-            transactionStatus.text = "Purchase Successful!";
+            // Turn the transaction status text on.
+            transactionStatus.gameObject.SetActive(true);
 
-            // green for extra feedback
-            transactionStatus.color = Color.green;
-        } else
+            if (status)
+            {
+                // status is good
+                transactionStatus.text = "Purchase Successful!";
+
+                // green for extra feedback
+                transactionStatus.color = Color.green;
+            }
+            else
+            {
+                // Transaction failed
+                // Check why the player cannot do the transaction and set text to reason
+                if (!canAfford(healthCost))
+                {
+                    transactionStatus.text = "Not enough coins!";
+                }
+                else if (gameManager.instance.getPlayerScript().getHP() == gameManager.instance.getPlayerScript().getHPOrig())
+                {
+                    transactionStatus.text = "Already full!";
+                }
+
+                // Set color to red for extra feedback.
+                transactionStatus.color = Color.red;
+            }
+
+            yield return new WaitForSeconds(2f);
+
+            // Timer is up, turn off text
+            transactionStatus.gameObject.SetActive(false);
+        } 
+        else
         {
-            // Transaction failed
-            // Check why the player cannot do the transaction and set text to reason
-            if (!canAfford(healthCost))
+            // Turn the transaction status text on.
+            t_transactionStatus.gameObject.SetActive(true);
+
+            if (status)
             {
-                transactionStatus.text = "Not enough coins!";
-                Debug.Log("lol ur broke");
+                // status is good
+                t_transactionStatus.text = "Purchase Successful!";
+
+                // green for extra feedback
+                t_transactionStatus.color = Color.green;
             }
-            else if (gameManager.instance.getPlayerScript().getHP() == gameManager.instance.getPlayerScript().getHPOrig())
+            else
             {
-                Debug.Log("why are you dumb");
-                transactionStatus.text = "Already full!";
+                // Transaction failed
+                // Check why the player cannot do the transaction and set text to reason
+                if (!canAfford(healthCost))
+                {
+                    t_transactionStatus.text = "Not enough coins!";
+                }
+                else if (gameManager.instance.getPlayerScript().getHP() == gameManager.instance.getPlayerScript().getHPOrig())
+                {
+                    t_transactionStatus.text = "Already full!";
+                }
+
+                // Set color to red for extra feedback.
+                t_transactionStatus.color = Color.red;
             }
 
-            // Set color to red for extra feedback.
-            transactionStatus.color = Color.red;
+            yield return new WaitForSeconds(2f);
+
+            // Timer is up, turn off text
+            t_transactionStatus.gameObject.SetActive(false);
         }
-        
-        yield return new WaitForSeconds(2f);
-
-        // Timer is up, turn off text
-        transactionStatus.gameObject.SetActive(false);
     }
 
     // Methods to give the player what they purchased
@@ -241,78 +276,165 @@ public class storeManager : MonoBehaviour
     // UI Display methods
     void updateCoinsDisplay()
     {
-        playerCoinsText.text = gameManager.instance.getPlayerScript().getCoins().ToString("F0");
+        if (!terminal)
+        {
+            playerCoinsText.text = gameManager.instance.getPlayerScript().getCoins().ToString("F0");
+        }
+        else
+        {
+            t_playerCoinsText.text = gameManager.instance.getPlayerScript().getCoins().ToString("F0");
+        }
     }
 
     void updateHealthDisplay()
     {
-        // Update the Health Restoration Display
-        healthText.text = gameManager.instance.getPlayerScript().getHP().ToString("F0") + " >> " + gameManager.instance.getPlayerScript().getHPOrig().ToString("F0");
+        if (!terminal)
+        {
+            // Update the Health Restoration Display
+            healthText.text = gameManager.instance.getPlayerScript().getHP().ToString("F0") + " >> " + gameManager.instance.getPlayerScript().getHPOrig().ToString("F0");
 
-        // Update the Health Cost
-        healthCostText.text = "Cost: " + healthCost.ToString();
+            // Update the Health Cost
+            healthCostText.text = "Cost: " + healthCost.ToString();
 
-        // Append Coin or Coins at the end
-        if (healthCost == 1) 
-            healthCostText.text += " coin";
+            // Append Coin or Coins at the end
+            if (healthCost == 1)
+                healthCostText.text += " coin";
+            else
+                healthCostText.text += " coins";
+
+            // Color the cost text green/red depending on if the player can afford it
+            if (canAfford(healthCost))
+                healthCostText.color = Color.green;
+            else
+                healthCostText.color = Color.red;
+        }
         else
-            healthCostText.text += " coins";
+        {
+            // Update the Health Restoration Display
+            t_healthText.text = gameManager.instance.getPlayerScript().getHP().ToString("F0") + " >> " + gameManager.instance.getPlayerScript().getHPOrig().ToString("F0");
 
-        // Color the cost text green/red depending on if the player can afford it
-        if (canAfford(healthCost))
-            healthCostText.color = Color.green;
-        else
-            healthCostText.color = Color.red;
+            // Update the Health Cost
+            t_healthCostText.text = "Cost: " + healthCost.ToString();
+
+            // Append Coin or Coins at the end
+            if (healthCost == 1)
+                t_healthCostText.text += " coin";
+            else
+                t_healthCostText.text += " coins";
+
+            // Color the cost text green/red depending on if the player can afford it
+            if (canAfford(healthCost))
+                t_healthCostText.color = Color.green;
+            else
+                t_healthCostText.color = Color.red;
+        }
     }
 
     void updateAmmoDisplay()
     {
-        if (gameManager.instance.getPlayerScript().hasGun())
+        if (!terminal)
         {
-            // Update the Ammo Restoration Display
-            ammoText.text = gameManager.instance.getPlayerScript().getAmmo().ToString("F0") + " >> " + gameManager.instance.getPlayerScript().getAmmoOrig().ToString("F0");
+            if (gameManager.instance.getPlayerScript().hasGun())
+            {
+                // Update the Ammo Restoration Display -- to fix the commented line, there'd need to be a total ammo on gunstats.
+                //ammoText.text = gameManager.instance.getPlayerScript().getAmmo().ToString("F0") + " >> " + gameManager.instance.getPlayerScript().getAmmoOrig().ToString("F0");
+                ammoText.text = "Refills all ammo!";
 
-            // Update the Ammo Cost
-            ammoCostText.text = "Cost: " + ammoCost.ToString();
+                // Update the Ammo Cost
+                ammoCostText.text = "Cost: " + ammoCost.ToString();
 
-            // Append Coin or Coins at the end
-            if (ammoCost == 1)
-                ammoCostText.text += " coin";
+                // Append Coin or Coins at the end
+                if (ammoCost == 1)
+                    ammoCostText.text += " coin";
+                else
+                    ammoCostText.text += " coins";
+
+                // Color the cost text green/red depending on if the player can afford it
+                if (canAfford(ammoCost))
+                    ammoCostText.color = Color.green;
+                else
+                    ammoCostText.color = Color.red;
+            }
             else
-                ammoCostText.text += " coins";
-
-            // Color the cost text green/red depending on if the player can afford it
-            if (canAfford(ammoCost))
-                ammoCostText.color = Color.green;
-            else
+            {
+                // Edge case
+                ammoCost = 0;
+                ammoText.text = "No Weapon";
+                ammoCostText.text = "Cost: N/A";
+                ammoText.color = Color.red;
                 ammoCostText.color = Color.red;
+            }
         }
         else
         {
-            // Edge case
-            ammoCost = 0;
-            ammoText.text = "No Weapon";
-            ammoCostText.text = "Cost: N/A";
-            ammoText.color = Color.red;
-            ammoCostText.color = Color.red;
+            if (gameManager.instance.getPlayerScript().hasGun())
+            {
+                // Update the Ammo Restoration Display -- to fix the commented line, there'd need to be a total ammo on gunstats.
+                //t_ammoText.text = gameManager.instance.getPlayerScript().getAmmo().ToString("F0") + " >> " + gameManager.instance.getPlayerScript().getAmmoOrig().ToString("F0");
+                t_ammoText.text = "Refills all ammo!";
+
+                // Update the Ammo Cost
+                t_ammoCostText.text = "Cost: " + ammoCost.ToString();
+
+                // Append Coin or Coins at the end
+                if (ammoCost == 1)
+                    t_ammoCostText.text += " coin";
+                else
+                    t_ammoCostText.text += " coins";
+
+                // Color the cost text green/red depending on if the player can afford it
+                if (canAfford(ammoCost))
+                    t_ammoCostText.color = Color.green;
+                else
+                    t_ammoCostText.color = Color.red;
+            }
+            else
+            {
+                // Edge case
+                ammoCost = 0;
+                t_ammoText.text = "No Weapon";
+                t_ammoCostText.text = "Cost: N/A";
+                t_ammoText.color = Color.red;
+                t_ammoCostText.color = Color.red;
+            }
         }
     }
 
     void updateLaserRifleDisplay()
     {
-        // Laser Rifle Cost
-        laserRifleCostText.text = "Cost: " + laserRifleCost.ToString("F0");
+        if (!terminal)
+        {
+            // Laser Rifle Cost
+            laserRifleCostText.text = "Cost: " + laserRifleCost.ToString("F0");
 
-        // Append Coin or Coins at the end
-        if (laserRifleCost == 1)
-            laserRifleCostText.text += " coin";
-        else
-            laserRifleCostText.text += " coins";
+            // Append Coin or Coins at the end
+            if (laserRifleCost == 1)
+                laserRifleCostText.text += " coin";
+            else
+                laserRifleCostText.text += " coins";
 
-        // Color the cost text green/red depending on if the player can afford it
-        if (canAfford(healthCost))
-            laserRifleCostText.color = Color.green;
+            // Color the cost text green/red depending on if the player can afford it
+            if (canAfford(healthCost))
+                laserRifleCostText.color = Color.green;
+            else
+                laserRifleCostText.color = Color.red;
+        }
         else
-            laserRifleCostText.color = Color.red;
+        {
+            // Laser Rifle Cost
+            t_laserRifleCostText.text = "Cost: " + laserRifleCost.ToString("F0");
+
+            // Append Coin or Coins at the end
+            if (laserRifleCost == 1)
+                t_laserRifleCostText.text += " coin";
+            else
+                t_laserRifleCostText.text += " coins";
+
+            // Color the cost text green/red depending on if the player can afford it
+            if (canAfford(healthCost))
+                t_laserRifleCostText.color = Color.green;
+            else
+                t_laserRifleCostText.color = Color.red;
+        }
     }
 }

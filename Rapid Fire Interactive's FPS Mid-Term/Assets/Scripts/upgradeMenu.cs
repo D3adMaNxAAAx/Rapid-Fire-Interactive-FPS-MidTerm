@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
+using UnityEngine.ProBuilder.MeshOperations;
 
 public class upgradeMenu : MonoBehaviour {
 
@@ -18,6 +20,17 @@ public class upgradeMenu : MonoBehaviour {
     [SerializeField] TMP_Text staminaRankText;
     [SerializeField] TMP_Text staminaUpgradeText;
 
+    [Header("-- Terminal Store Components --")]
+    [SerializeField] TMP_Text t_playerSkillPoints;
+    [SerializeField] TMP_Text t_healthRankText;
+    [SerializeField] TMP_Text t_healthUpgradeText;
+    [SerializeField] TMP_Text t_damageRankText;
+    [SerializeField] TMP_Text t_damageUpgradeText;
+    [SerializeField] TMP_Text t_speedRankText;
+    [SerializeField] TMP_Text t_speedUpgradeText;
+    [SerializeField] TMP_Text t_staminaRankText;
+    [SerializeField] TMP_Text t_staminaUpgradeText;
+
     [Header("Upgrade Costs")]
     [SerializeField] int healthUpgradeCost;
     [SerializeField] int damageUpgradeCost;
@@ -33,8 +46,10 @@ public class upgradeMenu : MonoBehaviour {
     float speed;
     int stamina;
     float moddedDam;
+    bool terminal = false;
 
-    void Start() {
+    void Start() 
+    {
         upgradeUI = this;
     }
 
@@ -42,11 +57,41 @@ public class upgradeMenu : MonoBehaviour {
         HPOrig = playerMovement.player.getHPOrig();
         speed = playerMovement.player.getSpeed();
         stamina = playerMovement.player.getStamina();
+
+        // Rank Display
+        healthRankText.text = healthRank.ToString();
+        damageRankText.text = damageRank.ToString();
+        speedRankText.text = speedRank.ToString();
+        staminaRankText.text = staminaRank.ToString();
+
+        // Stat Display
         healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 10).ToString();
         damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.2f).ToString();
         speedUpgradeText.text = speed.ToString() + " >> " + (speed + 1).ToString();
         staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
         playerSkillPoints.text = playerMovement.player.getSkillPoints().ToString();
+        terminal = false;
+    }
+
+    public void setTVars()
+    {
+        HPOrig = playerMovement.player.getHPOrig();
+        speed = playerMovement.player.getSpeed();
+        stamina = playerMovement.player.getStamina();
+
+        // Rank Display
+        t_healthRankText.text = healthRank.ToString();
+        t_damageRankText.text = damageRank.ToString();
+        t_speedRankText.text = speedRank.ToString();
+        t_staminaRankText.text = staminaRank.ToString();
+
+        // Stat Display
+        t_healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 10).ToString();
+        t_damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.2f).ToString();
+        t_speedUpgradeText.text = speed.ToString() + " >> " + (speed + 1).ToString();
+        t_staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
+        t_playerSkillPoints.text = playerMovement.player.getSkillPoints().ToString();
+        terminal = true;
     }
 
     // Transaction Methods
@@ -68,8 +113,13 @@ public class upgradeMenu : MonoBehaviour {
         // Method is called if canAfford returns true so player can afford something
         gameManager.instance.getPlayerScript().setSkillPoints(gameManager.instance.getPlayerScript().getSkillPoints() - _cost);
         playerStats.Stats.upgraded();
+
         // Update Skill Points text
-        playerSkillPoints.text = playerMovement.player.getSkillPoints().ToString();
+        if (!terminal)
+            playerSkillPoints.text = playerMovement.player.getSkillPoints().ToString();
+        else
+            t_playerSkillPoints.text = playerMovement.player.getSkillPoints().ToString();
+
     }
 
     // Upgrade Methods -- These methods will be called on button press
@@ -79,9 +129,21 @@ public class upgradeMenu : MonoBehaviour {
         if (canAfford(healthUpgradeCost)) {
             makeTransaction(healthUpgradeCost);
             healthRank++;
-            healthRankText.text = healthRank.ToString();
+
+            // Health Rank Text
+            if (!terminal)
+                healthRankText.text = healthRank.ToString();
+            else
+                t_healthRankText.text = healthRank.ToString();
+            
             HPOrig = HPOrig + 10;
-            healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 10).ToString();
+            
+            // Health Display
+            if (!terminal)
+                healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 10).ToString();
+            else
+                t_healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 10).ToString();
+
             playerMovement.player.setHPOrig(HPOrig);
 
             // Refill players health by 10 too to accomodate the new HP.
@@ -96,9 +158,21 @@ public class upgradeMenu : MonoBehaviour {
         {
             makeTransaction(damageUpgradeCost);
             damageRank++;
-            damageRankText.text = damageRank.ToString();
+
+            // Damage Rank Text
+            if (!terminal)
+                damageRankText.text = damageRank.ToString();
+            else
+                t_damageRankText.text = damageRank.ToString();
+
             damageMod += 0.2f;
-            damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.2f).ToString();
+
+            // Damage Display
+            if (!terminal)
+                damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.2f).ToString();
+            else
+                t_damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.2f).ToString();
+            
             playerMovement.player.setDamageMod(damageMod);
             moddedDam = playerMovement.player.getDamage() + playerMovement.player.getDamageMod();
             playerMovement.player.setDamage(moddedDam);
@@ -111,9 +185,21 @@ public class upgradeMenu : MonoBehaviour {
         {
             makeTransaction(speedUpgradeCost);
             speedRank++;
-            speedRankText.text = speedRank.ToString();
+            
+            // Speed Rank Text
+            if (!terminal)
+                speedRankText.text = speedRank.ToString();
+            else
+                t_speedRankText.text = speedRank.ToString();
+
             speed = speed + 1;
-            speedUpgradeText.text = speed.ToString() + " >> " + (speed + 1).ToString();
+
+            // Speed Display
+            if (!terminal)
+                speedUpgradeText.text = speed.ToString() + " >> " + (speed + 1).ToString();
+            else
+                t_speedUpgradeText.text = speed.ToString() + " >> " + (speed + 1).ToString();
+
             playerMovement.player.setSpeed(speed);
             playerMovement.player.updatePlayerUI();
         }
@@ -124,9 +210,21 @@ public class upgradeMenu : MonoBehaviour {
         {
             makeTransaction(staminaUpgradeCost);
             staminaRank++;
-            staminaRankText.text = staminaRank.ToString();
+            
+            // Stamina Rank Text
+            if (!terminal)
+                staminaRankText.text = staminaRank.ToString();
+            else
+                t_staminaRankText.text = staminaRank.ToString();
+
             stamina = stamina + 5;
-            staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
+
+            // Stamina Display
+            if (!terminal)
+                staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
+            else
+                t_staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
+
             playerMovement.player.setStamina(stamina);
             playerMovement.player.updatePlayerUI();
         }

@@ -72,12 +72,22 @@ public class buttonFunctions : MonoBehaviour {
         gameManager.instance.openUpgradeMenu();
     }
 
+    public void onTerminalUpgradeMenu()
+    {
+        gameManager.instance.openTerminalUpgradeMenu();
+    }
+
     public void continueGame() {
         gameManager.instance.nextRoomContinue();
     }
 
     public void storeMenu() {
         gameManager.instance.openStoreMenu();
+    }
+
+    public void onTerminalStoreMenu()
+    {
+        gameManager.instance.openTerminalStoreMenu();
     }
 
     public void quit() {

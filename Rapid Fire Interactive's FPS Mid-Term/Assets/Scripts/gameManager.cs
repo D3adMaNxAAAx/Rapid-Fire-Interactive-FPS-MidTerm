@@ -18,8 +18,11 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuContinue;
     [SerializeField] GameObject menuConfirmation;
+    [SerializeField] GameObject menuTerminal;
     [SerializeField] GameObject menuUpgrade;
+    [SerializeField] GameObject menuTerminalUpgrade;
     [SerializeField] GameObject menuStore;
+    [SerializeField] GameObject menuTerminalStore;
     [SerializeField] GameObject menuLoadout;
     [SerializeField] GameObject menuSettings;
     [SerializeField] GameObject menuOptions;
@@ -38,8 +41,11 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject howToMenuFirst;
     [SerializeField] GameObject tipsMenuFirst;
     [SerializeField] GameObject controlsMenuFirst;
+    [SerializeField] GameObject terminalMenuFirst;
     [SerializeField] GameObject storeMenuFirst;
+    [SerializeField] GameObject terminalStoreMenuFirst;
     [SerializeField] GameObject upgradeMenuFirst;
+    [SerializeField] GameObject terminalUpgradeMenuFirst;
     [SerializeField] GameObject continueMenuFirst;
     [SerializeField] GameObject loseMenuFirst;
     [SerializeField] GameObject winMenuFirst;
@@ -136,9 +142,8 @@ public class gameManager : MonoBehaviour {
         // Pausing game, hididng player background ui, and showing loadout menu
 
         menuActive = menuLoadout;
-        EventSystem.current.SetSelectedGameObject(loadoutMenuFirst); // Set eventsystem selected game object to the button assigned
         displayUI(false);
-
+        EventSystem.current.SetSelectedGameObject(loadoutMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
     // Update is called once per frame
@@ -393,6 +398,19 @@ public class gameManager : MonoBehaviour {
             
     }
 
+    public void openTerminal()
+    {
+        if (menuActive != null)
+        {
+            menuActive.SetActive(false);
+        }
+
+        statePause();
+        menuActive = menuTerminal;
+        menuActive.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(terminalMenuFirst);
+    }
+
     public void openUpgradeMenu() {
         if (menuActive != null) {
             menuActive.SetActive(false);
@@ -403,13 +421,43 @@ public class gameManager : MonoBehaviour {
         EventSystem.current.SetSelectedGameObject(upgradeMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
+    public void openTerminalUpgradeMenu()
+    {
+        if (menuActive != null)
+        {
+            menuActive.SetActive(false);
+        }
+        menuActive = menuTerminalUpgrade;
+        menuActive.SetActive(true);
+        upgradeMenu.upgradeUI.setTVars();
+        EventSystem.current.SetSelectedGameObject(terminalUpgradeMenuFirst); // Set eventsystem selected game object to the button assigned
+    }
+
     public void openStoreMenu() {
-        menuActive.SetActive(false);
+        if (menuActive != null)
+        {
+            menuActive.SetActive(false);
+        }
         // Update the store before it is displayed
+        storeManager.instance.setTerminalStatus(false);
         storeManager.instance.updateStoreUI();
         menuActive = menuStore;
         menuActive.SetActive(true);
         EventSystem.current.SetSelectedGameObject(storeMenuFirst); // Set eventsystem selected game object to the button assigned
+    }
+
+    public void openTerminalStoreMenu()
+    {
+        if (menuActive != null)
+        {
+            menuActive.SetActive(false);
+        }
+        // Update the store before it is displayed
+        storeManager.instance.setTerminalStatus(true);
+        storeManager.instance.updateStoreUI();
+        menuActive = menuTerminalStore;
+        menuActive.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(terminalStoreMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
     public void newGame() {
@@ -468,6 +516,24 @@ public class gameManager : MonoBehaviour {
             menuActive = menuPause;
             menuActive.SetActive(true);
         }
+        else if (menuActive == menuTerminal)
+        {
+            menuActive.SetActive(false);
+            stateUnpause();
+            menuActive = null;
+        }
+        else if (menuActive == menuTerminalStore)
+        {
+            menuActive.SetActive(false);
+            menuActive = menuTerminal;
+            menuActive.SetActive(true);
+        }
+        else if (menuActive == menuTerminalUpgrade)
+        {
+            menuActive.SetActive(false);
+            menuActive = menuTerminal;
+            menuActive.SetActive(true);
+        }
 
         if (menuActive == menuPause)
         {
@@ -480,6 +546,10 @@ public class gameManager : MonoBehaviour {
         else if (menuActive == menuContinue)
         {
             EventSystem.current.SetSelectedGameObject(continueMenuFirst); // Set eventsystem selected game object to the button assigned
+        }
+        else if (menuActive == menuTerminal)
+        {
+            EventSystem.current.SetSelectedGameObject(terminalMenuFirst); // Set eventsystem selected game object to the button assigned
         }
 
     }
