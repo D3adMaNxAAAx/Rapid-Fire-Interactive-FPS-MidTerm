@@ -31,7 +31,7 @@ public class AmmoDrop : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            gameManager.instance.getPlayerScript().ammoPickup(ammoRefillPercent);
+            gameManager.instance.getPlayerScript().addAmmo(ammoRefillPercent);
             Destroy(ammoDrop);
         }
         else

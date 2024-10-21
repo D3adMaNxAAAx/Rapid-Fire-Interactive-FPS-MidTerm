@@ -8,13 +8,6 @@ public class terminals : MonoBehaviour
 {
     [SerializeField] Light terminalScreenLight;
     [SerializeField] GameObject terminal;
-    //[SerializeField] GameObject menuMain;
-    //[SerializeField] GameObject menuUpg;
-    //[SerializeField] GameObject menuStore;
-    //[SerializeField] GameObject buttonUpg;
-    //[SerializeField] GameObject buttonStore;
-    //[SerializeField] GameObject buttonClose;
-    //[SerializeField] GameObject menuActive;
 
     bool isOpen; // if terminal menu is already open
     bool isOn; // if terminal can be accessed at all
@@ -77,82 +70,9 @@ public class terminals : MonoBehaviour
         yield return new WaitForSeconds(0.75f);
         gameManager.instance.getPwrLvlWarning().gameObject.SetActive(false);
     }
-
-    //public void openTerminal() 
-    //{
-    //    if (!isOpen)
-    //    {
-    //        gameManager.instance.displayUI(false);
-    //        gameManager.instance.statePause();
-    //        Cursor.visible = true;
-    //        Cursor.lockState = CursorLockMode.Confined;
-
-    //        menuActive = menuMain;
-    //        menuActive.SetActive(true); // used to be menuMain
-    //        isOpen = !isOpen;
-    //    }
-    //}
-
-    //public void closeTerminal()
-    //{
-    //    menuMain.SetActive(false);
-    //    gameManager.instance.stateUnpause();
-    //    Cursor.lockState = CursorLockMode.Locked;
-    //    Cursor.visible = false;  
-    //    gameManager.instance.displayUI(true);
-    //    isOpen = !isOpen;
-    //}
-
-    //public void openUpgrades()
-    //{
-    //    if (menuActive != null)
-    //    { menuActive.SetActive(false); }
-        
-    //    if (playerStats.Stats.getPWRLevel() == 3)
-    //    {
-    //        menuActive = menuUpg;
-    //        menuActive.SetActive(true);
-    //        buttonStore.SetActive(false);
-    //        buttonUpg.SetActive(false);
-    //        buttonClose.SetActive(false);
-    //    }
-    //}
-
-    //public void openStore()
-    //{
-    //    if (menuActive != null)
-    //    { menuActive.SetActive(false); }
-
-    //    if (playerStats.Stats.getPWRLevel() >= 2)
-    //    {
-    //        menuActive = menuStore;
-    //        menuActive.SetActive(true);
-    //        buttonStore.SetActive(false);
-    //        buttonUpg.SetActive(false);
-    //        buttonClose.SetActive(false);
-    //    }
-    //}
-
     public void turnOff()
     {
         isOpen = false;
         terminal.SetActive(false);
-        //menuActive.SetActive(false);
-        //menuMain.SetActive(false);
-        //menuActive = null;
     }
-
-    //public void closeMenuActive()
-    //{
-    //    if (menuActive != menuMain)
-    //    {
-    //        menuActive.SetActive(false);
-    //        buttonUpg.SetActive(true);
-    //        buttonStore.SetActive(true);
-    //        buttonClose.SetActive(true);
-    //    }
-    //    else
-    //        menuActive.SetActive(false);
-    //    menuActive = null;
-    //}
 }

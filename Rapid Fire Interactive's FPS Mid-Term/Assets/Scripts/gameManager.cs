@@ -424,14 +424,21 @@ public class gameManager : MonoBehaviour {
 
     public void openTerminalUpgradeMenu()
     {
-        if (menuActive != null)
+        if (playerStats.Stats.getPWRLevel() == 3)
         {
-            menuActive.SetActive(false);
+            if (menuActive != null)
+            {
+                menuActive.SetActive(false);
+            }
+            menuActive = menuTerminalUpgrade;
+            menuActive.SetActive(true);
+            upgradeMenu.upgradeUI.setTVars();
+            EventSystem.current.SetSelectedGameObject(terminalUpgradeMenuFirst); // Set eventsystem selected game object to the button assigned
+        } else
+        {
+            Debug.Log("You don't have Power Level 3");
+            // Replace this with UI feedback that they are not Power Level 3.
         }
-        menuActive = menuTerminalUpgrade;
-        menuActive.SetActive(true);
-        upgradeMenu.upgradeUI.setTVars();
-        EventSystem.current.SetSelectedGameObject(terminalUpgradeMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
     public void openStoreMenu() {

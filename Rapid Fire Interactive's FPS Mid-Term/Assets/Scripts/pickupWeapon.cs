@@ -5,6 +5,7 @@ using UnityEngine;
 public class pickupWeapon : MonoBehaviour
 {
     [SerializeField] gunStats gun;
+    bool isPickedUp = false;
 
     private void OnTriggerStay(Collider other)
     {
@@ -14,9 +15,10 @@ public class pickupWeapon : MonoBehaviour
             if (!gameManager.instance.getInteractUI().activeInHierarchy)
                 gameManager.instance.getInteractUI().SetActive(true);
 
-            if (Input.GetButton("Interact"))
+            if (Input.GetButton("Interact") && !isPickedUp)
             {
                 interact();
+                Destroy(gameObject);
             }
         }
     }
@@ -30,7 +32,7 @@ public class pickupWeapon : MonoBehaviour
 
     public void interact()
     {
+        isPickedUp = true;
         gameManager.instance.getPlayerScript().getGunStats(gun);
-        Destroy(gameObject);
     }
 }
