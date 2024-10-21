@@ -24,7 +24,7 @@ public class lightFlicker : MonoBehaviour, IInteractable
     int pwrLvl;
     bool isOn;
     bool safeAccess;
-    bool foundPower = false;
+    static bool foundPower = false;
 
     private void Awake()
     {
@@ -118,14 +118,21 @@ public class lightFlicker : MonoBehaviour, IInteractable
             if (Input.GetButton("Interact")) { interact(); }
         }
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        { foundPower = true; }
+    }
 
     private void OnTriggerExit(Collider other)
     {
-        // Turn off the interact UI if the player isn't within range
-        if (gameManager.instance.getInteractUI().activeInHierarchy)
-            gameManager.instance.getInteractUI().SetActive(false);
-        if (!foundPower)
-        { foundPower = true; }
+        if (other.CompareTag("Player"))
+        {
+            // Turn off the interact UI if the player isn't within range
+            if (gameManager.instance.getInteractUI().activeInHierarchy)
+                gameManager.instance.getInteractUI().SetActive(false);
+           
+        }
     }
 
     int remainingItems()
@@ -250,6 +257,6 @@ public class lightFlicker : MonoBehaviour, IInteractable
             isFlickering = false;
         }
     }
-    public bool getFoundPower()
+    static public bool getFoundPower()
     { return foundPower; }
 }

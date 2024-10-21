@@ -5,7 +5,7 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class playerJournal :  lightFlicker
+public class playerJournal :  MonoBehaviour
 {
     
 
@@ -202,12 +202,12 @@ public class playerJournal :  lightFlicker
     {
         obj1.text = playerStats.Stats.getPowerObjects().ToString("F0") + " / 9";
 
-        if (getFoundPower())
+        if (lightFlicker.getFoundPower() == true)
         {
             obj2.text = "Completed";
             obj2.color = Color.green;
         }
-        else
+        else if (lightFlicker.getFoundPower() == false) 
         {
             obj2.text = "Incomplete";
             obj2.color = Color.red;
