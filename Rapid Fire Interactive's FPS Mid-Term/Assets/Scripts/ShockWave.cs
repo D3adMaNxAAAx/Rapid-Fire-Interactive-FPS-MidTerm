@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShockWave : MonoBehaviour
@@ -13,11 +12,13 @@ public class ShockWave : MonoBehaviour
 
     private void Start()
     {
-        
         Renderer renderer = GetComponent<Renderer>();
         if (renderer != null)
         {
-            shockwaveMaterial = renderer.material;
+           
+            shockwaveMaterial = new Material(renderer.material);
+            renderer.material = shockwaveMaterial; 
+
             initialAlpha = shockwaveMaterial.color.a;
         }
 
@@ -53,4 +54,3 @@ public class ShockWave : MonoBehaviour
         Destroy(gameObject);
     }
 }
-

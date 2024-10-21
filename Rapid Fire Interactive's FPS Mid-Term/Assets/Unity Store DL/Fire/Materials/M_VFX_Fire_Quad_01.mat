@@ -8,22 +8,22 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_VFX_Fire_Quad_01
-  m_Shader: {fileID: 4800000, guid: 7a7b02219c97cfa48b5182adc1238a05, type: 3}
-  m_Parent: {fileID: 2100000, guid: 8bd95ac271a28e84fb4ba257973640d4, type: 2}
+  m_Shader: {fileID: 200, guid: 0000000000000000f000000000000000, type: 0}
+  m_Parent: {fileID: 2100000, guid: f53f1a24bb4ef8f4d879ea7b3a5197e5, type: 2}
   m_ModifiedSerializedProperties: 18
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _ADD_PRECOMPUTED_VELOCITY
-  - _EMISSION
+  - _ALPHABLEND_ON
   - _ENABLE_FOG_ON_TRANSPARENT
-  - _GLOSSYREFLECTIONS_OFF
+  - _FADING_ON
   - _RECEIVESHADOWS_OFF
   - _SURFACE_TYPE_TRANSPARENT
   - _WAVESMOOTHSTEP_ON
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap:
     MotionVector: User
   disabledShaderPasses:
@@ -37,10 +37,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _Distortion: 1.5
-    - _DstBlend: 0
-    - _Mode: 0
-    - _SrcBlend: 1
-    - _ZWrite: 1
+    - _DstBlend: 1
+    - _Mode: 4
+    - _SrcBlend: 5
+    - _ZWrite: 0
     m_Colors:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 0.6792453, g: 0.26699886, b: 0.26699886, a: 0}
