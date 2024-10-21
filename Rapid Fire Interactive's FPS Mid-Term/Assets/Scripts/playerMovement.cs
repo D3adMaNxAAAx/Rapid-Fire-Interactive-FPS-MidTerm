@@ -924,9 +924,10 @@ public class playerMovement : MonoBehaviour, IDamage
             // Trigger the shake with intensity 0.7 and duration 0.3 seconds
             CameraShake.instance.TriggerShake(0.7f, 0.3f);
         }
-        else
+        if (grenadeStats.shockwavePrefab != null)
         {
-            Debug.LogWarning("CameraShake instance not found.");
+            // Create the shockwave at the grenade's position
+            Instantiate(grenadeStats.shockwavePrefab, grenadeInstance.transform.position, Quaternion.identity);
         }
         Collider[] colliders = Physics.OverlapSphere(grenadeInstance.transform.position,grenadeStats.explosionRadius); // damage thing around in explosion
         foreach(Collider nearbyObject in colliders)
