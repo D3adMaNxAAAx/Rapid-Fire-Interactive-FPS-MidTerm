@@ -31,6 +31,7 @@ public class enemyAI : MonoBehaviour , IDamage {
     CapsuleCollider enemyHeadColl;
 
     // -- Extra Checks --
+    bool canAttack = true;
     bool canPlaySound = true; // Tracks if the sound can be played
     bool isShooting; // Private Tracker For If Enemy Is Shooting 
     bool playerInRange; // Tracker of if player is in range of enemy detection radius
@@ -257,26 +258,26 @@ public class enemyAI : MonoBehaviour , IDamage {
     int Dtime; // initialized in start by getting damage script and getting destroy time
     bool firstShot = true;
 
-    IEnumerator shoot() {
+    IEnumerator shoot()
+    {
         // Set shooting to true
         isShooting = true;
-        if (gameObject.CompareTag("Heavy") || gameObject.CompareTag("Basic Melee")) {
-            if (agent.remainingDistance <= agent.stoppingDistance + 1) {
+        if (gameObject.CompareTag("Heavy") || gameObject.CompareTag("Basic Melee"))
+        {
+            if (agent.remainingDistance <= agent.stoppingDistance + 1)
+            {
                 anim.SetTrigger("Melee");
             }
         }
 
-        else if (gameObject.CompareTag("Basic") || gameObject.CompareTag("Light") || gameObject.CompareTag("Ranged Heavy") || gameObject.CompareTag("Challenge") || (gameObject.CompareTag("Demon Golem"))) {
+        else if (canAttack && gameObject.CompareTag("Basic") || gameObject.CompareTag("Light") || gameObject.CompareTag("Boss") || gameObject.CompareTag("Ranged Heavy") || gameObject.CompareTag("Challenge") || (gameObject.CompareTag("Demon Golem")))
+        {
             anim.SetTrigger("Shoot");
             // Demon Golem also has melee he does both at once
         }
 
-        else if (gameObject.CompareTag("Boss")) {
-            if (agent.remainingDistance <= agent.stoppingDistance)
-                anim.SetTrigger("Melee");
-            else
-                anim.SetTrigger("Shoot");
-        }
+    
+        
         if (rangedAttack != null) {
             if (firstShot) { // first shot for enemies was being weird so first shot is normal and still put in objectPool
                 Instantiate(rangedAttack, shootPos.position, rotation); // OG method
@@ -343,10 +344,11 @@ public class enemyAI : MonoBehaviour , IDamage {
             }
 
             // Trigger the death animation
-            anim.CrossFade("Death", 0.1f);
+                anim.CrossFade("Death", 0.1f);
 
-            // Start fading the enemy out
-            StartCoroutine(HandleFadeOut());
+                // Start fading the enemy out
+                StartCoroutine(HandleFadeOut());
+            
         }
 
         playerStats.Stats.attack(_amount);
@@ -381,10 +383,7 @@ public class enemyAI : MonoBehaviour , IDamage {
         {
             isDead = true;
 
-            if (agent.gameObject.CompareTag("Boss"))
-            {
-                anim.CrossFade("Death", 0.1f);
-            }
+            
             // Tells Game manager to take 1 enemy out of game goal enemy total
             gameManager.instance.updateGameGoal(-1);
             playerStats.Stats.enemyKilled();
@@ -402,22 +401,21 @@ public class enemyAI : MonoBehaviour , IDamage {
             }
 
             // Since No HP Delete Enemy Object
-            if (!gameObject.CompareTag("Boss"))
-            {
+            
                 // Give the player XP & coins for defeating the enemy
                 gameManager.instance.getPlayerScript().setXP(getEnemyXP()); // setXP will ADD the amount given.
                 playerStats.Stats.gotXP(getEnemyXP());
                 gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() + getEnemyCoins()); // Add coins to player amount.
                 playerStats.Stats.gotMoney(getEnemyCoins());
                 Destroy(gameObject);
-            }
+            
             gameManager.instance.getPlayerScript().updatePlayerUI();
         }
     }
 
     private IEnumerator HandleFadeOut()
     {
-       
+        canAttack = false;
         yield return new WaitForSeconds(0.5f);
 
         float fadeDuration = 3f;
@@ -435,6 +433,7 @@ public class enemyAI : MonoBehaviour , IDamage {
         }
 
         Destroy(gameObject);
+        canAttack = true;
     }
 
     public void takeDamage(float amount, Vector3 sourcePosition, StatusEffects effect = null)

@@ -257,15 +257,6 @@ public class loadout : MonoBehaviour {
         }
     }
 
-    //click on the primary weapon slot
-    //list of weapons show for primarys 
-    //same for all other choices 
-    //need a choose primary, seconday, consumable, and throwable button
-    //already have back button 
-    //loadout 1 button adds all loadout 1 preset scriptable weapons, cons, throws
-    //same for loadout 2 button 
-
-    //Confirm Loadout button sets loadout and starts game 
-    //Quit game button as well 
+    
 
 }
