@@ -50,6 +50,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject loseMenuFirst;
     [SerializeField] GameObject winMenuFirst;
     [SerializeField] GameObject statsMenuFirst;
+    [SerializeField] GameObject menuLoseStats;
 
     // -- Player --
     [Header("-- Player UI --")]
@@ -83,6 +84,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] TMP_Text livesText;
     [SerializeField] GameObject interactUI; // this makes the timer run regardless if its hidden or not
     [SerializeField] GameObject startFailMessage;
+  
 
     // -- Game --
     [Header("-- Enemy UI --")]
@@ -258,6 +260,21 @@ public class gameManager : MonoBehaviour {
         deaths.text = playerStats.Stats.getDeaths().ToString();
         playerLevel.text = playerStats.Stats.getLevel().ToString(); 
         EventSystem.current.SetSelectedGameObject(winMenuFirst); // Set eventsystem selected game object to the button assigned
+    }
+
+    public void openLoseStatsMenu()
+    {
+        if (menuActive != null)
+        {
+            menuActive.SetActive(false); // Close the current menu
+        }
+        menuActive = menuLoseStats; // Set the LoseStatsMenu as the active menu
+        menuActive.SetActive(true); // Show it
+        EventSystem.current.SetSelectedGameObject(loseMenuFirst); // Make sure first button is selected
+                                                                 
+        completionTime.text = playerStats.Stats.getTimeTaken();
+        enemiesKilled.text = playerStats.Stats.getEnemiesKilled().ToString();
+        deaths.text = playerStats.Stats.getDeaths().ToString();
     }
 
     public void youLose() {

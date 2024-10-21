@@ -184,6 +184,10 @@ public class buttonFunctions : MonoBehaviour {
         gameManager.instance.getPlayerScript().getAudio().PlayOneShot(audioManager.instance.audButtonClick, audioManager.instance.audButtonClickVol);
     }
 
+    public void openLoseStatsMenu()
+    {
+        gameManager.instance.openLoseStatsMenu(); 
+    }
     // TO-DO: IMPLEMENT SPECIAL SOUNDS FOR STORE & UPGRADE
 
 }
