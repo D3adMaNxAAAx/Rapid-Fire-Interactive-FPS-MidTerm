@@ -76,6 +76,8 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject hpUI;
     [SerializeField] GameObject buffUI;
     [SerializeField] Image buffIcon;
+    [SerializeField] GameObject buffUI2;
+    [SerializeField] Image buffIcon2;
     [SerializeField] GameObject xpUI;
     [SerializeField] GameObject timer;
     [SerializeField] GameObject timerTracker; // this makes the timer run regardless if its hidden or not
@@ -747,6 +749,10 @@ public class gameManager : MonoBehaviour {
     public GameObject getBuffUI() { return buffUI; }
 
     public Image getBuffIcon() { return buffIcon; }
+
+    public GameObject getBuffUI2() { return buffUI2; }
+
+    public Image getBuffIcon2() { return buffIcon2; }
 
     public GameObject getXpUI() { return xpUI; }
 

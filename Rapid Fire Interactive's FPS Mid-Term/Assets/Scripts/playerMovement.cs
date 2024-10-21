@@ -695,64 +695,104 @@ public class playerMovement : MonoBehaviour, IDamage
         gameManager.instance.getAmmoWarning().SetActive(false); //gameManager
     }
 
+
+    bool buffActive = false;
+
     public void callBuff(int buff, Sprite icon) { // a seperate method is needed to call the Coroutine because if the pickup calls it directly it won't work after being destoryed
-        if (buff == 1) {
+        if (buffActive == false) {
+            buffActive = true;
             gameManager.instance.getBuffUI().SetActive(true);
             gameManager.instance.getBuffIcon().sprite = icon;
-            StartCoroutine(damageBuff());
+            if (buff == 1) {
+                StartCoroutine(damageBuff(1));
+            }
+            else if (buff == 2) {
+                StartCoroutine(healBuff(1));
+            }
+            else if (buff == 3) {
+                StartCoroutine(shieldBuff(1));
+            }
+            else if (buff == 4) {
+                StartCoroutine(staminaBuff(1));
+            }
         }
-        else if (buff == 2) {
-            gameManager.instance.getBuffUI().SetActive(true);
-            gameManager.instance.getBuffIcon().sprite = icon;
-            StartCoroutine(healBuff());
-        }
-        else if (buff == 3) {
-            gameManager.instance.getBuffUI().SetActive(true);
-            gameManager.instance.getBuffIcon().sprite = icon;
-            StartCoroutine(shieldBuff());
-        }
-        else if (buff == 4) {
-            gameManager.instance.getBuffUI().SetActive(true);
-            gameManager.instance.getBuffIcon().sprite = icon;
-            StartCoroutine(staminaBuff());
+        else { // if first buff UI slot is active, put buff in 2nd UI slot
+            gameManager.instance.getBuffUI2().SetActive(true);
+            gameManager.instance.getBuffIcon2().sprite = icon;
+            if (buff == 1) {
+                StartCoroutine(damageBuff(2));
+            }
+            else if (buff == 2) {
+                StartCoroutine(healBuff(2));
+            }
+            else if (buff == 3) {
+                StartCoroutine(shieldBuff(2));
+            }
+            else if (buff == 4) {
+                StartCoroutine(staminaBuff(2));
+            }
         }
     }
 
-    IEnumerator damageBuff() {
+    IEnumerator damageBuff(int slot) {
         damageBuffMult = 1.5f;
         yield return new WaitForSeconds(10);
         damageBuffMult = 1;
-        gameManager.instance.getBuffUI().SetActive(false);
+        if (slot == 1) {
+            buffActive = false;
+            gameManager.instance.getBuffUI().SetActive(false);
+        }
+        else {
+            gameManager.instance.getBuffUI2().SetActive(false);
+        }
     }
 
-    IEnumerator healBuff() {
+    IEnumerator healBuff(int slot) {
         for (int i = 1; i <= 5; i++) {
             Heal(true);
             updatePlayerUI();
             yield return new WaitForSeconds(1);
         }
-        gameManager.instance.getBuffUI().SetActive(false);
+        if (slot == 1) {
+            buffActive = false;
+            gameManager.instance.getBuffUI().SetActive(false);
+        }
+        else {
+            gameManager.instance.getBuffUI2().SetActive(false);
+        }
     }
 
-    IEnumerator shieldBuff() {
+    IEnumerator shieldBuff(int slot) {
         gameManager.instance.getShieldBar().SetActive(true);
         shieldOn = true;
         yield return new WaitForSeconds(10);
         setShieldOff();
+        if (slot == 1) {
+            buffActive = false;
+            gameManager.instance.getBuffUI().SetActive(false);
+        }
+        else {
+            gameManager.instance.getBuffUI2().SetActive(false);
+        }
     }
 
     public void setShieldOff() {
         shieldOn = false;
         shieldHP = 50;
-        gameManager.instance.getBuffUI().SetActive(false);
         gameManager.instance.getShieldBar().SetActive(false);
     }
 
-    IEnumerator staminaBuff() {
+    IEnumerator staminaBuff(int slot) {
         infiniteStam = true;
         yield return new WaitForSeconds(5);
         infiniteStam = false;
-        gameManager.instance.getBuffUI().SetActive(false);
+        if (slot == 1) {
+            buffActive = false;
+            gameManager.instance.getBuffUI().SetActive(false);
+        }
+        else {
+            gameManager.instance.getBuffUI2().SetActive(false);
+        }
     }
 
     void sprint() {
