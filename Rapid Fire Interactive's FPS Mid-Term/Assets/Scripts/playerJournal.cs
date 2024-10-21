@@ -76,7 +76,7 @@ public class playerJournal :  MonoBehaviour
 
     private void Start()
     {
-        enemyCountOrig = gameManager.instance.getEnemyCountOriginal();
+        
         journal.SetActive(false);
         isOpen = false;
     }
@@ -220,7 +220,7 @@ public class playerJournal :  MonoBehaviour
 
         obj5.text = playerStats.Stats.getBadgesFound().ToString("F0") + " / 9";
 
-        obj6.text = gameManager.instance.getEnemyCountOriginal().ToString("F0") + " / " + enemyCountOrig;
+        obj6.text = gameManager.instance.getEnemyRemainCount().text;
 
         obj7.text = playerStats.Stats.getNotesFound().ToString("F0") + " / 9";
 

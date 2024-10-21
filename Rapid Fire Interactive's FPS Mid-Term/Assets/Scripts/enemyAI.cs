@@ -78,7 +78,7 @@ public class enemyAI : MonoBehaviour , IDamage {
     // Start is called before the first frame update
     void Start() {
 
-        gameManager.instance.setEnemyCount(1);
+      
         // Assign variables that need to be set at enemy creation
         colorOrig = model.material.color; // Sets our Models original color on scene start
         HPOrig = HP; // Set orginal hp value on scene open for enemy

@@ -43,6 +43,8 @@ public class loadout : MonoBehaviour {
     [SerializeField] Image _thrwLd2Image;
     [SerializeField] TMP_Text _thrwLd2Name;
 
+    bool isSelected = false;
+
     public Image getPrmLd1Img() { return _primaryLd1Image; }
 
     public void setPrmLd1Img(Image _src) { _primaryLd1Image = _src; }
@@ -97,6 +99,8 @@ public class loadout : MonoBehaviour {
 
     public void loadOut1 () {
 
+        isSelected = true;
+
         playerMovement.player.removeFromGrenades();
         playerMovement.player.removeFromHeals();
 
@@ -134,6 +138,17 @@ public class loadout : MonoBehaviour {
 
     public void loadOut1HoverEnter()
     {
+        getPrmLd2Img().gameObject.SetActive(false);
+        _primaryLd2Name.gameObject.SetActive(false);
+        getSecLd2Img().gameObject.SetActive(false);
+        _secondaryLd2Name.gameObject.SetActive(false);
+        getCnsm1Ld2Img().gameObject.SetActive(false);
+        _cons1Ld2Name.gameObject.SetActive(false);
+        getCnsm2Ld2Img().gameObject.SetActive(false);
+        _cons2Ld2Name.gameObject.SetActive(false);
+        getThrwLd2Img().gameObject.SetActive(false);
+        _thrwLd2Name.gameObject.SetActive(false);
+
         getPrmLd1Img().gameObject.SetActive(true);
         _primaryLd1Name.gameObject.SetActive(true);
         getSecLd1Img().gameObject.SetActive(true);
@@ -144,22 +159,28 @@ public class loadout : MonoBehaviour {
         _cons2Ld1Name.gameObject.SetActive(true);
         getThrwLd1Img().gameObject.SetActive(true);
         _thrwLd1Name.gameObject.SetActive(true);
+
+       
     }
     public void loadOut1HoverExit()
     {
-        getPrmLd1Img().gameObject.SetActive(false);
-        _primaryLd1Name.gameObject.SetActive(false);
-        getSecLd1Img().gameObject.SetActive(false);
-        _secondaryLd1Name.gameObject.SetActive(false);
-        getCnsm1Ld1Img().gameObject.SetActive(false);
-        _cons1Ld1Name.gameObject.SetActive(false);
-        getCnsm2Ld1Img().gameObject.SetActive(false);
-        _cons2Ld1Name.gameObject.SetActive(false);
-        getThrwLd1Img().gameObject.SetActive(false);
-        _thrwLd1Name.gameObject.SetActive(false);
+        if (!isSelected)
+        {
+            getPrmLd1Img().gameObject.SetActive(false);
+            _primaryLd1Name.gameObject.SetActive(false);
+            getSecLd1Img().gameObject.SetActive(false);
+            _secondaryLd1Name.gameObject.SetActive(false);
+            getCnsm1Ld1Img().gameObject.SetActive(false);
+            _cons1Ld1Name.gameObject.SetActive(false);
+            getCnsm2Ld1Img().gameObject.SetActive(false);
+            _cons2Ld1Name.gameObject.SetActive(false);
+            getThrwLd1Img().gameObject.SetActive(false);
+            _thrwLd1Name.gameObject.SetActive(false);
+        }else return;
     }
 
         public void loadOut2() {
+        isSelected = true;
         playerMovement.player.removeFromGrenades();
         playerMovement.player.removeFromHeals();
 
@@ -197,6 +218,17 @@ public class loadout : MonoBehaviour {
 
     public void loadOut2HoverEnter()
     {
+        getPrmLd1Img().gameObject.SetActive(false);
+        _primaryLd1Name.gameObject.SetActive(false);
+        getSecLd1Img().gameObject.SetActive(false);
+        _secondaryLd1Name.gameObject.SetActive(false);
+        getCnsm1Ld1Img().gameObject.SetActive(false);
+        _cons1Ld1Name.gameObject.SetActive(false);
+        getCnsm2Ld1Img().gameObject.SetActive(false);
+        _cons2Ld1Name.gameObject.SetActive(false);
+        getThrwLd1Img().gameObject.SetActive(false);
+        _thrwLd1Name.gameObject.SetActive(false);
+
         getPrmLd2Img().gameObject.SetActive(true);
         _primaryLd2Name.gameObject.SetActive(true);
         getSecLd2Img().gameObject.SetActive(true);
@@ -210,16 +242,19 @@ public class loadout : MonoBehaviour {
     }
     public void loadOut2HoverExit()
     {
-        getPrmLd2Img().gameObject.SetActive(false);
-        _primaryLd2Name.gameObject.SetActive(false);
-        getSecLd2Img().gameObject.SetActive(false);
-        _secondaryLd2Name.gameObject.SetActive(false);
-        getCnsm1Ld2Img().gameObject.SetActive(false);
-        _cons1Ld2Name.gameObject.SetActive(false);
-        getCnsm2Ld2Img().gameObject.SetActive(false);
-        _cons2Ld2Name.gameObject.SetActive(false);
-        getThrwLd2Img().gameObject.SetActive(false);
-        _thrwLd2Name.gameObject.SetActive(false);
+        if (!isSelected)
+        {
+            getPrmLd2Img().gameObject.SetActive(false);
+            _primaryLd2Name.gameObject.SetActive(false);
+            getSecLd2Img().gameObject.SetActive(false);
+            _secondaryLd2Name.gameObject.SetActive(false);
+            getCnsm1Ld2Img().gameObject.SetActive(false);
+            _cons1Ld2Name.gameObject.SetActive(false);
+            getCnsm2Ld2Img().gameObject.SetActive(false);
+            _cons2Ld2Name.gameObject.SetActive(false);
+            getThrwLd2Img().gameObject.SetActive(false);
+            _thrwLd2Name.gameObject.SetActive(false);
+        }
     }
 
     //click on the primary weapon slot
