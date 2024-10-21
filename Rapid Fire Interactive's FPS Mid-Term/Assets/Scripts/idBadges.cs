@@ -31,9 +31,10 @@ public class idBadges : MonoBehaviour, IInteractable
 
     public void interact()
     {
+        playerStats.Stats.idBadgeFound();
         Destroy(badge);
         //isPickedUp = true;
-        playerStats.Stats.idBadgeFound();
+        
         pickedUpFeedback.enabled = true;
         isOpen = true;
 
@@ -45,10 +46,10 @@ public class idBadges : MonoBehaviour, IInteractable
     private void OnTriggerStay(Collider other)
     {
         // Since it will await the player input, use OnTriggerStay.
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !badge.IsDestroyed())
         {
             // If interact menu isn't on, turn it on.
-            if (!gameManager.instance.getInteractUI().activeInHierarchy && !badge.IsDestroyed())
+            if (!gameManager.instance.getInteractUI().activeInHierarchy )
                 gameManager.instance.getInteractUI().SetActive(true);
 
             if (Input.GetButton("Interact"))
