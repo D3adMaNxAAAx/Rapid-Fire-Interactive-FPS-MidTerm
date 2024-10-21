@@ -362,6 +362,7 @@ public class enemyAI : MonoBehaviour , IDamage {
        
 
         if (type == enemyType.boss) {
+            
             bossHP -= _amount;
         }
         
