@@ -21,66 +21,180 @@ public class mainMenu : MonoBehaviour
     [SerializeField] GameObject controlsMenuFirst;
 
     private GameObject currentMenu;
+    bool isTransitioning;
 
     private void Start()
     {
+        // Set menu vars
+        currentMenu = null;
         EventSystem.current.SetSelectedGameObject(mainMenuFirst);
     }
 
     public void startGame()
     {
-        SceneManager.LoadScene("Level 1", LoadSceneMode.Single);
+        if (!isTransitioning)
+        {
+            SceneManager.LoadScene("Level 1", LoadSceneMode.Single);
+        }
     }
 
     public void optionsMenu() {
-        menuOptions.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(optionsMenuFirst);
+        if (!isTransitioning)
+        {
+            // Set currentMenu then start it at 0 alpha and set things up
+            currentMenu = menuOptions;
+            currentMenu.GetComponent<CanvasRenderer>().SetAlpha(0f);
+            currentMenu.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(optionsMenuFirst);
+
+            // Everything set up, fade in the menu
+            StartCoroutine(transition(currentMenu, true));
+        }
     }
 
     public void optionsBack() {
-        menuOptions.SetActive(false);
-        EventSystem.current.SetSelectedGameObject(mainMenuFirst);
+        if (!isTransitioning)
+        {
+            // Fade out the options menu
+            StartCoroutine(transition(currentMenu, false));
+
+            // Reset the opacity
+            // Turning off the buttons needs to be in the coroutine because of how fast code is going
+
+            // Back to start screen
+            EventSystem.current.SetSelectedGameObject(mainMenuFirst);
+            currentMenu = null;
+        }
     }
 
     public void settingsMenu() {
-        menuOptions.SetActive(false);
-        menuSettings.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(settingsMenuFirst);
+        if (!isTransitioning)
+        {
+            currentMenu.SetActive(false);
+
+            // Set currentMenu then start it at 0 alpha and set things up
+            currentMenu = menuSettings;
+            currentMenu.GetComponent<CanvasRenderer>().SetAlpha(0f);
+            currentMenu.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(settingsMenuFirst);
+
+            // Everything set up, fade in the menu
+            StartCoroutine(transition(currentMenu, true));
+        }
     }
 
     public void settingsBack() {
-        menuSettings.SetActive(false);
-        menuOptions.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(optionsMenuFirst);
+        if (!isTransitioning)
+        {
+            // Fade out the current menu
+            StartCoroutine(transition(currentMenu, false));
+
+            // Reset the opacity
+            // Turning off the buttons needs to be in the coroutine because of how fast code is going
+
+            currentMenu = menuOptions;
+            EventSystem.current.SetSelectedGameObject(optionsMenuFirst);
+            currentMenu.SetActive(true);
+        }
     }
 
     public void controlMenu()
     {
-        menuOptions.SetActive(false);
-        controlsMenu.SetActive(true);
-        currentMenu = controlsMenu;
-        EventSystem.current.SetSelectedGameObject(controlsMenuFirst);
+        if (!isTransitioning)
+        {
+            currentMenu.SetActive(false);
+
+            // Set currentMenu then start it at 0 alpha and set things up
+            currentMenu = controlsMenu;
+            currentMenu.GetComponent<CanvasRenderer>().SetAlpha(0f);
+            currentMenu.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(controlsMenuFirst);
+
+            // Everything set up, fade in the menu
+            StartCoroutine(transition(currentMenu, true));
+        }
     }
     public void howToPlay()
     {
-        menuOptions.SetActive(false);
-        howToPlayMenu.SetActive(true);
-        currentMenu = howToPlayMenu;
-        EventSystem.current.SetSelectedGameObject(howToPlayMenuFirst);
+        if (!isTransitioning)
+        {
+            currentMenu.SetActive(false);
+
+            // Set currentMenu then start it at 0 alpha and set things up
+            currentMenu = howToPlayMenu;
+            currentMenu.GetComponent<CanvasRenderer>().SetAlpha(0f);
+            currentMenu.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(howToPlayMenuFirst);
+
+            // Everything set up, fade in the menu
+            StartCoroutine(transition(currentMenu, true));
+        }
     }
     public void backButton()
     {
-        currentMenu.SetActive(false);
-        menuOptions.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(optionsMenuFirst);
+        if (!isTransitioning)
+        {
+            // Fade out the current menu
+            StartCoroutine(transition(currentMenu, false));
+
+            // Reset the opacity
+            // Turning off the buttons needs to be in the coroutine because of how fast code is going
+            currentMenu.GetComponent<CanvasRenderer>().SetAlpha(1f);
+
+            currentMenu = menuOptions;
+            EventSystem.current.SetSelectedGameObject(optionsMenuFirst);
+            currentMenu.SetActive(true);
+        }
     }
 
     public void quitGame()
     {
+        if (!isTransitioning)
+        {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
+            UnityEditor.EditorApplication.isPlaying = false;
 #else
         Application.Quit();
 #endif
+        }
+    }
+
+    IEnumerator transition(GameObject _menu, bool _state)
+    {
+        // Fade In/Out Menus
+        isTransitioning = true;
+        yield return new WaitForSeconds(0.1f);
+
+        float fadeDuration = 0.2f;
+        float elapsed = 0f;
+
+        // Fade in
+        if (_state)
+        {
+            while (elapsed < fadeDuration)
+            {
+                elapsed += Time.deltaTime;
+                float alpha = Mathf.Lerp(0f, 1f, elapsed / fadeDuration);
+                _menu.GetComponent<CanvasRenderer>().SetAlpha(alpha);
+
+                yield return null;
+            }
+        }
+        // Fade out
+        else
+        {
+            while (elapsed < fadeDuration)
+            {
+                elapsed += Time.deltaTime;
+                float alpha = Mathf.Lerp(1f, 0f, elapsed / fadeDuration);
+                _menu.GetComponent<CanvasRenderer>().SetAlpha(alpha);
+                yield return null;
+            }
+
+            _menu.SetActive(false);
+            _menu.GetComponent<CanvasRenderer>().SetAlpha(1f);
+        }
+
+        isTransitioning = false;   
     }
 }
