@@ -24,33 +24,47 @@ public class damage : MonoBehaviour {
 
     [SerializeField] float damageAmount;
     [SerializeField] float attackSpeed;
-    [SerializeField] int destroyTime; //Object destroy timer
+
+    static Vector3 startingPosition;
+    static float distance;
+    static int range;
 
     public float getAttackSpeed() {
         return attackSpeed;
     }
-    public int getDTime() {
-        return destroyTime;
+
+    public void setCurrentPosAndRange(Vector3 pos, int bulletRange) {
+        distance = 0;
+        startingPosition = pos;
+        range = bulletRange;
     }
 
     // Start is called before the first frame update
     void Start() {
         objectPool = FindObjectOfType<projectilePool>();
+
         if (type == damageType.ranged) {
             // Give velocity to ranged attack 
             rb.velocity = transform.forward * attackSpeed;
 
-            // object is being added to pool and turned off (see playerMovement shoot method)
+            // object is being added to pool and turned off after is gets to its max range instead of being destroyed
         }
 
         if (type == damageType.missle) { // enemySeaking projectile
             missleTarget = gameManager.instance.getPlayer().transform; // getting player position
 
-            // object is being added to pool and turned off (see playerMovement shoot method)
+            // object is being added to pool and turned off after is gets to its max range instead of being destroyed
         }
     }
 
     void Update() {
+        if (type == damageType.ranged || type == damageType.missle) {
+            distance = Vector3.Distance(startingPosition, transform.position);
+            if (distance > range) {
+                objectPool.addToPool(projectileType, this.gameObject); // object is not being destory, instead being turned off and added to correct object pool
+                distance = 0;
+            }
+        }
         if (type == damageType.missle) {
             Vector3 direction = missleTarget.position - rb.position;
             Vector3 rotation = Vector3.Cross(transform.forward, direction);

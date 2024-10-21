@@ -372,7 +372,6 @@ MonoBehaviour:
   missleRotationSpeed: 0
   damageAmount: 10
   attackSpeed: 0
-  destroyTime: 0
 --- !u!65 &9024587465115303424
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -746,8 +745,6 @@ MonoBehaviour:
   hitClip: {fileID: 8300000, guid: bdb798b20d5ac2f438f3a562f4150019, type: 3}
   hitVolume: 1
   soundCooldown: 2
-  knockbackForce: 0
-  knockbackDuration: 0.2
   miniBossheadCollider: {fileID: 844604575250289273}
   enemyHeadCollider: {fileID: 0}
   viewAngle: 90
@@ -761,6 +758,7 @@ MonoBehaviour:
   rngDropRate: 0
   rangedAttack: {fileID: 1026084026005163015, guid: 65c4e63319d1e1f419365f8594341a69, type: 3}
   meleeCol: {fileID: 9024587465115303424}
+  range: 100
   shootRate: 1
   damageFlashTimer: 0.25
   projectileType: 11

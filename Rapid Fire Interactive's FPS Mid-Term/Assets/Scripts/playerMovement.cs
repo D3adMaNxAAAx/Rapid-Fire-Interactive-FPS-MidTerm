@@ -50,7 +50,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
     [SerializeField] float damage;
     [SerializeField] float fireRate;
-    [SerializeField] float bulletDistance;
+    [SerializeField] int range;
     [Range(1f,3f)][SerializeField] float headShotMult;
     //[SerializeField] int ammo;
     //[SerializeField] float bulletSpeed; // Is here if we wanna change to use bullets
@@ -200,7 +200,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
         if (isLaser) { // laser sight
             RaycastHit hit;
-            Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, bulletDistance, ~ignoreLayer);
+            Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range, ~ignoreLayer);
             laserSight.SetPosition(0, shotFlash.transform.position); // first param in "index", 0 is line start
             laserSight.SetPosition(1, hit.point); // first param in "index", 1 is line end
         }
@@ -268,7 +268,7 @@ public class playerMovement : MonoBehaviour, IDamage
         if (guns.Count > 0)
         {
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, bulletDistance, ~ignoreLayer))
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range, ~ignoreLayer))
             {
                 IDamage dmg = hit.collider.GetComponent<IDamage>();
 
@@ -309,7 +309,6 @@ public class playerMovement : MonoBehaviour, IDamage
 
     private projectilePool objectPool; // object pool class instance initialized in start I think, array of object pools
     public ObjectType projectileType; // for object pooling / recycling, ObjectType is enum in projectilePool script
-    int Dtime;
 
     void shootGun() {
         // Check if the player is not shooting & if they pressed the reload button mapped in input manager
@@ -335,8 +334,8 @@ public class playerMovement : MonoBehaviour, IDamage
                     newProjectile.transform.rotation = playerCamera.transform.rotation;
                     newProjectile.GetComponent<Rigidbody>().velocity = playerCamera.transform.forward * (playerShot.GetComponent<damage>().getAttackSpeed()); // accessing damage script and getting bullet speed
                     newProjectile.SetActive(true); // turning object on (it is set off when added to object pool)
-                    Dtime = playerShot.GetComponent<damage>().getDTime(); // accessing damage class and getting the bullet destory time
-                    StartCoroutine(addObjectToPool(projectileType, newProjectile, Dtime)); // projectile is added to pool if it collides (see damage script), or if bullet "destory" time is hit
+                    playerShot.GetComponent<damage>().setCurrentPosAndRange(newProjectile.transform.position, range);
+                    // setting bullet start position, update in damage will track its distance and "delete" the bullet when it goes past the distance
 
                     aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
                 }
@@ -354,6 +353,7 @@ public class playerMovement : MonoBehaviour, IDamage
             if (Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus()) {
                 if (getAmmo() > 0) {
                     StartCoroutine(shoot());
+
                     //Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation); // OG method
                     GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // setting bullet object to newProjectile
                     // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile
@@ -361,8 +361,8 @@ public class playerMovement : MonoBehaviour, IDamage
                     newProjectile.transform.rotation = playerCamera.transform.rotation;
                     newProjectile.GetComponent<Rigidbody>().velocity = playerCamera.transform.forward * (playerShot.GetComponent<damage>().getAttackSpeed()); // accessing damage script and getting bullet speed
                     newProjectile.SetActive(true); // turning object on (it is set off when added to object pool)
-                    Dtime = playerShot.GetComponent<damage>().getDTime(); // accessing damage class and getting the bullet destory time
-                    StartCoroutine(addObjectToPool(projectileType, newProjectile, Dtime)); // projectile is added to pool if it collides (see damage script), or if bullet "destory" time is hit
+                    playerShot.GetComponent<damage>().setCurrentPosAndRange(newProjectile.transform.position, range);
+                    // setting bullet start position, update in damage will track its distance and "delete" the bullet when it goes past the distance
 
                     aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
                 }
@@ -371,11 +371,6 @@ public class playerMovement : MonoBehaviour, IDamage
                 }
             }
         }
-    }
-
-    IEnumerator addObjectToPool(ObjectType type, GameObject projectile, int Dtime) { // adding projectile to the pool that matches its type
-        yield return new WaitForSeconds(Dtime-1); // I have no idea why but its adding extra time
-        objectPool.addToPool(type, projectile);
     }
 
     void reload()
@@ -410,7 +405,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
         //Create Raycast
         RaycastHit hit;
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, bulletDistance, ~ignoreLayer)) {
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range, ~ignoreLayer)) {
             IDamage dmg = hit.collider.GetComponent<IDamage>();
             guns[gunPos].ammoCur--;
             playerStats.Stats.gunShot();
@@ -996,16 +991,16 @@ public class playerMovement : MonoBehaviour, IDamage
             }
             healCoolDown = heals[0].healCoolDown;
             gameManager.instance.getHealsUI().text = (heals.Count-1).ToString(); // -1 because it hasn't been removed yet
+            if ((HP / HPOrig) > .25) {
+                lowHealth = false;
+                gameManager.instance.getHealthWarning().SetActive(false); // getting rid of low health state if not low anymore
+            }
             updatePlayerUI();
 
             yield return new WaitForSeconds(heals[0].healCoolDown);
             isHealing = false;
             heals.Remove(heals[0]);
 
-            if ((HP / HPOrig) > .25) {
-                lowHealth = false;
-                gameManager.instance.getHealthWarning().SetActive(false); // getting rid of low health state if not low anymore
-            }
         }
     }
 
@@ -1056,7 +1051,7 @@ public class playerMovement : MonoBehaviour, IDamage
     void changeGun() {
         float damTemp = guns[gunPos].damage * damageUpgradeMod;
         damage = damTemp;
-        bulletDistance = guns[gunPos].bulletDist;
+        range = guns[gunPos].range;
         fireRate = getCurGun().fireRate;
         isSniper = getCurGun().isSniper;
         isLaser = getCurGun().isLaser;
@@ -1090,7 +1085,7 @@ public class playerMovement : MonoBehaviour, IDamage
         float damTemp = _gun.damage * damageUpgradeMod; //reason I did this is because we can't supply a float value to an int.
         damage = damTemp;
         fireRate = _gun.fireRate;
-        bulletDistance = _gun.bulletDist;
+        range = _gun.range;
         //ammoOrig = _gun.ammoMax;
         isSniper = _gun.isSniper;
         isLaser = _gun.isLaser;

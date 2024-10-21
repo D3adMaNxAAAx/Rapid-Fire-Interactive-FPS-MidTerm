@@ -3616,8 +3616,6 @@ MonoBehaviour:
   hitClip: {fileID: 0}
   hitVolume: 1
   soundCooldown: 2
-  knockbackForce: 5
-  knockbackDuration: 0.2
   miniBossheadCollider: {fileID: 0}
   enemyHeadCollider: {fileID: 7936292954552834321}
   viewAngle: 90
@@ -3631,6 +3629,7 @@ MonoBehaviour:
   rngDropRate: 17
   rangedAttack: {fileID: 1026084026005163015, guid: 28f2b7d4f3f15154d85487f3e70746fa, type: 3}
   meleeCol: {fileID: 0}
+  range: 15
   shootRate: 0.4
   damageFlashTimer: 0.5
   projectileType: 12

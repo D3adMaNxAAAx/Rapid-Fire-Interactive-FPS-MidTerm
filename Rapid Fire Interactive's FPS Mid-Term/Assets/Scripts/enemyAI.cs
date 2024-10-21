@@ -64,7 +64,8 @@ public class enemyAI : MonoBehaviour , IDamage {
     [Header("----- Attack -----")]
     [SerializeField] GameObject rangedAttack; // Bullet Object Tracker and Communication Field For Designer
     [SerializeField] Collider meleeCol;
-    
+
+    [SerializeField] int range;
     [Range(.01f, 100)][SerializeField] float shootRate; // Enemy Fire Rate Modifier Field For Designer
     [Range(.01f, 30)][SerializeField] float damageFlashTimer; // Allows Designer To Set Damage Flash Timer 
     float HPOrig; // Private Tracker for enemy original HP
@@ -103,44 +104,32 @@ public class enemyAI : MonoBehaviour , IDamage {
 
         if (rangedAttack != null) {
             objectPool = FindObjectOfType<projectilePool>();
-            Dtime = rangedAttack.GetComponent<damage>().getDTime();
             projectileType = rangedAttack.GetComponent<damage>().getProjectileType();
         }
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        //animation speed we go to 
-        float agentSpeed = agent.velocity.normalized.magnitude;
-
-        //current animation speed
-        float animSpeed = anim.GetFloat("Speed");
-
+    void Update() { 
+        float agentSpeed = agent.velocity.normalized.magnitude; //animation speed we go to 
+        float animSpeed = anim.GetFloat("Speed"); //current animation speed
         //smoothly transitioning animation speed over time 
         anim.SetFloat("Speed", Mathf.Lerp(animSpeed, agentSpeed, Time.deltaTime * animSpeedTrans));
-
         dropRNG = Random.Range(0, 100);
 
-        seesPlayer = canSeePlayer();
-        if (!isDead)
-        {
-            if (playerInRange && !seesPlayer)
-            { // can't see player
-                if (sawPlayer)
-                { // but did see player before
-                    StartCoroutine(turnToPlayer());
-                    Debug.Log("hi i saw you");
+        if (!isDead) {
+            if (playerInRange) {
+                seesPlayer = canSeePlayer();
+                if (seesPlayer == false) { // can't see player
+                    if (sawPlayer) { // but did see player before
+                        StartCoroutine(turnToPlayer());
+                    }
+                    else if (!isRoaming && agent.remainingDistance < .05f && aCoRoutine == null)
+                        aCoRoutine = StartCoroutine(roam());
                 }
-                else if (!isRoaming && agent.remainingDistance < .05f && aCoRoutine == null)
-                    aCoRoutine = StartCoroutine(roam());
-
             }
-            else if (!playerInRange)
-            {
+            else if (!playerInRange) {
                 if (!playerInRange && agent.remainingDistance < .05f && aCoRoutine == null)
                     aCoRoutine = StartCoroutine(roam());
-
             }
         }
         sawPlayer = seesPlayer;
@@ -257,7 +246,6 @@ public class enemyAI : MonoBehaviour , IDamage {
 
     private projectilePool objectPool; // object pool class instance initialized in start I think, array of object pools
     public ObjectType projectileType; // for object pooling / recycling, ObjectType is enum in damage script, initialized in start by getting damage script and getting enum type
-    int Dtime; // initialized in start by getting damage script and getting destroy time
     bool firstShot = true;
 
     IEnumerator shoot()
@@ -287,21 +275,17 @@ public class enemyAI : MonoBehaviour , IDamage {
             }
             else {
                 GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // setting bullet object to newProjectile
-                                                                                             // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile
+                // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile
                 newProjectile.transform.position = shootPos.position;
                 newProjectile.transform.rotation = rotation;
                 newProjectile.GetComponent<Rigidbody>().velocity = (playerDir.normalized) * (rangedAttack.GetComponent<damage>().getAttackSpeed()); // accessing damage script and getting bullet speed
                 newProjectile.SetActive(true); // turning object on (it is set off when added to object pool)
-                StartCoroutine(addObjectToPool(newProjectile)); // projectile is added to pool if it collides (see damage script), or if bullet "destory" time is hit
+                rangedAttack.GetComponent<damage>().setCurrentPosAndRange(newProjectile.transform.position, range);
+                // setting bullet start position, update in damageManager will track its distance and "delete" the bullet when it goes past the distance
             }
         }
         yield return new WaitForSeconds(shootRate); // Timer setting shootRate time
         isShooting = false;
-    }
-
-    IEnumerator addObjectToPool(GameObject projectile) { // adding projectile to the pool that matches its type
-        yield return new WaitForSeconds(Dtime); // I have no idea why but its adding extra time
-        objectPool.addToPool(projectileType, projectile);
     }
 
     public void meleeOn()

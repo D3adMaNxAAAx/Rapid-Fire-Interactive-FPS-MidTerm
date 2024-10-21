@@ -11,7 +11,7 @@ public class gunStats : ScriptableObject
     public GameObject projectile;
     public float damage;
     public float fireRate;
-    public float bulletDist;
+    public int range;
     public int ammoCur, ammoMag, ammoMax, ammoOrig;
     public bool isSniper;
     public bool isAutomatic;
