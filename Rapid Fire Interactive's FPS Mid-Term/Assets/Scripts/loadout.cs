@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,17 +21,27 @@ public class loadout : MonoBehaviour {
 
     //Preset objects loadout 1 images
     [SerializeField] Image _primaryLd1Image;
+    [SerializeField] TMP_Text _primaryLd1Name;
     [SerializeField] Image _secondaryLd1Image;
+    [SerializeField] TMP_Text _secondaryLd1Name;
     [SerializeField] Image _cons1Ld1Image;
+    [SerializeField] TMP_Text _cons1Ld1Name;
     [SerializeField] Image _cons2Ld1Image;
+    [SerializeField] TMP_Text _cons2Ld1Name;
     [SerializeField] Image _thrwLd1Image;
+    [SerializeField] TMP_Text _thrwLd1Name;
 
     //Preset objects loadout 2 images
     [SerializeField] Image _primaryLd2Image;
+    [SerializeField] TMP_Text _primaryLd2Name;
     [SerializeField] Image _secondaryLd2Image;
+    [SerializeField] TMP_Text _secondaryLd2Name;
     [SerializeField] Image _cons1Ld2Image;
+    [SerializeField] TMP_Text _cons1Ld2Name;
     [SerializeField] Image _cons2Ld2Image;
+    [SerializeField] TMP_Text _cons2Ld2Name;
     [SerializeField] Image _thrwLd2Image;
+    [SerializeField] TMP_Text _thrwLd2Name;
 
     public Image getPrmLd1Img() { return _primaryLd1Image; }
 
@@ -97,20 +108,58 @@ public class loadout : MonoBehaviour {
         playerMovement.player.addToGrenades(Gernade1);
         playerMovement.player.addToHeals(Health1);
         playerMovement.player.addToHeals(Health2);
+
         getPrmLd2Img().gameObject.SetActive(false);
+        _primaryLd2Name.gameObject.SetActive(false);
         getSecLd2Img().gameObject.SetActive(false);
+        _secondaryLd2Name.gameObject.SetActive(false);
         getCnsm1Ld2Img().gameObject.SetActive(false);
+        _cons1Ld2Name.gameObject.SetActive(false);
         getCnsm2Ld2Img().gameObject.SetActive(false);
+        _cons2Ld2Name.gameObject.SetActive(false);
         getThrwLd2Img().gameObject.SetActive(false);
+        _thrwLd2Name.gameObject.SetActive(false);
 
         getPrmLd1Img().gameObject.SetActive(true);
+        _primaryLd1Name.gameObject.SetActive(true);
         getSecLd1Img().gameObject.SetActive(true);
+        _secondaryLd1Name.gameObject.SetActive(true);
         getCnsm1Ld1Img().gameObject.SetActive(true);
+        _cons1Ld1Name.gameObject.SetActive(true);
         getCnsm2Ld1Img().gameObject.SetActive(true);
+        _cons2Ld1Name.gameObject.SetActive(true);
         getThrwLd1Img().gameObject.SetActive(true);
+        _thrwLd1Name.gameObject.SetActive(true);
     }
 
-    public void loadOut2() {
+    public void loadOut1HoverEnter()
+    {
+        getPrmLd1Img().gameObject.SetActive(true);
+        _primaryLd1Name.gameObject.SetActive(true);
+        getSecLd1Img().gameObject.SetActive(true);
+        _secondaryLd1Name.gameObject.SetActive(true);
+        getCnsm1Ld1Img().gameObject.SetActive(true);
+        _cons1Ld1Name.gameObject.SetActive(true);
+        getCnsm2Ld1Img().gameObject.SetActive(true);
+        _cons2Ld1Name.gameObject.SetActive(true);
+        getThrwLd1Img().gameObject.SetActive(true);
+        _thrwLd1Name.gameObject.SetActive(true);
+    }
+    public void loadOut1HoverExit()
+    {
+        getPrmLd1Img().gameObject.SetActive(false);
+        _primaryLd1Name.gameObject.SetActive(false);
+        getSecLd1Img().gameObject.SetActive(false);
+        _secondaryLd1Name.gameObject.SetActive(false);
+        getCnsm1Ld1Img().gameObject.SetActive(false);
+        _cons1Ld1Name.gameObject.SetActive(false);
+        getCnsm2Ld1Img().gameObject.SetActive(false);
+        _cons2Ld1Name.gameObject.SetActive(false);
+        getThrwLd1Img().gameObject.SetActive(false);
+        _thrwLd1Name.gameObject.SetActive(false);
+    }
+
+        public void loadOut2() {
         playerMovement.player.removeFromGrenades();
         playerMovement.player.removeFromHeals();
 
@@ -120,20 +169,57 @@ public class loadout : MonoBehaviour {
         playerMovement.player.getGunStats(Shotgun);
 
         getPrmLd1Img().gameObject.SetActive(false);
+        _primaryLd1Name.gameObject.SetActive(false);
         getSecLd1Img().gameObject.SetActive(false);
+        _secondaryLd1Name.gameObject.SetActive(false);
         getCnsm1Ld1Img().gameObject.SetActive(false);
+        _cons1Ld1Name.gameObject.SetActive(false);
         getCnsm2Ld1Img().gameObject.SetActive(false);
+        _cons2Ld1Name.gameObject.SetActive(false);
         getThrwLd1Img().gameObject.SetActive(false);
+        _thrwLd1Name.gameObject.SetActive(false);
 
         getPrmLd2Img().gameObject.SetActive(true);
+        _primaryLd2Name.gameObject.SetActive(true);
         getSecLd2Img().gameObject.SetActive(true);
+        _secondaryLd2Name.gameObject.SetActive(true);
         getCnsm1Ld2Img().gameObject.SetActive(true);
+        _cons1Ld2Name.gameObject.SetActive(true);
         getCnsm2Ld2Img().gameObject.SetActive(true);
+        _cons2Ld2Name.gameObject.SetActive(true);
         getThrwLd2Img().gameObject.SetActive(true);
+        _thrwLd2Name.gameObject.SetActive(true);
 
         playerMovement.player.addToGrenades(Gernade1);
         playerMovement.player.addToGrenades(Gernade2);
         playerMovement.player.addToHeals(Health1);
+    }
+
+    public void loadOut2HoverEnter()
+    {
+        getPrmLd2Img().gameObject.SetActive(true);
+        _primaryLd2Name.gameObject.SetActive(true);
+        getSecLd2Img().gameObject.SetActive(true);
+        _secondaryLd2Name.gameObject.SetActive(true);
+        getCnsm1Ld2Img().gameObject.SetActive(true);
+        _cons1Ld2Name.gameObject.SetActive(true);
+        getCnsm2Ld2Img().gameObject.SetActive(true);
+        _cons2Ld2Name.gameObject.SetActive(true);
+        getThrwLd2Img().gameObject.SetActive(true);
+        _thrwLd2Name.gameObject.SetActive(true);
+    }
+    public void loadOut2HoverExit()
+    {
+        getPrmLd2Img().gameObject.SetActive(false);
+        _primaryLd2Name.gameObject.SetActive(false);
+        getSecLd2Img().gameObject.SetActive(false);
+        _secondaryLd2Name.gameObject.SetActive(false);
+        getCnsm1Ld2Img().gameObject.SetActive(false);
+        _cons1Ld2Name.gameObject.SetActive(false);
+        getCnsm2Ld2Img().gameObject.SetActive(false);
+        _cons2Ld2Name.gameObject.SetActive(false);
+        getThrwLd2Img().gameObject.SetActive(false);
+        _thrwLd2Name.gameObject.SetActive(false);
     }
 
     //click on the primary weapon slot
