@@ -54,7 +54,10 @@ public class lightFlicker : MonoBehaviour, IInteractable
             randFlickSpeed = UnityEngine.Random.Range(0.2f, 1.5f);
             if (!waitBool)
                 StartCoroutine(getNewNumber());
-            flickerLight();
+            if (pwrLvl < 3)
+                flickerLight();
+            else
+                StopCoroutine(lightAction());
         }
         else if (powerSys != null && isOn == true)
         {
@@ -110,12 +113,15 @@ public class lightFlicker : MonoBehaviour, IInteractable
     private void OnTriggerStay(Collider other)
     {
         // If interact menu isn't on, turn it on.
-        if (!gameManager.instance.getInteractUI().activeInHierarchy)
-            gameManager.instance.getInteractUI().SetActive(true);
-
-        if (other.CompareTag("Player"))
+        if (lightSys != null)
         {
-            if (Input.GetButton("Interact")) { interact(); }
+            if (!gameManager.instance.getInteractUI().activeInHierarchy)
+                gameManager.instance.getInteractUI().SetActive(true);
+
+            if (other.CompareTag("Player"))
+            {
+                if (Input.GetButton("Interact")) { interact(); }
+            }
         }
     }
     private void OnTriggerEnter(Collider other)
