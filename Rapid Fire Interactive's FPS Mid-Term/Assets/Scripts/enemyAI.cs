@@ -230,23 +230,25 @@ public class enemyAI : MonoBehaviour , IDamage {
 
     //allows enemy to  roam 
     IEnumerator roam() {
+        if (!isDead)
+        {
+            isRoaming = true;
+            yield return new WaitForSeconds(roamTimer); //wait desired time 
 
-        isRoaming = true;
-        yield return new WaitForSeconds(roamTimer); //wait desired time 
+            //set agent to reach right on random spot
+            agent.stoppingDistance = 0;
+            agent.speed = roamSpeed;
+            Vector3 randomPos = Random.insideUnitSphere * roamDist;
+            randomPos += startingPos; //adds random position to start position so that we can circle around the main start position
 
-        //set agent to reach right on random spot
-        agent.stoppingDistance = 0;
-        agent.speed = roamSpeed;
-        Vector3 randomPos = Random.insideUnitSphere * roamDist;
-        randomPos += startingPos; //adds random position to start position so that we can circle around the main start position
+            NavMeshHit hit;
+            NavMesh.SamplePosition(randomPos, out hit, roamDist, 1); // make sure position is valid
+            agent.SetDestination(hit.position);
 
-        NavMeshHit hit;
-        NavMesh.SamplePosition(randomPos, out hit, roamDist, 1); // make sure position is valid
-        agent.SetDestination(hit.position);
+            isRoaming = false;
 
-        isRoaming = false;
-
-        aCoRoutine = null;
+            aCoRoutine = null;
+        }
     }
 
 
@@ -319,6 +321,7 @@ public class enemyAI : MonoBehaviour , IDamage {
         {
             isDead = true;
             gameManager.instance.setEnemyCountOrig(-1);
+            StopAllCoroutines();
 
             // Stop the NavMeshAgent's movement
             agent.isStopped = true;
