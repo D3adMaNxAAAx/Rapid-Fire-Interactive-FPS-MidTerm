@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 33514144720113108}
   - component: {fileID: 23100105887039710}
   - component: {fileID: 95058898155949272}
+  - component: {fileID: -2664242669841354589}
   m_Layer: 0
   m_Name: WoodBox9
   m_TagString: Untagged
@@ -105,3 +106,25 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!64 &-2664242669841354589
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955996070621566}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300000, guid: 14916dbb0e0f4d84ca5fa30477d1b598, type: 3}
