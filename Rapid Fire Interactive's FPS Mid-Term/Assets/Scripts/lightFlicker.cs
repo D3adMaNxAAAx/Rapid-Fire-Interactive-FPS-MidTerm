@@ -24,6 +24,7 @@ public class lightFlicker : MonoBehaviour, IInteractable
     int pwrLvl;
     bool isOn;
     bool safeAccess;
+    bool foundPower = false;
 
     private void Awake()
     {
@@ -123,6 +124,8 @@ public class lightFlicker : MonoBehaviour, IInteractable
         // Turn off the interact UI if the player isn't within range
         if (gameManager.instance.getInteractUI().activeInHierarchy)
             gameManager.instance.getInteractUI().SetActive(false);
+        if (!foundPower)
+        { foundPower = true; }
     }
 
     int remainingItems()
@@ -247,4 +250,6 @@ public class lightFlicker : MonoBehaviour, IInteractable
             isFlickering = false;
         }
     }
+    public bool getFoundPower()
+    { return foundPower; }
 }

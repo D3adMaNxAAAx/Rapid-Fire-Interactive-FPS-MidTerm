@@ -5,7 +5,7 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class playerJournal : MonoBehaviour
+public class playerJournal :  lightFlicker
 {
     
 
@@ -27,6 +27,16 @@ public class playerJournal : MonoBehaviour
     [SerializeField] Canvas document7UI;
     [SerializeField] Canvas document8UI;
     [SerializeField] Canvas document9UI;
+
+    [SerializeField] TMP_Text obj1;
+    [SerializeField] TMP_Text obj2;
+    [SerializeField] TMP_Text obj3;
+    [SerializeField] TMP_Text obj4;
+    [SerializeField] TMP_Text obj5;
+    [SerializeField] TMP_Text obj6;
+    [SerializeField] TMP_Text obj7;
+    [SerializeField] TMP_Text obj8;
+    
 
     [SerializeField] TMP_Text healthStat;
     [SerializeField] TMP_Text stamStat;
@@ -55,6 +65,8 @@ public class playerJournal : MonoBehaviour
 
     bool isOpen;
 
+    int enemyCountOrig = 0;
+
     // Unused Variables
     //bool docIsOpen;
     //bool objOpen;
@@ -62,8 +74,9 @@ public class playerJournal : MonoBehaviour
     //bool statsOpen;
     //bool achieveOpen;
 
-    private void Awake()
+    private void Start()
     {
+        enemyCountOrig = gameManager.instance.getEnemyCountOriginal();
         journal.SetActive(false);
         isOpen = false;
     }
@@ -74,7 +87,7 @@ public class playerJournal : MonoBehaviour
         currentMoneyCounter();
         if (_menuStats.gameObject.activeInHierarchy)
             updateJournalStats();
-
+        updateObjectives();
     }
 
     void currentMoneyCounter() {
@@ -187,7 +200,45 @@ public class playerJournal : MonoBehaviour
 
     public void updateObjectives()
     {
-        
+        obj1.text = playerStats.Stats.getPowerObjects().ToString("F0") + " / 9";
+
+        if (getFoundPower())
+        {
+            obj2.text = "Completed";
+            obj2.color = Color.green;
+        }
+        else
+        {
+            obj2.text = "Incomplete";
+            obj2.color = Color.red;
+        }
+
+        obj3.text = playerStats.Stats.getPWRLevel().ToString("F0") + " / 3";
+
+        if (playerStats.Stats.getBadgesFound() <= 3)
+            obj4.text = playerStats.Stats.getBadgesFound().ToString("F0") + " / 3";
+
+        obj5.text = playerStats.Stats.getBadgesFound().ToString("F0") + " / 9";
+
+        obj6.text = gameManager.instance.getEnemyCountOriginal().ToString("F0") + " / " + enemyCountOrig;
+
+        obj7.text = playerStats.Stats.getNotesFound().ToString("F0") + " / 9";
+
+        if (playerStats.Stats.getPWRLevel() == 2)
+        { 
+            obj8.text = "Store Access Granted";
+            obj8.color = Color.green;
+        }
+        else if (playerStats.Stats.getPWRLevel() == 3)
+        { 
+            obj8.text = "Store & Upgrades Access Granted";
+            obj8.color = Color.green;
+        }
+        else 
+        {
+            obj8.text = "No Access Granted! Restore Power Level";
+            obj8.color = Color.red;
+        }
     }
   
 }

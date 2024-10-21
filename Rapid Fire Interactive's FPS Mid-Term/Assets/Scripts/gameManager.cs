@@ -124,6 +124,7 @@ public class gameManager : MonoBehaviour {
 
     // Dynamic Values
     int enemyCount;
+    int enemyCountOrig = 0;
     int bossCount; // For when we make boss monster
     int powerItems;
     float timeScaleOrig; // Tracks & stores original game time scale
@@ -570,6 +571,11 @@ public class gameManager : MonoBehaviour {
             CameraMovement.state.getCam().fieldOfView = CameraMovement.state.getNormalFOV();
         }
     }
+
+    public int getEnemyCountOriginal()
+    { return enemyCountOrig; }
+    public void setEnemyCountOrig(int _count)
+    { enemyCountOrig += _count; }
 
     public GameObject getMenuLoadout() {
         return menuLoadout; }

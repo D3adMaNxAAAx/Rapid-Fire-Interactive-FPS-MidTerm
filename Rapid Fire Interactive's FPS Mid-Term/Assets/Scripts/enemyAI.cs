@@ -78,6 +78,7 @@ public class enemyAI : MonoBehaviour , IDamage {
     // Start is called before the first frame update
     void Start() {
 
+        gameManager.instance.setEnemyCount(1);
         // Assign variables that need to be set at enemy creation
         colorOrig = model.material.color; // Sets our Models original color on scene start
         HPOrig = HP; // Set orginal hp value on scene open for enemy
@@ -317,6 +318,7 @@ public class enemyAI : MonoBehaviour , IDamage {
         if (HP <= 0 && !isDead)
         {
             isDead = true;
+            gameManager.instance.setEnemyCountOrig(-1);
 
             // Stop the NavMeshAgent's movement
             agent.isStopped = true;
