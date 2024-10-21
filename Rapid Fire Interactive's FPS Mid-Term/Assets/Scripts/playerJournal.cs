@@ -65,9 +65,9 @@ public class playerJournal :  MonoBehaviour
 
     bool isOpen;
 
-    int enemyCountOrig = 0;
-
     // Unused Variables
+    //int enemyCountOrig = 0;
+
     //bool docIsOpen;
     //bool objOpen;
     //bool itemsOpen;

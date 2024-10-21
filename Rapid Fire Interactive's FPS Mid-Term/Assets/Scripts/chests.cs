@@ -6,6 +6,7 @@ using UnityEngine;
 public class chests : MonoBehaviour, IInteractable
 {
     [Header("-- Chest Information --")]
+    [SerializeField] Animator anim;
     [SerializeField] collectablePickup shieldBuff;
     [SerializeField] collectablePickup staminaBuff;
     [SerializeField] collectablePickup healBuff;
@@ -59,12 +60,17 @@ public class chests : MonoBehaviour, IInteractable
         0 < 34, or 34 > 0 -- Passes Shield */
     }
 
-    // Don't think Update is needed
-
     public void interact()
     {
-        //openChest();
+        // Play the animation of the chest opening
+        openChest();
 
+        // Award loot
+        // giveLoot() moved to the Animation Events of the Press Animation for the chest.
+    }
+
+    public void giveLoot()
+    {
         // Give player loot
         gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() + coins);
         gameManager.instance.getPlayerScript().setXP(xp); // THIS WILL ADD XP
@@ -91,15 +97,16 @@ public class chests : MonoBehaviour, IInteractable
 
         // Power Up
         Instantiate(powerUp, new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), Quaternion.identity);
-
+        
         // Update UI
         gameManager.instance.getPlayerScript().updatePlayerUI();
     }
 
-    // for later
+    // Method for triggering the chest to open
     void openChest()
     {
-        Debug.Log("Wow! You know how to open chests! Incredible!");
+        isOpen = true;
+        anim.CrossFade("Animated PBR Chest _Opening_UnCommon", 0.1f);
     }
 
     private void OnTriggerStay(Collider other)
@@ -113,7 +120,6 @@ public class chests : MonoBehaviour, IInteractable
         if (Input.GetButton("Interact") && !isOpen)
         {
             interact();
-            isOpen = true;
         }
     }
 

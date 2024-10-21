@@ -21,8 +21,10 @@ public class enemyAI : MonoBehaviour , IDamage {
     [SerializeField] AudioClip hitClip;
     [SerializeField] float hitVolume = 1.0f;
     [SerializeField] float soundCooldown = 2; //cooldown on hit sound 
-    [SerializeField] float knockbackForce = 5f;  // Amount of force applied during knockback
-    [SerializeField] float knockbackDuration = 0.2f;  // Duration of the knockback effect
+
+    // Unused Variables
+    // [SerializeField] float knockbackForce = 5f;  // Amount of force applied during knockback
+    //[SerializeField] float knockbackDuration = 0.2f;  // Duration of the knockback effect
 
     [SerializeField] BoxCollider miniBossheadCollider = null;
     [SerializeField] CapsuleCollider enemyHeadCollider = null;
