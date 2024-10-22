@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
@@ -20,6 +21,9 @@ public class mainMenu : MonoBehaviour
     [SerializeField] GameObject howToPlayMenuFirst;
     [SerializeField] GameObject controlsMenuFirst;
 
+    [Header("-- Quit Button --")]
+    [SerializeField] Button quitButton;
+
     private GameObject currentMenu;
     bool isTransitioning;
 
@@ -28,6 +32,12 @@ public class mainMenu : MonoBehaviour
         // Set menu vars
         currentMenu = null;
         EventSystem.current.SetSelectedGameObject(mainMenuFirst);
+
+        // Check if on WebGL and disable quit if so
+        if (quitButton != null && Application.platform == RuntimePlatform.WebGLPlayer)
+        {
+            quitButton.interactable = false;
+        }
     }
 
     public void startGame()
