@@ -147,7 +147,7 @@ MonoBehaviour:
   laserSight: {fileID: 4691113019804941331}
   damage: 1
   fireRate: 0.4
-  bulletDistance: 25
+  range: 0
   headShotMult: 1.5
   grenades: []
   grenade: {fileID: 1666907183475564130, guid: cdf11c09e9ecf7446bab81d249de101c, type: 3}
@@ -265,7 +265,7 @@ CharacterController:
   m_Height: 2
   m_Radius: 0.5000001
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0.4
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
@@ -808,7 +808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f316b3b7dfc229e41be14f5cd545b6c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivitySlider: {fileID: 7329277867592090631, guid: 3141261dcdf34f04187177af5ee1437f, type: 3}
+  sensitivitySlider: {fileID: 0}
   sens: 300
   lockVertMin: -90
   lockVertMax: 90
