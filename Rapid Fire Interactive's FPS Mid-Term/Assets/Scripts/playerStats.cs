@@ -50,9 +50,7 @@ public class playerStats : MonoBehaviour {
     }
 
     public void enemyKilled() {
-        enemiesKilled++;
-        gameManager.instance.updateGameGoal(-1);
-    }
+        enemiesKilled++; }
 
     public void enemyHeadShot() { // needs to be implemented
         headShots++; }

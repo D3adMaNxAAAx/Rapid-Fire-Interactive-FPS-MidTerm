@@ -114,7 +114,6 @@ public class playerMovement : MonoBehaviour, IDamage
     float shieldHP = 25;
 
     // Checks
-    bool leveledUp = false;
     bool isSprinting;
     bool isShooting;
     bool isStepping;
@@ -420,7 +419,7 @@ public class playerMovement : MonoBehaviour, IDamage
                     dmg.takeDamage((damage * damageBuffMult) * headShotMult);
                     AudioSource.PlayClipAtPoint(audioManager.instance.headShotA, controller.transform.position, 0.5f);
                     playerStats.Stats.enemyHeadShot();
-                   
+                    Debug.Log("Headshot!");
                 }
                
                 if (guns[gunPos].isSniper || guns[gunPos].isShotgun)
@@ -869,7 +868,6 @@ public class playerMovement : MonoBehaviour, IDamage
         {
             playerLevel++;
             skillPoints++;
-            leveledUp = true;
             playerStats.Stats.levelUp();
             playerXP -= playerXPMax; // Reset XP back to zero
             gameManager.instance.getLevelTracker().text = playerLevel.ToString("F0");
@@ -886,7 +884,8 @@ public class playerMovement : MonoBehaviour, IDamage
 
         speedOrig = (int) speed;
 
-     
+        // if (toggleSprint == true)   //tried while loop but it broke it
+        //{
         speed *= speedMod;
         isSprinting = true;
         staminaDrain();
@@ -998,6 +997,27 @@ public class playerMovement : MonoBehaviour, IDamage
         AudioSource.PlayClipAtPoint(grenadeStats.explosionSound,grenadeInstance.transform.position);
         Destroy(grenadeInstance);
     }
+
+
+    //Working out null ref bug...put on pause for time being
+
+    //IEnumerator PlayerMelee()
+    //{
+    //    Vector3 currGunPos = getCurGun().GameObject().transform.position;
+    //    Vector3 meleePos = new Vector3(getCurGun().GameObject().transform.position.x, getCurGun().GameObject().transform.position.y , getCurGun().GameObject().transform.position.z + 3f);
+
+
+    //        if (guns[gunPos].GetComponentInChildren<BoxCollider>() != null)
+    //        {
+    //        Debug.Log("Melee Ready");
+    //            getCurGun().GameObject().transform.forward += Vector3.Lerp(currGunPos, meleePos, 1f);
+    //            yield return new WaitForSeconds(2);
+    //            getCurGun().GameObject().transform.position = currGunPos;
+    //        }
+    //        else
+    //            yield return new WaitForSeconds(2);
+
+    //}
 
     IEnumerator HealPlayer() { // x
         if (HP != HPOrig) {
@@ -1394,14 +1414,5 @@ public class playerMovement : MonoBehaviour, IDamage
     public void setSprintBool(bool value)
     {
         toggleSprint = value;
-    }
-
-    public bool getLeveledUp()
-    {
-        return leveledUp;
-    }
-    public void setLeveledUp(bool _state)
-    { 
-        leveledUp = _state; 
     }
 }

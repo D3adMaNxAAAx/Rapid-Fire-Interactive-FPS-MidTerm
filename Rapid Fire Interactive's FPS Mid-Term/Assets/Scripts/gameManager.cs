@@ -86,7 +86,6 @@ public class gameManager : MonoBehaviour {
     [SerializeField] TMP_Text livesText;
     [SerializeField] GameObject interactUI; // this makes the timer run regardless if its hidden or not
     [SerializeField] GameObject startFailMessage;
-    [SerializeField] TMP_Text levelPopUp;
   
 
     // -- Game --
@@ -182,11 +181,6 @@ public class gameManager : MonoBehaviour {
             statePause();
             displayUI(false);
             menuActive.SetActive(true);
-        }
-
-        if (playerScript.getLeveledUp())
-        {
-            StartCoroutine(showLevelPopUp());
         }
     }
 
@@ -461,19 +455,9 @@ public class gameManager : MonoBehaviour {
             EventSystem.current.SetSelectedGameObject(terminalUpgradeMenuFirst); // Set eventsystem selected game object to the button assigned
         } else
         {
-            
+            Debug.Log("You don't have Power Level 3");
             // Replace this with UI feedback that they are not Power Level 3.
         }
-    }
-
-    public IEnumerator showLevelPopUp()
-    {
-        
-        levelPopUp.gameObject.SetActive(true);
-        yield return new WaitForSeconds(1.7f);
-        levelPopUp.gameObject.SetActive(false);
-        playerScript.setLeveledUp(false);
-
     }
 
     public void openStoreMenu() {
