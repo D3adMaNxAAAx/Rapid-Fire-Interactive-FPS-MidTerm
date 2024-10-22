@@ -132,13 +132,9 @@ public class lightFlicker : MonoBehaviour, IInteractable
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
             // Turn off the interact UI if the player isn't within range
             if (gameManager.instance.getInteractUI().activeInHierarchy)
                 gameManager.instance.getInteractUI().SetActive(false);
-           
-        }
     }
 
     int remainingItems()
