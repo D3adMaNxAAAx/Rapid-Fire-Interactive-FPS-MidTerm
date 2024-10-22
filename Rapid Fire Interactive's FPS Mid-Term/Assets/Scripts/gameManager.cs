@@ -31,6 +31,9 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuControls;
     [SerializeField] GameObject menuStats;
 
+    [Header("-- Quit Buttons --")]
+    [SerializeField] Button[] quitButtons;
+    
     // First Selected Options (for use when selecting with arrow keys)
     [Header("-- First Selected Options --")]
     [SerializeField] GameObject loadoutMenuFirst;
@@ -76,6 +79,8 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject hpUI;
     [SerializeField] GameObject buffUI;
     [SerializeField] Image buffIcon;
+    [SerializeField] GameObject buffUI2;
+    [SerializeField] Image buffIcon2;
     [SerializeField] GameObject xpUI;
     [SerializeField] GameObject timer;
     [SerializeField] GameObject timerTracker; // this makes the timer run regardless if its hidden or not
@@ -84,6 +89,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] TMP_Text livesText;
     [SerializeField] GameObject interactUI; // this makes the timer run regardless if its hidden or not
     [SerializeField] GameObject startFailMessage;
+    [SerializeField] TMP_Text levelPopUp;
   
 
     // -- Game --
@@ -142,8 +148,20 @@ public class gameManager : MonoBehaviour {
         setPlayerScript(getPlayer().GetComponent<playerMovement>()); // setting the player script from the above player tracker script component 
         setPlayerSpawnPos(GameObject.FindWithTag("PlayerSpawnPos")); //setting player spawn position by tag
 
-        // Pausing game, hididng player background ui, and showing loadout menu
+        // Check for WebGL to disable the quit button from options.
+        if (getPlatform() == RuntimePlatform.WebGLPlayer)
+        {
+            if (quitButtons != null)
+            {
+                foreach (Button quit in quitButtons)
+                {
+                    if (quit != null)
+                        quit.interactable = false;
+                }
+            }
+        }
 
+        // Hiding player background ui, and showing loadout menu
         menuActive = menuLoadout;
         displayUI(false);
         EventSystem.current.SetSelectedGameObject(loadoutMenuFirst); // Set eventsystem selected game object to the button assigned
@@ -154,7 +172,8 @@ public class gameManager : MonoBehaviour {
 
         if (menuActive != menuLoadout)
         {
-            if (Input.GetButtonDown("Cancel"))
+            // Check if the player is playing on a platform that supports ESC.
+            if (Input.GetButtonDown("Cancel") && getPlatform() != RuntimePlatform.WebGLPlayer)
             { // When ESC clicked
                 scopeZoomOut();
                 if (menuActive == null)
@@ -172,13 +191,37 @@ public class gameManager : MonoBehaviour {
                 {
                     stateUnpause();
                 }
+            } 
+            else if (Input.GetButtonDown("webGL_Cancel") && getPlatform() == RuntimePlatform.WebGLPlayer) {
+                scopeZoomOut();
+                if (menuActive == null)
+                {
+                    // Turn off the interact UI if paused
+                    if (getInteractUI().activeInHierarchy)
+                        getInteractUI().SetActive(false);
+
+                    statePause();
+                    menuActive = menuPause; // Set the pause menu as active menu
+                    menuActive.SetActive(getPauseStatus()); // Show active menu
+                    EventSystem.current.SetSelectedGameObject(pauseMenuFirst); // Set eventsystem selected game object to the button assigned
+                }
+                else if (menuActive == menuPause)
+                {
+                    stateUnpause();
+                }
             }
+
         }
         else if (menuActive == menuLoadout)
         {
             statePause();
             displayUI(false);
             menuActive.SetActive(true);
+        }
+
+        if (playerScript.getLeveledUp())
+        {
+            StartCoroutine(showLevelPopUp());
         }
     }
 
@@ -206,6 +249,12 @@ public class gameManager : MonoBehaviour {
             if (EventSystem.current != null)
             EventSystem.current.SetSelectedGameObject(null); // Null out any selected game objects too
         }
+    }
+    
+    // Gets the platform the player is on
+    public RuntimePlatform getPlatform()
+    {
+        return Application.platform;
     }
 
     public void updateBossBar(Image _bossHealthBar, float bossHP, float _health)
@@ -451,11 +500,17 @@ public class gameManager : MonoBehaviour {
             menuActive.SetActive(true);
             upgradeMenu.upgradeUI.setTVars();
             EventSystem.current.SetSelectedGameObject(terminalUpgradeMenuFirst); // Set eventsystem selected game object to the button assigned
-        } else
-        {
-            Debug.Log("You don't have Power Level 3");
-            // Replace this with UI feedback that they are not Power Level 3.
         }
+    }
+
+    public IEnumerator showLevelPopUp()
+    {
+        
+        levelPopUp.gameObject.SetActive(true);
+        yield return new WaitForSeconds(1.7f);
+        levelPopUp.gameObject.SetActive(false);
+        playerScript.setLeveledUp(false);
+
     }
 
     public void openStoreMenu() {
@@ -747,6 +802,10 @@ public class gameManager : MonoBehaviour {
     public GameObject getBuffUI() { return buffUI; }
 
     public Image getBuffIcon() { return buffIcon; }
+
+    public GameObject getBuffUI2() { return buffUI2; }
+
+    public Image getBuffIcon2() { return buffIcon2; }
 
     public GameObject getXpUI() { return xpUI; }
 

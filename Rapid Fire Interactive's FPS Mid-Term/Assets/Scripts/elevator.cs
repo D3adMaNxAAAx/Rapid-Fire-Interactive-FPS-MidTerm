@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class elevator : MonoBehaviour, IInteractable
 {
     [SerializeField] GameObject elevCallButton;
     [SerializeField] GameObject elevNextLevel;
     [SerializeField] GameObject elevDoor;
+    [SerializeField] Canvas obj1; //These are for marking our objectives in game to inform the player on why the door doesn't open.
+    [SerializeField] Canvas obj2;
     //[Range(0,20)][SerializeField] int requiredPower = 0;
     [SerializeField] bool moveToScene;
     [SerializeField] bool killObjective;
@@ -18,11 +21,19 @@ public class elevator : MonoBehaviour, IInteractable
     Vector3 doorPos;
     Vector3 doorMovePos;
 
+    Canvas objStorage;
+
+    bool uIIsPopping;
+
     bool isDoor;
     bool movingScene;
     // Start is called before the first frame update
     void Start()
     {
+        if (obj1 != null)
+            obj1.enabled = false;
+        if (obj2 != null)
+            obj2.enabled = false;
         if (moveToScene)
             sceneNum = SceneManager.GetActiveScene().buildIndex + 1;
         if (elevDoor != null)
@@ -67,10 +78,22 @@ public class elevator : MonoBehaviour, IInteractable
                 {
                     isDoor = true;
                 }
-                //else
-                //{
-                //    Debug.Log("Not Enough Power");
-                //}
+                else if (powerAmount < 3)
+                {
+                    if (!uIIsPopping && obj1 != null)
+                    {
+                        objStorage = obj1;
+                        StartCoroutine(popUIStuff());
+                    }
+                }
+                else
+                {
+                    if (!uIIsPopping && obj2 != null)
+                    {
+                        objStorage = obj2;
+                        StartCoroutine(popUIStuff());
+                    }
+                }
             }
             else
             {
@@ -78,10 +101,11 @@ public class elevator : MonoBehaviour, IInteractable
                 {
                     isDoor = true;
                 }
-                //else
-                //{
-                //    Debug.Log("Must remove all enemies to proceed");
-                //}
+                else
+                {
+                    objStorage = obj1;
+                    StartCoroutine(popUIStuff());
+                }
             }
         }
     }
@@ -128,6 +152,15 @@ public class elevator : MonoBehaviour, IInteractable
             SceneManager.LoadScene(sceneNum, LoadSceneMode.Single);
             gameManager.instance.getInteractUI().SetActive(false);
         }
+    }
+    IEnumerator popUIStuff()
+    {
+        uIIsPopping = true;
+        objStorage.enabled = true;
+        yield return new WaitForSeconds(1.2f);
+        objStorage.enabled = false;
+        objStorage = null;
+        uIIsPopping = false;
     }
     public void disableDoorBool()
     {

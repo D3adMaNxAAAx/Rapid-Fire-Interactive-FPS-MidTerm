@@ -8,6 +8,7 @@ public class terminals : MonoBehaviour
 {
     [SerializeField] Light terminalScreenLight;
     [SerializeField] GameObject terminal;
+    [SerializeField] GameObject terminalUpgrade;
 
     bool isOpen; // if terminal menu is already open
     bool isOn; // if terminal can be accessed at all
@@ -23,12 +24,23 @@ public class terminals : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // Unlock Terminal
         if (playerStats.Stats != null)
             if (playerStats.Stats.getPWRLevel() > 2 && !isOn)
             { 
                 terminalScreenLight.gameObject.SetActive(true);
                 isOn = true;
-            }   
+            }
+
+        // Unlock Upgrade Menu
+        if (playerStats.Stats != null)
+            if (playerStats.Stats.getPWRLevel() == 3 && isOn)
+            {
+                if (!terminalUpgrade.activeInHierarchy)
+                {
+                    terminalUpgrade.SetActive(true);
+                }
+            }
     }
 
     private void OnTriggerStay(Collider other)

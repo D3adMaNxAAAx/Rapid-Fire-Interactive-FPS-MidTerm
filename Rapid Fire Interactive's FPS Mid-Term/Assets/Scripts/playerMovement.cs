@@ -114,6 +114,7 @@ public class playerMovement : MonoBehaviour, IDamage
     float shieldHP = 25;
 
     // Checks
+    bool leveledUp = false;
     bool isSprinting;
     bool isShooting;
     bool isStepping;
@@ -419,7 +420,7 @@ public class playerMovement : MonoBehaviour, IDamage
                     dmg.takeDamage((damage * damageBuffMult) * headShotMult);
                     AudioSource.PlayClipAtPoint(audioManager.instance.headShotA, controller.transform.position, 0.5f);
                     playerStats.Stats.enemyHeadShot();
-                    Debug.Log("Headshot!");
+                   
                 }
                
                 if (guns[gunPos].isSniper || guns[gunPos].isShotgun)
@@ -695,64 +696,104 @@ public class playerMovement : MonoBehaviour, IDamage
         gameManager.instance.getAmmoWarning().SetActive(false); //gameManager
     }
 
+
+    bool buffActive = false;
+
     public void callBuff(int buff, Sprite icon) { // a seperate method is needed to call the Coroutine because if the pickup calls it directly it won't work after being destoryed
-        if (buff == 1) {
+        if (buffActive == false) {
+            buffActive = true;
             gameManager.instance.getBuffUI().SetActive(true);
             gameManager.instance.getBuffIcon().sprite = icon;
-            StartCoroutine(damageBuff());
+            if (buff == 1) {
+                StartCoroutine(damageBuff(1));
+            }
+            else if (buff == 2) {
+                StartCoroutine(healBuff(1));
+            }
+            else if (buff == 3) {
+                StartCoroutine(shieldBuff(1));
+            }
+            else if (buff == 4) {
+                StartCoroutine(staminaBuff(1));
+            }
         }
-        else if (buff == 2) {
-            gameManager.instance.getBuffUI().SetActive(true);
-            gameManager.instance.getBuffIcon().sprite = icon;
-            StartCoroutine(healBuff());
-        }
-        else if (buff == 3) {
-            gameManager.instance.getBuffUI().SetActive(true);
-            gameManager.instance.getBuffIcon().sprite = icon;
-            StartCoroutine(shieldBuff());
-        }
-        else if (buff == 4) {
-            gameManager.instance.getBuffUI().SetActive(true);
-            gameManager.instance.getBuffIcon().sprite = icon;
-            StartCoroutine(staminaBuff());
+        else { // if first buff UI slot is active, put buff in 2nd UI slot
+            gameManager.instance.getBuffUI2().SetActive(true);
+            gameManager.instance.getBuffIcon2().sprite = icon;
+            if (buff == 1) {
+                StartCoroutine(damageBuff(2));
+            }
+            else if (buff == 2) {
+                StartCoroutine(healBuff(2));
+            }
+            else if (buff == 3) {
+                StartCoroutine(shieldBuff(2));
+            }
+            else if (buff == 4) {
+                StartCoroutine(staminaBuff(2));
+            }
         }
     }
 
-    IEnumerator damageBuff() {
+    IEnumerator damageBuff(int slot) {
         damageBuffMult = 1.5f;
         yield return new WaitForSeconds(10);
         damageBuffMult = 1;
-        gameManager.instance.getBuffUI().SetActive(false);
+        if (slot == 1) {
+            buffActive = false;
+            gameManager.instance.getBuffUI().SetActive(false);
+        }
+        else {
+            gameManager.instance.getBuffUI2().SetActive(false);
+        }
     }
 
-    IEnumerator healBuff() {
+    IEnumerator healBuff(int slot) {
         for (int i = 1; i <= 5; i++) {
             Heal(true);
             updatePlayerUI();
             yield return new WaitForSeconds(1);
         }
-        gameManager.instance.getBuffUI().SetActive(false);
+        if (slot == 1) {
+            buffActive = false;
+            gameManager.instance.getBuffUI().SetActive(false);
+        }
+        else {
+            gameManager.instance.getBuffUI2().SetActive(false);
+        }
     }
 
-    IEnumerator shieldBuff() {
+    IEnumerator shieldBuff(int slot) {
         gameManager.instance.getShieldBar().SetActive(true);
         shieldOn = true;
         yield return new WaitForSeconds(10);
         setShieldOff();
+        if (slot == 1) {
+            buffActive = false;
+            gameManager.instance.getBuffUI().SetActive(false);
+        }
+        else {
+            gameManager.instance.getBuffUI2().SetActive(false);
+        }
     }
 
     public void setShieldOff() {
         shieldOn = false;
         shieldHP = 50;
-        gameManager.instance.getBuffUI().SetActive(false);
         gameManager.instance.getShieldBar().SetActive(false);
     }
 
-    IEnumerator staminaBuff() {
+    IEnumerator staminaBuff(int slot) {
         infiniteStam = true;
         yield return new WaitForSeconds(5);
         infiniteStam = false;
-        gameManager.instance.getBuffUI().SetActive(false);
+        if (slot == 1) {
+            buffActive = false;
+            gameManager.instance.getBuffUI().SetActive(false);
+        }
+        else {
+            gameManager.instance.getBuffUI2().SetActive(false);
+        }
     }
 
     void sprint() {
@@ -828,6 +869,7 @@ public class playerMovement : MonoBehaviour, IDamage
         {
             playerLevel++;
             skillPoints++;
+            leveledUp = true;
             playerStats.Stats.levelUp();
             playerXP -= playerXPMax; // Reset XP back to zero
             gameManager.instance.getLevelTracker().text = playerLevel.ToString("F0");
@@ -844,8 +886,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
         speedOrig = (int) speed;
 
-        // if (toggleSprint == true)   //tried while loop but it broke it
-        //{
+     
         speed *= speedMod;
         isSprinting = true;
         staminaDrain();
@@ -957,27 +998,6 @@ public class playerMovement : MonoBehaviour, IDamage
         AudioSource.PlayClipAtPoint(grenadeStats.explosionSound,grenadeInstance.transform.position);
         Destroy(grenadeInstance);
     }
-
-
-    //Working out null ref bug...put on pause for time being
-
-    //IEnumerator PlayerMelee()
-    //{
-    //    Vector3 currGunPos = getCurGun().GameObject().transform.position;
-    //    Vector3 meleePos = new Vector3(getCurGun().GameObject().transform.position.x, getCurGun().GameObject().transform.position.y , getCurGun().GameObject().transform.position.z + 3f);
-
-
-    //        if (guns[gunPos].GetComponentInChildren<BoxCollider>() != null)
-    //        {
-    //        Debug.Log("Melee Ready");
-    //            getCurGun().GameObject().transform.forward += Vector3.Lerp(currGunPos, meleePos, 1f);
-    //            yield return new WaitForSeconds(2);
-    //            getCurGun().GameObject().transform.position = currGunPos;
-    //        }
-    //        else
-    //            yield return new WaitForSeconds(2);
-
-    //}
 
     IEnumerator HealPlayer() { // x
         if (HP != HPOrig) {
@@ -1374,5 +1394,14 @@ public class playerMovement : MonoBehaviour, IDamage
     public void setSprintBool(bool value)
     {
         toggleSprint = value;
+    }
+
+    public bool getLeveledUp()
+    {
+        return leveledUp;
+    }
+    public void setLeveledUp(bool _state)
+    { 
+        leveledUp = _state; 
     }
 }
