@@ -9,7 +9,7 @@ public class playerJournal :  MonoBehaviour
 {
     
 
-    [SerializeField] GameObject journal;
+    [SerializeField] Canvas journal;
     
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject _menuObjectives;
@@ -27,6 +27,7 @@ public class playerJournal :  MonoBehaviour
     [SerializeField] Canvas document7UI;
     [SerializeField] Canvas document8UI;
     [SerializeField] Canvas document9UI;
+    [SerializeField] Canvas itemsMenu;
 
     [SerializeField] TMP_Text obj1;
     [SerializeField] TMP_Text obj2;
@@ -77,7 +78,7 @@ public class playerJournal :  MonoBehaviour
     private void Start()
     {
         
-        journal.SetActive(false);
+        journal.enabled = false;
         isOpen = false;
     }
     // Update is called once per frame
@@ -140,7 +141,7 @@ public class playerJournal :  MonoBehaviour
             gameManager.instance.statePause();
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
-            journal.SetActive(true);
+            journal.enabled = true;
             isOpen = !isOpen;
             
         }
@@ -152,15 +153,17 @@ public class playerJournal :  MonoBehaviour
             gameManager.instance.stateUnpause();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
-            journal.SetActive(false);
+            journal.enabled = false;
             gameManager.instance.displayUI(true);
             isOpen = !isOpen;
         }
     }
     public void menuObj()
     {
-        if(menuActive != null)
+        if (menuActive != null && menuActive != _menuItems)
         { menuActive.SetActive(false); }
+        else if (menuActive == _menuItems)
+        { itemsMenu.enabled = false; }
 
         menuActive = _menuObjectives;
 
@@ -168,16 +171,20 @@ public class playerJournal :  MonoBehaviour
     }
     public void menuItems()
     {
-        if (menuActive != null)
+        if (menuActive != null && menuActive != _menuItems)
         { menuActive.SetActive(false); }
+        else if (menuActive == _menuItems)
+        { itemsMenu.enabled = false; }
 
         menuActive = _menuItems;
-        menuActive.SetActive(true);
+        itemsMenu.enabled = true;
     } 
     public void menuStats()
     {
-        if (menuActive != null)
+        if (menuActive != null && menuActive != _menuItems)
         { menuActive.SetActive(false); }
+        else if (menuActive == _menuItems)
+        { itemsMenu.enabled = false; }
 
         menuActive = _menuStats;
         menuActive.SetActive(true);
@@ -185,8 +192,10 @@ public class playerJournal :  MonoBehaviour
     } 
     public void menuachieve()
     {
-        if (menuActive != null)
+        if (menuActive != null && menuActive != _menuItems)
         { menuActive.SetActive(false); }
+        else if (menuActive == _menuItems)
+        { itemsMenu.enabled = false; }
 
         menuActive = _menuAchievements;
         menuActive.SetActive(true);

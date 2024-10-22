@@ -113,7 +113,7 @@ public class lightFlicker : MonoBehaviour, IInteractable
     private void OnTriggerStay(Collider other)
     {
         // If interact menu isn't on, turn it on.
-        if (lightSys != null)
+        if (lightSys != null && pwrLvl < 3)
         {
             if (!gameManager.instance.getInteractUI().activeInHierarchy)
                 gameManager.instance.getInteractUI().SetActive(true);
@@ -122,6 +122,11 @@ public class lightFlicker : MonoBehaviour, IInteractable
             {
                 if (Input.GetButton("Interact")) { interact(); }
             }
+        }
+        else
+        {
+            if (gameManager.instance.getInteractUI().activeInHierarchy)
+                gameManager.instance.getInteractUI().SetActive(false);
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -165,23 +170,22 @@ public class lightFlicker : MonoBehaviour, IInteractable
 
             if (pwrLvl == 2)
             {
-                setFlicker(false);
-                for (int i = 0; i < lightCount - 1; ++i)
-                {
-                    lights[i].enabled = true;
-                }
+                setRandFlickSpd(UnityEngine.Random.Range(0.2f, 1.5f));
+                if (!getWait())
+                    StartCoroutine(getNewNumber());
+                flickerLight();
+                setFlicker(true);
             }
 
             if (pwrLvl == 3)
             {
                 // Copied pwr lvl 1 code just for an indicator that it's actually working.
                 // Feel free to change this later.
-                setRandFlickSpd(UnityEngine.Random.Range(0.2f, 1.5f));
-                if (!getWait())
-                    StartCoroutine(getNewNumber());
-                flickerLight();
-                setFlicker(true);
-
+                setFlicker(false);
+                for (int i = 0; i < lightCount - 1; ++i)
+                {
+                    lights[i].enabled = true;
+                }
                 //elevator on 
                 //setElevatorAccess(true);
             }

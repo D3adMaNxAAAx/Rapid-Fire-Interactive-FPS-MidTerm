@@ -18,6 +18,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuContinue;
     [SerializeField] GameObject menuConfirmation;
+    [SerializeField] GameObject menuQuit;
     [SerializeField] GameObject menuTerminal;
     [SerializeField] GameObject menuUpgrade;
     [SerializeField] GameObject menuTerminalUpgrade;
@@ -40,6 +41,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject pauseMenuFirst;
     [SerializeField] GameObject optionsMenuFirst;
     [SerializeField] GameObject confirmationMenuFirst;
+    [SerializeField] GameObject quitMenuFirst;
     [SerializeField] GameObject settingsMenuFirst;
     [SerializeField] GameObject howToMenuFirst;
     [SerializeField] GameObject tipsMenuFirst;
@@ -405,6 +407,14 @@ public class gameManager : MonoBehaviour {
         EventSystem.current.SetSelectedGameObject(confirmationMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
+    public void openQuitMenu()
+    {
+        menuActive.SetActive(false);
+        menuActive = menuQuit;
+        menuActive.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(quitMenuFirst); // Set eventsystem selected game object to the button assigned
+    }
+
     public void openOptionsMenu() {
         menuActive.SetActive(false);
         menuActive = menuOptions;
@@ -596,6 +606,12 @@ public class gameManager : MonoBehaviour {
             menuActive = menuPause;
             menuActive.SetActive(true);
         }
+        else if (menuActive == menuQuit)
+        {
+            menuActive.SetActive(false);
+            menuActive = menuPause;
+            menuActive.SetActive(true);
+        }
         else if (menuActive == menuTerminal)
         {
             menuActive.SetActive(false);
@@ -633,6 +649,7 @@ public class gameManager : MonoBehaviour {
         }
 
     }
+
     public void scopeZoomIn() {
         if (menuActive == null) { // won't work if there is a menu active
             menuActive = sniperScope;
@@ -893,4 +910,13 @@ public class gameManager : MonoBehaviour {
         menuConfirmation = _confirmationMenu;
     }
 
+    public GameObject getMenuActive()
+    {
+        return menuActive;
+    }
+
+    public void setMenuActive(GameObject _menu)
+    {
+        menuActive = _menu;
+    }
 }
