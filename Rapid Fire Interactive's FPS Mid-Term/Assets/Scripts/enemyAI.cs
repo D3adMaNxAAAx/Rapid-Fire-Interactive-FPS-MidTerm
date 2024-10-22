@@ -320,6 +320,15 @@ public class enemyAI : MonoBehaviour , IDamage {
             agent.velocity = Vector3.zero;
             agent.enabled = false;
 
+            if (rngDropRate > 0)
+            {
+                spawnPos = ammoSpawn.position;
+                if (dropRNG <= rngDropRate)
+                {
+                    Instantiate<GameObject>(ammoDrop, spawnPos, Quaternion.identity);
+                }
+            }
+
             // Disable all colliders on this enemy to prevent further hits
             Collider[] colliders = GetComponentsInChildren<Collider>();
             foreach (var collider in colliders)
@@ -371,36 +380,29 @@ public class enemyAI : MonoBehaviour , IDamage {
        
 
         // Check if enemy is dead
-        if (HP <= 0 && !isDead)
-        {
-            isDead = true;
+        //if (HP <= 0 && !isDead)
+        //{
+        //    isDead = true;
 
             
-            // Tells Game manager to take 1 enemy out of game goal enemy total
-            gameManager.instance.updateGameGoal(-1);
-            playerStats.Stats.enemyKilled();
-            // Update UI
-            gameManager.instance.getPlayerScript().updatePlayerUI();
+        //    // Tells Game manager to take 1 enemy out of game goal enemy total
+        //    gameManager.instance.updateGameGoal(-1);
+        //    playerStats.Stats.enemyKilled();
+        //    // Update UI
+        //    gameManager.instance.getPlayerScript().updatePlayerUI();
 
-            // Roll for an ammo pickup
-            if (rngDropRate > 0)
-            {
-                spawnPos = ammoSpawn.position;
-                if (dropRNG <= rngDropRate)
-                {
-                    Instantiate<GameObject>(ammoDrop, spawnPos, Quaternion.identity);
-                }
-            }
-
-            // Since No HP Delete Enemy Object
+        //    // Roll for an ammo pickup
             
-                // Give the player XP & coins for defeating the enemy
+
+        //    // Since No HP Delete Enemy Object
+            
+        //        // Give the player XP & coins for defeating the enemy
 
                 
             
-            gameManager.instance.getPlayerScript().updatePlayerUI();
-            Destroy(gameObject);
-        }
+        //    gameManager.instance.getPlayerScript().updatePlayerUI();
+        //    Destroy(gameObject);
+        //}
     }
 
     private IEnumerator HandleFadeOut()
