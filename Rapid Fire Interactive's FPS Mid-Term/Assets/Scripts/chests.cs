@@ -112,23 +112,29 @@ public class chests : MonoBehaviour, IInteractable
     private void OnTriggerStay(Collider other)
     {
         // Enable Interact Menu
-        if (!gameManager.instance.getInteractUI().activeInHierarchy)
+        if (other.CompareTag("Player"))
         {
-            gameManager.instance.getInteractUI().SetActive(true);
-        }
+            if (!gameManager.instance.getInteractUI().activeInHierarchy)
+            {
+                gameManager.instance.getInteractUI().SetActive(true);
+            }
 
-        if (Input.GetButton("Interact") && !isOpen)
-        {
-            interact();
+            if (Input.GetButton("Interact") && !isOpen)
+            {
+                interact();
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         // Disable Interact Menu
-        if (gameManager.instance.getInteractUI().activeInHierarchy)
+        if (other.CompareTag("Player"))
         {
-            gameManager.instance.getInteractUI().SetActive(false);
+            if (gameManager.instance.getInteractUI().activeInHierarchy)
+            {
+                gameManager.instance.getInteractUI().SetActive(false);
+            }
         }
     }
 

@@ -307,13 +307,27 @@ public class enemyAI : MonoBehaviour , IDamage {
         if (HP <= 0 && !isDead)
         {
             isDead = true;
-            gameManager.instance.setEnemyCountOrig(-1);
+            playerStats.Stats.enemyKilled();
+            gameManager.instance.getPlayerScript().setXP(getEnemyXP()); // setXP will ADD the amount given.
+            playerStats.Stats.gotXP(getEnemyXP());
+            gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() + getEnemyCoins()); // Add coins to player amount.
+            playerStats.Stats.gotMoney(getEnemyCoins());
+            playerMovement.player.updatePlayerUI();
             StopAllCoroutines();
 
             // Stop the NavMeshAgent's movement
             agent.isStopped = true;
             agent.velocity = Vector3.zero;
             agent.enabled = false;
+
+            if (rngDropRate > 0)
+            {
+                spawnPos = ammoSpawn.position;
+                if (dropRNG <= rngDropRate)
+                {
+                    Instantiate<GameObject>(ammoDrop, spawnPos, Quaternion.identity);
+                }
+            }
 
             // Disable all colliders on this enemy to prevent further hits
             Collider[] colliders = GetComponentsInChildren<Collider>();
@@ -366,38 +380,29 @@ public class enemyAI : MonoBehaviour , IDamage {
        
 
         // Check if enemy is dead
-        if (HP <= 0 && !isDead)
-        {
-            isDead = true;
+        //if (HP <= 0 && !isDead)
+        //{
+        //    isDead = true;
 
             
-            // Tells Game manager to take 1 enemy out of game goal enemy total
-            gameManager.instance.updateGameGoal(-1);
-            playerStats.Stats.enemyKilled();
-            // Update UI
-            gameManager.instance.getPlayerScript().updatePlayerUI();
+        //    // Tells Game manager to take 1 enemy out of game goal enemy total
+        //    gameManager.instance.updateGameGoal(-1);
+        //    playerStats.Stats.enemyKilled();
+        //    // Update UI
+        //    gameManager.instance.getPlayerScript().updatePlayerUI();
 
-            // Roll for an ammo pickup
-            if (rngDropRate > 0)
-            {
-                spawnPos = ammoSpawn.position;
-                if (dropRNG <= rngDropRate)
-                {
-                    Instantiate<GameObject>(ammoDrop, spawnPos, Quaternion.identity);
-                }
-            }
+        //    // Roll for an ammo pickup
+            
 
-            // Since No HP Delete Enemy Object
+        //    // Since No HP Delete Enemy Object
             
-                // Give the player XP & coins for defeating the enemy
-                gameManager.instance.getPlayerScript().setXP(getEnemyXP()); // setXP will ADD the amount given.
-                playerStats.Stats.gotXP(getEnemyXP());
-                gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() + getEnemyCoins()); // Add coins to player amount.
-                playerStats.Stats.gotMoney(getEnemyCoins());
-                Destroy(gameObject);
+        //        // Give the player XP & coins for defeating the enemy
+
+                
             
-            gameManager.instance.getPlayerScript().updatePlayerUI();
-        }
+        //    gameManager.instance.getPlayerScript().updatePlayerUI();
+        //    Destroy(gameObject);
+        //}
     }
 
     private IEnumerator HandleFadeOut()
