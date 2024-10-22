@@ -459,10 +459,6 @@ public class gameManager : MonoBehaviour {
             menuActive.SetActive(true);
             upgradeMenu.upgradeUI.setTVars();
             EventSystem.current.SetSelectedGameObject(terminalUpgradeMenuFirst); // Set eventsystem selected game object to the button assigned
-        } else
-        {
-            
-            // Replace this with UI feedback that they are not Power Level 3.
         }
     }
 
