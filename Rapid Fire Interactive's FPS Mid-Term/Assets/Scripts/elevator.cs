@@ -82,7 +82,6 @@ public class elevator : MonoBehaviour, IInteractable
                 {
                     if (!uIIsPopping && obj1 != null)
                     {
-                        Debug.Log("Kill me");
                         objStorage = obj1;
                         StartCoroutine(popUIStuff());
                     }
