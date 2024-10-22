@@ -127,5 +127,10 @@ public class playerStats : MonoBehaviour {
     public float getCollectablesFound() {
         percentFound3 = collectablesFound / maxCollectables;
         return percentFound3; }
-    // getters
+    // setters
+    public void resetOBJStats()
+    {
+        idBadgesFound = 0;
+        powerObjectsFound = 0;
+    }
 }
