@@ -1363,7 +1363,7 @@ public class playerMovement : MonoBehaviour, IDamage
         stamina = newStamina;}
 
     public void setCoins(int newCoins) {
-        coins = newCoins;}
+        coins += newCoins;}
 
     public void setDamageMod(float newDamageMod) {
         damageUpgradeMod = newDamageMod;}
