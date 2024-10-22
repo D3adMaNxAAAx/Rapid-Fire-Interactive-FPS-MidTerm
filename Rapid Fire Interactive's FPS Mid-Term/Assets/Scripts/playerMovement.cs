@@ -296,6 +296,7 @@ public class playerMovement : MonoBehaviour, IDamage
         isStepping = true;
 
         // Play step sound
+        aud.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
         aud.PlayOneShot(audioManager.instance.audSteps[Random.Range(0, audioManager.instance.audSteps.Length)], audioManager.instance.audStepVol);
 
         // Check if the player is sprinting and play the sound faster if so
@@ -337,7 +338,7 @@ public class playerMovement : MonoBehaviour, IDamage
                     newProjectile.SetActive(true); // turning object on (it is set off when added to object pool)
                     playerShot.GetComponent<damage>().setCurrentPosAndRange(newProjectile.transform.position, range);
                     // setting bullet start position, update in damage will track its distance and "delete" the bullet when it goes past the distance
-
+                    aud.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
                     aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
                 }
                 // Another check for the player to auto-reload if they attempt to shoot with nothing in their barrel.
@@ -560,6 +561,7 @@ public class playerMovement : MonoBehaviour, IDamage
             // Play hurt sound for audio indication
             if (damageAudioReady)
             {
+                aud.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
                 aud.PlayOneShot(audioManager.instance.audHurt[Random.Range(0, audioManager.instance.audHurt.Length)], audioManager.instance.audHurtVol);
                 StartCoroutine(damageAudioCooldown());
             }

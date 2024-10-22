@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class audioManager : MonoBehaviour
 {
     public static audioManager instance; // Singleton
+    public AudioMixerGroup SFXMixerGroup;
     // -- Audio Clips --
     [Header("-- Game Music --")]
     [SerializeField] public AudioClip menuMusic;
@@ -54,5 +56,25 @@ public class audioManager : MonoBehaviour
     void Start()
     {
         instance = this;
+    }
+    public void PlayFootstep()
+    {
+        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = SFXMixerGroup; // Set the audio source to use the SFX mixer group
+        audioSource.PlayOneShot(audSteps[Random.Range(0, audSteps.Length)], audStepVol);  // Play random footstep
+    }
+
+    public void PlayJump()
+    {
+        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = SFXMixerGroup; // Set the audio source to use the SFX mixer group
+        audioSource.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);  // Play random jump sound
+    }
+
+    public void PlayHurt()
+    {
+        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = SFXMixerGroup; // Set the audio source to use the SFX mixer group
+        audioSource.PlayOneShot(audHurt[Random.Range(0, audHurt.Length)], audHurtVol);  // Play random hurt sound
     }
 }
