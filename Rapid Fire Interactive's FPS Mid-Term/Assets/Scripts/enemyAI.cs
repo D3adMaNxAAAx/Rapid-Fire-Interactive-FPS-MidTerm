@@ -16,13 +16,14 @@ public class enemyAI : MonoBehaviour , IDamage {
     [SerializeField] public NavMeshAgent agent; // Allows Designer Communication To NavMeshAgent Component 
     [SerializeField] Transform headPos; // Enemy Head Position Tracker(Line Of Sight) For Designer
     [SerializeField] Transform shootPos; // Enemy SHoot Point Origin Tracker For Designer
-    [SerializeField] Transform ammoSpawn;
-    [SerializeField] GameObject ammoDrop;
+    // [SerializeField] Transform dropSpawn; not being used rn
+    // [SerializeField] GameObject ammoDrop; not being used rn
     [SerializeField] GameObject coinDrop;
     [SerializeField] AudioClip hitClip;
     [SerializeField] float hitVolume = 1.0f;
     [SerializeField] float soundCooldown = 2; //cooldown on hit sound 
 
+    /// keep the commented out ammo drop comments (they say not being used rn)
     // Unused Variables
     // [SerializeField] float knockbackForce = 5f;  // Amount of force applied during knockback
     //[SerializeField] float knockbackDuration = 0.2f;  // Duration of the knockback effect
@@ -39,7 +40,6 @@ public class enemyAI : MonoBehaviour , IDamage {
     bool isShooting; // Private Tracker For If Enemy Is Shooting 
     bool playerInRange; // Tracker of if player is in range of enemy detection radius
     Vector3 playerDir; // Tracks player Direction for AI rotation and player in range
-    Vector3 spawnPos;
     Vector3 lastSeenPlayerPosition;
     [Header("----- Roam -----")]
     // All value fields for enemy view and roam settings 
@@ -59,8 +59,8 @@ public class enemyAI : MonoBehaviour , IDamage {
 
     [Range(1, 30)][SerializeField] int faceTargetSpeed; // Sets enemy rotation look speed for turning towards enemy look direction
     [Range(1, 1000)][SerializeField] int dropXP; // How much XP enemy drops
-    [Range(1, 1000)][SerializeField] int dropCoins; // How many coins enemy drops
-    [Range(0,100)][SerializeField] int rngDropRate;
+    [SerializeField] int coinsHeld; // amount of coins the enemy drops
+    // [Range(0,100)][SerializeField] int rngDropRate; not being used rn
 
     [Header("----- Attack -----")]
     [SerializeField] GameObject rangedAttack; // Bullet Object Tracker and Communication Field For Designer
@@ -88,6 +88,7 @@ public class enemyAI : MonoBehaviour , IDamage {
         colorOrig = model.material.color; // Sets our Models original color on scene start
         HPOrig = HP; // Set orginal hp value on scene open for enemy
         OGSpeed = agent.speed;
+        // dropRNG = Random.Range(0, 100); not being used rn
 
         // if enemy is boss original = enemy hp used for boss health progress bar
         if (type == enemyType.boss)
@@ -115,7 +116,6 @@ public class enemyAI : MonoBehaviour , IDamage {
         float animSpeed = anim.GetFloat("Speed"); //current animation speed
         //smoothly transitioning animation speed over time 
         anim.SetFloat("Speed", Mathf.Lerp(animSpeed, agentSpeed, Time.deltaTime * animSpeedTrans));
-        dropRNG = Random.Range(0, 100);
 
         if (!isDead) {
             if (playerInRange) {
@@ -298,22 +298,50 @@ public class enemyAI : MonoBehaviour , IDamage {
         meleeCol.enabled = false;
     }
 
-    // Calling our takeDamage method from interface class IDamage
-    public void takeDamage(float _amount)
-    {    
-        // Deduct HP on damage recieved
 
+    int coinsToDrop;
+    int dropPosVariant;
+    int dropVariance = 1;
 
+    public void dropEnemyCoins() {
+        if (coinsHeld == 0) {
+            return;
+        }
+        coinsToDrop = coinsHeld / 2; // each coin drop is worth 2 coins;
+        for (int i = 1; i <= coinsToDrop; i++) {
+            dropPosVariant = Random.Range(0, 100); // 5 different positions coins can drop, getting random roll to decide which
+            dropVariance = dropVariance * -1; // switching between positive and negative
+            float extraVariance = i / 10 * dropVariance;
+            if (dropPosVariant <= 20) {
+                Instantiate(coinDrop, model.transform.position + new Vector3(extraVariance, 0.5f, extraVariance), Quaternion.identity);
+            }
+            else if (dropPosVariant <= 40) {
+                Instantiate(coinDrop, model.transform.position + new Vector3(extraVariance + 0.3f, 0.5f, extraVariance + 0.3f), Quaternion.identity);
+            }
+            else if (dropPosVariant <= 60) {
+                Instantiate(coinDrop, model.transform.position + new Vector3(extraVariance + 0.3f, 0.5f, extraVariance - 0.3f), Quaternion.identity);
+            }
+            else if (dropPosVariant <= 80) {
+                Instantiate(coinDrop, model.transform.position + new Vector3(extraVariance - 0.3f, 0.5f, extraVariance - 0.3f), Quaternion.identity);
+            }
+            else {
+                Instantiate(coinDrop, model.transform.position + new Vector3(extraVariance - 0.3f, 0.5f, extraVariance + 0.3f), Quaternion.identity);
+            }
+        }
+    }
+
+    public void takeDamage(float _amount) { // Calling our takeDamage method from interface class IDamage
         HP -= _amount;
-        if (HP <= 0 && !isDead)
-        {
+        playerStats.Stats.attack(_amount);
+
+        if (HP <= 0 && !isDead) { /// death code
             isDead = true;
             playerStats.Stats.enemyKilled();
             gameManager.instance.getPlayerScript().setXP(getEnemyXP()); // setXP will ADD the amount given.
             playerStats.Stats.gotXP(getEnemyXP());
-            gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() + getEnemyCoins()); // Add coins to player amount.
-            playerStats.Stats.gotMoney(getEnemyCoins());
             playerMovement.player.updatePlayerUI();
+            dropEnemyCoins();
+
             StopAllCoroutines();
 
             // Stop the NavMeshAgent's movement
@@ -321,14 +349,11 @@ public class enemyAI : MonoBehaviour , IDamage {
             agent.velocity = Vector3.zero;
             agent.enabled = false;
 
-            if (rngDropRate > 0)
-            {
-                spawnPos = ammoSpawn.position;
-                if (dropRNG <= rngDropRate)
-                {
-                    Instantiate<GameObject>(ammoDrop, spawnPos, Quaternion.identity);
+            /*if (rngDropRate > 0) { // not being used rn
+                if (dropRNG <= rngDropRate) {
+                    Instantiate<GameObject>(ammoDrop, dropSpawn.position, Quaternion.identity);
                 }
-            }
+            }*/
 
             // Disable all colliders on this enemy to prevent further hits
             Collider[] colliders = GetComponentsInChildren<Collider>();
@@ -344,15 +369,20 @@ public class enemyAI : MonoBehaviour , IDamage {
                 rb.useGravity = true; // Ensure gravity is enabled
             }
 
-            // Trigger the death animation
+            if (gameObject.CompareTag("Light") == false) {
+                this.gameObject.transform.position -= new Vector3(0, 1, 0);
+                // Trigger the death animation
                 anim.CrossFade("Death", 0.1f);
 
                 // Start fading the enemy out
                 StartCoroutine(HandleFadeOut());
+            }
+            else {
+                Destroy(gameObject);
+            }
             
-        }
+        } /// end of death code
 
-        playerStats.Stats.attack(_amount);
         isRoaming = false;
 
         if (canPlaySound)
@@ -377,38 +407,10 @@ public class enemyAI : MonoBehaviour , IDamage {
 
         if (HP > 0)
             agent.SetDestination(gameManager.instance.getPlayer().transform.position); // makes enemys go to player
-
-       
-
-        // Check if enemy is dead
-        //if (HP <= 0 && !isDead)
-        //{
-        //    isDead = true;
-
-            
-        //    // Tells Game manager to take 1 enemy out of game goal enemy total
-        //    gameManager.instance.updateGameGoal(-1);
-        //    playerStats.Stats.enemyKilled();
-        //    // Update UI
-        //    gameManager.instance.getPlayerScript().updatePlayerUI();
-
-        //    // Roll for an ammo pickup
-            
-
-        //    // Since No HP Delete Enemy Object
-            
-        //        // Give the player XP & coins for defeating the enemy
-
-                
-            
-        //    gameManager.instance.getPlayerScript().updatePlayerUI();
-        //    Destroy(gameObject);
-        //}
     }
 
     private IEnumerator HandleFadeOut()
     {
-        canAttack = false;
         yield return new WaitForSeconds(0.5f);
 
         float fadeDuration = 3f;
@@ -426,7 +428,6 @@ public class enemyAI : MonoBehaviour , IDamage {
         }
 
         Destroy(gameObject);
-        canAttack = true;
     }
 
     public void takeDamage(float amount, Vector3 sourcePosition, StatusEffects effect = null)
@@ -498,11 +499,11 @@ public class enemyAI : MonoBehaviour , IDamage {
 
     // Gives other classes access to enemy coins value
     public int getEnemyCoins()
-    { return dropCoins; }
+    { return coinsHeld; }
 
     // Setter for enemy coins from other classes
     public void setEnemyCoins(int _coins)
-    { dropCoins = _coins; }
+    { coinsHeld = _coins; }
 
     // Getter for Enemy HP
     public float getEnemyHP()

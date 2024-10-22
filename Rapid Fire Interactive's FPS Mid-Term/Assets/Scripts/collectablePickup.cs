@@ -6,7 +6,7 @@ public class collectablePickup : MonoBehaviour {
 
     [SerializeField] Sprite buffIcon;
     [SerializeField] ObjectType type;
-    enum ObjectType { secret, healBuff, attackBuff, shieldBuff, staminaBuff }
+    enum ObjectType { secret, healBuff, attackBuff, shieldBuff, staminaBuff, coins }
 
     [SerializeField] AudioClip pickUpA;
     
@@ -20,7 +20,11 @@ public class collectablePickup : MonoBehaviour {
     private void OnTriggerEnter(Collider otherObject) {
         if (otherObject.CompareTag("Player")) {
             AudioSource.PlayClipAtPoint(pickUpA, transform.position);
-            if (type == ObjectType.secret) {
+            if (type == ObjectType.coins) {
+                gameManager.instance.getPlayerScript().setCoins(2); // Add coins to player amount
+                playerStats.Stats.gotMoney(2); // each coin pickup is 2 coins
+            }
+            else if (type == ObjectType.secret) {
                 /// track this
             }
             else if (type == ObjectType.healBuff) {

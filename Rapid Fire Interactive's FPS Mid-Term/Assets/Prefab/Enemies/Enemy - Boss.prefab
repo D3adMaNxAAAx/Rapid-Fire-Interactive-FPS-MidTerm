@@ -1922,8 +1922,7 @@ MonoBehaviour:
   agent: {fileID: 5022875280789059963}
   headPos: {fileID: 5467910972576209273}
   shootPos: {fileID: 4432241784408976627}
-  ammoSpawn: {fileID: 2211265906524788034}
-  ammoDrop: {fileID: 6904497920734926788, guid: 4237d6ffeea48944596bf777dda61238, type: 3}
+  coinDrop: {fileID: 1837553608210685687, guid: 3885cebfb6c10724a8ba057b2c1212a8, type: 3}
   hitClip: {fileID: 8300000, guid: c35b1f489447c164f99deded2c2a9a6a, type: 3}
   hitVolume: 1
   soundCooldown: 2
@@ -1936,8 +1935,7 @@ MonoBehaviour:
   HP: 35
   faceTargetSpeed: 6
   dropXP: 17
-  dropCoins: 25
-  rngDropRate: 0
+  coinsHeld: 20
   rangedAttack: {fileID: 1026084026005163015, guid: 723833d5004a207488922350f27747f7, type: 3}
   meleeCol: {fileID: 0}
   range: 100
