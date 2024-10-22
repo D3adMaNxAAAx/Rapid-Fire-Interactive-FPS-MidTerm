@@ -552,7 +552,7 @@ public class playerMovement : MonoBehaviour, IDamage
             playerStats.Stats.attacked(amount);
             stopHealing = true; // STOP HEALING IF DAMAGED
 
-            if (amount > 3) // If the damage taken exceeds 3, apply the bleeding effect
+            if (amount >= 5) // If the damage taken exceeds 3, apply the bleeding effect
             {
                 ApplyBleedingEffect(gameObject);
             }
