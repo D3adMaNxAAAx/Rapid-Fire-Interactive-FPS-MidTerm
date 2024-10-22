@@ -6,7 +6,6 @@ using UnityEngine;
 public class audioManager : MonoBehaviour
 {
     public static audioManager instance; // Singleton
-
     // -- Audio Clips --
     [Header("-- Game Music --")]
     [SerializeField] public AudioClip menuMusic;

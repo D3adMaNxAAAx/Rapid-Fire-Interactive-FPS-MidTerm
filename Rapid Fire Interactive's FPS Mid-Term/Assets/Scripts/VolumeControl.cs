@@ -22,17 +22,6 @@ public class VolumeControl : MonoBehaviour
             SetSFXVolume();
         }
        
-        //float musicVol;
-        //float sfxVol;
-
-        //audioMixer.GetFloat("MusicVolume", out musicVol);
-        //musicSlider.value = Mathf.Pow(10, musicVol / 20);
-
-        //audioMixer.GetFloat("SFXVolume", out sfxVol);
-        //sfxSlider.value = Mathf.Pow(10, sfxVol / 20);
-
-        //musicSlider.onValueChanged.AddListener(SetMusicVolume);
-        //sfxSlider.onValueChanged.AddListener(SetSFXVolume);
     }
 
     public void SetMusicVolume()
