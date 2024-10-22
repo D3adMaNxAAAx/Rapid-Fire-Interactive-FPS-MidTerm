@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
+
 public class damage : MonoBehaviour {
 
     //Allows switch between damage types
@@ -11,6 +12,7 @@ public class damage : MonoBehaviour {
 
     [SerializeField] ObjectType projectileType; // for object pooling / recycling, ObjectType is enum in projectilePool script
     projectilePool objectPool; // for object pooling / recycling
+    private StatusEffectUIManager uiManager;
 
     public ObjectType getProjectileType() {
         return projectileType;
@@ -98,6 +100,7 @@ public class damage : MonoBehaviour {
     }
 
     private void OnTriggerStay(Collider otherObject) {
+       
         if (otherObject.isTrigger) {
             return;
         }
@@ -105,7 +108,35 @@ public class damage : MonoBehaviour {
             IDamage toDamage = otherObject.GetComponent<IDamage>();
             if (otherObject.CompareTag("Player")) { // only damages player
                 toDamage.takeDamage(damageAmount);
+              
+                uiManager = FindObjectOfType<StatusEffectUIManager>();
+                if (uiManager != null)
+                {
+                    uiManager.ShowBurningEffect();  // Show burning icon when the effect starts
+                }
             }
         }
+    }
+
+    private void OnTriggerExit(Collider otherObject)
+    {
+        if (otherObject.isTrigger)
+        {
+            return;
+        }
+        if (type == damageType.hazard)
+        { // dealing damage while still in area of effect
+           // IDamage toDamage = otherObject.GetComponent<IDamage>();
+            if (otherObject.CompareTag("Player"))
+            {
+
+                uiManager = FindObjectOfType<StatusEffectUIManager>();
+                if (uiManager != null)
+                {
+                    uiManager.HideBurningEffect();
+                }
+            }
+        }
+    
     }
 }
