@@ -12,7 +12,7 @@ public class pickupWeapon : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Show interact menu
-            if (!gameManager.instance.getInteractUI().activeInHierarchy)
+            if (!gameManager.instance.getInteractUI().activeInHierarchy && !isPickedUp)
                 gameManager.instance.getInteractUI().SetActive(true);
 
             if (Input.GetButton("Interact") && !isPickedUp)
@@ -34,5 +34,9 @@ public class pickupWeapon : MonoBehaviour
     {
         isPickedUp = true;
         gameManager.instance.getPlayerScript().getGunStats(gun);
+
+        // Hide interact menu
+        if (gameManager.instance.getInteractUI().activeInHierarchy)
+            gameManager.instance.getInteractUI().SetActive(false);
     }
 }
