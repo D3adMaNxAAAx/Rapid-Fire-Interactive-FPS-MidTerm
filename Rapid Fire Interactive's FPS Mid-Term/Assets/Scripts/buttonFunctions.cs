@@ -4,13 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class buttonFunctions : MonoBehaviour {
+
+    // stateIndex will have the name of the scene to go to.
     string stateIndex;
+
     private void Start()
     {
         stateIndex = SceneManager.GetActiveScene().name;
         if (stateIndex == "MainMenu")
             stateIndex = "Level 1";
     }
+
     public void confirmRestart()
     {
         if (playerStats.Stats != null)
@@ -42,6 +46,11 @@ public class buttonFunctions : MonoBehaviour {
 
     public void restart() {
         gameManager.instance.openConfirmationMenu();
+    }
+
+    public void quitMenu()
+    {
+        gameManager.instance.openQuitMenu();
     }
 
     public void options() {
@@ -98,6 +107,21 @@ public class buttonFunctions : MonoBehaviour {
 #endif
     }
 
+    public void mainMenu()
+    {
+        // Hide UI
+        gameManager.instance.getMenuActive().SetActive(false);
+        gameManager.instance.setMenuActive(null);
+
+        // Wipe Player Data
+        Destroy(playerMovement.player.gameObject);
+        Destroy(uiManager.manager.gameObject);
+        Destroy(playerStats.Stats.gameObject);
+
+        // Load Main Menu
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+    }
+
     public void invertY() {
         if (CameraMovement.state != null)
         CameraMovement.state.invert();
@@ -127,7 +151,6 @@ public class buttonFunctions : MonoBehaviour {
                 playerMovement.player.toggleSprintOn();
 
             }
-
     }
 
     public void toggleZoom() {
