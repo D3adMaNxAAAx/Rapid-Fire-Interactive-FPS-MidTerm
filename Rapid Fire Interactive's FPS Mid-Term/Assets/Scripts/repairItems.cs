@@ -24,34 +24,37 @@ public class repairItems : MonoBehaviour, IInteractable
 
     public void interact()
     {
-        Destroy(repairObj);
-        //isPickedUp = true;
         
-        pickedUpFeedback.enabled = true;
-        isOpen = true;
-        gameManager.instance.setPowerItems(1);
-
-        if (journalIcon != null)
-            journalIcon.SetActive(true);
     }
     
     private void OnTriggerStay(Collider other)
     {
-        // Since it will await the player input, use OnTriggerStay.
-        if (other.CompareTag("Player") && !repairObj.IsDestroyed())
+        if (!isOpen)
         {
-            // If interact menu isn't on, turn it on.
-            if (!gameManager.instance.getInteractUI().activeInHierarchy && !repairObj.IsDestroyed())
-                gameManager.instance.getInteractUI().SetActive(true);
-
-            if (Input.GetButton("Interact"))
+            // Since it will await the player input, use OnTriggerStay.
+            if (other.CompareTag("Player") && !repairObj.IsDestroyed())
             {
-                interact();
-                gameManager.instance.getInteractUI().SetActive(false);
+                // If interact menu isn't on, turn it on.
+                if (!gameManager.instance.getInteractUI().activeInHierarchy && !repairObj.IsDestroyed())
+                    gameManager.instance.getInteractUI().SetActive(true);
+
+                if (Input.GetButton("Interact"))
+                {
+                    isOpen = true;
+                    Destroy(repairObj);
+                    //isPickedUp = true;
+
+                    pickedUpFeedback.enabled = true;
+                    gameManager.instance.setPowerItems(1);
+
+                    if (journalIcon != null)
+                        journalIcon.SetActive(true);
+                    gameManager.instance.getInteractUI().SetActive(false);
+                }
             }
+            else
+                return;
         }
-        else
-            return;
     }
 
     private void OnTriggerExit(Collider other)
@@ -65,7 +68,6 @@ public class repairItems : MonoBehaviour, IInteractable
         yield return new WaitForSeconds(1.2f);
         playerStats.Stats.objectFound();
         pickedUpFeedback.enabled = false;
-        isOpen = false;
         Destroy(toDestroy);
     }
 }
