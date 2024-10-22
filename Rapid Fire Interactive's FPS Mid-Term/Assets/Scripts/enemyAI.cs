@@ -307,7 +307,12 @@ public class enemyAI : MonoBehaviour , IDamage {
         if (HP <= 0 && !isDead)
         {
             isDead = true;
-            gameManager.instance.setEnemyCountOrig(-1);
+            playerStats.Stats.enemyKilled();
+            gameManager.instance.getPlayerScript().setXP(getEnemyXP()); // setXP will ADD the amount given.
+            playerStats.Stats.gotXP(getEnemyXP());
+            gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() + getEnemyCoins()); // Add coins to player amount.
+            playerStats.Stats.gotMoney(getEnemyCoins());
+            playerMovement.player.updatePlayerUI();
             StopAllCoroutines();
 
             // Stop the NavMeshAgent's movement
@@ -390,13 +395,11 @@ public class enemyAI : MonoBehaviour , IDamage {
             // Since No HP Delete Enemy Object
             
                 // Give the player XP & coins for defeating the enemy
-                gameManager.instance.getPlayerScript().setXP(getEnemyXP()); // setXP will ADD the amount given.
-                playerStats.Stats.gotXP(getEnemyXP());
-                gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() + getEnemyCoins()); // Add coins to player amount.
-                playerStats.Stats.gotMoney(getEnemyCoins());
-                Destroy(gameObject);
+
+                
             
             gameManager.instance.getPlayerScript().updatePlayerUI();
+            Destroy(gameObject);
         }
     }
 
