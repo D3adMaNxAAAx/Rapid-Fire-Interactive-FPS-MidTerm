@@ -17,7 +17,8 @@ public class enemyAI : MonoBehaviour , IDamage {
     [SerializeField] Transform headPos; // Enemy Head Position Tracker(Line Of Sight) For Designer
     [SerializeField] Transform shootPos; // Enemy SHoot Point Origin Tracker For Designer
     [SerializeField] Transform ammoSpawn;
-    [SerializeField] GameObject ammoDrop; //Ammo Drop prefab
+    [SerializeField] GameObject ammoDrop;
+    [SerializeField] GameObject coinDrop;
     [SerializeField] AudioClip hitClip;
     [SerializeField] float hitVolume = 1.0f;
     [SerializeField] float soundCooldown = 2; //cooldown on hit sound 

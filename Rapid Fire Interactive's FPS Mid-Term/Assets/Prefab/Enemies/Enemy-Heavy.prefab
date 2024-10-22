@@ -482,8 +482,6 @@ MonoBehaviour:
   hitClip: {fileID: 8300000, guid: a4366158371c9514cae30cfff454dcb2, type: 3}
   hitVolume: 1
   soundCooldown: 2
-  knockbackForce: 5
-  knockbackDuration: 0.2
   miniBossheadCollider: {fileID: 0}
   enemyHeadCollider: {fileID: 8837416346018604893}
   viewAngle: 90
@@ -494,9 +492,10 @@ MonoBehaviour:
   faceTargetSpeed: 5
   dropXP: 7
   dropCoins: 5
-  rngDropRate: 17
+  rngDropRate: 0
   rangedAttack: {fileID: 0}
   meleeCol: {fileID: 3783255110361844638}
+  range: 0
   shootRate: 1
   damageFlashTimer: 0.5
   projectileType: 0
@@ -1824,7 +1823,6 @@ MonoBehaviour:
   missleRotationSpeed: 0
   damageAmount: 5
   attackSpeed: 0
-  destroyTime: 0
 --- !u!65 &3783255110361844638
 BoxCollider:
   m_ObjectHideFlags: 0
