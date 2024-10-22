@@ -31,6 +31,9 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuControls;
     [SerializeField] GameObject menuStats;
 
+    [Header("-- Quit Buttons --")]
+    [SerializeField] Button[] quitButtons;
+    
     // First Selected Options (for use when selecting with arrow keys)
     [Header("-- First Selected Options --")]
     [SerializeField] GameObject loadoutMenuFirst;
@@ -145,8 +148,20 @@ public class gameManager : MonoBehaviour {
         setPlayerScript(getPlayer().GetComponent<playerMovement>()); // setting the player script from the above player tracker script component 
         setPlayerSpawnPos(GameObject.FindWithTag("PlayerSpawnPos")); //setting player spawn position by tag
 
-        // Pausing game, hididng player background ui, and showing loadout menu
+        // Check for WebGL to disable the quit button from options.
+        if (getPlatform() == RuntimePlatform.WebGLPlayer)
+        {
+            if (quitButtons != null)
+            {
+                foreach (Button quit in quitButtons)
+                {
+                    if (quit != null)
+                        quit.interactable = false;
+                }
+            }
+        }
 
+        // Hiding player background ui, and showing loadout menu
         menuActive = menuLoadout;
         displayUI(false);
         EventSystem.current.SetSelectedGameObject(loadoutMenuFirst); // Set eventsystem selected game object to the button assigned
