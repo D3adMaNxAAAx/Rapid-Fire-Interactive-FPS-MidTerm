@@ -151,8 +151,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lostDocument: {fileID: 4398646282626324185}
   journalIcon: {fileID: 0}
-  toDestroy: {fileID: 4386480248007534887}
   pickedUpFeedback: {fileID: 7941310885653464561}
+  docOpened: {fileID: 0}
+  closeButton: {fileID: 0}
+  activeDoc: {fileID: 0}
 --- !u!65 &-4852406473578128556
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -172,7 +174,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.2, y: 0.2, z: 0.2}
+  m_Size: {x: 0.2, y: 0.1, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4398646282626324185
 GameObject:
