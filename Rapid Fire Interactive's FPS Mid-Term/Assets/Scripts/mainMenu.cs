@@ -13,12 +13,14 @@ public class mainMenu : MonoBehaviour
     [SerializeField] GameObject mainSceneStuff;
     [SerializeField] GameObject controlsMenu;
     [SerializeField] GameObject howToPlayMenu;
+    [SerializeField] GameObject tipsMenu;
 
     [Header("-- First Selected Buttons --")]
     [SerializeField] GameObject mainMenuFirst;
     [SerializeField] GameObject optionsMenuFirst;
     [SerializeField] GameObject settingsMenuFirst;
     [SerializeField] GameObject howToPlayMenuFirst;
+    [SerializeField] GameObject tipsMenuFirst;
     [SerializeField] GameObject controlsMenuFirst;
 
     [Header("-- Quit Button --")]
@@ -140,6 +142,35 @@ public class mainMenu : MonoBehaviour
             StartCoroutine(transition(currentMenu, true));
         }
     }
+    public void tips() {
+        if (!isTransitioning) {
+            currentMenu.SetActive(false);
+
+            // Set currentMenu then start it at 0 alpha and set things up
+            currentMenu = tipsMenu;
+            currentMenu.GetComponent<CanvasRenderer>().SetAlpha(0f);
+            currentMenu.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(tipsMenuFirst);
+
+            // Everything set up, fade in the menu
+            StartCoroutine(transition(currentMenu, true));
+        }
+    }
+
+    public void tipsBack() {
+        if (!isTransitioning) {
+            // Fade out the current menu
+            StartCoroutine(transition(currentMenu, false));
+
+            // Reset the opacity
+            // Turning off the buttons needs to be in the coroutine because of how fast code is going
+
+            currentMenu = howToPlayMenu;
+            EventSystem.current.SetSelectedGameObject(howToPlayMenuFirst);
+            currentMenu.SetActive(true);
+        }
+    }
+
     public void backButton()
     {
         if (!isTransitioning)
