@@ -562,93 +562,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Controls Menu
       objectReference: {fileID: 0}
-    - target: {fileID: 714105785383891640, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5242942613034417562, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 5242942613034417562, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 6790430040221370044, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
-      propertyPath: m_text
-      value: 'Use the mouse to look around.
-
-        Use WASD to move your character,
-        hold shift to sprint.
-
-        Double tap a movement key to dash in that
-        direction.
-
-        Use Space to jump, ctrl to crouch.
-
-        Use Q and
-        E to peak around things.
-
-        Use right to click to zoom / focus your
-        weapon.
-
-        Use left click to shoot your weapon, R to reload.
-
-        Use
-        the scroll wheel or 1-5 keys to switch weapons.
-
-        Hit F to interact
-        with things (pickup item, open door).
-
-        Hit X to use a health potion,
-        G to throw a grenade.
-
-        Hit Escape to pause, tab to open player journal.
-
-
-        You
-        can check these anytime in the pause menu in game.'
-      objectReference: {fileID: 0}
-    - target: {fileID: 6790430040221370044, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
-      propertyPath: m_fontSize
-      value: 33.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6790430040221370044, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
-      propertyPath: m_fontStyle
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6790430040221370044, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8116576711531143345, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 8116576711531143345, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
-      propertyPath: m_Colors.m_SelectedColor.b
-      value: 0.6666667
-      objectReference: {fileID: 0}
-    - target: {fileID: 8116576711531143345, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
-      propertyPath: m_Colors.m_SelectedColor.g
-      value: 0.6666667
-      objectReference: {fileID: 0}
-    - target: {fileID: 8116576711531143345, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
-      propertyPath: m_Colors.m_SelectedColor.r
-      value: 0.6666667
-      objectReference: {fileID: 0}
     - target: {fileID: 8116576711531143345, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 991967956}
-    - target: {fileID: 8116576711531143345, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: backButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 8116576711531143345, guid: 48d980f9cf08eab49b537195e700ebaa, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: mainMenu, Assembly-CSharp
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1530,68 +1447,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 335856711}
     m_Modifications:
     - target: {fileID: 121156271903872517, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
-      propertyPath: m_Navigation.m_Mode
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 121156271903872517, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
-      propertyPath: m_Colors.m_SelectedColor.b
-      value: 0.6666667
-      objectReference: {fileID: 0}
-    - target: {fileID: 121156271903872517, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
-      propertyPath: m_Colors.m_SelectedColor.g
-      value: 0.6666667
-      objectReference: {fileID: 0}
-    - target: {fileID: 121156271903872517, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
-      propertyPath: m_Colors.m_SelectedColor.r
-      value: 0.6666667
-      objectReference: {fileID: 0}
-    - target: {fileID: 121156271903872517, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 991967956}
-    - target: {fileID: 121156271903872517, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: backButton
-      objectReference: {fileID: 0}
-    - target: {fileID: 121156271903872517, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: mainMenu, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 3400716193469362184, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
-      propertyPath: m_text
-      value: 'Welcome to Monster Slasher Inc. You will have to battle through a creepy
-        warehouse infested with tons monsters to try and put a stop to the evil monster
-        overlord''s plans to destroy the world.
-
-        The power has been shut
-        off and you need to find the missing power objects to restore power. As you
-        restore the power, you will gain access to new things to help you become
-        more powerful. There are also ID badges that can be used to access safe areas
-        that will serve as check points and some free chests of loot. There are many
-        items throughout the warehouse to help you defeat the monsters. After fighting
-        through the first warehouse, you will be taken to a second and more gaurded
-        warehouse. At the end, you will find where the evil boss resides. Goodluck'
-      objectReference: {fileID: 0}
-    - target: {fileID: 3400716193469362184, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
-      propertyPath: m_fontSize
-      value: 34.85
-      objectReference: {fileID: 0}
-    - target: {fileID: 3400716193469362184, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
-      propertyPath: m_fontStyle
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3400716193469362184, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4165581165648743214, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 4165581165648743214, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 600
-      objectReference: {fileID: 0}
     - target: {fileID: 8245646046576140240, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1675,10 +1533,6 @@ PrefabInstance:
     - target: {fileID: 8711283384182768652, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
       propertyPath: m_Name
       value: How to Play Menu
-      objectReference: {fileID: 0}
-    - target: {fileID: 8711283384182768652, guid: 94ce06f88d6fe574ab824155c6a0897b, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
