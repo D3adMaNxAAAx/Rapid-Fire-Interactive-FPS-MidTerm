@@ -157,7 +157,8 @@ public class gameManager : MonoBehaviour {
 
         if (menuActive != menuLoadout)
         {
-            if (Input.GetButtonDown("Cancel"))
+            // Check if the player is playing on a platform that supports ESC.
+            if (Input.GetButtonDown("Cancel") && getPlatform() != RuntimePlatform.WebGLPlayer)
             { // When ESC clicked
                 scopeZoomOut();
                 if (menuActive == null)
@@ -175,7 +176,26 @@ public class gameManager : MonoBehaviour {
                 {
                     stateUnpause();
                 }
+            } 
+            else if (Input.GetButtonDown("webGL_Cancel") && getPlatform() == RuntimePlatform.WebGLPlayer) {
+                scopeZoomOut();
+                if (menuActive == null)
+                {
+                    // Turn off the interact UI if paused
+                    if (getInteractUI().activeInHierarchy)
+                        getInteractUI().SetActive(false);
+
+                    statePause();
+                    menuActive = menuPause; // Set the pause menu as active menu
+                    menuActive.SetActive(getPauseStatus()); // Show active menu
+                    EventSystem.current.SetSelectedGameObject(pauseMenuFirst); // Set eventsystem selected game object to the button assigned
+                }
+                else if (menuActive == menuPause)
+                {
+                    stateUnpause();
+                }
             }
+
         }
         else if (menuActive == menuLoadout)
         {
@@ -214,6 +234,12 @@ public class gameManager : MonoBehaviour {
             if (EventSystem.current != null)
             EventSystem.current.SetSelectedGameObject(null); // Null out any selected game objects too
         }
+    }
+    
+    // Gets the platform the player is on
+    public RuntimePlatform getPlatform()
+    {
+        return Application.platform;
     }
 
     public void updateBossBar(Image _bossHealthBar, float bossHP, float _health)
