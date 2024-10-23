@@ -214,4 +214,9 @@ public class buttonFunctions : MonoBehaviour {
         gameManager.instance.openLoseStatsMenu(); 
     }
 
+    public void creditScreen()
+    {
+        SceneManager.LoadScene(5, LoadSceneMode.Single);
+    }
+
 }

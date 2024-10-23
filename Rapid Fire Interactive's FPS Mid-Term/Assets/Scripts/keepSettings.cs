@@ -43,7 +43,6 @@ public class keepSettings : MonoBehaviour
         if (settingMenu == null)
         {
             setDefaults();
-            settingMenu.SetActive(false);
         }
         else
         {
@@ -71,6 +70,7 @@ public class keepSettings : MonoBehaviour
             sensSlider.value = sens;
             musicSlider.value = mus;
             sfxVolume.value = sfx;
+            settingMenu.SetActive(false);
         }
         else
             return;
