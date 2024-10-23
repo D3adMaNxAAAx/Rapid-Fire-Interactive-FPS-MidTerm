@@ -18,6 +18,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuLose;
     [SerializeField] GameObject menuContinue;
     [SerializeField] GameObject menuConfirmation;
+    [SerializeField] GameObject menuJournal;
     [SerializeField] GameObject menuQuit;
     [SerializeField] GameObject menuTerminal;
     [SerializeField] GameObject menuUpgrade;
@@ -175,7 +176,7 @@ public class gameManager : MonoBehaviour {
         if (menuActive != menuLoadout)
         {
             // Check if the player is playing on a platform that supports ESC.
-            if (Input.GetButtonDown("Cancel") && getPlatform() != RuntimePlatform.WebGLPlayer)
+            if (Input.GetButtonDown("Cancel") && menuActive == null && getPlatform() != RuntimePlatform.WebGLPlayer)
             { // When ESC clicked
                 scopeZoomOut();
                 if (menuActive == null)
@@ -194,7 +195,7 @@ public class gameManager : MonoBehaviour {
                     stateUnpause();
                 }
             } 
-            else if (Input.GetButtonDown("webGL_Cancel") && getPlatform() == RuntimePlatform.WebGLPlayer) {
+            else if (Input.GetButtonDown("webGL_Cancel") && menuActive == null && getPlatform() == RuntimePlatform.WebGLPlayer) {
                 scopeZoomOut();
                 if (menuActive == null)
                 {
