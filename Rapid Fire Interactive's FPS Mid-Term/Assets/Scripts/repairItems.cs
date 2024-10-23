@@ -24,7 +24,17 @@ public class repairItems : MonoBehaviour, IInteractable
 
     public void interact()
     {
-        
+        isOpen = true;
+        Destroy(repairObj);
+        //isPickedUp = true;
+
+        pickedUpFeedback.enabled = true;
+        gameManager.instance.setPowerItems(1);
+        playerStats.Stats.objectFound();
+
+        if (journalIcon != null)
+            journalIcon.SetActive(true);
+        gameManager.instance.getInteractUI().SetActive(false);
     }
     
     private void OnTriggerStay(Collider other)
@@ -40,16 +50,7 @@ public class repairItems : MonoBehaviour, IInteractable
 
                 if (Input.GetButton("Interact"))
                 {
-                    isOpen = true;
-                    Destroy(repairObj);
-                    //isPickedUp = true;
-
-                    pickedUpFeedback.enabled = true;
-                    gameManager.instance.setPowerItems(1);
-
-                    if (journalIcon != null)
-                        journalIcon.SetActive(true);
-                    gameManager.instance.getInteractUI().SetActive(false);
+                    interact();
                 }
             }
             else
@@ -66,7 +67,6 @@ public class repairItems : MonoBehaviour, IInteractable
     IEnumerator hideFeedback()
     {
         yield return new WaitForSeconds(1.2f);
-        playerStats.Stats.objectFound();
         pickedUpFeedback.enabled = false;
         Destroy(toDestroy);
     }
