@@ -25,7 +25,7 @@ public class playerStats : MonoBehaviour {
     int idBadgesFound;
     int powerObjectsFound; 
     int docsFound; 
-    int collectablesFound; float percentFound3; int maxCollectables = 10; // if implemented
+    int collectablesFound;
 
     // unused stats
     //float percentFound1; int maxPowerObjects = 9; // in relation to powerObjectsFound
@@ -44,8 +44,8 @@ public class playerStats : MonoBehaviour {
     }
 
     public void Reset() { // reseting all tracked stats to 0
-        enemiesKilled = headShots = maxLevel = totalXP = totalMoney = deaths = nearDeaths = ammoUsed = upgradesPurchased = shopItemsPurchased = powerObjectsFound = docsFound = collectablesFound = 0;
-        damageDealt = damageTaken = 0;
+        enemiesKilled = headShots = maxLevel = totalXP = totalMoney = deaths = nearDeaths = ammoUsed = upgradesPurchased = shopItemsPurchased = powerObjectsFound = docsFound = 0;
+        damageDealt = damageTaken = collectablesFound = 0;
         completionTime = "N/A";
     }
 
@@ -124,9 +124,8 @@ public class playerStats : MonoBehaviour {
     public int getPowerObjects() { return powerObjectsFound; }
     public int getNotesFound() { return docsFound; }
     public int getBadgesFound() { return idBadgesFound; }
-    public float getCollectablesFound() {
-        percentFound3 = collectablesFound / maxCollectables;
-        return percentFound3; }
+    public int getCollectablesFound() {
+        return collectablesFound * 10; }
     // setters
     public void resetOBJStats()
     {

@@ -31,7 +31,7 @@ public class statsMenu : MonoBehaviour {
         damageReceived.text = playerStats.Stats.getDamageTaken().ToString("F0");
         playerDeathCount.text = playerStats.Stats.getDeaths().ToString("F0");
         totalXPEarnedCount.text = playerStats.Stats.getTotalXP().ToString("F0");
-        secretsFound.text = playerStats.Stats.getCollectablesFound().ToString("F0");
+        secretsFound.text = playerStats.Stats.getCollectablesFound().ToString("F0") + "%";
         ammoUsed.text = playerStats.Stats.getAmmoUsed().ToString("F0");
         playerNearDeathCount.text = playerStats.Stats.getNearDeaths().ToString("F0");
         playerLevelStat.text = playerStats.Stats.getLevel().ToString("F0");

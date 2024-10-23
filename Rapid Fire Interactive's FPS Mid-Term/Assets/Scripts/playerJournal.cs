@@ -115,7 +115,7 @@ public class playerJournal :  MonoBehaviour
         enemiesKilled.text = playerStats.Stats.getEnemiesKilled().ToString("F0");
         damageDealt.text = playerStats.Stats.getDamageDealt().ToString("F0");
         damageReceived.text = playerStats.Stats.getDamageTaken().ToString("F0");
-        secretsFound.text = playerStats.Stats.getCollectablesFound().ToString("F0");
+        secretsFound.text = playerStats.Stats.getCollectablesFound().ToString("F0") + "%";
         headShots.text = playerStats.Stats.getHeadShots().ToString("F0");
     }
 
