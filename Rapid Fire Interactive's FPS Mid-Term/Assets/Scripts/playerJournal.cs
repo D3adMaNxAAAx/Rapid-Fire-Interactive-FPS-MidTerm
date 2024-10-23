@@ -121,15 +121,15 @@ public class playerJournal :  MonoBehaviour
 
     void toggleJournal()
     {
-        if (Input.GetButtonDown("OpenJournal") && !isOpen)
+        if (Input.GetButtonDown("OpenJournal") && gameManager.instance.getMenuActive() == null && !isOpen)
         {
-           openJournal();
-            
-
+            gameManager.instance.setMenuActive(journal.gameObject);
+            openJournal();
         }
         else if (Input.GetButtonDown("OpenJournal") && isOpen)
         {
-           closeJournal();
+            gameManager.instance.setMenuActive(null);
+            closeJournal();
         }
     }
 
@@ -142,7 +142,7 @@ public class playerJournal :  MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.Confined;
             journal.enabled = true;
-            isOpen = !isOpen;
+            isOpen = true;
             
         }
     }
@@ -155,7 +155,7 @@ public class playerJournal :  MonoBehaviour
             Cursor.visible = false;
             journal.enabled = false;
             gameManager.instance.displayUI(true);
-            isOpen = !isOpen;
+            isOpen = false;
         }
     }
     public void menuObj()
