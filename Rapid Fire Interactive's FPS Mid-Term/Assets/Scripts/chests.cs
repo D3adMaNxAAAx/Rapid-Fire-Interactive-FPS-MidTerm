@@ -64,7 +64,6 @@ public class chests : MonoBehaviour, IInteractable
     {
         // Play the animation of the chest opening
         openChest();
-
         // Award loot
         // giveLoot() moved to the Animation Events of the Press Animation for the chest.
     }
@@ -107,6 +106,7 @@ public class chests : MonoBehaviour, IInteractable
     {
         isOpen = true;
         anim.CrossFade("Animated PBR Chest _Opening_UnCommon", 0.1f);
+        gameManager.instance.getInteractUI().SetActive(false);
     }
 
     private void OnTriggerStay(Collider other)
@@ -114,7 +114,7 @@ public class chests : MonoBehaviour, IInteractable
         // Enable Interact Menu
         if (other.CompareTag("Player"))
         {
-            if (!gameManager.instance.getInteractUI().activeInHierarchy)
+            if (!gameManager.instance.getInteractUI().activeInHierarchy && !isOpen)
             {
                 gameManager.instance.getInteractUI().SetActive(true);
             }
