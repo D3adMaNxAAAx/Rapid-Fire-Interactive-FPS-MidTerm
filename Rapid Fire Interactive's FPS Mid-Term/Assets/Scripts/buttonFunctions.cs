@@ -118,6 +118,9 @@ public class buttonFunctions : MonoBehaviour {
         Destroy(uiManager.manager.gameObject);
         Destroy(playerStats.Stats.gameObject);
 
+        // Unpause
+        Time.timeScale = gameManager.instance.getTimeScaleOrig();
+
         // Load Main Menu
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
