@@ -137,7 +137,6 @@ public class elevator : MonoBehaviour, IInteractable
     }
     IEnumerator closeDoor()
     {
-        //Debug.Log("closing door");
         float a = Time.deltaTime * 3;
         //Use of Lerp to get smooth door movement
         elevDoor.transform.position = Vector3.Lerp(elevDoor.transform.position, doorPos, a);

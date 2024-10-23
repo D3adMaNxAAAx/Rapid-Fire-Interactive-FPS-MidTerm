@@ -18,14 +18,5 @@ public class closeDoorTrigger : MonoBehaviour
             if (safeRoom.instance.getSafeState())
                 StartCoroutine(safeRoom.instance.closeDoor());
         }
-
-        if (bossRoom.instance != null)
-        {
-            if (bossRoom.instance.getDoorStatus())
-            {
-                // for some reason the boss door just isn't working correctly so this won't work for now..
-                //bossRoom.instance.setDoorStatus(false);
-            }
-        }
     }
 }

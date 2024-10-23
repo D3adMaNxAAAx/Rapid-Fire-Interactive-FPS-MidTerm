@@ -6,7 +6,6 @@ public class doorControllerManual : MonoBehaviour, IInteractable
 {
     // Using safeRoom as a reference
 
-    // Member Fields
     // Singleton
     public static doorControllerManual instance;
 
@@ -23,7 +22,6 @@ public class doorControllerManual : MonoBehaviour, IInteractable
     Vector3 openPos;
     Vector3 closePos;
 
-    // Checks / Bools
     bool isOpen;
 
 

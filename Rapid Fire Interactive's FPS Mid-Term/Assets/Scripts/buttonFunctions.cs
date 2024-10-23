@@ -213,6 +213,5 @@ public class buttonFunctions : MonoBehaviour {
     {
         gameManager.instance.openLoseStatsMenu(); 
     }
-    // TO-DO: IMPLEMENT SPECIAL SOUNDS FOR STORE & UPGRADE
 
 }

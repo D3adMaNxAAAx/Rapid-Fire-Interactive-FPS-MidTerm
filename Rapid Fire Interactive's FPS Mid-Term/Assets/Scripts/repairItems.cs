@@ -26,7 +26,6 @@ public class repairItems : MonoBehaviour, IInteractable
     {
         isOpen = true;
         Destroy(repairObj);
-        //isPickedUp = true;
 
         pickedUpFeedback.enabled = true;
         gameManager.instance.setPowerItems(1);

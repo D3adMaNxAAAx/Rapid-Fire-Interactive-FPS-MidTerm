@@ -31,8 +31,6 @@ public class lostDocuments : MonoBehaviour , IInteractable
     {
         Destroy(lostDocument);
         playerStats.Stats.docFound();
-
-        //isPickedUp = true;
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
         
         pickedUpFeedback.enabled = true;
@@ -83,7 +81,6 @@ public class lostDocuments : MonoBehaviour , IInteractable
         {
             docOpened.gameObject.SetActive(true);
             closeButton.gameObject.SetActive(true);
-            //docOpen = true;
             activeDoc = docOpened;
         }
         
@@ -98,9 +95,4 @@ public class lostDocuments : MonoBehaviour , IInteractable
         
     }
 
-    //method to pick up document 
-    //pickup doc in scene
-    //open doc canvas
-    //close doc canvas
-    //add doc to journal
 }

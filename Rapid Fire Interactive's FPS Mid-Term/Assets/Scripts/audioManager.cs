@@ -30,7 +30,7 @@ public class audioManager : MonoBehaviour
 
     [Header("-- Game Sounds --")]
     [SerializeField] public AudioClip VictoryA;
-    [SerializeField] public AudioClip audHeal; // I think there is already an audio in playerMovement for this?
+    [SerializeField] public AudioClip audHeal; 
 
     [Header("-- UI Sounds --")]
     [SerializeField] public AudioClip audButtonHover;

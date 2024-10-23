@@ -106,10 +106,6 @@ public class safeRoom : MonoBehaviour, IInteractable
             float smoothOpen = Time.deltaTime * timeToOpen;
             activeDoor.transform.position = Vector3.Lerp(activeDoor.transform.position, closePos, smoothOpen);
 
-            // Set player spawn after the door closes
-            // KNOWN BUG: IF THE PLAYER DECIDES NOT TO GO IN THE SAFE HOUSE
-            // BUT STILL OPENED THE DOOR, THEIR SPAWN WILL BE SET ANYWAY.
-            // (Could maybe be a feature? Some games do this.)
             if (isSafe) { gameManager.instance.setPlayerSpawnPos(safeSpawnPos); }
 
             isSafe = false;

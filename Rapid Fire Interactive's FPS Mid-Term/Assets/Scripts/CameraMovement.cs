@@ -103,7 +103,6 @@ public class CameraMovement : MonoBehaviour
             }
         }
         else {
-            //isAiming = false;
             sniperZoom = false;
             if (snapZoom) {
                 cam.fieldOfView = normalFOV; //snap back to normal Fov
@@ -115,7 +114,6 @@ public class CameraMovement : MonoBehaviour
             sens = startingSens;
             gameManager.instance.scopeZoomOut(); // handles showing scope, gun model, camera zoom
         }
-        //sens = (int)keepSettings.gameSettings.getSens();
     }
 
     void HandleLeaning()

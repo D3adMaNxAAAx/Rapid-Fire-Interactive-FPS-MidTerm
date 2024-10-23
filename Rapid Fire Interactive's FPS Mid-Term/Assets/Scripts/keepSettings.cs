@@ -26,17 +26,6 @@ public class keepSettings : MonoBehaviour
 
     private void Awake()
     {
-        // Find Settings Menu -- Properly Implement Later (just add settings tag to settings menu in literally every scene)
-        //foreach (GameObject obj in GameObject.FindObjectsOfType<GameObject>(true))
-        //{
-        //    if (obj.CompareTag("Settings"))
-        //    {
-        //        settingMenu = obj;
-        //    }
-        //}
-
-        // Update Game settings
-        //settingMenu.SetActive(true);
 
         if (gameSettings == null)
         {

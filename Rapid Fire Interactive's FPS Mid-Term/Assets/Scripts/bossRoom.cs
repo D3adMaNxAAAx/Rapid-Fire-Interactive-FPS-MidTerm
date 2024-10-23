@@ -93,7 +93,6 @@ public class bossRoom : MonoBehaviour, IInteractable
     // Tell door to open
     public IEnumerator openDoor()
     { 
-        //activeDoor.transform.position = openPos;
         if (activeDoor.transform.position != openPos)
         {
             a = Time.deltaTime * timeToOpen;
@@ -106,7 +105,6 @@ public class bossRoom : MonoBehaviour, IInteractable
     // tell door to close
     public IEnumerator closeDoor()
     { 
-        //activeDoor.transform.position = closePos;
         if (activeDoor.transform.position != closePos)
         {
             a = Time.deltaTime * timeToOpen;

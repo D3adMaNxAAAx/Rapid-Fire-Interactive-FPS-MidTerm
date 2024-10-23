@@ -5,8 +5,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-// TODO: Make the game unpaused while using storeManager so timers can be used!
-
 public class storeManager : MonoBehaviour
 {
     // Singleton
@@ -61,8 +59,6 @@ public class storeManager : MonoBehaviour
     {
         terminal = _state;
     }
-
-    // No update needed.
 
     // Public methods for external store functions -- these will call internal store functions as necessary
     // Update the store UI as the player interacts with it
@@ -336,8 +332,6 @@ public class storeManager : MonoBehaviour
         {
             if (gameManager.instance.getPlayerScript().hasGun())
             {
-                // Update the Ammo Restoration Display -- to fix the commented line, there'd need to be a total ammo on gunstats.
-                //ammoText.text = gameManager.instance.getPlayerScript().getAmmo().ToString("F0") + " >> " + gameManager.instance.getPlayerScript().getAmmoOrig().ToString("F0");
                 ammoText.text = "Refills all ammo!";
 
                 // Update the Ammo Cost
@@ -369,8 +363,6 @@ public class storeManager : MonoBehaviour
         {
             if (gameManager.instance.getPlayerScript().hasGun())
             {
-                // Update the Ammo Restoration Display -- to fix the commented line, there'd need to be a total ammo on gunstats.
-                //t_ammoText.text = gameManager.instance.getPlayerScript().getAmmo().ToString("F0") + " >> " + gameManager.instance.getPlayerScript().getAmmoOrig().ToString("F0");
                 t_ammoText.text = "Refills all ammo!";
 
                 // Update the Ammo Cost

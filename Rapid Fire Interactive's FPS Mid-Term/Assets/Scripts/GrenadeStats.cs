@@ -14,5 +14,4 @@ public class GrenadeStats : ScriptableObject
     public AudioClip pinSound;
     public float throwForce;
     public GameObject shockwavePrefab;
-    //public bool isSticky;
 }

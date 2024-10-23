@@ -48,16 +48,6 @@ public class chests : MonoBehaviour, IInteractable
         {
             powerUp = shieldBuff;
         }
-
-        /* Visualizer (Collapsible):
-        85 < 95, or 95 > 85 -- Passes Attack
-        85 < 69, or 69 < 85 -- Fails Attack
-        65 < 75, or 75 > 65 -- Passes Heal
-        65 < 63, or 63 < 65 -- Fails Heal
-        40 < 53, or 53 > 40 -- Passes Stamina
-        40 < 39, or 39 < 40 -- Fails Stamina
-        0 < 15, or 15 > 0 -- Passes Shield
-        0 < 34, or 34 > 0 -- Passes Shield */
     }
 
     public void interact()
@@ -65,7 +55,6 @@ public class chests : MonoBehaviour, IInteractable
         // Play the animation of the chest opening
         openChest();
         // Award loot
-        // giveLoot() moved to the Animation Events of the Press Animation for the chest.
     }
 
     public void giveLoot()

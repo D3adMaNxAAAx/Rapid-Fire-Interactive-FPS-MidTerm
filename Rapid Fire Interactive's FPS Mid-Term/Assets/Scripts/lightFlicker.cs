@@ -186,8 +186,6 @@ public class lightFlicker : MonoBehaviour, IInteractable
                 {
                     lights[i].enabled = true;
                 }
-                //elevator on 
-                //setElevatorAccess(true);
             }
 
             // Check the power level and update things accordingly.

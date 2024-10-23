@@ -15,9 +15,4 @@ public class mainMenuHandler : MonoBehaviour
     
     [SerializeField] AudioSource aud;
 
-    // BUTTON METHODS
-
-    // SOUND METHODS
-    //aud.PlayOneShot(audioManager.instance.audButtonHover, audioManager.instance.audButtonHoverVol);
-
 }

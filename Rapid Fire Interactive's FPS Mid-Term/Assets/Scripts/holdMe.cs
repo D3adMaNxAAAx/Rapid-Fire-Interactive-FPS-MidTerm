@@ -20,6 +20,5 @@ public class holdMe : MonoBehaviour
     {
         return pwrItems;
     }
-    // Start is called before the first frame update
     
 }

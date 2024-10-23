@@ -126,7 +126,6 @@ public class damage : MonoBehaviour {
         }
         if (type == damageType.hazard)
         { // dealing damage while still in area of effect
-           // IDamage toDamage = otherObject.GetComponent<IDamage>();
             if (otherObject.CompareTag("Player"))
             {
 

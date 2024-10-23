@@ -86,12 +86,6 @@ public class loadout : MonoBehaviour {
     public void setThrwLd2Img(Image _src) { _thrwLd2Image = _src; }
 
 
-    /*//Lists for players to select items out of 
-    [SerializeField] List<ScriptableObject> primaryWeapons; 
-    [SerializeField] List<ScriptableObject> secondaryWeapons;
-    [SerializeField] List<ScriptableObject> consumables;
-    [SerializeField] List<ScriptableObject> throwables;*/
-
     // Start is called before the first frame update
     void Start() {
         instance = this;
