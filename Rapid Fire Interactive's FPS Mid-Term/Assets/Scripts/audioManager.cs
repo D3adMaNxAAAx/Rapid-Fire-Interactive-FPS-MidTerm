@@ -77,4 +77,18 @@ public class audioManager : MonoBehaviour
         audioSource.outputAudioMixerGroup = SFXMixerGroup; // Set the audio source to use the SFX mixer group
         audioSource.PlayOneShot(audHurt[Random.Range(0, audHurt.Length)], audHurtVol);  // Play random hurt sound
     }
+
+    public void PlayButtonHover()
+    {
+        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = SFXMixerGroup;
+        audioSource.PlayOneShot(audButtonHover, audButtonHoverVol);
+    }
+
+    public void PlayButtonClick()
+    {
+        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = SFXMixerGroup;
+        audioSource.PlayOneShot(audButtonClick, audButtonClickVol);
+    }
 }

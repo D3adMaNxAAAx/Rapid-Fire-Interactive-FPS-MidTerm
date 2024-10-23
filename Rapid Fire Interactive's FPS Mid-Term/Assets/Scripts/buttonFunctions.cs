@@ -198,13 +198,12 @@ public class buttonFunctions : MonoBehaviour {
     // When the player's cursor is over a button
     public void playHoverSound()
     {
-        gameManager.instance.getPlayerScript().getAudio().PlayOneShot(audioManager.instance.audButtonHover, audioManager.instance.audButtonHoverVol);
+        audioManager.instance.PlayButtonHover();
     }
 
-    // When the player selects a button
     public void playButtonSound()
     {
-        gameManager.instance.getPlayerScript().getAudio().PlayOneShot(audioManager.instance.audButtonClick, audioManager.instance.audButtonClickVol);
+        audioManager.instance.PlayButtonClick();
     }
 
     public void openLoseStatsMenu()
