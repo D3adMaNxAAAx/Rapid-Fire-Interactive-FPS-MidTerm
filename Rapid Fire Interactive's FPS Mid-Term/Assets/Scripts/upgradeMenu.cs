@@ -56,7 +56,7 @@ public class upgradeMenu : MonoBehaviour {
     public void setVars() { // wouldn't work in start
         HPOrig = playerMovement.player.getHPOrig();
         speed = playerMovement.player.getSpeed();
-        stamina = playerMovement.player.getStamina();
+        stamina = playerMovement.player.getStaminaOrig();
 
         // Rank Display
         healthRankText.text = healthRank.ToString();
@@ -77,7 +77,7 @@ public class upgradeMenu : MonoBehaviour {
     {
         HPOrig = playerMovement.player.getHPOrig();
         speed = playerMovement.player.getSpeed();
-        stamina = playerMovement.player.getStamina();
+        stamina = playerMovement.player.getStaminaOrig();
 
         // Rank Display
         t_healthRankText.text = healthRank.ToString();
@@ -87,7 +87,7 @@ public class upgradeMenu : MonoBehaviour {
 
         // Stat Display
         t_healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 10).ToString();
-        t_damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.2f).ToString();
+        t_damageUpgradeText.text = damageMod.ToString("F2") + " >> " + (damageMod + 0.2f).ToString("F2");
         t_speedUpgradeText.text = speed.ToString() + " >> " + (speed + 1).ToString();
         t_staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
         t_playerSkillPoints.text = playerMovement.player.getSkillPoints().ToString();
