@@ -215,4 +215,9 @@ public class buttonFunctions : MonoBehaviour {
     }
     // TO-DO: IMPLEMENT SPECIAL SOUNDS FOR STORE & UPGRADE
 
+    public void creditScreen()
+    {
+        SceneManager.LoadScene(5, LoadSceneMode.Single);
+    }
+
 }
