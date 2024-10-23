@@ -6,10 +6,6 @@ using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.SceneManagement;
 
-//------------NOTES-------------
-/* For this whole code to work IDamage and gameManager scripts must both be functional.
-   After completing scripts please uncomment ONLY that part of the script!!!
-   Each one will be labeled as //IDamage or //gameManager at the end of each line of code or function. */
 public class playerMovement : MonoBehaviour, IDamage
 {
 
@@ -52,8 +48,6 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] float fireRate;
     [SerializeField] int range;
     [Range(1f,3f)][SerializeField] float headShotMult;
-    //[SerializeField] int ammo;
-    //[SerializeField] float bulletSpeed; // Is here if we wanna change to use bullets
     [SerializeField] List<GrenadeStats> grenades;
     [SerializeField] GameObject grenade;
     [SerializeField] GrenadeStats grenadeStats;
@@ -182,12 +176,6 @@ public class playerMovement : MonoBehaviour, IDamage
             if (healCoolDown > 0f) {
                 healCoolDown -= Time.deltaTime;
             }
-          
-
-            //Working out null ref bug...put on pause for time being
-
-                //if (Input.GetButton("Melee"))
-                //    StartCoroutine(PlayerMelee());
         }
       
 
@@ -353,7 +341,6 @@ public class playerMovement : MonoBehaviour, IDamage
                 if (getAmmo() > 0) {
                     StartCoroutine(shoot());
 
-                    //Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation); // OG method
                     GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // setting bullet object to newProjectile
                     // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile
                     newProjectile.transform.position = playerCamera.transform.position; // player camera needs to be used instead of Camera.main (I don't know why)
@@ -374,7 +361,6 @@ public class playerMovement : MonoBehaviour, IDamage
 
     void reload()
     {
-        // Gun is not at full, so reload
 
         // Check if there's enough spare ammo to fill a mag
         if (guns[gunPos].ammoMax - (guns[gunPos].ammoMag - guns[gunPos].ammoCur) >= 0)
@@ -398,11 +384,9 @@ public class playerMovement : MonoBehaviour, IDamage
     // Shoot Timer
     IEnumerator shoot()
     {
-        // Set bool true at timer begin
         isShooting = true;
         StartCoroutine(shotFlashTimer());
 
-        //Create Raycast
         RaycastHit hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range, ~ignoreLayer)) {
             IDamage dmg = hit.collider.GetComponent<IDamage>();
@@ -435,9 +419,6 @@ public class playerMovement : MonoBehaviour, IDamage
             }
             else if (hit.collider.GetComponent<bossRoom>() == true)
             {
-                // Debug.Log("Button Hit");
-                // I've (Bryan) decided to keep this as an easter egg.
-                // Because of this, I added a check to see if the interactUI is on so then it'll turn off if the player shoots it.
                 if (gameManager.instance.getInteractUI().activeInHierarchy)
                     gameManager.instance.getInteractUI().SetActive(false);
 
@@ -451,13 +432,11 @@ public class playerMovement : MonoBehaviour, IDamage
         }
         else { guns[gunPos].ammoCur--; } //had to put this here, there's a bug this was causing where if the bullet isn't hitting anything, it doesn't use ammo.
 
-        // Update the UI
         updatePlayerUI();
 
         // Time Between Shots
         yield return new WaitForSeconds(fireRate);
 
-        // Set bool false at timer end
         isShooting = false;        
     }
 
@@ -510,13 +489,12 @@ public class playerMovement : MonoBehaviour, IDamage
                 getCurGun().ammoCur = getCurGun().ammoMag; // player's reserve is full, set clip to mag size.
             }
         }
-        updatePlayerUI(); // Update the UI to show ammo has been restored
+        updatePlayerUI();
     }
 
     // Player Damage Controller
     public void takeDamage(float amount) {
         if (HP > 0) { // Further prevention from additional damage that may trigger things like lives lost multiple times or negative HP values.
-            // Player takes damage
             criticalHealthThreshold = 0.1f;
             isCriticalHealth = HP <= HPOrig * criticalHealthThreshold;
             if (shieldOn) {
@@ -1105,7 +1083,6 @@ public class playerMovement : MonoBehaviour, IDamage
         damage = damTemp;
         fireRate = _gun.fireRate;
         range = _gun.range;
-        //ammoOrig = _gun.ammoMax;
         isSniper = _gun.isSniper;
         isLaser = _gun.isLaser;
         isShotgun = _gun.isShotgun;
@@ -1318,7 +1295,6 @@ public class playerMovement : MonoBehaviour, IDamage
         if (guns != null || guns.Count != 0)
             getCurGun().ammoMag = newAmmoMag;
 
-        // Update the UI to show it's been changed
         updatePlayerUI();
     }
 
@@ -1327,8 +1303,6 @@ public class playerMovement : MonoBehaviour, IDamage
         // Check if the player has a gun
         if (guns != null || guns.Count != 0)
             getCurGun().ammoMax = newAmmoMax;
-
-        // Update the UI to show it's been changed
         updatePlayerUI();
     }
 
@@ -1337,7 +1311,6 @@ public class playerMovement : MonoBehaviour, IDamage
         if (guns != null || guns.Count != 0)
             getCurGun().ammoOrig = newAmmoOrig;
 
-        // Update the UI to show it's been changed
         updatePlayerUI();
     }
 

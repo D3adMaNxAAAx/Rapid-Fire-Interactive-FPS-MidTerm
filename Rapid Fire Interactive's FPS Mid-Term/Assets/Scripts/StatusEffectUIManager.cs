@@ -18,28 +18,24 @@ public class StatusEffectUIManager : MonoBehaviour
     // Show the burning icon
     public void ShowBurningEffect()
     {
-        Debug.Log("Showing Burning Effect UI");
         burningIcon.gameObject.SetActive(true);
     }
 
     // Hide the burning icon
     public void HideBurningEffect()
     {
-        Debug.Log("Hiding Burning Effect UI");
         burningIcon.gameObject.SetActive(false);
     }
 
     // Show the bleeding icon
     public void ShowBleedingEffect()
     {
-        Debug.Log("Showing Bleeding Effect UI");
         bleedingIcon.gameObject.SetActive(true);
     }
 
     // Hide the bleeding icon
     public void HideBleedingEffect()
     {
-        Debug.Log("Hiding Bleeding Effect UI");
         bleedingIcon.gameObject.SetActive(false);
     }
 }

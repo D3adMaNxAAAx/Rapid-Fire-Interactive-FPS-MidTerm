@@ -213,7 +213,6 @@ public class CameraMovement : MonoBehaviour
     public void AdjustSensitivity(float value)
     {
         sens = (int)value;
-        Debug.Log("Sensitivity adjusted to: " + sens);
     }
 
     public bool getZoomSnap()

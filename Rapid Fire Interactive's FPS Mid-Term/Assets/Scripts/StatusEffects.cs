@@ -142,7 +142,6 @@ public class ToxicEffect : StatusEffects
 
     public override void ApplyEffect(GameObject target)
     {
-        Debug.Log("Bleeding effect applied to: " + target.name);
         StartCoroutine(InflictBleed(target));
     }
 
@@ -155,7 +154,6 @@ public class ToxicEffect : StatusEffects
             {
                 damageable.takeDamage(damagePerTick);
             }
-            Debug.Log(gameManager.instance.getPlayerScript().getHP() + " -- Dead");
             yield return new WaitForSeconds(1f);
             timer += 1f;  // Increment the timer properly
         }

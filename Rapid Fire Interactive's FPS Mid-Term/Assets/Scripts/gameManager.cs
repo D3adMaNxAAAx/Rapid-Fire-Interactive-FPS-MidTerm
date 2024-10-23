@@ -360,9 +360,6 @@ public class gameManager : MonoBehaviour {
     }
     public void displayUI(bool state)
     {
-        // All of this only hides some things and not the entire thing. Refer to how the AmmoUI is hidden
-        // Unhide these after loadout is picked.
-        // Leave commented until above is addressed.
         displayPlayerHP(state);
         displayAmmoUI(state);
         displayEnemyCount(state);
@@ -467,7 +464,6 @@ public class gameManager : MonoBehaviour {
         bossRoom.instance.startNextRoom();
         displayBossBar(true);
 
-        // Why do I hear boss music?
         // Note: There is a bug where the song will be interrupted if the player hits continue again.
         if (gameManager.instance.getPlayerScript().getAudio() != audioManager.instance.bossMusic) {
             gameManager.instance.getPlayerScript().getAudio().Stop();

@@ -83,8 +83,6 @@ public class enemyAI : MonoBehaviour , IDamage {
     // Start is called before the first frame update
     void Start() {
 
-      
-        // Assign variables that need to be set at enemy creation
         colorOrig = model.material.color; // Sets our Models original color on scene start
         HPOrig = HP; // Set orginal hp value on scene open for enemy
         OGSpeed = agent.speed;
@@ -151,9 +149,6 @@ public class enemyAI : MonoBehaviour , IDamage {
 
         //Creating an angle from our enemy forward direction to player direction in world 
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
-
-        //showing a line of sight reference in scene creator
-        Debug.DrawRay(headPos.position, playerDir);
 
         RaycastHit hit; //Tracks ray for enemy line of sight 
 
@@ -400,9 +395,6 @@ public class enemyAI : MonoBehaviour , IDamage {
         // Flash Enemy Red To Indicate Damage Taken
         StartCoroutine(flashColor());
 
-        // Decrement their health bar & update the UI
-        //gameManager.instance.getBossHPBar().fillAmount = (float)bossHP / HPOrig;
-        //updateBossHealth();
         gameManager.instance.updateBossBar(gameManager.instance.getBossHPBar(), bossHP, HPOrig);
 
         if (HP > 0)
