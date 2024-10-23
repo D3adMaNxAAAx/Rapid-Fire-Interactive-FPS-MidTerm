@@ -570,6 +570,8 @@ public class playerMovement : MonoBehaviour, IDamage
             updatePlayerUI();
             StartCoroutine(damageFlash());
 
+            Debug.Log("I'm taking damage!!!!!!!!" + amount);
+
             // On Player Death
             if (HP <= 0)
             {

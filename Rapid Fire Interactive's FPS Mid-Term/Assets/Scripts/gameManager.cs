@@ -865,6 +865,11 @@ public class gameManager : MonoBehaviour {
         return pwrLvlWarning;
     }
 
+    public float getTimeScaleOrig()
+    {
+        return timeScaleOrig;
+    }
+
     public void setPwrLvlWarning(TMP_Text _pwrLevelWarningText)
     {
         pwrLvlWarning = _pwrLevelWarningText;
