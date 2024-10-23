@@ -161,9 +161,6 @@ public class playerMovement : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update() {
         if (gameManager.instance.getPauseStatus() == false) {
-        
-            if (Input.GetButton("Kill")) { SceneManager.LoadScene(5, LoadSceneMode.Single); }
-
             movement();
             HandleCrouch();
             DashAll(); // at bottom of file, only does anything if specific key is pressed
