@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class terminals : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public class terminals : MonoBehaviour
     [SerializeField] GameObject terminal;
     [SerializeField] GameObject terminalUpgrade;
 
-    bool isOpen; // if terminal menu is already open
+    bool isOpen; // if terminal menu is open
     bool isOn; // if terminal can be accessed at all
 
     // Start is called before the first frame update
@@ -41,6 +42,9 @@ public class terminals : MonoBehaviour
                     terminalUpgrade.SetActive(true);
                 }
             }
+
+       // Keypress to close terminal
+
     }
 
     private void OnTriggerStay(Collider other)
