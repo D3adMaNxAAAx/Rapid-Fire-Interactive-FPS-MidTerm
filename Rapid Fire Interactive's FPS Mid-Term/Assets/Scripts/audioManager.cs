@@ -91,4 +91,10 @@ public class audioManager : MonoBehaviour
         audioSource.outputAudioMixerGroup = SFXMixerGroup;
         audioSource.PlayOneShot(audButtonClick, audButtonClickVol);
     }
+    public void PlayHeadshot()
+    {
+        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = SFXMixerGroup;
+        audioSource.PlayOneShot(headShotA, 1.0f); // Adjust volume as needed
+    }
 }

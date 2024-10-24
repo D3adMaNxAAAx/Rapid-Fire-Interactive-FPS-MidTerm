@@ -400,7 +400,9 @@ public class playerMovement : MonoBehaviour, IDamage
                 
                 else { // headshot
                     dmg.takeDamage((damage * damageBuffMult) * headShotMult);
-                    AudioSource.PlayClipAtPoint(audioManager.instance.headShotA, controller.transform.position, 0.5f);
+                    aud.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;  // Ensure correct mixer group
+                    aud.PlayOneShot(audioManager.instance.headShotA, 0.5f);
+
                     playerStats.Stats.enemyHeadShot();
                    
                 }
