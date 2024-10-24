@@ -920,7 +920,8 @@ public class playerMovement : MonoBehaviour, IDamage
         if (grenades.Count > 0)
         {
             GameObject grenadeInstance = Instantiate(grenade, transform.position + transform.forward, Quaternion.identity);
-            AudioSource.PlayClipAtPoint(grenadeStats.pinSound, grenadeInstance.transform.position); // playing audio for taking grenade pin out
+            aud.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
+            aud.PlayOneShot(grenadeStats.pinSound, 1.0f); // playing audio for taking grenade pin out
 
             Rigidbody rb = grenadeInstance.GetComponent<Rigidbody>(); //throw force 
             if (rb != null)
@@ -943,7 +944,8 @@ public class playerMovement : MonoBehaviour, IDamage
         {
             Instantiate(grenadeStats.explosionEffect,grenadeInstance.transform.position, Quaternion.identity);
         }
-
+        aud.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
+        aud.PlayOneShot(grenadeStats.explosionSound, 1.0f);
         if (CameraShake.instance != null)
         {
             // Trigger the shake with intensity 0.7 and duration 0.3 seconds
@@ -974,7 +976,7 @@ public class playerMovement : MonoBehaviour, IDamage
             }
         }
 
-        AudioSource.PlayClipAtPoint(grenadeStats.explosionSound,grenadeInstance.transform.position);
+        //AudioSource.PlayClipAtPoint(grenadeStats.explosionSound,grenadeInstance.transform.position);
         Destroy(grenadeInstance);
     }
 
