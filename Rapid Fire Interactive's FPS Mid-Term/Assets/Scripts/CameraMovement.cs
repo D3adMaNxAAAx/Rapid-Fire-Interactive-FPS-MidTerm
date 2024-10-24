@@ -121,16 +121,27 @@ public class CameraMovement : MonoBehaviour
         float targetLeanAngle = 0f;
         Vector3 targetOffSet = OrigCameraPos; //orig camera start
 
+        Vector3 leanDirection = Vector3.zero;
+
         if (Input.GetButton("PeekLeft"))
         {
             targetLeanAngle = GetLeanAngle(); //lean left
             targetOffSet += Vector3.left * LeanOffSet; //off set camera lean left
-            
+            leanDirection = Vector3.left;
+
         }
         else if (Input.GetButton("PeekRight"))
         {
             targetLeanAngle = -GetLeanAngle(); // lean right
             targetOffSet += Vector3.right * LeanOffSet; //off set camera lean right
+            leanDirection = Vector3.right;
+        }
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(leanDirection), out hit, LeanOffSet))
+        {
+            // If we hit a wall, reduce the lean offset so we don't go through the wall
+            float distanceToWall = hit.distance;
+            targetOffSet = OrigCameraPos + leanDirection * (distanceToWall - 0.1f); // Keep a small buffer from the wall
         }
 
         currentLeanAngle = Mathf.LerpAngle(currentLeanAngle, targetLeanAngle, Time.deltaTime * leanSpeed); //smooth transition to lean
