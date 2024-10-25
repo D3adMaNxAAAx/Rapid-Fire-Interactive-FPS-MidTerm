@@ -390,6 +390,9 @@ public class playerMovement : MonoBehaviour, IDamage
             guns[gunPos].ammoMax = 0;
         }
 
+        // Play reload sound
+        aud.PlayOneShot(audioManager.instance.audReload, audioManager.instance.audReloadVol);
+
         // Update the UI for confirmation
         updatePlayerUI();
     }

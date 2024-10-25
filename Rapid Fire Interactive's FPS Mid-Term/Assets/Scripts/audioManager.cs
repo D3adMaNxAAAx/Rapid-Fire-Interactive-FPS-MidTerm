@@ -33,7 +33,10 @@ public class audioManager : MonoBehaviour
     [Header("-- Game Sounds --")]
     [SerializeField] public AudioClip VictoryA;
     [SerializeField] public AudioClip VictoryMusicA;
-    [SerializeField] public AudioClip audHeal; 
+    [SerializeField] public AudioClip audHeal;
+    [SerializeField] public AudioClip audReload; // needs volume
+    [SerializeField] public AudioClip audChestOpen; // needs volume
+    [SerializeField] public AudioClip fartEgg;
 
     [Header("-- UI Sounds --")]
     [SerializeField] public AudioClip audButtonHover;
@@ -45,24 +48,24 @@ public class audioManager : MonoBehaviour
     [Range(0, 1)] [SerializeField] public float menuMusicVol;
     [Range(0, 1)] [SerializeField] public float levelMusicVol;
     [Range(0, 1)] [SerializeField] public float bossMusicVol;
-    [Range(0, 1)][SerializeField] public float VictoryVol;
-    [Range(0, 1)][SerializeField] public float VictoryMusicVol;
+    [Range(0, 1)] [SerializeField] public float VictoryVol;
+    [Range(0, 1)] [SerializeField] public float VictoryMusicVol;
 
     [Header("-- Player Sounds --")]
-    [Range(0, 1)][SerializeField] public float itemPickupVol;
-    [Range(0, 1)][SerializeField] public float coinPickupVol;
+    [Range(0, 1)] [SerializeField] public float itemPickupVol;
+    [Range(0, 1)] [SerializeField] public float coinPickupVol;
 
     [Header("-- Enemy Volume --")]
     [Range(0, 1)] [SerializeField] public float audEnemyStepVol;
 
     [Header("-- Game Volume --")]
     [Range(0, 1)] [SerializeField] public float audHealVol;
+    [Range(0, 1)] [SerializeField] public float audReloadVol;
+    [Range(0, 1)] [SerializeField] public float audChestOpenVol;
 
     [Header("-- UI Volume --")]
     [Range(0, 1)] [SerializeField] public float audButtonHoverVol;
     [Range(0, 1)] [SerializeField] public float audButtonClickVol;
-
-    [SerializeField] public AudioClip fartEgg;
 
     void Start()
     {

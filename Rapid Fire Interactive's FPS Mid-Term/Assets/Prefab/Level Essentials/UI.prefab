@@ -69567,20 +69567,24 @@ MonoBehaviour:
   VictoryA: {fileID: 8300000, guid: 1c194f7117795404aa0616d0eebcc3f7, type: 3}
   VictoryMusicA: {fileID: 8300000, guid: affd9c5c09121c7409974534e92b6ecd, type: 3}
   audHeal: {fileID: 8300000, guid: 88871fe463f058f48993e0a94964e09b, type: 3}
+  audReload: {fileID: 8300000, guid: 5a3e828c21994d5409208aa7691845a0, type: 3}
+  audChestOpen: {fileID: 0}
+  fartEgg: {fileID: 8300000, guid: bad1d9843a300d8468da771570b00cb2, type: 3}
   audButtonHover: {fileID: 8300000, guid: 6fb8e2414ba5b6c49adabcf9e538091b, type: 3}
   audButtonClick: {fileID: 8300000, guid: a1bf6825de593ba4494cb2eda5126c9f, type: 3}
   menuMusicVol: 0.5
   levelMusicVol: 0.5
   bossMusicVol: 0.5
-  VictoryVol: 1
-  VictoryMusicVol: 1
-  itemPickupVol: 1
-  coinPickupVol: 1
+  VictoryVol: 0.5
+  VictoryMusicVol: 0.5
+  itemPickupVol: 0.5
+  coinPickupVol: 0.5
   audEnemyStepVol: 0.5
   audHealVol: 0.5
+  audReloadVol: 0.5
+  audChestOpenVol: 0.5
   audButtonHoverVol: 0.5
   audButtonClickVol: 0.5
-  fartEgg: {fileID: 8300000, guid: bad1d9843a300d8468da771570b00cb2, type: 3}
 --- !u!82 &6228370177919439127
 AudioSource:
   m_ObjectHideFlags: 0
