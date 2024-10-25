@@ -14,6 +14,7 @@ public class elevator : MonoBehaviour, IInteractable
     //[Range(0,20)][SerializeField] int requiredPower = 0;
     [SerializeField] bool moveToScene;
     [SerializeField] bool killObjective;
+    [SerializeField] loadingScreen screen;
 
     int requiredPower = 3;
     int sceneNum;
@@ -40,6 +41,10 @@ public class elevator : MonoBehaviour, IInteractable
         {
             doorPos = elevDoor.transform.position;
             doorMovePos = new Vector3(doorPos.x, doorPos.y, doorPos.z + 3.5f);
+        }
+        if (screen == null)
+        {
+            screen = GameObject.Find("Loading Screen Obj").GetComponent<loadingScreen>();
         }
     }
 
@@ -148,8 +153,7 @@ public class elevator : MonoBehaviour, IInteractable
         {
             movingScene = true;
             yield return new WaitForSeconds(3f);
-            SceneManager.LoadScene(sceneNum, LoadSceneMode.Single);
-            gameManager.instance.getInteractUI().SetActive(false);
+            screen.loadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
     IEnumerator popUIStuff()
