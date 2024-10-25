@@ -19,16 +19,22 @@ public class collectablePickup : MonoBehaviour {
 
     private void OnTriggerEnter(Collider otherObject) {
         if (otherObject.CompareTag("Player")) {
-            AudioSource.PlayClipAtPoint(pickUpA, transform.position);
             if (type == ObjectType.coinDrop) {
                 gameManager.instance.getPlayerScript().setCoins(2); // Add coins to player amount
                 playerStats.Stats.gotMoney(2); // each coin pickup is 2 coins
+                playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.coinPickupA, audioManager.instance.coinPickupVol);
+                Destroy(gameObject);
+                return;
             }
             else if (type == ObjectType.coinPickup) {
                 gameManager.instance.getPlayerScript().setCoins(1);
                 playerStats.Stats.gotMoney(1);
+                playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.coinPickupA, audioManager.instance.coinPickupVol);
+                Destroy(gameObject);
+                return;
             }
-            else if (type == ObjectType.secret) {
+            AudioSource.PlayClipAtPoint(pickUpA, transform.position);
+            if (type == ObjectType.secret) {
                 playerStats.Stats.collectableFound();
             }
             else if (type == ObjectType.healBuff) {

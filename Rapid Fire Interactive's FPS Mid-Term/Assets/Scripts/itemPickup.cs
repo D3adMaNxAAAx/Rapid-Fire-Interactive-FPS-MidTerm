@@ -17,6 +17,7 @@ public class itemPickup : MonoBehaviour { // handles pickups for grenades and he
                 gameManager.instance.getPlayerScript().addToGrenades(grenade);
                 Destroy(gameObject);
             }
+            playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.itemPickupA, audioManager.instance.itemPickupVol);
         }
     }
 }
