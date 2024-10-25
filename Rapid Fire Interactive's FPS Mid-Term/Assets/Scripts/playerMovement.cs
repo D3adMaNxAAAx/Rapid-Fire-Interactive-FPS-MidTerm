@@ -249,10 +249,12 @@ public class playerMovement : MonoBehaviour, IDamage
             aud.PlayOneShot(audioManager.instance.audJump[Random.Range(0, audioManager.instance.audJump.Length)], audioManager.instance.audJumpVol);
 
             // For Ty's easter egg:
-            if (TyEasterEgg.getTriggerBool() == true) {
-                jumpInAreaCount++;
-                if (jumpInAreaCount == 5) {
-                    TyEasterEgg.activateEasterEgg(aud);
+            if (activated) {
+                if (TyEasterEgg.getTriggerBool() == true) {
+                    jumpInAreaCount++;
+                    if (jumpInAreaCount == 5) {
+                        TyEasterEgg.activateEasterEgg(aud);
+                    }
                 }
             }
         }

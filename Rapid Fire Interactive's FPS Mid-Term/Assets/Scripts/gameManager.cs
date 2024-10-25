@@ -93,6 +93,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject interactUI; // this makes the timer run regardless if its hidden or not
     [SerializeField] GameObject startFailMessage;
     [SerializeField] TMP_Text levelPopUp;
+    [SerializeField] GameObject TyEasterEggPopUp;
   
 
     // -- Game --
@@ -866,8 +867,9 @@ public class gameManager : MonoBehaviour {
     {
         return timeScaleOrig;
     }
+    public GameObject getTyPopUp() { return TyEasterEggPopUp;  }
 
-    public void setPwrLvlWarning(TMP_Text _pwrLevelWarningText)
+        public void setPwrLvlWarning(TMP_Text _pwrLevelWarningText)
     {
         pwrLvlWarning = _pwrLevelWarningText;
     }

@@ -26,6 +26,7 @@ public class TyEasterEgg : MonoBehaviour {
         else { // button
             if (other.CompareTag("Player Bullet")) {
                 playerMovement.player.Activate();
+                StartCoroutine(confirmationPopUpTimer());
             }
         }
     }
@@ -35,5 +36,11 @@ public class TyEasterEgg : MonoBehaviour {
                 inTriggerArea = false;
             }
         }
+    }
+
+    IEnumerator confirmationPopUpTimer() {
+        gameManager.instance.getTyPopUp().SetActive(true);
+        yield return new WaitForSeconds(3);
+        gameManager.instance.getTyPopUp().SetActive(false);
     }
 }
