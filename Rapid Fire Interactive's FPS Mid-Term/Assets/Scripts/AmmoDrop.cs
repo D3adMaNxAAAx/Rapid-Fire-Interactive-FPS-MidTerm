@@ -21,10 +21,9 @@ public class AmmoDrop : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (rotateClockwise)
+        if (rotateClockwise) {
             transform.Rotate(0, rotateSpeed, 0 * Time.deltaTime);
-        else
-            transform.Rotate(0, -rotateSpeed, 0 * Time.deltaTime);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

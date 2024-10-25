@@ -9,12 +9,11 @@ public class collectablePickup : MonoBehaviour {
     enum ObjectType { secret, healBuff, attackBuff, shieldBuff, staminaBuff, coinDrop, coinPickup }
 
     [SerializeField] AudioClip pickUpA;
-    
-    // Unused Variables
-    //float pickUpV = 1;
 
     void Update() {
-        transform.Rotate(0, 0.25f, 0 * Time.deltaTime); // making pickup object spin
+        if (type != ObjectType.coinPickup) {
+            transform.Rotate(0, 0.25f, 0 * Time.deltaTime); // making pickup object spin
+        }
     }
 
     private void OnTriggerEnter(Collider otherObject) {
