@@ -15,7 +15,7 @@ public class safeRoom : MonoBehaviour, IInteractable
     [SerializeField] GameObject safeSpawnPos;
     [SerializeField] GameObject badgeScanner;
     [SerializeField] GameObject activeDoor;
-    [SerializeField] bool safeAccess;
+    //[SerializeField] bool safeAccess;
 
     [Header("-- Open Information --")]
     [SerializeField] float doorMoveX;
@@ -62,12 +62,12 @@ public class safeRoom : MonoBehaviour, IInteractable
             if (!gameManager.instance.getInteractUI().activeInHierarchy)
                 gameManager.instance.getInteractUI().SetActive(true);
 
-            if (Input.GetButton("Interact") && safeAccess == true && playerStats.Stats.getBadgesFound() >= 3)
+            if (Input.GetButton("Interact") && gameManager.instance.getPlayerScript().getSafeAccess() && playerStats.Stats.getBadgesFound() >= 3)
             {
                 interact();
                 gameManager.instance.getInteractUI().SetActive(false);
             } 
-            else if (Input.GetButton("Interact") && !safeAccess)
+            else if (Input.GetButton("Interact") && !gameManager.instance.getPlayerScript().getSafeAccess())
             {
                 StartCoroutine(flashPowerWarning());
             } 
@@ -133,10 +133,10 @@ public class safeRoom : MonoBehaviour, IInteractable
 
     // Getters
     public bool getSafeState() { return isSafe; }
-    public bool getSafeAccess() { return safeAccess; }
+    //public bool getSafeAccess() { return safeAccess; }
 
     // Setters
     public void setSafeState(bool _state) { isSafe = _state; }
 
-    public void setSafeAccess(bool _state) { safeAccess = _state; }
+    //public void setSafeAccess(bool _state) { safeAccess = _state; }
 }

@@ -123,6 +123,7 @@ public class playerMovement : MonoBehaviour, IDamage
     bool isCrouching = false;
     bool infiniteStam = false;
     bool isCriticalHealth;
+    bool safeAccess = false;
 
     // Ty's Easter Egg vars
     bool activated = false;
@@ -1297,6 +1298,11 @@ public class playerMovement : MonoBehaviour, IDamage
         return aud;
     }
 
+    public bool getSafeAccess()
+    {
+        return safeAccess;
+    }
+
     // Setters
     public void setHP(float newHP) {
         HP = newHP;
@@ -1396,8 +1402,14 @@ public class playerMovement : MonoBehaviour, IDamage
     {
         return leveledUp;
     }
+
     public void setLeveledUp(bool _state)
     { 
         leveledUp = _state; 
+    }
+
+    public void setSafeAccess(bool _state)
+    {
+        safeAccess = _state;
     }
 }

@@ -192,8 +192,11 @@ public class lightFlicker : MonoBehaviour, IInteractable
             if (pwrLvl >= 1) 
             {
                 // Grant access to the safe
-                if (!safeRoom.instance.getSafeAccess())
-                    safeRoom.instance.setSafeAccess(true);
+                if (!gameManager.instance.getPlayerScript().getSafeAccess())
+                    gameManager.instance.getPlayerScript().setSafeAccess(true);
+
+                //if (!safeRoom.instance.getSafeAccess())
+                //    safeRoom.instance.setSafeAccess(true);
 
                 // Things will now turn on like the safe room door.
                 isOn = true;
@@ -261,6 +264,11 @@ public class lightFlicker : MonoBehaviour, IInteractable
             isFlickering = false;
         }
     }
+
+    // Getters
     static public bool getFoundPower()
     { return foundPower; }
+
+    // Setters
+    public bool getSafeAccess() { return safeAccess; }
 }
