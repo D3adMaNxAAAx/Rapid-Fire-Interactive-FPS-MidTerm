@@ -449,7 +449,7 @@ public class playerMovement : MonoBehaviour, IDamage
             else if (guns[gunPos].hitEffects != null) { 
                 Instantiate(guns[gunPos].hitEffects, hit.point, Quaternion.identity);
             }
-        }
+       }
         else { guns[gunPos].ammoCur--; } //had to put this here, there's a bug this was causing where if the bullet isn't hitting anything, it doesn't use ammo.
 
         updatePlayerUI();
@@ -955,8 +955,8 @@ public class playerMovement : MonoBehaviour, IDamage
     }
 
     float distanceFromGrenade;
-    IEnumerator HandleGrenadeExplosion(GameObject grenadeInstance)
-    {
+    float grenadeMult = 1;
+    IEnumerator HandleGrenadeExplosion(GameObject grenadeInstance) {
         yield return new WaitForSeconds(grenadeStats.explosionDelay); //explosion delay
 
         if(grenadeStats.explosionEffect != null) // trigger explosion effect
@@ -967,7 +967,6 @@ public class playerMovement : MonoBehaviour, IDamage
         aud.PlayOneShot(grenadeStats.explosionSound, 1.0f);
 
         distanceFromGrenade = Vector3.Distance(controller.transform.position, grenadeInstance.transform.position);
-        Debug.Log(distanceFromGrenade);
         if (distanceFromGrenade < 5) {
             CameraShake.instance.TriggerShake(1f, 0.75f);
         }
@@ -992,8 +991,17 @@ public class playerMovement : MonoBehaviour, IDamage
         foreach(Collider nearbyObject in colliders)
         {
             IDamage damageable = nearbyObject.GetComponent<IDamage>();
-            if(damageable != null) {
-                damageable.takeDamage(grenadeStats.explosionDamage); // grenade does double damage to player, bleed should already be applied because of the damage amount
+            if(damageable != null) { // bleed should already be applied because of the damage amount, grenade does double damage for some reason
+                if (nearbyObject.CompareTag("Player")) {
+                    grenadeMult = 1; // double damage
+                }
+                else if (nearbyObject.CompareTag("Demon Golem") || nearbyObject.CompareTag("Elder Demon")) {
+                    grenadeMult = 0.25f; // boss, half damage
+                }
+                else {
+                    grenadeMult = 0.5f; // enemies, normal damage
+                }
+                damageable.takeDamage(2); // grenade does double damage to player
             }
         }
         Destroy(grenadeInstance);

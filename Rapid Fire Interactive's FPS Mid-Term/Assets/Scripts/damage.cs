@@ -77,9 +77,11 @@ public class damage : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        // Ignore if it collides with another trigger or is tagged as enemy
-        if (other.isTrigger || other.CompareTag("Light") || other.CompareTag("Heavy") || other.CompareTag("Basic") || other.CompareTag("Boss") || other.CompareTag("Challenge"))
+        // so enemies don't hurt themselves
+        if (other.isTrigger || other.CompareTag("Light") || other.CompareTag("Heavy") || other.CompareTag("Basic") || other.CompareTag("Elder Demon") || other.CompareTag("Challenge")
+            || other.CompareTag("Basic Melee") || other.CompareTag("Ranged Heavy") || other.CompareTag("Demon Golem")) {
             return;
+        }
 
         // Object tracker and checker to see if object takes damage
         IDamage dmgObject = other.GetComponent<IDamage>();

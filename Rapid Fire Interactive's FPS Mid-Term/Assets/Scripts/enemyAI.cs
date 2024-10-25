@@ -256,7 +256,7 @@ public class enemyAI : MonoBehaviour , IDamage {
             }
         }
 
-        else if (canAttack && gameObject.CompareTag("Basic") || gameObject.CompareTag("Light") || gameObject.CompareTag("Boss") || gameObject.CompareTag("Ranged Heavy") || gameObject.CompareTag("Challenge") || (gameObject.CompareTag("Demon Golem")))
+        else if (canAttack && gameObject.CompareTag("Basic") || gameObject.CompareTag("Light") || gameObject.CompareTag("Elder Demon") || gameObject.CompareTag("Ranged Heavy") || gameObject.CompareTag("Challenge") || (gameObject.CompareTag("Demon Golem")))
         {
             anim.SetTrigger("Shoot");
             // Demon Golem also has melee he does both at once
