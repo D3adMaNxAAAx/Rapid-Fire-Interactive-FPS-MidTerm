@@ -19,6 +19,8 @@ public class audioManager : MonoBehaviour
     [SerializeField] public AudioClip[] audJump;
     [SerializeField] public AudioClip[] audHurt;
     [SerializeField] public AudioClip headShotA;
+    [SerializeField] public AudioClip itemPickupA;
+    [SerializeField] public AudioClip coinPickupA;
 
     [Header("-- Enemy Sounds --")]
     [SerializeField] public AudioClip[] audEnemySteps;
@@ -30,6 +32,7 @@ public class audioManager : MonoBehaviour
 
     [Header("-- Game Sounds --")]
     [SerializeField] public AudioClip VictoryA;
+    [SerializeField] public AudioClip VictoryMusicA;
     [SerializeField] public AudioClip audHeal; 
 
     [Header("-- UI Sounds --")]
@@ -42,6 +45,12 @@ public class audioManager : MonoBehaviour
     [Range(0, 1)] [SerializeField] public float menuMusicVol;
     [Range(0, 1)] [SerializeField] public float levelMusicVol;
     [Range(0, 1)] [SerializeField] public float bossMusicVol;
+    [Range(0, 1)][SerializeField] public float VictoryVol;
+    [Range(0, 1)][SerializeField] public float VictoryMusicVol;
+
+    [Header("-- Player Sounds --")]
+    [Range(0, 1)][SerializeField] public float itemPickupVol;
+    [Range(0, 1)][SerializeField] public float coinPickupVol;
 
     [Header("-- Enemy Volume --")]
     [Range(0, 1)] [SerializeField] public float audEnemyStepVol;

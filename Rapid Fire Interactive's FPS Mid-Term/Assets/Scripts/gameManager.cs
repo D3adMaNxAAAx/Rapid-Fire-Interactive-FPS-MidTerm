@@ -297,7 +297,7 @@ public class gameManager : MonoBehaviour {
     }
 
     public IEnumerator preWinMenuThings() {
-        AudioSource.PlayClipAtPoint(audioManager.instance.VictoryA, player.transform.position);
+        AudioSource.PlayClipAtPoint(audioManager.instance.VictoryA, player.transform.position, audioManager.instance.VictoryVol);
         yield return new WaitForSeconds(3); // waitings for boss thumbs up after death
     }
 
@@ -308,6 +308,7 @@ public class gameManager : MonoBehaviour {
         statePause();
         menuActive = menuWin; // set active menu to win menu
         menuActive.SetActive(true); // Show active menu
+        playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.VictoryMusicA, audioManager.instance.VictoryMusicVol);
         completionTime.text = playerStats.Stats.getTimeTaken();
         enemiesKilled.text = playerStats.Stats.getEnemiesKilled().ToString();
         deaths.text = playerStats.Stats.getDeaths().ToString();
