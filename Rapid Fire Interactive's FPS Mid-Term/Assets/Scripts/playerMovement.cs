@@ -210,6 +210,7 @@ public class playerMovement : MonoBehaviour, IDamage
             gameManager.instance.getHealthWarning().SetActive(false);
             RemoveAllSatusEffects();
             updatePlayerUI();
+            CameraShake.instance.setIsNotDead(true);
         }
     }
 
@@ -952,6 +953,7 @@ public class playerMovement : MonoBehaviour, IDamage
         }
     }
 
+    float distanceFromGrenade;
     IEnumerator HandleGrenadeExplosion(GameObject grenadeInstance)
     {
         yield return new WaitForSeconds(grenadeStats.explosionDelay); //explosion delay
@@ -962,13 +964,26 @@ public class playerMovement : MonoBehaviour, IDamage
         }
         aud.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
         aud.PlayOneShot(grenadeStats.explosionSound, 1.0f);
-        if (CameraShake.instance != null)
-        {
-            // Trigger the shake with intensity 0.7 and duration 0.3 seconds
-            CameraShake.instance.TriggerShake(0.7f, 0.3f);
+
+        distanceFromGrenade = Vector3.Distance(controller.transform.position, grenadeInstance.transform.position);
+        Debug.Log(distanceFromGrenade);
+        if (distanceFromGrenade < 5) {
+            CameraShake.instance.TriggerShake(1f, 0.75f);
         }
-        if (grenadeStats.shockwavePrefab != null)
-        {
+        else if (distanceFromGrenade < 10) {
+            CameraShake.instance.TriggerShake(0.75f, 0.75f);
+        }
+        else if (distanceFromGrenade < 15) {
+            CameraShake.instance.TriggerShake(0.6f, 0.75f);
+        }
+        else if (distanceFromGrenade < 20) {
+            CameraShake.instance.TriggerShake(0.4f, 0.75f);
+        }
+        else {
+            CameraShake.instance.TriggerShake(0.2f, 0.75f);
+        }
+
+        if (grenadeStats.shockwavePrefab != null) {
             // Create the shockwave at the grenade's position
             Instantiate(grenadeStats.shockwavePrefab, grenadeInstance.transform.position, Quaternion.identity);
         }
@@ -976,23 +991,10 @@ public class playerMovement : MonoBehaviour, IDamage
         foreach(Collider nearbyObject in colliders)
         {
             IDamage damageable = nearbyObject.GetComponent<IDamage>();
-            if(damageable != null)
-            {
-                damageable.takeDamage(grenadeStats.explosionDamage); // grenade does double damage to player
-
-                
-                BurningEffect burningEffect = nearbyObject.gameObject.AddComponent<BurningEffect>();
-                burningEffect.duration = 5f;  // Set the duration for the burn effect
-                burningEffect.ApplyEffect(nearbyObject.gameObject);
-
-                BleedingEffect bleedingEffect = nearbyObject.gameObject.AddComponent<BleedingEffect>();
-                bleedingEffect.duration = 5f;  // Set the duration for the bleed effect
-                bleedingEffect.ApplyEffect(nearbyObject.gameObject);
-
+            if(damageable != null) {
+                damageable.takeDamage(grenadeStats.explosionDamage); // grenade does double damage to player, bleed should already be applied because of the damage amount
             }
         }
-
-        //AudioSource.PlayClipAtPoint(grenadeStats.explosionSound,grenadeInstance.transform.position);
         Destroy(grenadeInstance);
     }
 
@@ -1233,7 +1235,9 @@ public class playerMovement : MonoBehaviour, IDamage
     }
 
     // -- GETTERS --
-
+    public CharacterController getController() {
+        return controller;
+    }
     public float getHP() {
         return HP;}
 

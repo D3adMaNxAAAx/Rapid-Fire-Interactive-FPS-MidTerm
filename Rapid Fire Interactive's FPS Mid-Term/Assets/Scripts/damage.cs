@@ -128,7 +128,6 @@ public class damage : MonoBehaviour {
         { // dealing damage while still in area of effect
             if (otherObject.CompareTag("Player"))
             {
-
                 uiManager = FindObjectOfType<StatusEffectUIManager>();
                 if (uiManager != null)
                 {

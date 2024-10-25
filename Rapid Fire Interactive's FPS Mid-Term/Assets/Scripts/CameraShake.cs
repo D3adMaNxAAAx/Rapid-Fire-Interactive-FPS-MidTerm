@@ -19,7 +19,12 @@ public class CameraShake : MonoBehaviour
         }
     }
 
-    
+    Coroutine explosionShake;
+    bool isNotDead = true;
+    public void setIsNotDead(bool alive) {
+        isNotDead = alive;
+    }
+
     public void TriggerShake(float intensity, float duration)
     {
         StartCoroutine(Shake(intensity, duration));
@@ -31,15 +36,12 @@ public class CameraShake : MonoBehaviour
         Vector3 originalPos = transform.localPosition;
         float elapsed = 0.0f;
 
-        while (elapsed < duration)
+        while (elapsed < duration && isNotDead)
         {
             float x = Random.Range(-1f, 1f) * intensity;
-            float y = Random.Range(-1f, 1f) * intensity;
-
-            transform.localPosition = new Vector3(x, y, originalPos.z);
-
+            float y = Random.Range(-1f, 1f) * intensity + 0.75f;
+            transform.localPosition = new Vector3(x, y, originalPos.z + 0.25f);
             elapsed += Time.deltaTime;
-
             yield return null;
         }
 
