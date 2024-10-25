@@ -111,4 +111,11 @@ public class audioManager : MonoBehaviour
         audioSource.outputAudioMixerGroup = SFXMixerGroup;
         audioSource.PlayOneShot(headShotA, 1.0f); // Adjust volume as needed
     }
+
+    public void PlaySound(AudioClip _audio, float _volume)
+    {
+        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = SFXMixerGroup;
+        audioSource.PlayOneShot(_audio, _volume); // Adjust volume as needed
+    }
 }
