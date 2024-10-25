@@ -95,9 +95,10 @@ public class chests : MonoBehaviour, IInteractable
     {
         isOpen = true;
         anim.CrossFade("Animated PBR Chest _Opening_UnCommon", 0.1f);
+        audioManager.instance.PlaySound(audioManager.instance.audChestOpen, audioManager.instance.audChestOpenVol);
         gameManager.instance.getInteractUI().SetActive(false);
     }
-
+    
     private void OnTriggerStay(Collider other)
     {
         // Enable Interact Menu
