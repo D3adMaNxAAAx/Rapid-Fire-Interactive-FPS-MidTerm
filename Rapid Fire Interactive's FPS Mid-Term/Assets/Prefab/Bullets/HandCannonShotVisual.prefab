@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7594719340303131265}
   m_Layer: 0
   m_Name: HandCannonShotVisual
-  m_TagString: Untagged
+  m_TagString: Player Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -55,7 +55,6 @@ MonoBehaviour:
   missleRotationSpeed: 10
   damageAmount: 0
   attackSpeed: 125
-  destroyTime: 3
 --- !u!96 &2482374105805426821
 TrailRenderer:
   serializedVersion: 3

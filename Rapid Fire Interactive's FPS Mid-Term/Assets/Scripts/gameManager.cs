@@ -465,9 +465,9 @@ public class gameManager : MonoBehaviour {
         displayBossBar(true);
 
         // Note: There is a bug where the song will be interrupted if the player hits continue again.
-        if (gameManager.instance.getPlayerScript().getAudio() != audioManager.instance.bossMusic) {
-            gameManager.instance.getPlayerScript().getAudio().Stop();
-            gameManager.instance.getPlayerScript().getAudio().PlayOneShot(audioManager.instance.bossMusic, audioManager.instance.bossMusicVol);
+        if (gameManager.instance.getPlayerScript().getAudioLocation() != audioManager.instance.bossMusic) {
+            gameManager.instance.getPlayerScript().getAudioLocation().Stop();
+            gameManager.instance.getPlayerScript().getAudioLocation().PlayOneShot(audioManager.instance.bossMusic, audioManager.instance.bossMusicVol);
         }
             
     }

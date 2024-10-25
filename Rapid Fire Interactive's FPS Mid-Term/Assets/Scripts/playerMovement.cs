@@ -124,6 +124,12 @@ public class playerMovement : MonoBehaviour, IDamage
     bool infiniteStam = false;
     bool isCriticalHealth;
 
+    // Ty's Easter Egg vars
+    bool activated = false;
+    int jumpInAreaCount = 0;
+
+    public void Activate() { activated = true; }
+
     private void Awake()
     {
         if (player == null)
@@ -237,13 +243,18 @@ public class playerMovement : MonoBehaviour, IDamage
             StartCoroutine(staminaRecover());
 
         // Jump Controller
-        if (Input.GetButtonDown("Jump") && jumpCounter < maxJumps)
-        {
+        if (Input.GetButtonDown("Jump") && jumpCounter < maxJumps) {
             jumpCounter++;
             playerVel.y = jumpSpeed;
-
-            // Play Jump Sound
             aud.PlayOneShot(audioManager.instance.audJump[Random.Range(0, audioManager.instance.audJump.Length)], audioManager.instance.audJumpVol);
+
+            // For Ty's easter egg:
+            if (TyEasterEgg.getTriggerBool() == true) {
+                jumpInAreaCount++;
+                if (jumpInAreaCount == 5) {
+                    TyEasterEgg.activateEasterEgg(aud);
+                }
+            }
         }
 
         // Gravity Controller
@@ -1272,7 +1283,7 @@ public class playerMovement : MonoBehaviour, IDamage
     public List<gunStats> getGunList()
     { return guns; }
 
-    public AudioSource getAudio()
+    public AudioSource getAudioLocation()
     {
         return aud;
     }

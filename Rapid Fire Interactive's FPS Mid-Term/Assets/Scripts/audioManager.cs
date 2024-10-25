@@ -53,6 +53,8 @@ public class audioManager : MonoBehaviour
     [Range(0, 1)] [SerializeField] public float audButtonHoverVol;
     [Range(0, 1)] [SerializeField] public float audButtonClickVol;
 
+    [SerializeField] public AudioClip fartEgg;
+
     void Start()
     {
         instance = this;
