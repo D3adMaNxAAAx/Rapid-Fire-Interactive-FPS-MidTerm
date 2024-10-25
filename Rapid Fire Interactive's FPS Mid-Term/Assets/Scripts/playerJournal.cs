@@ -128,7 +128,6 @@ public class playerJournal :  MonoBehaviour
         }
         else if (Input.GetButtonDown("OpenJournal") && isOpen)
         {
-            gameManager.instance.setMenuActive(null);
             closeJournal();
         }
     }
@@ -150,6 +149,7 @@ public class playerJournal :  MonoBehaviour
     {
         if (isOpen)
         {
+            gameManager.instance.setMenuActive(null);
             gameManager.instance.stateUnpause();
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;

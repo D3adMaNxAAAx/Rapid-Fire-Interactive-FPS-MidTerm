@@ -7,12 +7,17 @@ public class buttonFunctions : MonoBehaviour {
 
     // stateIndex will have the name of the scene to go to.
     string stateIndex;
+    loadingScreen screen;
 
     private void Start()
     {
         stateIndex = SceneManager.GetActiveScene().name;
         if (stateIndex == "MainMenu")
             stateIndex = "Level 1";
+        if (screen == null)
+        {
+            screen = GameObject.Find("Loading Screen Obj").GetComponent<loadingScreen>();
+        }
     }
 
     public void confirmRestart()
@@ -31,8 +36,9 @@ public class buttonFunctions : MonoBehaviour {
         if (playerStats.Stats != null)
             Destroy(playerStats.Stats.gameObject);
 
-        SceneManager.LoadScene(stateIndex, LoadSceneMode.Single);
+        /*SceneManager.LoadScene(stateIndex, LoadSceneMode.Single);*/
         gameManager.instance.stateUnpause();
+        screen.loadScene(1);
     }
 
     public void cancel()
@@ -122,7 +128,7 @@ public class buttonFunctions : MonoBehaviour {
         Time.timeScale = gameManager.instance.getTimeScaleOrig();
 
         // Load Main Menu
-        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
+        screen.loadScene(0);
     }
 
     public void invertY() {

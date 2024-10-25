@@ -23,6 +23,7 @@ public class keepSettings : MonoBehaviour
     float sens = 300f;
     float mus = 1f;
     float sfx = 1f;
+    GameObject UIobj;
 
     private void Awake()
     {
@@ -48,6 +49,10 @@ public class keepSettings : MonoBehaviour
         {
             getSettingsUpdate();
             settingUpdate();
+        }
+        if(UIobj == null)
+        {
+            UIobj = GameObject.Find("UI");
         }
         
     }
@@ -139,5 +144,9 @@ public class keepSettings : MonoBehaviour
     public float getSFX()
     {
         return sfx;
+    }
+    public GameObject getUIobj()
+    {
+        return UIobj;
     }
 }
