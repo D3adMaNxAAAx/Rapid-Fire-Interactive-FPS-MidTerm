@@ -13,6 +13,7 @@ public class lostDocuments : MonoBehaviour , IInteractable
     [SerializeField] Image docOpened;
     [SerializeField] GameObject closeButton;
     [SerializeField] Image activeDoc;
+    [SerializeField] playerJournal playerJournalScript;
     bool isOpen;
 
     // Unused variables

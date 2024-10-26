@@ -201,11 +201,7 @@ public class playerJournal :  MonoBehaviour
         menuActive.SetActive(true);
     }
 
-    public void closeDoc()
-    {
-            activeDoc.enabled = false;
-            //docIsOpen = false;
-    }
+    
 
     public void updateObjectives()
     {
