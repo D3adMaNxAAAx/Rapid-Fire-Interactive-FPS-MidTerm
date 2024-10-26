@@ -20,6 +20,12 @@ public class lostDocuments : MonoBehaviour , IInteractable
     // bool isPickedUp;
     // bool docOpen;
 
+
+    void Start()
+    {
+        if (gameObject.CompareTag("Do Not Destroy")) 
+            DontDestroyOnLoad(gameObject); 
+    }
     // Update is called once per frame
     void Update()
     {
