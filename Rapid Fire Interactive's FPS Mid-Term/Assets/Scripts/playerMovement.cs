@@ -1020,7 +1020,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 else {
                     grenadeMult = 0.5f; // enemies, normal damage
                 }
-                damageable.takeDamage(2); // grenade does double damage to player
+                damageable.takeDamage((grenadeStats.explosionDamage) * grenadeMult); // grenade does double damage to player
             }
         }
         Destroy(grenadeInstance);
