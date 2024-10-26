@@ -300,8 +300,18 @@ public class gameManager : MonoBehaviour {
     }
 
     public IEnumerator preWinMenuThings() {
-        AudioSource.PlayClipAtPoint(audioManager.instance.VictoryA, player.transform.position, audioManager.instance.VictoryVol);
-        yield return new WaitForSeconds(3); // waitings for boss thumbs up after death
+        AudioSource audioSource = gameObject.AddComponent<AudioSource>();
+        audioSource.outputAudioMixerGroup = audioManager.instance.MusicMixerGroup;
+
+        // Play the short victory audio first
+        audioSource.PlayOneShot(audioManager.instance.VictoryA, audioManager.instance.VictoryVol);
+        yield return new WaitForSeconds(audioManager.instance.VictoryA.length);
+
+        // After the short clip, play the longer victory music
+        audioSource.clip = audioManager.instance.VictoryMusicA;
+        audioSource.volume = audioManager.instance.VictoryMusicVol; // This should use the configured volume
+        audioSource.loop = false;
+        audioSource.Play();
     }
 
     void youWin() {

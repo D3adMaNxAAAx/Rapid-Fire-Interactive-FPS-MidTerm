@@ -8,6 +8,7 @@ public class audioManager : MonoBehaviour
 {
     public static audioManager instance; // Singleton
     public AudioMixerGroup SFXMixerGroup;
+    public AudioMixerGroup MusicMixerGroup;
     // -- Audio Clips --
     [Header("-- Game Music --")]
     [SerializeField] public AudioClip menuMusic;
