@@ -24550,6 +24550,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4219171108711184052}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: openWinMenuStats
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 0
 --- !u!114 &7887912160721871505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32276,7 +32288,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -145, y: 67}
+  m_AnchoredPosition: {x: -303, y: 67}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3834459813113215379
@@ -38431,7 +38443,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -245, y: 68}
+  m_AnchoredPosition: {x: -406.7, y: 67}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4547059779678083671
@@ -42775,7 +42787,7 @@ MonoBehaviour:
   flashMod: 0.2
   healthCost: 5
   ammoCost: 3
-  laserRifleCost: 35
+  laserRifleCost: 75
 --- !u!1 &4970854999398518357
 GameObject:
   m_ObjectHideFlags: 0
@@ -67950,7 +67962,7 @@ MonoBehaviour:
   audHurtVol: 0.35
   VictoryA: {fileID: 8300000, guid: 1c194f7117795404aa0616d0eebcc3f7, type: 3}
   VictoryMusicA: {fileID: 8300000, guid: affd9c5c09121c7409974534e92b6ecd, type: 3}
-  audHeal: {fileID: 8300000, guid: 88871fe463f058f48993e0a94964e09b, type: 3}
+  audHeal: {fileID: 8300000, guid: cfce0cea076109f478783201b2a9f57f, type: 3}
   audReload: {fileID: 8300000, guid: 5a3e828c21994d5409208aa7691845a0, type: 3}
   audChestOpen: {fileID: 8300000, guid: 8f2a2c76d2064bd418629e17a0193b00, type: 3}
   fartEgg: {fileID: 8300000, guid: bad1d9843a300d8468da771570b00cb2, type: 3}
@@ -68344,7 +68356,7 @@ MonoBehaviour:
   menuControls: {fileID: 1464735865728314134}
   menuStats: {fileID: 4245347885017655489}
   menuLoseStats: {fileID: 6813230557533381504}
-  menuWinStats: {fileID: 4614324246558868268}
+  menuWinStats: {fileID: 2468215611587746195}
   quitButtons:
   - {fileID: 7425524128664661907}
   loadoutMenuFirst: {fileID: 4573719314063046872}
@@ -77606,6 +77618,18 @@ MonoBehaviour:
       - m_Target: {fileID: 4219171108711184052}
         m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
         m_MethodName: back
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4219171108711184052}
+        m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
+        m_MethodName: openLoseStatsMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
