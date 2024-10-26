@@ -303,15 +303,21 @@ public class gameManager : MonoBehaviour {
         AudioSource audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.outputAudioMixerGroup = audioManager.instance.MusicMixerGroup;
 
-        // Play the short victory audio first
-        audioSource.PlayOneShot(audioManager.instance.VictoryA, audioManager.instance.VictoryVol);
-        yield return new WaitForSeconds(audioManager.instance.VictoryA.length);
-
-        // After the short clip, play the longer victory music
+        // Play the short victory clip
         audioSource.clip = audioManager.instance.VictoryA;
-        audioSource.volume = audioManager.instance.VictoryMusicVol; // This should use the configured volume
+        audioSource.volume = audioManager.instance.VictoryVol;
         audioSource.loop = false;
         audioSource.Play();
+        yield return new WaitForSeconds(audioManager.instance.VictoryA.length);
+
+        // Transition to the longer victory music
+        audioSource.clip = audioManager.instance.VictoryMusicA;
+        audioSource.volume = audioManager.instance.VictoryMusicVol;
+        audioSource.loop = true; // Loop the longer music if desired
+        audioSource.Play();
+
+        // Call win menu display
+        youWin();
     }
 
     void youWin() {
@@ -324,7 +330,7 @@ public class gameManager : MonoBehaviour {
         menuActive = menuWin; // Set Win menu as active
         menuActive.SetActive(true); // Show Win menu
         EventSystem.current.SetSelectedGameObject(winMenuFirst);
-        audioSource.PlayOneShot(audioManager.instance.VictoryMusicA, audioManager.instance.VictoryVol);// Set eventsystem selected game object to the button assigned
+   
     }
     public void openWinStatsMenu()
     {
