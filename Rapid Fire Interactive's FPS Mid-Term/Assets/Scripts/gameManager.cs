@@ -32,6 +32,8 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuTips;
     [SerializeField] GameObject menuControls;
     [SerializeField] GameObject menuStats;
+    [SerializeField] GameObject menuLoseStats;
+    [SerializeField] GameObject menuWinStats;
 
     [Header("-- Quit Buttons --")]
     [SerializeField] Button[] quitButtons;
@@ -56,8 +58,8 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject loseMenuFirst;
     [SerializeField] GameObject winMenuFirst;
     [SerializeField] GameObject statsMenuFirst;
-    [SerializeField] GameObject menuLoseStats;
-    [SerializeField] GameObject menuWinStats;
+    [SerializeField] GameObject loseStatsMenuFirst;
+    [SerializeField] GameObject winStatsMenuFirst;
 
     // -- Player --
     [Header("-- Player UI --")]
@@ -319,7 +321,7 @@ public class gameManager : MonoBehaviour {
         }
         menuActive = menuWinStats; // Set WinStatsMenu as active
         menuActive.SetActive(true); // Show WinStatsMenu
-        EventSystem.current.SetSelectedGameObject(winMenuFirst); // Focus first button in WinStatsMenu
+        EventSystem.current.SetSelectedGameObject(winStatsMenuFirst); // Focus first button in WinStatsMenu
 
         // Update stats
         completionTime.text = playerStats.Stats.getTimeTaken();
@@ -336,7 +338,7 @@ public class gameManager : MonoBehaviour {
         }
         menuActive = menuLoseStats; // Set the LoseStatsMenu as the active menu
         menuActive.SetActive(true); // Show it
-        EventSystem.current.SetSelectedGameObject(loseMenuFirst); // Make sure first button is selected
+        EventSystem.current.SetSelectedGameObject(loseStatsMenuFirst); // Make sure first button is selected
                                                                  
         completionTime.text = playerStats.Stats.getTimeTaken();
         enemiesKilled.text = playerStats.Stats.getEnemiesKilled().ToString();
@@ -608,6 +610,16 @@ public class gameManager : MonoBehaviour {
             menuActive.SetActive(true);
         }
         else if (menuActive == menuStats) {
+            menuActive.SetActive(false);
+            menuActive = menuJournal;
+            menuActive.SetActive(true);
+        }
+        else if (menuActive == menuLoseStats) {
+            menuActive.SetActive(false);
+            menuActive = menuLose;
+            menuActive.SetActive(true);
+        }
+        else if (menuActive == menuWinStats) {
             menuActive.SetActive(false);
             menuActive = menuWin;
             menuActive.SetActive(true);
