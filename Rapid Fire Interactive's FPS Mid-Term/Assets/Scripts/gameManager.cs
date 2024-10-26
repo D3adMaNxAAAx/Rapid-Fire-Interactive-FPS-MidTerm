@@ -840,6 +840,10 @@ public class gameManager : MonoBehaviour {
     public void setPowerItems(int _items)
     { powerItems += _items; }
 
+    public void resetPwrItems()
+    {
+        powerItems = 0;
+    }
     public TMP_Text getAmmoReserveText() { return ammoReserveText; }
 
     public void setAmmoReserveText(TMP_Text _ammoReserveText)

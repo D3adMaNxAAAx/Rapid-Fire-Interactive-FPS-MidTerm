@@ -130,6 +130,7 @@ public class playerStats : MonoBehaviour {
     public void resetOBJStats()
     {
         idBadgesFound = 0;
+        gameManager.instance.resetPwrItems();
         powerObjectsFound = 0;
     }
 }
