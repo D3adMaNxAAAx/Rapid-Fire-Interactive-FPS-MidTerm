@@ -429,10 +429,9 @@ GameObject:
   - component: {fileID: 2482008848661056758}
   - component: {fileID: 7549303394707905848}
   - component: {fileID: 3136025754483489140}
-  - component: {fileID: 2478449606372114272}
   - component: {fileID: 2141348410770550419}
   - component: {fileID: 334545436835023342}
-  - component: {fileID: 7110305984264545036}
+  - component: {fileID: 5511139015450753609}
   m_Layer: 7
   m_Name: Enemy-Ranged Heavy
   m_TagString: Ranged Heavy
@@ -540,29 +539,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!136 &2478449606372114272
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1976139769632855763}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.2
-  m_Height: 0.8
-  m_Direction: 0
-  m_Center: {x: 0, y: 1.6, z: 0.1}
 --- !u!135 &2141348410770550419
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -607,8 +583,8 @@ CapsuleCollider:
   m_Height: 0.25
   m_Direction: 1
   m_Center: {x: 0, y: 1.65, z: 0.35}
---- !u!136 &7110305984264545036
-CapsuleCollider:
+--- !u!64 &5511139015450753609
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -625,11 +601,10 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.7
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.8, z: 0}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5795027835290004469, guid: 27c70984b9f4990489d83faa91f41371, type: 3}
 --- !u!1 &2049913419548452060
 GameObject:
   m_ObjectHideFlags: 0
