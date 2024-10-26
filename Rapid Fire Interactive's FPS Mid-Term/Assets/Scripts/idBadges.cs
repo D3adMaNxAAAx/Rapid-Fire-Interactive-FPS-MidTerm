@@ -31,6 +31,7 @@ public class idBadges : MonoBehaviour, IInteractable
         //isPickedUp = true;
         
         pickedUpFeedback.enabled = true;
+        playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.docPickupA, audioManager.instance.docPickupVol);
         isOpen = true;
 
         if (journalIcon != null)

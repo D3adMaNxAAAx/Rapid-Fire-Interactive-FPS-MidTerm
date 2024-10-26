@@ -28,6 +28,7 @@ public class repairItems : MonoBehaviour, IInteractable
         Destroy(repairObj);
 
         pickedUpFeedback.enabled = true;
+        playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.itemPickupA, audioManager.instance.itemPickupVol);
         gameManager.instance.setPowerItems(1);
         playerStats.Stats.objectFound();
 

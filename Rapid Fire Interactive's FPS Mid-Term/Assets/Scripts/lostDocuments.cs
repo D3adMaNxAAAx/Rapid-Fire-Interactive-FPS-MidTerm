@@ -41,6 +41,7 @@ public class lostDocuments : MonoBehaviour , IInteractable
         this.gameObject.GetComponent<BoxCollider>().enabled = false;
         
         pickedUpFeedback.enabled = true;
+        playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.docPickupA, audioManager.instance.docPickupVol);
         isOpen = true;
 
         if (journalIcon != null)
