@@ -348,11 +348,6 @@ public class playerMovement : MonoBehaviour, IDamage
                         aud.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
                         aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
                     }
-                    // Another check for the player to auto-reload if they attempt to shoot with nothing in their barrel.
-                    else if (guns[gunPos].ammoCur == 0 && guns[gunPos].ammoMax > 0)
-                    {
-                        reload();
-                    }
                     else
                     {
                         StartCoroutine(AmmoWarningFlash());
@@ -410,6 +405,12 @@ public class playerMovement : MonoBehaviour, IDamage
 
         // Update the UI for confirmation
         updatePlayerUI();
+    }
+
+    IEnumerator doReloadCooldown() {
+        isReloading = true;
+        yield return new WaitForSeconds(reloadCooldown);
+        isReloading = false;
     }
 
     // Shoot Timer
@@ -762,12 +763,6 @@ public class playerMovement : MonoBehaviour, IDamage
         }
     }
 
-    IEnumerator doReloadCooldown()
-    {
-        isReloading = true;
-        yield return new WaitForSeconds(reloadCooldown);
-        isReloading = false;
-    }
     IEnumerator healBuff(int slot) {
         for (int i = 1; i <= 5; i++) {
             Heal(true);
