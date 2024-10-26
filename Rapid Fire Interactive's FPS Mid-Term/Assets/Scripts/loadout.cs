@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class loadout : MonoBehaviour {
@@ -89,6 +90,20 @@ public class loadout : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
         instance = this;
+    }
+
+    bool menuOpen = true;
+    public void setMenuOpen() {
+        menuOpen = false;
+    }
+    private void Update() {
+        if (menuOpen) {
+            if (SceneManager.GetActiveScene().buildIndex == 1) {
+                if (Input.GetKey("s") && Input.GetKey("k") && Input.GetKey("i") && Input.GetKey("p")) { /// shortcut to level 2
+                    SceneManager.LoadScene(3, LoadSceneMode.Single);
+                }
+            }
+        }
     }
 
     public void loadOut1 () {

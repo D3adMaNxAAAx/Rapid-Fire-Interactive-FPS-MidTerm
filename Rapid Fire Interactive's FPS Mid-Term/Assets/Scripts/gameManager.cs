@@ -554,6 +554,7 @@ public class gameManager : MonoBehaviour {
         if (playerMovement.player.getGunList().Count > 0) {
             startFailMessage.SetActive(false);
             stateUnpause();
+            loadout.instance.setMenuOpen();
             timerTracker.SetActive(true);
             displayUI(true);
         }

@@ -12,10 +12,10 @@ public class buttonFunctions : MonoBehaviour {
     private void Start()
     {
         stateIndex = SceneManager.GetActiveScene().name;
-        if (stateIndex == "MainMenu")
+        if (stateIndex == "MainMenu") {
             stateIndex = "Level 1";
-        if (screen == null)
-        {
+        }
+        if (screen == null) {
             screen = GameObject.Find("Loading Screen Obj").GetComponent<loadingScreen>();
         }
     }
