@@ -46,6 +46,10 @@ public class elevator : MonoBehaviour, IInteractable
         {
             screen = GameObject.Find("Loading Screen Obj").GetComponent<loadingScreen>();
         }
+        if (gameManager.instance.getInteractUI().activeInHierarchy)
+        {
+            gameManager.instance.getInteractUI().SetActive(false);
+        }
     }
 
     private void Update()
@@ -88,7 +92,8 @@ public class elevator : MonoBehaviour, IInteractable
                     if (!uIIsPopping && obj1 != null)
                     {
                         objStorage = obj1;
-                        StartCoroutine(popUIStuff());
+                        if (!uIIsPopping)
+                            StartCoroutine(popUIStuff());
                     }
                 }
                 else
@@ -96,7 +101,8 @@ public class elevator : MonoBehaviour, IInteractable
                     if (!uIIsPopping && obj2 != null)
                     {
                         objStorage = obj2;
-                        StartCoroutine(popUIStuff());
+                        if (!uIIsPopping)
+                            StartCoroutine(popUIStuff());
                     }
                 }
             }
@@ -109,7 +115,8 @@ public class elevator : MonoBehaviour, IInteractable
                 else
                 {
                     objStorage = obj1;
-                    StartCoroutine(popUIStuff());
+                    if (!uIIsPopping)
+                        StartCoroutine(popUIStuff());
                 }
             }
         }
