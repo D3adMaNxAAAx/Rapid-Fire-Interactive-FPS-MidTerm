@@ -57,6 +57,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject winMenuFirst;
     [SerializeField] GameObject statsMenuFirst;
     [SerializeField] GameObject menuLoseStats;
+    [SerializeField] GameObject menuWinStats;
 
     // -- Player --
     [Header("-- Player UI --")]
@@ -306,14 +307,25 @@ public class gameManager : MonoBehaviour {
             menuActive.SetActive(false);
         }
         statePause();
-        menuActive = menuWin; // set active menu to win menu
-        menuActive.SetActive(true); // Show active menu
-        playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.VictoryMusicA, audioManager.instance.VictoryMusicVol);
+        menuActive = menuWin; // Set Win menu as active
+        menuActive.SetActive(true); // Show Win menu
+        EventSystem.current.SetSelectedGameObject(winMenuFirst);  // Set eventsystem selected game object to the button assigned
+    }
+    public void openWinStatsMenu()
+    {
+        if (menuActive != null)
+        {
+            menuActive.SetActive(false); // Close current menu
+        }
+        menuActive = menuWinStats; // Set WinStatsMenu as active
+        menuActive.SetActive(true); // Show WinStatsMenu
+        EventSystem.current.SetSelectedGameObject(winMenuFirst); // Focus first button in WinStatsMenu
+
+        // Update stats
         completionTime.text = playerStats.Stats.getTimeTaken();
         enemiesKilled.text = playerStats.Stats.getEnemiesKilled().ToString();
         deaths.text = playerStats.Stats.getDeaths().ToString();
-        playerLevel.text = playerStats.Stats.getLevel().ToString(); 
-        EventSystem.current.SetSelectedGameObject(winMenuFirst); // Set eventsystem selected game object to the button assigned
+        playerLevel.text = playerStats.Stats.getLevel().ToString();
     }
 
     public void openLoseStatsMenu()

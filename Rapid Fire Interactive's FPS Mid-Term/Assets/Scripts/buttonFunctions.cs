@@ -220,6 +220,11 @@ public class buttonFunctions : MonoBehaviour {
         gameManager.instance.openLoseStatsMenu(); 
     }
 
+    public void openWinMenuStats()
+    {
+        gameManager.instance.openWinStatsMenu();
+    }
+
     public void creditScreen()
     {
         SceneManager.LoadScene(5, LoadSceneMode.Single);
