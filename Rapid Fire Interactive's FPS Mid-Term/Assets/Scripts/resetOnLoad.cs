@@ -6,21 +6,26 @@ public class resetOnLoad : MonoBehaviour
 {
     List<GameObject> pwrIs;
     List<GameObject> idCards;
+    bool isDone;
     // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        pwrIs = holdMe.instance.getPwrItems();
-        idCards = holdMe.instance.getIDImages();
-        if (playerStats.Stats != null)
+        if (!isDone)
         {
-            playerStats.Stats.resetOBJStats();
-            for (int i = 0; i < pwrIs.Count; i++)
+            isDone = true;
+            pwrIs = holdMe.instance.getPwrItems();
+            idCards = holdMe.instance.getIDImages();
+            if (playerStats.Stats != null)
             {
-                pwrIs[i].SetActive(false);
-            }
-            for (int i = 0; i < idCards.Count; i++)
-            {
-                idCards[i].SetActive(false);
+                playerStats.Stats.resetOBJStats();
+                for (int i = 0; i < pwrIs.Count; i++)
+                {
+                    pwrIs[i].SetActive(false);
+                }
+                for (int i = 0; i < idCards.Count; i++)
+                {
+                    idCards[i].SetActive(false);
+                }
             }
         }
     }

@@ -132,5 +132,6 @@ public class playerStats : MonoBehaviour {
         idBadgesFound = 0;
         gameManager.instance.resetPwrItems();
         powerObjectsFound = 0;
+        pwrLvl = 0;
     }
 }
