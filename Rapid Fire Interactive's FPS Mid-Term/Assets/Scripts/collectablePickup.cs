@@ -32,7 +32,7 @@ public class collectablePickup : MonoBehaviour {
                 Destroy(gameObject);
                 return;
             }
-            AudioSource.PlayClipAtPoint(pickUpA, transform.position);
+            PlayPickupSound(pickUpA, audioManager.instance.itemPickupVol);
             if (type == ObjectType.secret) {
                 playerStats.Stats.collectableFound();
             }
@@ -53,5 +53,12 @@ public class collectablePickup : MonoBehaviour {
             return;
         }
         Destroy(gameObject);
+    }
+    private void PlayPickupSound(AudioClip clip, float volume)
+    {
+        if (clip != null)
+        {
+            playerMovement.player.getAudioLocation().PlayOneShot(clip, volume);
+        }
     }
 }
