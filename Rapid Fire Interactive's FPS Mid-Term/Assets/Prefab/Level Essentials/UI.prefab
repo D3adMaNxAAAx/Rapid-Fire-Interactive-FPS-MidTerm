@@ -25281,7 +25281,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 4219171108711184052}
         m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
-        m_MethodName: openLoseStatsMenu
+        m_MethodName: openWinMenuStats
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -55319,7 +55319,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 4219171108711184052}
         m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
-        m_MethodName: playButtonSound
+        m_MethodName: resume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -55329,9 +55329,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 4219171108711184052}
-        m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
-        m_MethodName: resume
+      - m_Target: {fileID: 5947381001247648091}
+        m_TargetAssemblyTypeName: audioManager, Assembly-CSharp
+        m_MethodName: PlayButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -55358,9 +55358,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4219171108711184052}
-          m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
-          m_MethodName: playHoverSound
+        - m_Target: {fileID: 5947381001247648091}
+          m_TargetAssemblyTypeName: audioManager, Assembly-CSharp
+          m_MethodName: PlayButtonHover
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -55374,9 +55374,9 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4219171108711184052}
-          m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
-          m_MethodName: playHoverSound
+        - m_Target: {fileID: 5947381001247648091}
+          m_TargetAssemblyTypeName: audioManager, Assembly-CSharp
+          m_MethodName: PlayButtonHover
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -69981,7 +69981,7 @@ MonoBehaviour:
   winMenuFirst: {fileID: 96736685219602558}
   statsMenuFirst: {fileID: 2667133621052501449}
   menuLoseStats: {fileID: 7668838754381556218}
-  menuWinStats: {fileID: 0}
+  menuWinStats: {fileID: 2468215611587746195}
   HPBar: {fileID: 131460679855224033}
   HPText: {fileID: 3440014445263058199}
   shieldBarImage: {fileID: 9116450370924475352}
@@ -79639,7 +79639,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &9089417057791478383
 RectTransform:
   m_ObjectHideFlags: 0
@@ -79757,6 +79757,18 @@ MonoBehaviour:
       - m_Target: {fileID: 4219171108711184052}
         m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
         m_MethodName: back
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4219171108711184052}
+        m_TargetAssemblyTypeName: buttonFunctions, Assembly-CSharp
+        m_MethodName: openLoseStatsMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
