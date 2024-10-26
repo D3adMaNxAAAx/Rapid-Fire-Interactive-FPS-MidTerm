@@ -1547,7 +1547,7 @@ MonoBehaviour:
   optionsMenuFirst: {fileID: 20371476}
   settingsMenuFirst: {fileID: 2945763793536926777}
   howToPlayMenuFirst: {fileID: 3703661355887209760}
-  tipsMenuFirst: {fileID: 0}
+  tipsMenuFirst: {fileID: 6654006939003031971}
   controlsMenuFirst: {fileID: 4175950380575602571}
   quitButton: {fileID: 426205616}
 --- !u!224 &991967957
@@ -2741,22 +2741,33 @@ MonoBehaviour:
   audJump: []
   audHurt: []
   headShotA: {fileID: 0}
+  itemPickupA: {fileID: 0}
+  coinPickupA: {fileID: 0}
   audEnemySteps: []
   audStepVol: 0
   audJumpVol: 0
   audHurtVol: 0
   VictoryA: {fileID: 0}
+  VictoryMusicA: {fileID: 0}
   audHeal: {fileID: 0}
+  audReload: {fileID: 0}
+  audChestOpen: {fileID: 0}
+  fartEgg: {fileID: 0}
   audButtonHover: {fileID: 8300000, guid: 5a41da056cd6147d39093be3f10a2ed5, type: 3}
   audButtonClick: {fileID: 0}
   menuMusicVol: 0
   levelMusicVol: 0
   bossMusicVol: 0
+  VictoryVol: 0
+  VictoryMusicVol: 0
+  itemPickupVol: 0
+  coinPickupVol: 0
   audEnemyStepVol: 0
   audHealVol: 0
+  audReloadVol: 0
+  audChestOpenVol: 0
   audButtonHoverVol: 0
   audButtonClickVol: 0
-  fartEgg: {fileID: 0}
 --- !u!4 &1849315704 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3616128519723685649, guid: 9b9d7b326f9641b42a4f3a0df6a92438, type: 3}
