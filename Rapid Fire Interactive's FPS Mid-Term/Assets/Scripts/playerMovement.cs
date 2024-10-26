@@ -641,7 +641,10 @@ public class playerMovement : MonoBehaviour, IDamage
 
     public void Heal(bool buff) { // if true, it is a buff and should not be recursive or follow the half health limit
         HP += 3; // HEAL THE PLAYER
-        AudioSource.PlayClipAtPoint(healSound, transform.position); // playing heal audio clip
+        AudioSource healAudioSource = gameObject.AddComponent<AudioSource>();
+        healAudioSource.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
+        healAudioSource.PlayOneShot(audioManager.instance.audHeal, audioManager.instance.audHealVol);
+        // playing heal audio clip
         StartCoroutine(healIndicator()); // flashing screen green
         if (lowHealth == true) {
             if ((HP / HPOrig) > .25) { 
@@ -1035,7 +1038,8 @@ public class playerMovement : MonoBehaviour, IDamage
             StartCoroutine(healIndicator()); // flashing screen green
 
             if (heals[0].healSound != null) {
-                AudioSource.PlayClipAtPoint(heals[0].healSound, transform.position);
+                aud.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
+                aud.PlayOneShot(heals[0].healSound, audioManager.instance.audHealVol);
             }
             healCoolDown = heals[0].healCoolDown;
             gameManager.instance.getHealsUI().text = (heals.Count-1).ToString(); // -1 because it hasn't been removed yet
