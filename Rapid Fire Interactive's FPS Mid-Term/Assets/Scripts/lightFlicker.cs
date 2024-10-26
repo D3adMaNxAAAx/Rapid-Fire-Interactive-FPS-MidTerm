@@ -223,7 +223,7 @@ public class lightFlicker : MonoBehaviour, IInteractable
             gameManager.instance.getRepairWarning().text = _remainingItems.ToString("F0") + " Repair Items needed until next power level!";
 
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         gameManager.instance.getRepairWarning().gameObject.SetActive(false);
     }
 
@@ -231,7 +231,7 @@ public class lightFlicker : MonoBehaviour, IInteractable
     {
         gameManager.instance.getPowerLevelPopup().SetActive(true);
         gameManager.instance.getPowerLevelText().text = "Level " + pwrLvl.ToString();
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         gameManager.instance.getPowerLevelPopup().SetActive(false);
     }
 

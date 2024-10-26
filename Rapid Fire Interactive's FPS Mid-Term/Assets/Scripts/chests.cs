@@ -62,19 +62,8 @@ public class chests : MonoBehaviour, IInteractable
         // Give player loot
         gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() + coins);
         gameManager.instance.getPlayerScript().setXP(xp); // THIS WILL ADD XP
-
-        // Ammo
         gameManager.instance.getPlayerScript().addAmmo(ammo);
-
-        // Grenades & Heals
-        if (grenades != 0)
-        {
-            for (int i = 0; i < grenades; i++)
-            {
-                gameManager.instance.getPlayerScript().addToGrenades(grenade);
-            }
-        }
-
+        gameManager.instance.getPlayerScript().addToGrenades(grenade);
         if (heals != 0)
         {
             for (int i = 0; i < heals; i++)

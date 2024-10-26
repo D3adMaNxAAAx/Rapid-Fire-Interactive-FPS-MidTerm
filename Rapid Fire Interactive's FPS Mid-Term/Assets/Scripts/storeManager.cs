@@ -81,7 +81,6 @@ public class storeManager : MonoBehaviour
             giveHealth();
             // Successful Transaction
         }
-        else { /* Unsuccessful */ }
     }
 
     public void onAmmoPurchase()
@@ -96,7 +95,6 @@ public class storeManager : MonoBehaviour
             giveAmmo();
             // Successful Transaction
         }
-        else { /* Unsuccessful */ }
     }
 
     public void onLaserRiflePurchase()
@@ -121,7 +119,6 @@ public class storeManager : MonoBehaviour
             giveLaserRifle();
             // Successful Transaction
         }
-        else { /* Unsuccessful */ }
     }
 
     // Private methods for internal store functions
@@ -142,7 +139,7 @@ public class storeManager : MonoBehaviour
     {
         // Designated function just in case transactions may be more deliberate
         // Method is called if canAfford returns true so player can afford something
-        gameManager.instance.getPlayerScript().setCoins(gameManager.instance.getPlayerScript().getCoins() - _cost);
+        gameManager.instance.getPlayerScript().setCoins(-_cost);
         playerStats.Stats.purchased();
     }
 
