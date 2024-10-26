@@ -112,10 +112,9 @@ public class damage : MonoBehaviour {
             IDamage toDamage = otherObject.GetComponent<IDamage>();
             if (otherObject.CompareTag("Player")) { // only damages player
                 toDamage.takeDamage(damageAmount);
-              
+
                 uiManager = FindObjectOfType<StatusEffectUIManager>();
-                if (uiManager != null)
-                {
+                if (uiManager != null) {
                     uiManager.ShowBurningEffect();  // Show burning icon when the effect starts
                 }
             }

@@ -24,6 +24,7 @@ public class CameraShake : MonoBehaviour
     public void setIsNotDead(bool alive) {
         isNotDead = alive;
     }
+    public bool getIsNotDead() { return isNotDead; }
 
     public void TriggerShake(float intensity, float duration)
     {
@@ -44,8 +45,6 @@ public class CameraShake : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-
-       
         transform.localPosition = originalPos;
     }
 }

@@ -543,7 +543,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 // If the player's HP is already 1 or the damage is still lethal, let the player die
                 if (HP == 1)
                 {
-                    HP -= amount; // Allow the player to die if they take further damage while at 1 HP
+                    HP = 0; // player dead
                 }
                 else if (amount >= HP)
                 {
@@ -582,6 +582,7 @@ public class playerMovement : MonoBehaviour, IDamage
             if (HP <= 0)
             {
                 HP = 0; // set HP to 0 for no weirdness in code/visuals
+                CameraShake.instance.setIsNotDead(false);
                 if (lives > 0) { lives--; }
                 playerStats.Stats.died();
                 gameManager.instance.youLose();

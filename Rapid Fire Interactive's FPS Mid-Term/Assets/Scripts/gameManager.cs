@@ -344,7 +344,6 @@ public class gameManager : MonoBehaviour {
     }
 
     public void youLose() {
-        CameraShake.instance.setIsNotDead(false);
         playerMovement.player.setShieldOff();
         if (menuActive != null) {
             menuActive.SetActive(false);
