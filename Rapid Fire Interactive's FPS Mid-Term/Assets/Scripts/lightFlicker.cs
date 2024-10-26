@@ -268,6 +268,10 @@ public class lightFlicker : MonoBehaviour, IInteractable
     // Getters
     static public bool getFoundPower()
     { return foundPower; }
+    static public void setFoundPower(bool _state)
+    {
+        foundPower = _state;
+    }
 
     // Setters
     public bool getSafeAccess() { return safeAccess; }

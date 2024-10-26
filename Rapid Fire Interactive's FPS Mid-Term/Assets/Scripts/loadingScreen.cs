@@ -17,6 +17,7 @@ public class loadingScreen : MonoBehaviour
         if(keepSettings.gameSettings != null && keepSettings.gameSettings.getUIobj() != null)
         {
             keepSettings.gameSettings.getUIobj().SetActive(true);
+            
         }
     }
 
@@ -31,6 +32,9 @@ public class loadingScreen : MonoBehaviour
             keepSettings.gameSettings.getUIobj().SetActive(false);
         }
         StartCoroutine(loadSceneAsync(index));
+       
+            lightFlicker.setFoundPower(false); 
+       
     }
 
     IEnumerator loadSceneAsync(int index)

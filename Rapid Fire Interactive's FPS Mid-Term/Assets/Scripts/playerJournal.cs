@@ -65,6 +65,7 @@ public class playerJournal :  MonoBehaviour
     [SerializeField] TMP_Text currentMoney;
 
     bool isOpen;
+    
 
     // Unused Variables
     //int enemyCountOrig = 0;
@@ -89,6 +90,8 @@ public class playerJournal :  MonoBehaviour
         if (_menuStats.gameObject.activeInHierarchy)
             updateJournalStats();
         updateObjectives();
+
+        
     }
 
     void currentMoneyCounter() {
