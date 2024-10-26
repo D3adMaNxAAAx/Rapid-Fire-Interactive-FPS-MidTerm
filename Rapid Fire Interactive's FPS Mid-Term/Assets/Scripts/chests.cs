@@ -11,6 +11,8 @@ public class chests : MonoBehaviour, IInteractable
     [SerializeField] collectablePickup staminaBuff;
     [SerializeField] collectablePickup healBuff;
     [SerializeField] collectablePickup attackBuff;
+    [SerializeField] GrenadeStats grenade;
+    [SerializeField] HealStats heal;
     [SerializeField] int coins;
     [SerializeField] int xp;
     [SerializeField] int ammo;
@@ -23,8 +25,6 @@ public class chests : MonoBehaviour, IInteractable
 
     // Generic Stats
     collectablePickup powerUp;
-    GrenadeStats grenade;
-    HealStats heal;
 
     // Tracks
     bool isOpen;
