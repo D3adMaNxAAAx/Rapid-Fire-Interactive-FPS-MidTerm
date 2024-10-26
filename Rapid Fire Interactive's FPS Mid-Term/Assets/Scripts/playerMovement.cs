@@ -103,6 +103,7 @@ public class playerMovement : MonoBehaviour, IDamage
     int gunPos = 0; // Weapon selected
     int speedOrig;  // Original Speed
     int startingLives;
+    float reloadCooldown = 1.0f; // Time before the player can shoot after reload
 
     bool shieldOn = false;
     float shieldHP = 25;
@@ -112,8 +113,9 @@ public class playerMovement : MonoBehaviour, IDamage
     bool isSprinting;
     bool isShooting;
     bool isStepping;
-    bool isDraining; // To check if the player is currently losing stamina
-    bool isRecovering; // To check if the player is currently recovering stamina
+    bool isDraining;
+    bool isRecovering;
+    bool isReloading;
     bool lowHealth = false;
     bool readyToHeal = false;
     bool stopHealing = false; // was the player damaged while healing?
@@ -209,13 +211,13 @@ public class playerMovement : MonoBehaviour, IDamage
             HP = HPOrig;
             lowHealth = false;
             gameManager.instance.getHealthWarning().SetActive(false);
-            RemoveAllSatusEffects();
+            RemoveAllStatusEffects();
             updatePlayerUI();
             CameraShake.instance.setIsNotDead(true);
         }
     }
 
-    private void RemoveAllSatusEffects()
+    private void RemoveAllStatusEffects()
     {
         StatusEffects[] effects = GetComponents<StatusEffects>();
 
@@ -225,6 +227,7 @@ public class playerMovement : MonoBehaviour, IDamage
         }
 
     }
+
     // Player Movement Controls
     void movement()
     {
@@ -323,52 +326,62 @@ public class playerMovement : MonoBehaviour, IDamage
         {
             reload();
         }
-
-        if (getCurGun().isAutomatic) {
-            if (Input.GetButton("Fire1") && !isShooting && !gameManager.instance.getPauseStatus()) {
-                if (getAmmo() > 0) {
-                    StartCoroutine(shoot());
-
-                    //Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation); // OG method
-                    GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // setting bullet object to newProjectile
-                    // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile
-                    newProjectile.transform.position = playerCamera.transform.position; // player camera needs to be used instead of Camera.main (I don't know why)
-                    newProjectile.transform.rotation = playerCamera.transform.rotation;
-                    newProjectile.GetComponent<Rigidbody>().velocity = playerCamera.transform.forward * (playerShot.GetComponent<damage>().getAttackSpeed()); // accessing damage script and getting bullet speed
-                    newProjectile.SetActive(true); // turning object on (it is set off when added to object pool)
-                    playerShot.GetComponent<damage>().setCurrentPosAndRange(newProjectile.transform.position, range);
-                    // setting bullet start position, update in damage will track its distance and "delete" the bullet when it goes past the distance
-                    aud.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
-                    aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
-                }
-                // Another check for the player to auto-reload if they attempt to shoot with nothing in their barrel.
-                else if (guns[gunPos].ammoCur == 0 && guns[gunPos].ammoMax > 0)
+        if (!isReloading)
+        {
+            if (getCurGun().isAutomatic)
+            {
+                if (Input.GetButton("Fire1") && !isShooting && !gameManager.instance.getPauseStatus())
                 {
-                    reload();
-                }
-                else {
-                    StartCoroutine(AmmoWarningFlash());
+                    if (getAmmo() > 0)
+                    {
+                        StartCoroutine(shoot());
+
+                        //Instantiate(playerShot, Camera.main.transform.position, Camera.main.transform.rotation); // OG method
+                        GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // setting bullet object to newProjectile
+                                                                                                     // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile
+                        newProjectile.transform.position = playerCamera.transform.position; // player camera needs to be used instead of Camera.main (I don't know why)
+                        newProjectile.transform.rotation = playerCamera.transform.rotation;
+                        newProjectile.GetComponent<Rigidbody>().velocity = playerCamera.transform.forward * (playerShot.GetComponent<damage>().getAttackSpeed()); // accessing damage script and getting bullet speed
+                        newProjectile.SetActive(true); // turning object on (it is set off when added to object pool)
+                        playerShot.GetComponent<damage>().setCurrentPosAndRange(newProjectile.transform.position, range);
+                        // setting bullet start position, update in damage will track its distance and "delete" the bullet when it goes past the distance
+                        aud.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
+                        aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
+                    }
+                    // Another check for the player to auto-reload if they attempt to shoot with nothing in their barrel.
+                    else if (guns[gunPos].ammoCur == 0 && guns[gunPos].ammoMax > 0)
+                    {
+                        reload();
+                    }
+                    else
+                    {
+                        StartCoroutine(AmmoWarningFlash());
+                    }
                 }
             }
-        }
-        else {
-            if (Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus()) {
-                if (getAmmo() > 0) {
-                    StartCoroutine(shoot());
+            else
+            {
+                if (Input.GetButtonDown("Fire1") && !isShooting && !gameManager.instance.getPauseStatus())
+                {
+                    if (getAmmo() > 0)
+                    {
+                        StartCoroutine(shoot());
 
-                    GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // setting bullet object to newProjectile
-                    // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile
-                    newProjectile.transform.position = playerCamera.transform.position; // player camera needs to be used instead of Camera.main (I don't know why)
-                    newProjectile.transform.rotation = playerCamera.transform.rotation;
-                    newProjectile.GetComponent<Rigidbody>().velocity = playerCamera.transform.forward * (playerShot.GetComponent<damage>().getAttackSpeed()); // accessing damage script and getting bullet speed
-                    newProjectile.SetActive(true); // turning object on (it is set off when added to object pool)
-                    playerShot.GetComponent<damage>().setCurrentPosAndRange(newProjectile.transform.position, range);
-                    // setting bullet start position, update in damage will track its distance and "delete" the bullet when it goes past the distance
+                        GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // setting bullet object to newProjectile
+                                                                                                     // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile
+                        newProjectile.transform.position = playerCamera.transform.position; // player camera needs to be used instead of Camera.main (I don't know why)
+                        newProjectile.transform.rotation = playerCamera.transform.rotation;
+                        newProjectile.GetComponent<Rigidbody>().velocity = playerCamera.transform.forward * (playerShot.GetComponent<damage>().getAttackSpeed()); // accessing damage script and getting bullet speed
+                        newProjectile.SetActive(true); // turning object on (it is set off when added to object pool)
+                        playerShot.GetComponent<damage>().setCurrentPosAndRange(newProjectile.transform.position, range);
+                        // setting bullet start position, update in damage will track its distance and "delete" the bullet when it goes past the distance
 
-                    aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
-                }
-                else {
-                    StartCoroutine(AmmoWarningFlash());
+                        aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
+                    }
+                    else
+                    {
+                        StartCoroutine(AmmoWarningFlash());
+                    }
                 }
             }
         }
@@ -376,7 +389,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
     void reload()
     {
-
+        StartCoroutine(doReloadCooldown());
         // Check if there's enough spare ammo to fill a mag
         if (guns[gunPos].ammoMax - (guns[gunPos].ammoMag - guns[gunPos].ammoCur) >= 0)
         {
@@ -745,6 +758,12 @@ public class playerMovement : MonoBehaviour, IDamage
         }
     }
 
+    IEnumerator doReloadCooldown()
+    {
+        isReloading = true;
+        yield return new WaitForSeconds(reloadCooldown);
+        isReloading = false;
+    }
     IEnumerator healBuff(int slot) {
         for (int i = 1; i <= 5; i++) {
             Heal(true);
