@@ -26,6 +26,8 @@ public class damage : MonoBehaviour {
 
     [SerializeField] float damageAmount;
     [SerializeField] float attackSpeed;
+    [SerializeField] float burnEffectDuration = 5f; // Duration for lingering burn
+    [SerializeField] float burnEffectDamage = 0.5f; // Low damage for lingering burn
 
     static Vector3 startingPosition;
     static float distance;
@@ -135,8 +137,34 @@ public class damage : MonoBehaviour {
                 {
                     uiManager.HideBurningEffect();
                 }
+                StartCoroutine(ApplyBurnEffect(otherObject.GetComponent<IDamage>()));
             }
         }
     
+    }
+
+    private IEnumerator ApplyBurnEffect(IDamage target)
+    {
+        if (target == null) yield break;
+
+        float elapsed = 0;
+        uiManager = FindObjectOfType<StatusEffectUIManager>();
+
+        if (uiManager != null)
+        {
+            uiManager.ShowBurningEffect(); // Show burn effect in UI
+        }
+
+        while (elapsed < burnEffectDuration)
+        {
+            target.takeDamage(burnEffectDamage);
+            elapsed += 1f;
+            yield return new WaitForSeconds(1f); // Apply burn damage every second
+        }
+
+        if (uiManager != null)
+        {
+            uiManager.HideBurningEffect(); // Hide burn effect after duration
+        }
     }
 }
