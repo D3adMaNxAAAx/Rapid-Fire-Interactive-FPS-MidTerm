@@ -115,7 +115,6 @@ MonoBehaviour:
   safeSpawnPos: {fileID: 2697282837228962113}
   badgeScanner: {fileID: 361865787527381206}
   activeDoor: {fileID: 5349976193805205136}
-  safeAccess: 0
   doorMoveX: 5
   doorMoveY: 0
   doorMoveZ: 0
@@ -1214,6 +1213,10 @@ PrefabInstance:
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8207048374594539710, guid: 592efec31c9e05a4ebf44733afc1db4d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8813277214360799151, guid: 592efec31c9e05a4ebf44733afc1db4d, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
@@ -1521,6 +1524,14 @@ PrefabInstance:
     - target: {fileID: 6367554060929241843, guid: bbd8250f9e4ef3149bf54a612c6665bb, type: 3}
       propertyPath: m_Name
       value: Support Beam (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6367554060929241843, guid: bbd8250f9e4ef3149bf54a612c6665bb, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6367554060929241843, guid: bbd8250f9e4ef3149bf54a612c6665bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2340,6 +2351,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Support Beam (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6367554060929241843, guid: bbd8250f9e4ef3149bf54a612c6665bb, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6367554060929241843, guid: bbd8250f9e4ef3149bf54a612c6665bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2511,6 +2530,10 @@ PrefabInstance:
     - target: {fileID: 7643544004349150191, guid: 592efec31c9e05a4ebf44733afc1db4d, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8207048374594539710, guid: 592efec31c9e05a4ebf44733afc1db4d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8813277214360799151, guid: 592efec31c9e05a4ebf44733afc1db4d, type: 3}
       propertyPath: m_NavMeshLayer
@@ -2832,6 +2855,10 @@ PrefabInstance:
       propertyPath: m_NavMeshLayer
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8207048374594539710, guid: 592efec31c9e05a4ebf44733afc1db4d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8813277214360799151, guid: 592efec31c9e05a4ebf44733afc1db4d, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
@@ -2984,6 +3011,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Support Beam
       objectReference: {fileID: 0}
+    - target: {fileID: 6367554060929241843, guid: bbd8250f9e4ef3149bf54a612c6665bb, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6367554060929241843, guid: bbd8250f9e4ef3149bf54a612c6665bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3005,6 +3040,10 @@ PrefabInstance:
     - target: {fileID: 3065103931617503154, guid: f93d34f5a31a8b44d83c24589729fd8b, type: 3}
       propertyPath: m_Name
       value: Rack
+      objectReference: {fileID: 0}
+    - target: {fileID: 3065103931617503154, guid: f93d34f5a31a8b44d83c24589729fd8b, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5437720247357015679, guid: f93d34f5a31a8b44d83c24589729fd8b, type: 3}
       propertyPath: m_LocalScale.x
@@ -4117,6 +4156,10 @@ PrefabInstance:
     - target: {fileID: 7643544004349150191, guid: 592efec31c9e05a4ebf44733afc1db4d, type: 3}
       propertyPath: m_NavMeshLayer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8207048374594539710, guid: 592efec31c9e05a4ebf44733afc1db4d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8813277214360799151, guid: 592efec31c9e05a4ebf44733afc1db4d, type: 3}
       propertyPath: m_NavMeshLayer
