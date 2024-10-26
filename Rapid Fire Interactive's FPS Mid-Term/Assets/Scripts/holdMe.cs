@@ -7,6 +7,8 @@ public class holdMe : MonoBehaviour
     public static holdMe instance;
     [SerializeField] List<GameObject> iDs;
     [SerializeField] List<GameObject> pwrItems;
+    [SerializeField] GameObject terminalMainMenu;
+    [SerializeField] GameObject terminalUpgradeMenu;
 
     private void Awake()
     {
@@ -21,4 +23,7 @@ public class holdMe : MonoBehaviour
         return pwrItems;
     }
     
+
+    public GameObject getTerminalMainMenu() { return terminalMainMenu; }
+    public GameObject getTerminalUpgradeMenu() { return terminalUpgradeMenu; }
 }

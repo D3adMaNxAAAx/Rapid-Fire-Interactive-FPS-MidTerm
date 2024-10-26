@@ -15,8 +15,10 @@ public class terminals : MonoBehaviour
     bool isOn; // if terminal can be accessed at all
 
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
+        terminal = holdMe.instance.getTerminalMainMenu();
+        terminalUpgrade = holdMe.instance.getTerminalUpgradeMenu();
         isOpen = false;
         isOn = false;
         terminalScreenLight.gameObject.SetActive(false);
