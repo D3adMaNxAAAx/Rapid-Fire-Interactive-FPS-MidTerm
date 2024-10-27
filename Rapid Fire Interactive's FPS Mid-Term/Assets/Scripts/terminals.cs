@@ -4,6 +4,7 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class terminals : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class terminals : MonoBehaviour
 
     bool isOpen; // if terminal menu is open
     bool isOn; // if terminal can be accessed at all
+    bool isMoved;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,7 @@ public class terminals : MonoBehaviour
         terminalUpgrade = holdMe.instance.getTerminalUpgradeMenu();
         isOpen = false;
         isOn = false;
+        isMoved = false;
         terminalScreenLight.gameObject.SetActive(false);
     }
 
@@ -46,6 +49,13 @@ public class terminals : MonoBehaviour
                     terminalUpgrade.SetActive(true);
                 }
             }
+        if (!isMoved && SceneManager.GetActiveScene() == SceneManager.GetSceneByName("MainScene"))
+        {
+            Vector3 newPos = new Vector3(75.56f, 0f, -2.11f);
+            gameObject.transform.position = newPos;
+            gameObject.transform.rotation = Quaternion.Euler(0f, -90f, 0f);
+            isMoved = true;
+        }
 
        // Keypress to close terminal
 
