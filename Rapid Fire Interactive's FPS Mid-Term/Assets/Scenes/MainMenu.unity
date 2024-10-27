@@ -1416,6 +1416,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4124231056423851555, guid: 25e0daeaf0046c94296d5dd81301349c, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 49e779580e56b4044b4a9552beefc18a, type: 3}
+    - target: {fileID: 4124231056423851555, guid: 25e0daeaf0046c94296d5dd81301349c, type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 
       objectReference: {fileID: -4653773197911716952, guid: fe51c561d32bf70408ea556628c2090c, type: 2}
@@ -1609,15 +1613,15 @@ RectTransform:
   m_GameObject: {fileID: 1091307311}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 19.209, y: 10.806669, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1351686977}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1091307313
 MonoBehaviour:
@@ -2734,6 +2738,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SFXMixerGroup: {fileID: -4653773197911716952, guid: fe51c561d32bf70408ea556628c2090c, type: 2}
+  MusicMixerGroup: {fileID: 0}
   menuMusic: {fileID: 8300000, guid: 49e779580e56b4044b4a9552beefc18a, type: 3}
   levelMusic: {fileID: 0}
   bossMusic: {fileID: 0}
@@ -2743,6 +2748,7 @@ MonoBehaviour:
   headShotA: {fileID: 0}
   itemPickupA: {fileID: 0}
   coinPickupA: {fileID: 0}
+  docPickupA: {fileID: 0}
   audEnemySteps: []
   audStepVol: 0
   audJumpVol: 0
@@ -2762,6 +2768,7 @@ MonoBehaviour:
   VictoryMusicVol: 0
   itemPickupVol: 0
   coinPickupVol: 0
+  docPickupVol: 0
   audEnemyStepVol: 0
   audHealVol: 0
   audReloadVol: 0
