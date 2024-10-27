@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class closeDoorTrigger : MonoBehaviour
 {
+    [SerializeField] safeRoom safe;
+
     private void OnTriggerExit(Collider other)
     {
-        // Check which door to close
-        if (doorControllerManual.instance != null)
+        if (other.CompareTag("Player"))
         {
-            if (doorControllerManual.instance.getDoorStatus())
-                StartCoroutine(doorControllerManual.instance.closeDoor());
-        }
+            // Check which door to close
+            if (doorControllerManual.instance != null)
+            {
+                if (doorControllerManual.instance.getDoorStatus())
+                    StartCoroutine(doorControllerManual.instance.closeDoor());
+            }
 
-        if (safeRoom.instance != null)
-        {
-            if (safeRoom.instance.getSafeState())
-                StartCoroutine(safeRoom.instance.closeDoor());
+            if (safe != null)
+            {
+                if (safe.getSafeState())
+                    StartCoroutine(safe.closeDoor());
+            }
         }
     }
 }

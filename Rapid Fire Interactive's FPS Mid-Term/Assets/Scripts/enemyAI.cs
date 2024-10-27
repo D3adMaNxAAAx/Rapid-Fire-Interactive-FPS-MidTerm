@@ -21,7 +21,8 @@ public class enemyAI : MonoBehaviour , IDamage {
     [SerializeField] GameObject coinDrop;
     [SerializeField] AudioClip hitClip;
     [SerializeField] float hitVolume = 1.0f;
-    [SerializeField] float soundCooldown = 2; //cooldown on hit sound 
+    [SerializeField] float soundCooldown = 2; //cooldown on hit sound
+    AudioSource enemyAudioSource;
 
     /// keep the commented out ammo drop comments (they say not being used rn)
     // Unused Variables
@@ -106,6 +107,8 @@ public class enemyAI : MonoBehaviour , IDamage {
             objectPool = FindObjectOfType<projectilePool>();
             projectileType = rangedAttack.GetComponent<damage>().getProjectileType();
         }
+
+        enemyAudioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -471,7 +474,8 @@ public class enemyAI : MonoBehaviour , IDamage {
         if (hitClip != null)
         {
             // Play the clip at the enemy's position
-            AudioSource.PlayClipAtPoint(hitClip, transform.position, hitVolume);
+            enemyAudioSource.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
+            enemyAudioSource.PlayOneShot(hitClip, hitVolume);
         }
     }
     private IEnumerator SoundCooldown()

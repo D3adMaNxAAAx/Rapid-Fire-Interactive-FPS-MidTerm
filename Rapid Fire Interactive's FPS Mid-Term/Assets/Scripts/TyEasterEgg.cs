@@ -14,6 +14,7 @@ public class TyEasterEgg : MonoBehaviour {
     }
 
     public static void activateEasterEgg(AudioSource location) {
+        location.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
         location.PlayOneShot(audioManager.instance.fartEgg, 1);
     }
 

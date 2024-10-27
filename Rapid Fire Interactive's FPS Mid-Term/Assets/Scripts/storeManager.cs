@@ -403,7 +403,7 @@ public class storeManager : MonoBehaviour
                 laserRifleCostText.text += " coins";
 
             // Color the cost text green/red depending on if the player can afford it
-            if (canAfford(healthCost))
+            if (canAfford(laserRifleCost))
                 laserRifleCostText.color = Color.green;
             else
                 laserRifleCostText.color = Color.red;
@@ -420,7 +420,7 @@ public class storeManager : MonoBehaviour
                 t_laserRifleCostText.text += " coins";
 
             // Color the cost text green/red depending on if the player can afford it
-            if (canAfford(healthCost))
+            if (canAfford(laserRifleCost))
                 t_laserRifleCostText.color = Color.green;
             else
                 t_laserRifleCostText.color = Color.red;
