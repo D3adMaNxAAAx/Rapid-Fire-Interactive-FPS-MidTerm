@@ -8,23 +8,32 @@ using UnityEngine;
 // Despite the name of this script, it is also the main way that the power system works! Therefore, it must be interactable!
 public class lightFlicker : MonoBehaviour, IInteractable
 {
+    // Serialized Member Fields used for particular 
     [SerializeField] bool doFlicker = false;
     [Range(1, 100)] [SerializeField] float percentFlicker;
     [SerializeField] GameObject lightSys = null;
     [SerializeField] GameObject powerSys = null;
-    Light _light; // This was previously named light which was the same name of a variable it was inheriting from.
     [SerializeField] Light[] lights = null;
-    float randNum;
-    float randFlickSpeed;
+
+    // Power Variables
+    int pwrLvl;
+
+    // Light Variables
+    Light _light; // This was previously named light which was the same name of a variable it was inheriting from.
     float lightIntensity;
     float[] lightsIntensity;
-    bool isFlickering = false;
-    bool waitBool = false;
     int lightCount;
-    int pwrLvl;
+
+    // Random # Light Variables
+    float randNum;
+    float randFlickSpeed;
+
+    // Checks
+    static bool foundPower = false;
+    bool isFlickering = false;
+    bool waitBool = false;    
     bool isOn;
     bool safeAccess;
-    static bool foundPower = false;
 
     private void Awake()
     {
@@ -95,6 +104,9 @@ public class lightFlicker : MonoBehaviour, IInteractable
             // Set pwrLvl to new pwrLvl
             pwrLvl = calcPwrLvl;
             playerStats.Stats.pwrLevel(calcPwrLvl);
+
+            // Play Audio
+            audioManager.instance.PlaySound(audioManager.instance.audPowerUp, audioManager.instance.audPowerUpVol);
 
             // Show the power popup
             StartCoroutine(flashPowerPopup());

@@ -39,6 +39,7 @@ public class audioManager : MonoBehaviour
     [SerializeField] public AudioClip audReload; // needs volume
     [SerializeField] public AudioClip audChestOpen; // needs volume
     [SerializeField] public AudioClip fartEgg;
+    [SerializeField] public AudioClip audPowerUp;
 
     [Header("-- UI Sounds --")]
     [SerializeField] public AudioClip audButtonHover;
@@ -65,6 +66,7 @@ public class audioManager : MonoBehaviour
     [Range(0, 1)] [SerializeField] public float audHealVol;
     [Range(0, 1)] [SerializeField] public float audReloadVol;
     [Range(0, 1)] [SerializeField] public float audChestOpenVol;
+    [Range(0, 1)] [SerializeField] public float audPowerUpVol;
 
     [Header("-- UI Volume --")]
     [Range(0, 1)] [SerializeField] public float audButtonHoverVol;

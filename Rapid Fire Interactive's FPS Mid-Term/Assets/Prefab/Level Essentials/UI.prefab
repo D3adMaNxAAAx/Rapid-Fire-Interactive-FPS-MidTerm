@@ -43740,7 +43740,6 @@ RectTransform:
   - {fileID: 7064482783159232616}
   - {fileID: 4981403225590696437}
   - {fileID: 5543398790645201864}
-  - {fileID: 8157852386471707556}
   - {fileID: 4653852614539569371}
   - {fileID: 3029958833125829258}
   - {fileID: 8103849498232703613}
@@ -43783,6 +43782,7 @@ RectTransform:
   - {fileID: 6435074332196379698}
   - {fileID: 2548166895912022833}
   - {fileID: 344308288893096027}
+  - {fileID: 8157852386471707556}
   - {fileID: 7828801907469495896}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -67967,6 +67967,7 @@ MonoBehaviour:
   audReload: {fileID: 8300000, guid: 5a3e828c21994d5409208aa7691845a0, type: 3}
   audChestOpen: {fileID: 8300000, guid: 8f2a2c76d2064bd418629e17a0193b00, type: 3}
   fartEgg: {fileID: 8300000, guid: bad1d9843a300d8468da771570b00cb2, type: 3}
+  audPowerUp: {fileID: 0}
   audButtonHover: {fileID: 8300000, guid: 6fb8e2414ba5b6c49adabcf9e538091b, type: 3}
   audButtonClick: {fileID: 8300000, guid: a1bf6825de593ba4494cb2eda5126c9f, type: 3}
   menuMusicVol: 0.5
@@ -67981,6 +67982,7 @@ MonoBehaviour:
   audHealVol: 0.5
   audReloadVol: 0.5
   audChestOpenVol: 0.5
+  audPowerUpVol: 0
   audButtonHoverVol: 0.5
   audButtonClickVol: 0.5
 --- !u!82 &6228370177919439127

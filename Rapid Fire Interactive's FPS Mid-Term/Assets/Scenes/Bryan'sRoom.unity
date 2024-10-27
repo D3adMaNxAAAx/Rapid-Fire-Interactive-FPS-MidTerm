@@ -365,6 +365,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 196511000}
+    - target: {fileID: 2056678339265471930, guid: 3a7a37492a1b2c04e96926d4be5220c0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2259562114335907013, guid: 3a7a37492a1b2c04e96926d4be5220c0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -565,6 +569,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5947381001247648091, guid: 3a7a37492a1b2c04e96926d4be5220c0, type: 3}
+      propertyPath: audPowerUp
+      value: 
+      objectReference: {fileID: 8300000, guid: 1a47cc997235e5c4e9c9190eb8746db4, type: 3}
+    - target: {fileID: 5947381001247648091, guid: 3a7a37492a1b2c04e96926d4be5220c0, type: 3}
+      propertyPath: audPowerUpVol
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5947381001247648091, guid: 3a7a37492a1b2c04e96926d4be5220c0, type: 3}
+      propertyPath: MusicMixerGroup
+      value: 
+      objectReference: {fileID: -4653773197911716952, guid: fe51c561d32bf70408ea556628c2090c, type: 2}
     - target: {fileID: 6367988030086973159, guid: 3a7a37492a1b2c04e96926d4be5220c0, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -3279,8 +3295,8 @@ SceneRoots:
   m_Roots:
   - {fileID: 2045237769}
   - {fileID: 835626483}
-  - {fileID: 1885756360}
   - {fileID: 316660169}
+  - {fileID: 1885756360}
   - {fileID: 1329360237}
   - {fileID: 501046823}
   - {fileID: 1103138048}
