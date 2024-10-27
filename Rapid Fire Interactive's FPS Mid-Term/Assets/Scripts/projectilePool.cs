@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 [System.Serializable]
@@ -19,7 +20,18 @@ public class ObjectPool { // first class
 
 public class projectilePool : MonoBehaviour { // second class
 
+    public static projectilePool thePool; // singleton
     public ObjectPool[] objectPoolsArray; // array of each object's pool, projectiles are manually added (dragged into inspector) in unity (13 of them)
+
+    void Awake() {
+        if (thePool == null) {
+            DontDestroyOnLoad(gameObject); // this script will stay between scenes
+            thePool = this;
+        }
+        else if (thePool != null) {
+            Destroy(this.gameObject);
+        }
+    }
 
     void Start() {
         foreach (ObjectPool tempObjectPool in objectPoolsArray) { // 13

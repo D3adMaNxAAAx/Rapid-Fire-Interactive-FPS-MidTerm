@@ -30,6 +30,9 @@ public class buttonFunctions : MonoBehaviour {
         if (uiManager.manager != null)
             Destroy(uiManager.manager.gameObject);
 
+        if (projectilePool.thePool != null)
+            Destroy(projectilePool.thePool.gameObject);
+
         if (playerMovement.player != null)
             Destroy(playerMovement.player.gameObject);
 
