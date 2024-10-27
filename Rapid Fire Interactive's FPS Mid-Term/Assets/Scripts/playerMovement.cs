@@ -933,8 +933,8 @@ public class playerMovement : MonoBehaviour, IDamage
             else
             {
                 controller.height = normalHeight;  
-                controller.center = new Vector3(0, normalHeight / 6, 0);
-                playerCamera.localPosition = new Vector3(0, normalHeight * 0.75f, 0); ;  // Reset camera position
+                controller.center = new Vector3(0, 0, 0);
+                playerCamera.localPosition = new Vector3(0, normalHeight, 0); ;  // Reset camera position
                speed = speedOrig;  // Restore original speed
             }
         }

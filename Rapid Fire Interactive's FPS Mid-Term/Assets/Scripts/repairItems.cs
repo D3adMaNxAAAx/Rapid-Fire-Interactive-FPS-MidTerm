@@ -60,8 +60,11 @@ public class repairItems : MonoBehaviour, IInteractable
 
     private void OnTriggerExit(Collider other)
     {
-        if (gameManager.instance.getInteractUI().activeInHierarchy)
-            gameManager.instance.getInteractUI().SetActive(false);
+        if (gameManager.instance != null)
+        {
+            if (gameManager.instance.getInteractUI().activeInHierarchy)
+                gameManager.instance.getInteractUI().SetActive(false);
+        }
     }
 
     IEnumerator hideFeedback()
