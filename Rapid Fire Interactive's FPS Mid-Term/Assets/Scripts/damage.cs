@@ -70,10 +70,13 @@ public class damage : MonoBehaviour {
             }
         }
         if (type == damageType.missle) {
-            Vector3 direction = missleTarget.position - rb.position;
-            Vector3 rotation = Vector3.Cross(transform.forward, direction);
-            rb.angularVelocity = (Vector3.Cross(transform.forward, missleTarget.position - rb.position)) * missleRotationSpeed; // changing where missle is going as the target moves
-            rb.velocity = transform.forward * attackSpeed; // keeping bullet speed constant
+            if (playerMovement.player != null)
+            {
+                Vector3 direction = missleTarget.position - rb.position;
+                Vector3 rotation = Vector3.Cross(transform.forward, direction);
+                rb.angularVelocity = (Vector3.Cross(transform.forward, missleTarget.position - rb.position)) * missleRotationSpeed; // changing where missle is going as the target moves
+                rb.velocity = transform.forward * attackSpeed; // keeping bullet speed constant
+            }
         }
     }
 
