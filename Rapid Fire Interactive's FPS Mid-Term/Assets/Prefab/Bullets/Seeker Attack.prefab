@@ -52,9 +52,11 @@ MonoBehaviour:
   projectileType: 12
   rb: {fileID: 480077600912443003}
   missleTarget: {fileID: 0}
-  missleRotationSpeed: 20
+  missleRotationSpeed: 1
   damageAmount: 1
   attackSpeed: 10
+  burnEffectDuration: 0
+  burnEffectDamage: 0
 --- !u!135 &8796806919602617418
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -74,7 +76,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.2
+  m_Radius: 0.1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!96 &2482374105805426821
 TrailRenderer:
@@ -122,7 +124,7 @@ TrailRenderer:
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.05
+    widthMultiplier: 0.25
     widthCurve:
       serializedVersion: 2
       m_Curve:

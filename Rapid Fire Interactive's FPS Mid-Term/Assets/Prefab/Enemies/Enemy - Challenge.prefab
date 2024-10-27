@@ -2079,16 +2079,16 @@ MonoBehaviour:
   miniBossheadCollider: {fileID: 0}
   enemyHeadCollider: {fileID: 8907678264042682335}
   viewAngle: 90
-  roamDist: 8
+  roamDist: 4
   roamSpeed: 4
-  roamTimer: 3
+  roamTimer: 2
   HP: 13
   faceTargetSpeed: 6
   dropXP: 10
   coinsHeld: 8
   rangedAttack: {fileID: 1026084026005163015, guid: 9cf944e79bfcf2d4a86117ea6e5ed04e, type: 3}
   meleeCol: {fileID: 0}
-  range: 25
+  range: 15
   shootRate: 0.8
   damageFlashTimer: 0.5
   projectileType: 10
@@ -2123,7 +2123,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 8
+  m_Speed: 6
   m_Acceleration: 32
   avoidancePriority: 50
   m_AngularSpeed: 300

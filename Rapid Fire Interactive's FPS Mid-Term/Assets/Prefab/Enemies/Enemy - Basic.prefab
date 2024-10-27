@@ -2137,10 +2137,10 @@ MonoBehaviour:
   soundCooldown: 2
   miniBossheadCollider: {fileID: 0}
   enemyHeadCollider: {fileID: 8848041171568096009}
-  viewAngle: 90
-  roamDist: 6
-  roamSpeed: 3
-  roamTimer: 2
+  viewAngle: 75
+  roamDist: 10
+  roamSpeed: 2
+  roamTimer: 4
   HP: 7
   faceTargetSpeed: 4
   dropXP: 1
@@ -2148,7 +2148,7 @@ MonoBehaviour:
   rangedAttack: {fileID: 1026084026005163015, guid: 17def77748eb48e4fbb847c6e03563f6, type: 3}
   meleeCol: {fileID: 0}
   range: 15
-  shootRate: 0.6
+  shootRate: 0.5
   damageFlashTimer: 0.5
   projectileType: 8
 --- !u!95 &3732205276819310901

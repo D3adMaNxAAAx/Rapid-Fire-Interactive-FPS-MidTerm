@@ -91,9 +91,10 @@ public class damage : MonoBehaviour {
         // if it is an object that takes damage we apply damage
         if (dmgObject != null)
         {
-            // if object can take damage apply damage amount 
             dmgObject.takeDamage(damageAmount);
-
+            if (projectileType == ObjectType.MassiveDreadShot) { // applying burn to Demon Golem Ranged attacks
+                /// apply fire
+            }
         }
 
         // if it isnt an object that takes damage and damageType was ranged, destroy damage inflicting object
@@ -145,7 +146,6 @@ public class damage : MonoBehaviour {
     private IEnumerator ApplyBurnEffect(IDamage target)
     {
         if (target == null) yield break;
-
         float elapsed = 0;
         uiManager = FindObjectOfType<StatusEffectUIManager>();
 
@@ -153,14 +153,12 @@ public class damage : MonoBehaviour {
         {
             uiManager.ShowBurningEffect(); // Show burn effect in UI
         }
-
         while (elapsed < burnEffectDuration)
         {
             target.takeDamage(burnEffectDamage);
             elapsed += 1f;
             yield return new WaitForSeconds(1f); // Apply burn damage every second
         }
-
         if (uiManager != null)
         {
             uiManager.HideBurningEffect(); // Hide burn effect after duration

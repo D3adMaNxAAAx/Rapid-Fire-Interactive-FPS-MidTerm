@@ -672,9 +672,9 @@ MonoBehaviour:
   soundCooldown: 2
   miniBossheadCollider: {fileID: 0}
   enemyHeadCollider: {fileID: 0}
-  viewAngle: 90
-  roamDist: 1
-  roamSpeed: 0
+  viewAngle: 105
+  roamDist: 4
+  roamSpeed: 2
   roamTimer: 6
   HP: 100
   faceTargetSpeed: 4
@@ -696,7 +696,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 3
+  m_Speed: 4
   m_Acceleration: 32
   avoidancePriority: 50
   m_AngularSpeed: 300
@@ -748,7 +748,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 25
+  m_Radius: 40
   m_Center: {x: 0, y: 3, z: 0}
 --- !u!65 &4607750887814964690
 BoxCollider:

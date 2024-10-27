@@ -483,17 +483,17 @@ MonoBehaviour:
   miniBossheadCollider: {fileID: 0}
   enemyHeadCollider: {fileID: 8837416346018604893}
   viewAngle: 90
-  roamDist: 10
-  roamSpeed: 3
-  roamTimer: 3
+  roamDist: 6
+  roamSpeed: 1
+  roamTimer: 5
   HP: 14
-  faceTargetSpeed: 5
+  faceTargetSpeed: 6
   dropXP: 7
   coinsHeld: 4
   rangedAttack: {fileID: 0}
   meleeCol: {fileID: 3783255110361844638}
   range: 0
-  shootRate: 1
+  shootRate: 1.5
   damageFlashTimer: 0.5
   projectileType: 0
 --- !u!95 &7549303394707905848
@@ -506,7 +506,7 @@ Animator:
   m_GameObject: {fileID: 1976139769632855763}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 27c70984b9f4990489d83faa91f41371, type: 3}
-  m_Controller: {fileID: 9100000, guid: bd7c17847d3a9ec4683a7d2da14ad4ff, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0fc1a8d145139784e88c2fdc32b2070f, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -527,7 +527,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 4
+  m_Speed: 3
   m_Acceleration: 32
   avoidancePriority: 50
   m_AngularSpeed: 250
@@ -558,7 +558,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 5
+  m_Radius: 12.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &8837416346018604893
 CapsuleCollider:

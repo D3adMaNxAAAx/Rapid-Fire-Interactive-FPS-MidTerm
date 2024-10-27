@@ -52,10 +52,11 @@ MonoBehaviour:
   projectileType: 10
   rb: {fileID: 480077600912443003}
   missleTarget: {fileID: 0}
-  missleRotationSpeed: 10
-  damageAmount: 5
-  attackSpeed: 12.5
-  destroyTime: 4
+  missleRotationSpeed: 2
+  damageAmount: 3
+  attackSpeed: 15
+  burnEffectDuration: 0
+  burnEffectDamage: 0
 --- !u!135 &8796806919602617418
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -123,7 +124,7 @@ TrailRenderer:
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1
+    widthMultiplier: 0.5
     widthCurve:
       serializedVersion: 2
       m_Curve:
