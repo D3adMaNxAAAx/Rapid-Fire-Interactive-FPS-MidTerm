@@ -17,7 +17,7 @@ public class terminals : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(gameObject.CompareTag("Do Not Destroy"))
         DontDestroyOnLoad(gameObject);
         terminal = holdMe.instance.getTerminalMainMenu();
         terminalUpgrade = holdMe.instance.getTerminalUpgradeMenu();
