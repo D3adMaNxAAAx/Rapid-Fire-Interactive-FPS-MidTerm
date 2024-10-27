@@ -137,7 +137,7 @@ public class damage : MonoBehaviour {
                 {
                     uiManager.HideBurningEffect();
                 }
-                StartCoroutine(ApplyBurnEffect(otherObject.GetComponent<IDamage>()));
+                //StartCoroutine(ApplyBurnEffect(otherObject.GetComponent<IDamage>()));
             }
         }
     
@@ -145,6 +145,7 @@ public class damage : MonoBehaviour {
 
     private IEnumerator ApplyBurnEffect(IDamage target)
     {
+       
         if (target == null) yield break;
         float elapsed = 0;
         uiManager = FindObjectOfType<StatusEffectUIManager>();
@@ -163,5 +164,7 @@ public class damage : MonoBehaviour {
         {
             uiManager.HideBurningEffect(); // Hide burn effect after duration
         }
+
+
     }
 }
