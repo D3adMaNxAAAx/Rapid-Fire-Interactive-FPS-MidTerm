@@ -6,6 +6,7 @@ public abstract class StatusEffects : MonoBehaviour
 {
     public float duration;  // How long the effect lasts
     protected float timer;  // Tracks time since the effect was applied
+    public Coroutine statusCoroutine;
 
     // Abstract method: must be implemented by derived classes
     public abstract void ApplyEffect(GameObject target);
@@ -51,57 +52,57 @@ public class SlownessEffect : StatusEffects
     }
 
     public class BurningEffect : StatusEffects
-{
-    public float damagePerSecond = 5f;
-    public float playerDamageMultiplier = 0.5f;
-    private StatusEffectUIManager uiManager;
-
-    private void Start()
     {
-        // Find the StatusEffectUIManager in the scene
-        uiManager = FindObjectOfType<StatusEffectUIManager>();
-        if (uiManager != null)
+        public float damagePerSecond = 5f;
+        public float playerDamageMultiplier = 0.5f;
+        private StatusEffectUIManager uiManager;
+
+        private void Start()
         {
-            uiManager.ShowBurningEffect();  // Show burning icon when the effect starts
-        }
-    }
-
-    public override void ApplyEffect(GameObject target)
-    {
-        StartCoroutine(InflictBurn(target));
-    }
-
-    private IEnumerator InflictBurn(GameObject target)
-    {
-        while (timer < duration)
-        {
-            if (target.TryGetComponent(out IDamage damageable))
+            // Find the StatusEffectUIManager in the scene
+            uiManager = FindObjectOfType<StatusEffectUIManager>();
+            if (uiManager != null)
             {
-                float actualDamage = damagePerSecond;
+                uiManager.ShowBurningEffect();  // Show burning icon when the effect starts
+            }
+        }
 
-                if (target.CompareTag("Player"))
+        public override void ApplyEffect(GameObject target)
+        {
+            statusCoroutine = StartCoroutine(InflictBurn(target));
+        }
+
+        private IEnumerator InflictBurn(GameObject target)
+        {
+            while (timer < duration)
+            {
+                if (target.TryGetComponent(out IDamage damageable))
                 {
-                    actualDamage *= playerDamageMultiplier;  // Reduce damage for player
+                    float actualDamage = damagePerSecond;
+
+                    if (target.CompareTag("Player"))
+                    {
+                        actualDamage *= playerDamageMultiplier;  // Reduce damage for player
+                    }
+
+                    damageable.takeDamage(actualDamage);
                 }
 
-                damageable.takeDamage(actualDamage);
+                yield return new WaitForSeconds(1f);  // Inflict damage every second
+                timer += 1f;  // Increment the timer properly
             }
-
-            yield return new WaitForSeconds(1f);  // Inflict damage every second
-            timer += 1f;  // Increment the timer properly
+            EndEffect();  // Ensure the effect ends after the loop
         }
-        EndEffect();  // Ensure the effect ends after the loop
-    }
-    public override void EndEffect()
-    {
-        // Hide the burning icon when the effect ends
-        if (uiManager != null)
+        public override void EndEffect()
         {
-            uiManager.HideBurningEffect();
+            // Hide the burning icon when the effect ends
+            if (uiManager != null)
+            {
+                uiManager.HideBurningEffect();
+            }
+            base.EndEffect();
         }
-        base.EndEffect();
     }
-}
 
 public class ToxicEffect : StatusEffects
     {
@@ -109,7 +110,7 @@ public class ToxicEffect : StatusEffects
 
         public override void ApplyEffect(GameObject target)
         {
-            StartCoroutine(InflictToxicDamage(target));
+            statusCoroutine = StartCoroutine(InflictToxicDamage(target));
         }
 
         private IEnumerator InflictToxicDamage(GameObject target)
@@ -126,49 +127,49 @@ public class ToxicEffect : StatusEffects
     }
 
    public class BleedingEffect : StatusEffects
-{
-    public float damagePerTick = 3f;
-    private StatusEffectUIManager uiManager;
+   {
+        public float damagePerTick = 3f;
+        private StatusEffectUIManager uiManager;
 
-    private void Start()
-    {
-        // Find the StatusEffectUIManager in the scene
-        uiManager = FindObjectOfType<StatusEffectUIManager>();
-        if (uiManager != null)
+        private void Start()
         {
-            uiManager.ShowBleedingEffect();  // Show bleeding icon when the effect starts
-        }
-    }
-
-    public override void ApplyEffect(GameObject target)
-    {
-        StartCoroutine(InflictBleed(target));
-    }
-
-
-    private IEnumerator InflictBleed(GameObject target)
-    {
-        while (timer < duration)
-        {
-            if (target.TryGetComponent(out IDamage damageable))
+            // Find the StatusEffectUIManager in the scene
+            uiManager = FindObjectOfType<StatusEffectUIManager>();
+            if (uiManager != null)
             {
-                damageable.takeDamage(damagePerTick);
+                uiManager.ShowBleedingEffect();  // Show bleeding icon when the effect starts
             }
-            yield return new WaitForSeconds(1f);
-            timer += 1f;  // Increment the timer properly
         }
 
-        EndEffect();
-    }
-
-    public override void EndEffect()
-    {
-        // Hide the bleeding icon when the effect ends
-        if (uiManager != null)
+        public override void ApplyEffect(GameObject target)
         {
-            uiManager.HideBleedingEffect();
+            statusCoroutine = StartCoroutine(InflictBleed(target));
         }
-        base.EndEffect();
-    }
-}
+
+
+        private IEnumerator InflictBleed(GameObject target)
+        {
+            while (timer < duration)
+            {
+                if (target.TryGetComponent(out IDamage damageable))
+                {
+                    damageable.takeDamage(damagePerTick);
+                }
+                yield return new WaitForSeconds(1f);
+                timer += 1f;  // Increment the timer properly
+            }
+
+            EndEffect();
+        }
+
+        public override void EndEffect()
+        {
+            // Hide the bleeding icon when the effect ends
+            if (uiManager != null)
+            {
+                uiManager.HideBleedingEffect();
+            }
+            base.EndEffect();
+        }
+   }
 

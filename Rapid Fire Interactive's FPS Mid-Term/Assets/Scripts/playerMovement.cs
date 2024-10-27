@@ -220,9 +220,10 @@ public class playerMovement : MonoBehaviour, IDamage
     private void RemoveAllStatusEffects()
     {
         StatusEffects[] effects = GetComponents<StatusEffects>();
-
+        //Debug.Log("You tried!");
         foreach (StatusEffects effect in effects)
         {
+            //StopCoroutine(effect.statusCoroutine);
             Destroy(effect);
         }
 

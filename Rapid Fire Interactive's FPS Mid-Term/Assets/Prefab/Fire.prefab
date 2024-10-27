@@ -4899,6 +4899,8 @@ MonoBehaviour:
   missleRotationSpeed: 0
   damageAmount: 0.15
   attackSpeed: 0
+  burnEffectDuration: 5
+  burnEffectDamage: 0.5
 --- !u!198 &4113042513277245302
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -9705,7 +9707,7 @@ AudioSource:
   m_GameObject: {fileID: 4244110532268685013}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -1882243743196421039, guid: fe51c561d32bf70408ea556628c2090c, type: 2}
   m_audioClip: {fileID: 8300000, guid: 447e97f44e7d0fd4eb6ddec82c319992, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
