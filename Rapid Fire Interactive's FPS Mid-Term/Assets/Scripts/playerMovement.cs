@@ -205,8 +205,7 @@ public class playerMovement : MonoBehaviour, IDamage
         // Secondary check to make sure the player can only respawn if they have lives.
         if (lives > 0) {
             controller.enabled = false;
-            transform.position = gameManager.instance.getPlayerSpawnPos().transform.position;
-            transform.rotation = gameManager.instance.getPlayerSpawnPos().transform.rotation;
+            transform.SetPositionAndRotation(gameManager.instance.getPlayerSpawnPos().transform.position, gameManager.instance.getPlayerSpawnPos().transform.rotation);
             controller.enabled = true;
             HP = HPOrig;
             lowHealth = false;
@@ -219,14 +218,13 @@ public class playerMovement : MonoBehaviour, IDamage
 
     private void RemoveAllStatusEffects()
     {
+        // effects isn't populated.
         StatusEffects[] effects = GetComponents<StatusEffects>();
-        //Debug.Log("You tried!");
+
         foreach (StatusEffects effect in effects)
         {
-            //StopCoroutine(effect.statusCoroutine);
-            Destroy(effect);
+            effect.EndEffect();
         }
-
     }
 
     // Player Movement Controls

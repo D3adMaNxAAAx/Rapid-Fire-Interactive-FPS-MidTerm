@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class StatusEffects : MonoBehaviour
@@ -23,6 +24,7 @@ public abstract class StatusEffects : MonoBehaviour
 
     public virtual void EndEffect()
     {
+        StopCoroutine(statusCoroutine);
         Destroy(this);  // Remove effect from the object
     }
 }
@@ -74,7 +76,7 @@ public class SlownessEffect : StatusEffects
 
         private IEnumerator InflictBurn(GameObject target)
         {
-            while (timer < duration)
+            while (timer < duration && gameManager.instance.getPlayerScript().getHP() != 0)
             {
                 if (target.TryGetComponent(out IDamage damageable))
                 {
@@ -149,7 +151,7 @@ public class ToxicEffect : StatusEffects
 
         private IEnumerator InflictBleed(GameObject target)
         {
-            while (timer < duration)
+            while (timer < duration && gameManager.instance.getPlayerScript().getHP() != 0)
             {
                 if (target.TryGetComponent(out IDamage damageable))
                 {
