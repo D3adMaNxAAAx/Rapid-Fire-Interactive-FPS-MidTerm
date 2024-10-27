@@ -69,10 +69,11 @@ public class playerMovement : MonoBehaviour, IDamage
 
     // --Crouching---
     [SerializeField] float normalHeight = 6.0f;
-    [SerializeField] float crouchHeight = 1.0f;
+    [SerializeField] float crouchHeight = 1f;
     //[SerializeField] float crouchSpeed = 1.0f;
    // [SerializeField] float normalSpeed = 6.0f;
     [SerializeField] Transform playerCamera;
+    bool noCrouch = false;
 
 
     //HitBox
@@ -929,22 +930,23 @@ public class playerMovement : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Crouch"))  
         {
-            isCrouching = !isCrouching;  // Toggle crouch state
 
-            if (isCrouching)
+            if (!isCrouching)
             {
+                isCrouching = true;
                 controller.height = crouchHeight;  
-                controller.center = new Vector3(0, crouchHeight / 4, 0);
-                playerCamera.localPosition = new Vector3(0, crouchHeight * 0.75f, 0);
-
+                controller.center = new Vector3(0, 0.75f, 0);
+                playerCamera.localPosition = new Vector3(0, crouchHeight, 0);
                 speed = speedOrig / 2f;  // Reduce speed while crouching
             }
-            else
+            else if (isCrouching && !noCrouch)
             {
+                isCrouching = false;
+                controller.transform.position = new Vector3(controller.transform.position.x, controller.transform.position.y + 0.75f, controller.transform.position.z);
                 controller.height = normalHeight;  
                 controller.center = new Vector3(0, 0, 0);
                 playerCamera.localPosition = new Vector3(0, normalHeight, 0); ;  // Reset camera position
-               speed = speedOrig;  // Restore original speed
+                speed = speedOrig;  // Restore original speed
             }
         }
     }
@@ -1446,5 +1448,10 @@ public class playerMovement : MonoBehaviour, IDamage
     public void setSafeAccess(bool _state)
     {
         safeAccess = _state;
+    }
+
+    public void setNoCrouch(bool _crouch)
+    {
+        noCrouch = _crouch;
     }
 }
