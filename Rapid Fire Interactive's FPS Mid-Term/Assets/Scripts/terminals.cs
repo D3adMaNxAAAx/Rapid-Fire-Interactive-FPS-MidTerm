@@ -101,6 +101,7 @@ public class terminals : MonoBehaviour
     }
     public void turnOff()
     {
+        isOn = false;
         isOpen = false;
         terminal.SetActive(false);
     }
