@@ -69,10 +69,11 @@ public class playerMovement : MonoBehaviour, IDamage
 
     // --Crouching---
     [SerializeField] float normalHeight = 6.0f;
-    [SerializeField] float crouchHeight = 1.0f;
+    [SerializeField] float crouchHeight = 1f;
     //[SerializeField] float crouchSpeed = 1.0f;
    // [SerializeField] float normalSpeed = 6.0f;
     [SerializeField] Transform playerCamera;
+    bool noCrouch = false;
 
 
     //HitBox
@@ -90,6 +91,7 @@ public class playerMovement : MonoBehaviour, IDamage
     // Player movement variables
     Vector3 moveDir;
     Vector3 playerVel;
+    Vector3 cameraNormal;
 
     // Count number of jumps
     int jumpCounter;
@@ -156,6 +158,7 @@ public class playerMovement : MonoBehaviour, IDamage
         if (gameManager.instance.getPlayerSpawnPos() != null) {
             spawnPlayer();
         }
+        cameraNormal = playerCamera.localPosition;
 
         gunInventoryManager = FindObjectOfType<GunInventoryManager>();
         objectPool = FindObjectOfType<projectilePool>();
@@ -187,7 +190,10 @@ public class playerMovement : MonoBehaviour, IDamage
             }
         }
       
-
+        if (!isCrouching)
+        {
+            StartCoroutine(handleCameraPos());
+        }
         sprint();
         // Check if sprinting -- Drain stamina as the player runs
         if (isSprinting && !isDraining)
@@ -929,24 +935,46 @@ public class playerMovement : MonoBehaviour, IDamage
     {
         if (Input.GetButtonDown("Crouch"))  
         {
-            isCrouching = !isCrouching;  // Toggle crouch state
 
-            if (isCrouching)
+            if (!isCrouching)
             {
+                isCrouching = true;
                 controller.height = crouchHeight;  
-                controller.center = new Vector3(0, crouchHeight / 4, 0);
-                playerCamera.localPosition = new Vector3(0, crouchHeight * 0.75f, 0);
-
+                controller.center = new Vector3(0, 0.75f, 0);
+                playerCamera.localPosition = new Vector3(0, crouchHeight, 0);
                 speed = speedOrig / 2f;  // Reduce speed while crouching
             }
-            else
+            else if (isCrouching)
             {
-                controller.height = normalHeight;  
-                controller.center = new Vector3(0, 0, 0);
-                playerCamera.localPosition = new Vector3(0, normalHeight, 0); ;  // Reset camera position
-               speed = speedOrig;  // Restore original speed
+                RaycastHit hit;
+                if (Physics.Raycast(controller.transform.position, controller.transform.up, out hit, 5f, ~ignoreLayer))
+                {
+                    if (hit.distance > 1.8f)
+                    {
+                        isCrouching = false;
+                        controller.transform.position = new Vector3(controller.transform.position.x, controller.transform.position.y + 0.65f, controller.transform.position.z);
+                        controller.height = normalHeight;
+                        controller.center = new Vector3(0, 0, 0);
+                        playerCamera.localPosition = new Vector3(0, normalHeight, 0); ;  // Reset camera position
+                        speed = speedOrig;  // Restore original speed 
+                    }
+                }
+                else
+                {
+                    isCrouching = false;
+                    controller.transform.position = new Vector3(controller.transform.position.x, controller.transform.position.y + 0.65f, controller.transform.position.z);
+                    controller.height = normalHeight;
+                    controller.center = new Vector3(0, 0, 0);
+                    // Reset camera position
+                    speed = speedOrig;  // Restore original speed 
+                }
             }
         }
+    }
+    IEnumerator handleCameraPos()
+    {
+        playerCamera.localPosition = Vector3.Lerp(playerCamera.localPosition, cameraNormal, 1f);
+        yield return new WaitForSeconds(0.1f);
     }
     void AdjustHitbox(float baseHeight)
     {
@@ -1446,5 +1474,10 @@ public class playerMovement : MonoBehaviour, IDamage
     public void setSafeAccess(bool _state)
     {
         safeAccess = _state;
+    }
+
+    public void setNoCrouch(bool _crouch)
+    {
+        noCrouch = _crouch;
     }
 }
