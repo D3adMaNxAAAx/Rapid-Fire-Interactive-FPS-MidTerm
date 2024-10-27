@@ -21,8 +21,7 @@ public class terminals : MonoBehaviour
     {
         if(gameObject.CompareTag("Do Not Destroy"))
         DontDestroyOnLoad(gameObject);
-        terminal = holdMe.instance.getTerminalMainMenu();
-        terminalUpgrade = holdMe.instance.getTerminalUpgradeMenu();
+       
         isOpen = false;
         isOn = false;
         isMoved = false;
