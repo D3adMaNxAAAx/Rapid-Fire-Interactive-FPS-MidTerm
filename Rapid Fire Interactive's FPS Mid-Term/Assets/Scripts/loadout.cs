@@ -101,6 +101,7 @@ public class loadout : MonoBehaviour {
             if (SceneManager.GetActiveScene().buildIndex == 1) {
                 if (Input.GetKey("s") && Input.GetKey("k") && Input.GetKey("i") && Input.GetKey("p")) { /// shortcut to level 2
                     SceneManager.LoadScene(3, LoadSceneMode.Single);
+                    projectilePool.thePool.recreatePools();
                 }
             }
         }

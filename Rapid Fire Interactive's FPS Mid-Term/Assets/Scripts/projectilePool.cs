@@ -34,6 +34,10 @@ public class projectilePool : MonoBehaviour { // second class
     }
 
     void Start() {
+        recreatePools();
+    }
+
+    public void recreatePools() {
         foreach (ObjectPool tempObjectPool in objectPoolsArray) { // 13
             tempObjectPool.objectQueue = new Queue<GameObject>();
         }

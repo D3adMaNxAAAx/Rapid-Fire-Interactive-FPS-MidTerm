@@ -161,6 +161,7 @@ public class elevator : MonoBehaviour, IInteractable
             movingScene = true;
             yield return new WaitForSeconds(3f);
             screen.loadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            projectilePool.thePool.recreatePools();
         }
     }
     IEnumerator popUIStuff()
