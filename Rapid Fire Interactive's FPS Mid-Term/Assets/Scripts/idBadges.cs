@@ -10,6 +10,7 @@ public class idBadges : MonoBehaviour, IInteractable
     [SerializeField] GameObject journalIcon;
     [SerializeField] GameObject toDestroy;
     [SerializeField] Canvas pickedUpFeedback;
+    [SerializeField] int idNum;
 
     bool isOpen;
 
@@ -34,8 +35,8 @@ public class idBadges : MonoBehaviour, IInteractable
         playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.docPickupA, audioManager.instance.docPickupVol);
         isOpen = true;
 
-        if (journalIcon != null)
-            journalIcon.SetActive(true);
+        if (holdMe.instance.getIDImages()[idNum] != null)
+            holdMe.instance.getIDImages()[idNum].SetActive(true);
 
     }
 
