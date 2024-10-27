@@ -7,8 +7,6 @@ using UnityEngine.UI;
 
 public class playerJournal :  MonoBehaviour
 {
-    
-
     [SerializeField] Canvas journal;
     
     [SerializeField] GameObject menuActive;
@@ -38,7 +36,6 @@ public class playerJournal :  MonoBehaviour
     [SerializeField] TMP_Text obj7;
     [SerializeField] TMP_Text obj8;
     
-
     [SerializeField] TMP_Text healthStat;
     [SerializeField] TMP_Text stamStat;
     [SerializeField] TMP_Text speedStat;
@@ -86,17 +83,18 @@ public class playerJournal :  MonoBehaviour
     void Update()
     {
        toggleJournal();
-        currentMoneyCounter();
-        if (_menuStats.gameObject.activeInHierarchy)
-            updateJournalStats();
-        updateObjectives();
+       currentMoneyCounter();
 
-        
+       if (_menuStats.gameObject.activeInHierarchy)
+            updateJournalStats();
+
+       updateObjectives();
     }
 
     void currentMoneyCounter() {
         currentMoney.text = gameManager.instance.getPlayerScript().getCoins().ToString("F0");
     }
+
     void updateJournalStats() {
 
         healthStat.text = gameManager.instance.getPlayerScript().getHPOrig().ToString("F0");
@@ -126,6 +124,11 @@ public class playerJournal :  MonoBehaviour
     {
         if (Input.GetButtonDown("OpenJournal") && gameManager.instance.getMenuActive() == null && !isOpen)
         {
+            if (gameManager.instance.getInteractUI().activeInHierarchy)
+            {
+                gameManager.instance.getInteractUI().SetActive(false);
+            }
+
             gameManager.instance.setMenuActive(journal.gameObject);
             openJournal();
         }
