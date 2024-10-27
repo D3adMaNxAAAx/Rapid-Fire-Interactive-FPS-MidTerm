@@ -144,6 +144,8 @@ public class gameManager : MonoBehaviour {
     int powerItems;
     float timeScaleOrig; // Tracks & stores original game time scale
     bool isPaused;
+    bool hasWon;
+    bool hasLost;
 
     // Start is called before the first frame update, awake is before start
     void Awake() {
@@ -321,6 +323,7 @@ public class gameManager : MonoBehaviour {
     }
 
     void youWin() {
+        hasWon = true;
         AudioSource audioSource = gameObject.AddComponent<AudioSource>();
         audioSource.outputAudioMixerGroup = audioManager.instance.MusicMixerGroup;
         if (menuActive != null) {
@@ -330,7 +333,6 @@ public class gameManager : MonoBehaviour {
         menuActive = menuWin; // Set Win menu as active
         menuActive.SetActive(true); // Show Win menu
         EventSystem.current.SetSelectedGameObject(winMenuFirst);
-   
     }
     public void openWinStatsMenu()
     {
@@ -365,6 +367,7 @@ public class gameManager : MonoBehaviour {
     }
 
     public void youLose() {
+        hasLost = true;
         playerMovement.player.setShieldOff();
         if (menuActive != null) {
             menuActive.SetActive(false);
@@ -651,9 +654,22 @@ public class gameManager : MonoBehaviour {
         }
         else if (menuActive == menuQuit)
         {
-            menuActive.SetActive(false);
-            menuActive = menuPause;
+            GameObject menuState;
+            // Make sure the player is returned to the correct menu
+            if (hasWon)
+            {
+                menuState = menuWin;
+            }
+            else if (hasLost)
+            {
+                menuState = menuLose;
+            }
+            else menuState = menuPause;
+
+                menuActive.SetActive(false);
+            menuActive = menuState;
             menuActive.SetActive(true);
+
         }
         else if (menuActive == menuTerminal)
         {
@@ -709,6 +725,16 @@ public class gameManager : MonoBehaviour {
             getSniperScope().SetActive(false);
             CameraMovement.state.getCam().fieldOfView = CameraMovement.state.getNormalFOV();
         }
+    }
+
+    public bool getWinState()
+    {
+        return hasWon;
+    }
+
+    public bool getLoseState()
+    {
+        return hasLost;
     }
 
     public int getEnemyCountOriginal()
@@ -778,15 +804,13 @@ public class gameManager : MonoBehaviour {
     public GameObject getAmmoUI() {
         return ammoUI; }
 
-    void setAmmoUI(GameObject _ammoUI) {
-        ammoUI = _ammoUI; }
+    void setAmmoUI(GameObject _ammoUI) { ammoUI = _ammoUI; }
 
     public GameObject getHealthWarning() { return lowHealthWarning; }
 
     public void setHealthWarning(GameObject _lowHealthWarning) { lowHealthWarning = _lowHealthWarning; }
 
-    public GameObject getSniperScope() {
-        return sniperScope; }
+    public GameObject getSniperScope() { return sniperScope; }
 
     public playerMovement getPlayerScript() { return playerScript; }
 
@@ -817,7 +841,9 @@ public class gameManager : MonoBehaviour {
     public Image getHPBar() { return HPBar; }
 
     public GameObject getShieldBar() { return shieldBar; }
+
     public Image getShieldBarImage() { return shieldBarImage; }
+
     public TMP_Text getShieldText() { return ShieldHPText; }
 
     public void setXPBar(Image newXPBar) { XPBar = newXPBar; }
@@ -825,6 +851,7 @@ public class gameManager : MonoBehaviour {
     public Image getXPBar() { return XPBar; }
 
     public TMP_Text getHealsUI() { return healsLeft; }
+
     public TMP_Text getGrenadesUI() { return grenadesLeft; }
 
     public void setBossHP(GameObject newBossHP) { bossHP = newBossHP; }
@@ -916,9 +943,10 @@ public class gameManager : MonoBehaviour {
     {
         return timeScaleOrig;
     }
+
     public GameObject getTyPopUp() { return TyEasterEggPopUp;  }
 
-        public void setPwrLvlWarning(TMP_Text _pwrLevelWarningText)
+    public void setPwrLvlWarning(TMP_Text _pwrLevelWarningText)
     {
         pwrLvlWarning = _pwrLevelWarningText;
     }
