@@ -627,6 +627,14 @@ public class playerMovement : MonoBehaviour, IDamage
             bleedingEffect.ApplyEffect(target);
         }
     }
+    public void ApplyBurningEffect() {
+        if (this.gameObject.GetComponent<BurningEffect>() == null) {
+            BurningEffect burningEffect = this.gameObject.AddComponent<BurningEffect>();
+            burningEffect.duration = 5f;  
+            burningEffect.damagePerSecond = 2f; // does half damage
+            burningEffect.ApplyEffect(this.gameObject);
+        }
+    }
     public void takeDamage(float amount, Vector3 sourcePosition)
     {
         takeDamage(amount);

@@ -93,7 +93,7 @@ public class damage : MonoBehaviour {
         {
             dmgObject.takeDamage(damageAmount);
             if (projectileType == ObjectType.MassiveDreadShot) { // applying burn to Demon Golem Ranged attacks
-                /// apply fire
+                playerMovement.player.ApplyBurningEffect();
             }
         }
 
