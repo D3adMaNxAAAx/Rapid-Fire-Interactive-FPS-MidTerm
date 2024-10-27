@@ -39,9 +39,9 @@ public class buttonFunctions : MonoBehaviour {
         if (playerStats.Stats != null)
             Destroy(playerStats.Stats.gameObject);
 
-        /*SceneManager.LoadScene(stateIndex, LoadSceneMode.Single);*/
         gameManager.instance.stateUnpause();
-        screen.loadScene(1);
+        SceneManager.LoadScene(stateIndex, LoadSceneMode.Single);
+        //screen.loadScene(1);
     }
 
     public void cancel()

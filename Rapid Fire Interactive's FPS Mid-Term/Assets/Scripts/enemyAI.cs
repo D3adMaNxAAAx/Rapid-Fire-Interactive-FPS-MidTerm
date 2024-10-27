@@ -145,7 +145,7 @@ public class enemyAI : MonoBehaviour , IDamage {
 
     bool canSeePlayer() {
         // Setting direction of where player is in relation to enemy location when within detection rang
-        playerDir = gameManager.instance.getPlayer().transform.position - headPos.position;
+        playerDir = playerMovement.player.getController().transform.position - headPos.position;
 
         //Creating an angle from our enemy forward direction to player direction in world 
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
