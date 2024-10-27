@@ -175,10 +175,11 @@ public class enemyAI : MonoBehaviour , IDamage {
                     { // when enemy is within stopping distance of player
                         faceTarget(); //face player
                     }
-                    if (!isShooting)
-                    {
-                        if (angleToPlayer <= (viewAngle / 3))
-                        { // enemies always shoots and hits you even if not fully rotated to you yet so nerfing view angle for when shooting at player
+                    if (!isShooting) {
+                        if (angleToPlayer <= (viewAngle / 3)) { // enemies always shoots and hits you even if not fully rotated to you yet so nerfing view angle for when shooting at player
+                            StartCoroutine(shoot());
+                        }
+                        else if (gameObject.CompareTag("Heavy")) {
                             StartCoroutine(shoot());
                         }
                     }
