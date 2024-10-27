@@ -116,19 +116,26 @@ public class enemyAI : MonoBehaviour , IDamage {
         anim.SetFloat("Speed", Mathf.Lerp(animSpeed, agentSpeed, Time.deltaTime * animSpeedTrans));
 
         if (!isDead) {
-            if (playerInRange) {
-                seesPlayer = canSeePlayer();
-                if (seesPlayer == false) { // can't see player
-                    if (sawPlayer) { // but did see player before
-                        StartCoroutine(turnToPlayer());
+            if (playerMovement.player != null)
+            {
+                if (playerInRange)
+                {
+                    seesPlayer = canSeePlayer();
+                    if (seesPlayer == false)
+                    { // can't see player
+                        if (sawPlayer)
+                        { // but did see player before
+                            StartCoroutine(turnToPlayer());
+                        }
+                        else if (!isRoaming && agent.remainingDistance < .05f && aCoRoutine == null)
+                            aCoRoutine = StartCoroutine(roam());
                     }
-                    else if (!isRoaming && agent.remainingDistance < .05f && aCoRoutine == null)
+                }
+                else if (!playerInRange)
+                {
+                    if (!playerInRange && agent.remainingDistance < .05f && aCoRoutine == null)
                         aCoRoutine = StartCoroutine(roam());
                 }
-            }
-            else if (!playerInRange) {
-                if (!playerInRange && agent.remainingDistance < .05f && aCoRoutine == null)
-                    aCoRoutine = StartCoroutine(roam());
             }
         }
         sawPlayer = seesPlayer;
