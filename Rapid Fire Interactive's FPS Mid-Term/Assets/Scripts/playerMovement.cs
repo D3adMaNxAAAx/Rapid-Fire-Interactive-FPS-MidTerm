@@ -223,7 +223,16 @@ public class playerMovement : MonoBehaviour, IDamage
 
         foreach (StatusEffects effect in effects)
         {
-            effect.EndEffect();
+            if (effect.statusCoroutine != null)
+            {
+                StopCoroutine(effect.statusCoroutine); 
+            }
+            effect.EndEffect(); 
+        }
+        StatusEffectUIManager uiManager = FindObjectOfType<StatusEffectUIManager>();
+        if (uiManager != null)
+        {
+            uiManager.HideBurningEffect();
         }
     }
 
