@@ -156,6 +156,9 @@ public class enemyAI : MonoBehaviour , IDamage {
     bool canSeePlayer() {
         // Setting direction of where player is in relation to enemy location when within detection rang
         playerDir = playerMovement.player.getController().transform.position - headPos.position;
+        if (gameObject.CompareTag("Elder Demon")) {
+            playerDir += new Vector3(0, 1, 0);
+        }
 
         //Creating an angle from our enemy forward direction to player direction in world 
         angleToPlayer = Vector3.Angle(playerDir, transform.forward);
@@ -179,7 +182,7 @@ public class enemyAI : MonoBehaviour , IDamage {
                         if (angleToPlayer <= (viewAngle / 3)) { // enemies always shoots and hits you even if not fully rotated to you yet so nerfing view angle for when shooting at player
                             StartCoroutine(shoot());
                         }
-                        else if (gameObject.CompareTag("Heavy")) {
+                        else if (gameObject.CompareTag("Heavy") || gameObject.CompareTag("Elder Demon")) {
                             StartCoroutine(shoot());
                         }
                     }
