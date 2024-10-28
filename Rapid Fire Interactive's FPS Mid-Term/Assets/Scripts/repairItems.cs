@@ -10,6 +10,7 @@ public class repairItems : MonoBehaviour, IInteractable
     [SerializeField] GameObject journalIcon;
     [SerializeField] GameObject toDestroy;
     [SerializeField] Canvas pickedUpFeedback;
+    [SerializeField] int idNum;
     bool isOpen;
     
     // Unused Variables
@@ -32,8 +33,8 @@ public class repairItems : MonoBehaviour, IInteractable
         gameManager.instance.setPowerItems(1);
         playerStats.Stats.objectFound();
 
-        if (journalIcon != null)
-            journalIcon.SetActive(true);
+        if (holdMe.instance.getPwrItems()[idNum] != null)
+            holdMe.instance.getPwrItems()[idNum].SetActive(true);
         gameManager.instance.getInteractUI().SetActive(false);
     }
     
