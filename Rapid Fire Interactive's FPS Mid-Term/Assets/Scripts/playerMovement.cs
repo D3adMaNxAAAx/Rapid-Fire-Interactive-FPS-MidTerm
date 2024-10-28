@@ -390,7 +390,7 @@ public class playerMovement : MonoBehaviour, IDamage
                         newProjectile.SetActive(true); // turning object on (it is set off when added to object pool)
                         playerShot.GetComponent<damage>().setCurrentPosAndRange(newProjectile.transform.position, range);
                         // setting bullet start position, update in damage will track its distance and "delete" the bullet when it goes past the distance
-
+                        aud.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
                         aud.PlayOneShot(guns[gunPos].shootSound[Random.Range(0, guns[gunPos].shootSound.Length)], guns[gunPos].audioVolume); // Play the gun's shoot sound
                     }
                     else

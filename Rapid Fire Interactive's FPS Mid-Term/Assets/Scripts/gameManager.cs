@@ -702,6 +702,11 @@ public class gameManager : MonoBehaviour {
 
     }
 
+    public void hidePopups(GameObject _triggeringObject)
+    {
+        // Method dedicated to hiding popups whenever another is triggered.
+    }
+
     public void scopeZoomIn() {
         if (menuActive == null) { // won't work if there is a menu active
             menuActive = sniperScope;
