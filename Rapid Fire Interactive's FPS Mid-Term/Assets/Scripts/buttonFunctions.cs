@@ -131,7 +131,8 @@ public class buttonFunctions : MonoBehaviour {
         Time.timeScale = gameManager.instance.getTimeScaleOrig();
 
         // Load Main Menu
-        screen.loadScene(0);
+        SceneManager.LoadScene(0, LoadSceneMode.Single);
+        //screen.loadScene(0);
     }
 
     public void invertY() {
