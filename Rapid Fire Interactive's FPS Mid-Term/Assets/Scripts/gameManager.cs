@@ -322,6 +322,12 @@ public class gameManager : MonoBehaviour {
         if (menuActive != null) {
             menuActive.SetActive(false);
         }
+
+        if (getInteractUI().activeInHierarchy)
+        {
+            getInteractUI().SetActive(false);
+        }
+
         statePause();
         menuActive = menuWin; // Set Win menu as active
         menuActive.SetActive(true); // Show Win menu
@@ -364,6 +370,10 @@ public class gameManager : MonoBehaviour {
         playerMovement.player.setShieldOff();
         if (menuActive != null) {
             menuActive.SetActive(false);
+        }
+        if (getInteractUI().activeInHierarchy)
+        {
+            getInteractUI().SetActive(false);
         }
         statePause();
         if (getPlayerScript().getLives() <= 0)

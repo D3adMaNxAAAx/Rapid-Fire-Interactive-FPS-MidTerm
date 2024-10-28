@@ -33,7 +33,7 @@ public class loadingScreen : MonoBehaviour
         }
         StartCoroutine(loadSceneAsync(index));
        
-            lightFlicker.setFoundPower(false); 
+            //lightFlicker.setFoundPower(false); 
        
     }
 
