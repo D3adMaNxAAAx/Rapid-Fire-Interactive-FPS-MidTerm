@@ -19,6 +19,7 @@ public class enemyAI : MonoBehaviour , IDamage {
     // [SerializeField] Transform dropSpawn; not being used rn
     // [SerializeField] GameObject ammoDrop; not being used rn
     [SerializeField] GameObject coinDrop;
+    [SerializeField] GameObject bloodPool;
     [SerializeField] AudioClip hitClip;
     [SerializeField] float hitVolume = 1.0f;
     [SerializeField] float soundCooldown = 2; //cooldown on hit sound
@@ -349,35 +350,26 @@ public class enemyAI : MonoBehaviour , IDamage {
             gameManager.instance.getPlayerScript().setXP(getEnemyXP()); // setXP will ADD the amount given.
             playerStats.Stats.gotXP(getEnemyXP());
             playerMovement.player.updatePlayerUI();
+            Instantiate(bloodPool, new Vector3(model.transform.position.x, 0.25f, model.transform.position.z), Quaternion.identity);
             dropEnemyCoins();
-
             StopAllCoroutines();
-
-            // Stop the NavMeshAgent's movement
             agent.isStopped = true;
             agent.velocity = Vector3.zero;
             agent.enabled = false;
-
             /*if (rngDropRate > 0) { // not being used rn
                 if (dropRNG <= rngDropRate) {
                     Instantiate<GameObject>(ammoDrop, dropSpawn.position, Quaternion.identity);
                 }
             }*/
-
-            // Disable all colliders on this enemy to prevent further hits
-            Collider[] colliders = GetComponentsInChildren<Collider>();
-            foreach (var collider in colliders)
-            {
+            Collider[] colliders = GetComponentsInChildren<Collider>(); // Disable all colliders on this enemy to prevent further hits
+            foreach (var collider in colliders) {
                 collider.enabled = false;
             }
-            
             Rigidbody rb = GetComponent<Rigidbody>();
-            if (rb != null)
-            {
+            if (rb != null) {
                 rb.isKinematic = false; // Allow physics to take control
                 rb.useGravity = true; // Ensure gravity is enabled
             }
-
             if (gameObject.CompareTag("Light") == false) {
                 this.gameObject.transform.position -= new Vector3(0, 1, 0);
                 // Trigger the death animation
@@ -389,7 +381,6 @@ public class enemyAI : MonoBehaviour , IDamage {
             else {
                 Destroy(gameObject);
             }
-            
         } /// end of death code
 
         isRoaming = false;
