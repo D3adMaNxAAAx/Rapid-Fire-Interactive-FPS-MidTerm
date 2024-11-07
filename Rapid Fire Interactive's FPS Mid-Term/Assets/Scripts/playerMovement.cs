@@ -1229,7 +1229,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 if (onDashCooldown == false && time1W - time2W < 0.2f) { // time that both key pressed need to be done within
                     for (int i = 1; i <= 4; i++) {
                         controller.Move(transform.forward * 1.5f);
-                        yield return new WaitForSeconds(0.05f);
+                        yield return new WaitForSeconds(0.025f);
                     }
                     StartCoroutine(dashCooldown()); // can't dash again for x seconds
                 }
@@ -1250,7 +1250,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 if (onDashCooldown == false && time1A - time2A < 0.2f) { // time that both key pressed need to be done within
                     for (int i = 1; i <= 4; i++) {
                         controller.Move(-transform.right * 1.5f); // negative right = left
-                        yield return new WaitForSeconds(0.05f);
+                        yield return new WaitForSeconds(0.025f);
                     }
                     StartCoroutine(dashCooldown()); // can't dash again for x seconds
                 }
@@ -1271,7 +1271,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 if (onDashCooldown == false && time1S - time2S < 0.2f) { // time that both key pressed need to be done within
                     for (int i = 1; i <= 4; i++) {
                         controller.Move(-transform.forward * 1.5f); // negative forward = backwards
-                        yield return new WaitForSeconds(0.05f);
+                        yield return new WaitForSeconds(0.025f);
                     }
                     StartCoroutine(dashCooldown()); // can't dash again for x seconds
                 }
@@ -1292,7 +1292,7 @@ public class playerMovement : MonoBehaviour, IDamage
                 if (onDashCooldown == false && time1D - time2D < 0.2f) { // time that both key pressed need to be done within
                     for (int i = 1; i <= 4; i++) {
                         controller.Move(transform.right * 1.5f);
-                        yield return new WaitForSeconds(0.05f);
+                        yield return new WaitForSeconds(0.025f);
                     }
                     StartCoroutine(dashCooldown()); // can't dash again for x seconds
                 }
