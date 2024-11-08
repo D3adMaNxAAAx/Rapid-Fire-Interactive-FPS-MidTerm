@@ -186,6 +186,15 @@ public class enemyAI : MonoBehaviour , IDamage {
                         else if (gameObject.CompareTag("Heavy") || gameObject.CompareTag("Elder Demon")) {
                             StartCoroutine(shoot());
                         }
+                        else { // when you are right up against the enemy the angle is off
+                            float distance;
+                            distance = Vector3.Distance(playerMovement.player.transform.position, transform.position);
+                            if (distance <= 2) {
+                                if (angleToPlayer <= viewAngle) {
+                                    StartCoroutine(shoot());
+                                }
+                            }
+                        }
                     }
                     //reset ai stopping dist
                     agent.stoppingDistance = stoppingDistOrig;
@@ -402,8 +411,10 @@ public class enemyAI : MonoBehaviour , IDamage {
 
         gameManager.instance.updateBossBar(gameManager.instance.getBossHPBar(), bossHP, HPOrig);
 
-        if (HP > 0)
+        if (HP > 0) {
             agent.SetDestination(gameManager.instance.getPlayer().transform.position); // makes enemys go to player
+            faceTarget();
+        }
     }
 
     private IEnumerator HandleFadeOut()
