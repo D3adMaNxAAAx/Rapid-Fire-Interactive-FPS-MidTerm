@@ -180,7 +180,7 @@ public class enemyAI : MonoBehaviour , IDamage {
                         faceTarget(); //face player
                     }
                     if (!isShooting) {
-                        if (angleToPlayer <= (viewAngle / 3)) { // enemies always shoots and hits you even if not fully rotated to you yet so nerfing view angle for when shooting at player
+                        if (angleToPlayer <= (viewAngle / 2)) { // enemies always shoots and hits you even if not fully rotated to you yet so nerfing view angle for when shooting at player
                             StartCoroutine(shoot());
                         }
                         else if (gameObject.CompareTag("Heavy") || gameObject.CompareTag("Elder Demon")) {
