@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class statsMenu : MonoBehaviour {
 
+    public static statsMenu statDisplays; // singleton, will update both lose and win?
+
     [SerializeField] TMP_Text enemiesKilled;
     [SerializeField] TMP_Text damageDealt;
     [SerializeField] TMP_Text lostDocsHeld;
@@ -21,9 +23,11 @@ public class statsMenu : MonoBehaviour {
     [SerializeField] TMP_Text upgrades;
     [SerializeField] TMP_Text shopPurchases;
 
-    // Start is called before the first frame update
-    void Start() {
+    void Awake() {
+        statDisplays = this;
+    }
 
+    public void updateStats() {
         enemiesKilled.text = playerStats.Stats.getEnemiesKilled().ToString("F0");
         damageDealt.text = playerStats.Stats.getDamageDealt().ToString("F0");
         lostDocsHeld.text = playerStats.Stats.getNotesFound().ToString("F0");
@@ -39,6 +43,6 @@ public class statsMenu : MonoBehaviour {
         compTime.text = playerStats.Stats.getTimeTaken();
         upgrades.text = playerStats.Stats.getUpgradesCount().ToString("F0");
         shopPurchases.text = playerStats.Stats.getShopPurchases().ToString("F0");
-
     }
+
 }

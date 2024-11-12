@@ -342,12 +342,7 @@ public class gameManager : MonoBehaviour {
         menuActive = menuWinStats; // Set WinStatsMenu as active
         menuActive.SetActive(true); // Show WinStatsMenu
         EventSystem.current.SetSelectedGameObject(winStatsMenuFirst); // Focus first button in WinStatsMenu
-
-        // Update stats
-        completionTime.text = playerStats.Stats.getTimeTaken();
-        enemiesKilled.text = playerStats.Stats.getEnemiesKilled().ToString();
-        deaths.text = playerStats.Stats.getDeaths().ToString();
-        playerLevel.text = playerStats.Stats.getLevel().ToString();
+        statsMenu.statDisplays.updateStats();
     }
 
     public void openLoseStatsMenu()
@@ -359,10 +354,7 @@ public class gameManager : MonoBehaviour {
         menuActive = menuLoseStats; // Set the LoseStatsMenu as the active menu
         menuActive.SetActive(true); // Show it
         EventSystem.current.SetSelectedGameObject(loseStatsMenuFirst); // Make sure first button is selected
-                                                                 
-        completionTime.text = playerStats.Stats.getTimeTaken();
-        enemiesKilled.text = playerStats.Stats.getEnemiesKilled().ToString();
-        deaths.text = playerStats.Stats.getDeaths().ToString();
+        statsMenu.statDisplays.updateStats();
     }
 
     public void youLose() {

@@ -9,7 +9,7 @@ public class playerStats : MonoBehaviour {
 
     // stats being tracked
     int enemiesKilled; 
-    int headShots; // if implemented
+    int headShots; 
     float damageDealt; 
     float damageTaken; 
     int maxLevel;
@@ -49,12 +49,12 @@ public class playerStats : MonoBehaviour {
         completionTime = "N/A";
     }
 
+    // setters (for tracking):
     public void enemyKilled() {
         enemiesKilled++;
-        gameManager.instance.updateGameGoal(-1);
-    }
+        gameManager.instance.updateGameGoal(-1); }
 
-    public void enemyHeadShot() { // needs to be implemented
+    public void enemyHeadShot() { 
         headShots++; }
 
     public void attack(float damage) {
@@ -103,7 +103,7 @@ public class playerStats : MonoBehaviour {
     public void docFound() {
         docsFound++; }
 
-    public void collectableFound() { // needs to be implemented
+    public void collectableFound() {
         collectablesFound++; }
 
     // getters (for displaying)
@@ -126,7 +126,7 @@ public class playerStats : MonoBehaviour {
     public int getBadgesFound() { return idBadgesFound; }
     public int getCollectablesFound() {
         return collectablesFound * 10; }
-    // setters
+
     public void resetOBJStats()
     {
         idBadgesFound = 0;
