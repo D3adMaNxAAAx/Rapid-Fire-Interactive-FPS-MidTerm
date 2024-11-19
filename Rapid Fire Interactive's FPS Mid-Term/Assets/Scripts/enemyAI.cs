@@ -37,6 +37,7 @@ public class enemyAI : MonoBehaviour , IDamage {
     CapsuleCollider enemyHeadColl;
 
     // -- Extra Checks --
+    bool bleedReady;
     bool canAttack = true;
     bool canPlaySound = true; // Tracks if the sound can be played
     bool isShooting; // Private Tracker For If Enemy Is Shooting 
@@ -392,28 +393,32 @@ public class enemyAI : MonoBehaviour , IDamage {
             }
         } /// end of death code
 
+        if (HP < (HPOrig / 2) && bleedReady == false) {
+            if (gameObject.CompareTag("Demon Golem") == false && gameObject.CompareTag("Elder Demon") == false) {
+                bleedReady = true;
+            }
+        }
         isRoaming = false;
-
         if (canPlaySound)
         {
             PlayHitSound();
             StartCoroutine(SoundCooldown());
         }
-       
-
         if (type == enemyType.boss) {
-            
             bossHP -= _amount;
         }
-        
         // Flash Enemy Red To Indicate Damage Taken
         StartCoroutine(flashColor());
-
         gameManager.instance.updateBossBar(gameManager.instance.getBossHPBar(), bossHP, HPOrig);
-
         if (HP > 0) {
             agent.SetDestination(gameManager.instance.getPlayer().transform.position); // makes enemys go to player
             faceTarget();
+        }
+    }
+
+    public void showBleed(Vector3 hitPoint, GameObject bloodSpew) {
+        if (bleedReady) {
+            Instantiate(bloodSpew, hitPoint, Quaternion.identity, transform);
         }
     }
 

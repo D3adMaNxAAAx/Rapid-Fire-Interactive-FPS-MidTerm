@@ -11,13 +11,15 @@ public class playerMovement : MonoBehaviour, IDamage
 
     public static playerMovement player; // singleton
 
-    // -----MODIFIABLE VARIABLES-----
     // Unity object fields
     [Header("-- Player Components --")]
     [SerializeField] CharacterController controller;
     [SerializeField] AudioSource aud; // Audio controller for the player
     [SerializeField] LayerMask ignoreLayer;
     [SerializeField] GameObject playerShot;
+    [SerializeField] GameObject bloodSpew;
+    [SerializeField] GameObject bloodSpew2;
+    [SerializeField] GameObject bleedPos;
 
     // Player modifiers
     // -- Attributes --
@@ -223,6 +225,11 @@ public class playerMovement : MonoBehaviour, IDamage
             lowHealth = false;
             gameManager.instance.getHealthWarning().SetActive(false);
             RemoveAllStatusEffects();
+            foreach (GameObject bleedObject in bleeds) { // getting rid of blood falling out of player
+                if (bleedObject != null) {
+                    Destroy(bleedObject);
+                }
+            }
             updatePlayerUI();
             CameraShake.instance.setIsNotDead(true);
         }
@@ -447,9 +454,10 @@ public class playerMovement : MonoBehaviour, IDamage
 
             if (dmg != null) {
                 if (hit.collider != hit.collider.GetComponent<enemyAI>().getMiniBossHeadCollider() && hit.collider != hit.collider.GetComponent<enemyAI>().getEnemyHeadCollider()) {
-                    dmg.takeDamage((damage * damageBuffMult)); 
+                    dmg.takeDamage((damage * damageBuffMult));
+                    hit.collider.GetComponent<enemyAI>().showBleed(hit.point, bloodSpew2); // will display blood spew if conditions are met in enemyAI
                 }
-                
+
                 else { // headshot
                     dmg.takeDamage((damage * damageBuffMult) * headShotMult);
                     aud.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;  // Ensure correct mixer group
@@ -502,51 +510,40 @@ public class playerMovement : MonoBehaviour, IDamage
         {
             int _ammo = (int)(getAmmoOrig() * (amount / 100f));
             // Check if the player's ammo reserve isn't already full
-            if (getCurGun().ammoMax < getCurGun().ammoOrig)
-            {
+            if (getCurGun().ammoMax < getCurGun().ammoOrig){
                 // Check if the ammo will go over mag size
-                if (_ammo + getCurGun().ammoCur >= getAmmoMag())
-                {
-                    // Does go over size, will be adding to reserve instead.
-                    // Check if adding to reserve will hit capacity.
-                    if (_ammo + getCurGun().ammoMax >= getAmmoOrig())
-                    {
+                if (_ammo + getCurGun().ammoCur >= getAmmoMag()){
+                    // Does go over size, will be adding to reserve instead. Check if adding to reserve will hit capacity.
+                    if (_ammo + getCurGun().ammoMax >= getAmmoOrig()){
                         // Add any remaining ammo to mag size as long as it doesn't go over mag
                         _ammo -= getAmmoOrig() - getCurGun().ammoMax;
-                        // Will hit capacity, set max to capacity.
                         getCurGun().ammoMax = getAmmoOrig();
-
-                        if (_ammo > 0)
-                        {
-                            // Check if it'll go over magazine size
-                            if (_ammo + getCurGun().ammoCur > getCurGun().ammoMag)
-                            {
+                        if (_ammo > 0){
+                            if (_ammo + getCurGun().ammoCur > getCurGun().ammoMag) {
                                 getCurGun().ammoCur = getAmmoMag();
                             }
-                            else
-                            {
-                                // It will not, so just add the leftover ammo.
+                            else {
                                 getCurGun().ammoCur += _ammo;
                             }
                         }
                     }
-                    else
-                    {
+                    else {
                         getCurGun().ammoMax += _ammo; // Will not hit capacity, so add normally.
                     }
                 }
                 else
                     getCurGun().ammoCur += _ammo; // Does not go over mag size, so just add to clip.
             }
-            else
-            {
+            else{
                 getCurGun().ammoCur = getCurGun().ammoMag; // player's reserve is full, set clip to mag size.
             }
         }
         updatePlayerUI();
     }
 
-    // Player Damage Controller
+
+    Queue<GameObject> bleeds = new Queue<GameObject>();
+
     public void takeDamage(float amount) {
         if (HP > 0) { // Further prevention from additional damage that may trigger things like lives lost multiple times or negative HP values.
             criticalHealthThreshold = 0.1f;
@@ -562,31 +559,27 @@ public class playerMovement : MonoBehaviour, IDamage
                 amount *= 0.5f;
 
                 // If the player's HP is already 1 or the damage is still lethal, let the player die
-                if (HP == 1)
-                {
+                if (HP == 1) {
                     HP = 0; // player dead
                 }
-                else if (amount >= HP)
-                {
+                else if (amount >= HP) {
                     HP = 1;  // Leave the player at 1 HP temporarily
                 }
-                else
-                {
+                else {
                     HP -= amount;
                 }
             }
             else {
-                
                 HP -= amount;
             }
             playerStats.Stats.attacked(amount);
             stopHealing = true; // STOP HEALING IF DAMAGED
-
-            if (amount >= 5) // If the damage taken exceeds 3, apply the bleeding effect
-            {
+            if (amount >= 5) { 
                 ApplyBleedingEffect(gameObject);
+                GameObject Bleed = Instantiate(bloodSpew, bleedPos.transform.position + new Vector3(0, 0.75f, 0), Quaternion.identity, bleedPos.transform); 
+                bleeds.Enqueue(Bleed); // adding to queue
+                Destroy(Bleed, 20);
             }
-
             // Play hurt sound for audio indication
             if (damageAudioReady)
             {
@@ -594,28 +587,22 @@ public class playerMovement : MonoBehaviour, IDamage
                 aud.PlayOneShot(audioManager.instance.audHurt[Random.Range(0, audioManager.instance.audHurt.Length)], audioManager.instance.audHurtVol);
                 StartCoroutine(damageAudioCooldown());
             }
-
-            // Update UI & Flash Screen red
             updatePlayerUI();
             StartCoroutine(damageFlash());
 
-            // On Player Death
-            if (HP <= 0)
-            {
+            if (HP <= 0) { // On Player Death
                 HP = 0; // set HP to 0 for no weirdness in code/visuals
                 CameraShake.instance.setIsNotDead(false);
                 if (lives > 0) { lives--; }
                 playerStats.Stats.died();
                 gameManager.instance.youLose();
             }
-            else if ((HP / HPOrig) <= .25)
-            {
+            else if ((HP / HPOrig) <= .25) {
                 lowHealth = true;
                 gameManager.instance.getHealthWarning().SetActive(true);
                 playerStats.Stats.almostDied();
             }
-            if ((HP / HPOrig) < .5)
-            {
+            if ((HP / HPOrig) < .5) {
                 StartCoroutine(noDamageTime()); // TIMER FOR WHEN PLAYER CAN START TO HEAL
             }
         }
