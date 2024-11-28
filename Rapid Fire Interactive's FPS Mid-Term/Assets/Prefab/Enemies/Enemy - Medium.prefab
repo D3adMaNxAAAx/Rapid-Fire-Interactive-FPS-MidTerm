@@ -3621,7 +3621,7 @@ MonoBehaviour:
   enemyHeadCollider: {fileID: 7936292954552834321}
   viewAngle: 90
   roamDist: 6
-  roamSpeed: 4
+  roamSpeed: 3
   roamTimer: 2
   HP: 7
   faceTargetSpeed: 4
@@ -3695,7 +3695,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 12.5
+  m_Radius: 20
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &7936292954552834321
 CapsuleCollider:

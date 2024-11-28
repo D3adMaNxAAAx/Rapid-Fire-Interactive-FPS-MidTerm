@@ -486,9 +486,9 @@ MonoBehaviour:
   enemyHeadCollider: {fileID: 334545436835023342}
   viewAngle: 90
   roamDist: 4
-  roamSpeed: 2
+  roamSpeed: 1
   roamTimer: 5
-  HP: 12
+  HP: 14
   faceTargetSpeed: 4
   dropXP: 4
   coinsHeld: 6
@@ -529,7 +529,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 3
+  m_Speed: 4
   m_Acceleration: 32
   avoidancePriority: 50
   m_AngularSpeed: 250
@@ -560,7 +560,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 17.5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &334545436835023342
 CapsuleCollider:
