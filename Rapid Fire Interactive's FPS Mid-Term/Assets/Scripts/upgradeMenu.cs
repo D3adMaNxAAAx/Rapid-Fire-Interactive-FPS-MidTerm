@@ -45,7 +45,6 @@ public class upgradeMenu : MonoBehaviour {
     float damageMod = 1;
     float speed;
     int stamina;
-    float moddedDam;
     bool terminal = false;
 
     void Start() 
@@ -65,9 +64,9 @@ public class upgradeMenu : MonoBehaviour {
         staminaRankText.text = staminaRank.ToString();
 
         // Stat Display
-        healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 10).ToString();
-        damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.2f).ToString();
-        speedUpgradeText.text = speed.ToString() + " >> " + (speed + 1).ToString();
+        healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 5).ToString();
+        damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.1f).ToString();
+        speedUpgradeText.text = speed.ToString() + " >> " + (speed + 0.5).ToString();
         staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
         playerSkillPoints.text = playerMovement.player.getSkillPoints().ToString();
         terminal = false;
@@ -86,9 +85,9 @@ public class upgradeMenu : MonoBehaviour {
         t_staminaRankText.text = staminaRank.ToString();
 
         // Stat Display
-        t_healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 10).ToString();
-        t_damageUpgradeText.text = damageMod.ToString("F2") + " >> " + (damageMod + 0.2f).ToString("F2");
-        t_speedUpgradeText.text = speed.ToString() + " >> " + (speed + 1).ToString();
+        t_healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 5).ToString();
+        t_damageUpgradeText.text = damageMod.ToString("F2") + " >> " + (damageMod + 0.1f).ToString("F2");
+        t_speedUpgradeText.text = speed.ToString() + " >> " + (speed + 0.5f).ToString();
         t_staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
         t_playerSkillPoints.text = playerMovement.player.getSkillPoints().ToString();
         terminal = true;
@@ -140,14 +139,14 @@ public class upgradeMenu : MonoBehaviour {
             
             // Health Display
             if (!terminal)
-                healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 10).ToString();
+                healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 5).ToString();
             else
-                t_healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 10).ToString();
+                t_healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 5).ToString();
 
             playerMovement.player.setHPOrig(HPOrig);
 
             // Refill players health by 10 too to accomodate the new HP.
-            playerMovement.player.setHP(playerMovement.player.getHP() + 10);
+            playerMovement.player.setHP(playerMovement.player.getHP() + 5);
 
             playerMovement.player.updatePlayerUI();
         }
@@ -165,17 +164,15 @@ public class upgradeMenu : MonoBehaviour {
             else
                 t_damageRankText.text = damageRank.ToString();
 
-            damageMod += 0.2f;
+            damageMod += 0.1f;
 
             // Damage Display
             if (!terminal)
-                damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.2f).ToString();
+                damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.1f).ToString();
             else
-                t_damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.2f).ToString();
+                t_damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.1f).ToString();
             
             playerMovement.player.setDamageMod(damageMod);
-            moddedDam = playerMovement.player.getDamage() + playerMovement.player.getDamageMod();
-            playerMovement.player.setDamage(moddedDam);
             playerMovement.player.updatePlayerUI();
         }
     }
@@ -192,13 +189,13 @@ public class upgradeMenu : MonoBehaviour {
             else
                 t_speedRankText.text = speedRank.ToString();
 
-            speed = speed + 1;
+            speed = speed + 0.5f;
 
             // Speed Display
             if (!terminal)
-                speedUpgradeText.text = speed.ToString() + " >> " + (speed + 1).ToString();
+                speedUpgradeText.text = speed.ToString() + " >> " + (speed + 0.5f).ToString();
             else
-                t_speedUpgradeText.text = speed.ToString() + " >> " + (speed + 1).ToString();
+                t_speedUpgradeText.text = speed.ToString() + " >> " + (speed + 0.5f).ToString();
 
             playerMovement.player.setSpeed(speed);
             playerMovement.player.updatePlayerUI();

@@ -895,7 +895,7 @@ public class playerMovement : MonoBehaviour, IDamage
     public void levelTracker()
     {
         // Check if player XP meets requirement to level up (XP Max)
-        if (playerXP >= playerXPMax && playerLevel < 999)
+        if (playerXP >= playerXPMax && playerLevel < 50)
         {
             playerLevel++;
             skillPoints++;
