@@ -473,7 +473,7 @@ public class playerMovement : MonoBehaviour, IDamage
                     Vector3 sourcePosition = transform.position;
 
                     // Apply knockback using the enemy's takeDamage method with the sourcePosition
-                    dmg.takeDamage(damage, sourcePosition);
+                    dmg.takeDamage(sourcePosition);
                 }
 
                 if (guns[gunPos].hitEffects != null)
@@ -628,9 +628,8 @@ public class playerMovement : MonoBehaviour, IDamage
             burningEffect.ApplyEffect(this.gameObject);
         }
     }
-    public void takeDamage(float amount, Vector3 sourcePosition)
+    public void takeDamage(Vector3 sourcePosition)
     {
-        takeDamage(amount);
         ApplyKnockback(sourcePosition);
 
     }

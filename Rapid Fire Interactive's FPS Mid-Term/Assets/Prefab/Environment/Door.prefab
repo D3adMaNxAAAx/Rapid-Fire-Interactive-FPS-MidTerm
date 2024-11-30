@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fe6847d63339b354f864815a92aca487, type: 2}
+  - {fileID: 2100000, guid: a498527214e8f2540a9263d29fc2afd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -133,7 +133,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 39.5, y: 1.5, z: 4}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.05, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6986917493545509184}
@@ -175,5 +175,5 @@ MonoBehaviour:
   aDoor: {fileID: 3819638777230581911}
   x: 0
   y: 0
-  z: 0
+  z: 3.5
   doorSpeed: 3

@@ -351,6 +351,7 @@ public class enemyAI : MonoBehaviour , IDamage {
     }
 
     public void takeDamage(float _amount) { // Calling our takeDamage method from interface class IDamage
+        Debug.Log("I GOT FUCKED");
         HP -= _amount;
         playerStats.Stats.attack(_amount);
 
@@ -453,11 +454,7 @@ public class enemyAI : MonoBehaviour , IDamage {
         }
         ApplyKnockback(sourcePosition);
     }
-    public void takeDamage(float amount, Vector3 sourcePosition)
-    {
-        // Apply basic damage logic
-        takeDamage(amount);
-
+    public void takeDamage(Vector3 sourcePosition) {
         // Apply knockback using the enemy's position
         ApplyKnockback(sourcePosition);
     }
