@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9012631987657529918}
   - component: {fileID: 6974544955875577292}
   - component: {fileID: 3452970144512717627}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Lost Doc 8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -53,6 +53,7 @@ MonoBehaviour:
   docOpened: {fileID: 0}
   closeButton: {fileID: 0}
   activeDoc: {fileID: 0}
+  playerJournalScript: {fileID: 0}
 --- !u!65 &3452970144512717627
 BoxCollider:
   m_ObjectHideFlags: 0
