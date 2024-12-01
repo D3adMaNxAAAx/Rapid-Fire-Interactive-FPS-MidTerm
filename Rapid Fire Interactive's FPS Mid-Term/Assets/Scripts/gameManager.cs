@@ -32,8 +32,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuTips;
     [SerializeField] GameObject menuControls;
     [SerializeField] GameObject menuStats;
-    [SerializeField] GameObject menuLoseStats;
-    [SerializeField] GameObject menuWinStats;
+    [SerializeField] GameObject menuEndStats;
 
     [Header("-- Quit Buttons --")]
     [SerializeField] Button[] quitButtons;
@@ -57,9 +56,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject continueMenuFirst;
     [SerializeField] GameObject loseMenuFirst;
     [SerializeField] GameObject winMenuFirst;
-    [SerializeField] GameObject statsMenuFirst;
-    [SerializeField] GameObject loseStatsMenuFirst;
-    [SerializeField] GameObject winStatsMenuFirst;
+    [SerializeField] GameObject endStatsMenuFirst;
 
     // -- Player --
     [Header("-- Player UI --")]
@@ -302,6 +299,7 @@ public class gameManager : MonoBehaviour {
     }
 
     public IEnumerator preWinMenuThings() {
+        hasWon = true;
         AudioSource audioSource = getPlayerScript().getAudioLocation();
         audioSource.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
 
@@ -318,7 +316,6 @@ public class gameManager : MonoBehaviour {
     }
 
     void youWin() {
-        hasWon = true;
         if (menuActive != null) {
             menuActive.SetActive(false);
         }
@@ -332,6 +329,10 @@ public class gameManager : MonoBehaviour {
         menuActive = menuWin; // Set Win menu as active
         menuActive.SetActive(true); // Show Win menu
         EventSystem.current.SetSelectedGameObject(winMenuFirst);
+        completionTime.text = playerStats.Stats.getTimeTaken();
+        enemiesKilled.text = playerStats.Stats.getEnemiesKilled().ToString();
+        deaths.text = playerStats.Stats.getDeaths().ToString();
+        playerLevel.text = playerStats.Stats.getLevel().ToString();
     }
     public void openWinStatsMenu()
     {
@@ -339,14 +340,10 @@ public class gameManager : MonoBehaviour {
         {
             menuActive.SetActive(false); // Close current menu
         }
-        menuActive = menuWinStats; // Set WinStatsMenu as active
+        menuActive = menuEndStats; // Set WinStatsMenu as active
         menuActive.SetActive(true); // Show WinStatsMenu
-        EventSystem.current.SetSelectedGameObject(winStatsMenuFirst); // Focus first button in WinStatsMenu
+        EventSystem.current.SetSelectedGameObject(endStatsMenuFirst); // Focus first button in WinStatsMenu
         statsMenu.statDisplays.updateStats();
-        completionTime.text = playerStats.Stats.getTimeTaken();
-        enemiesKilled.text = playerStats.Stats.getEnemiesKilled().ToString();
-        deaths.text = playerStats.Stats.getDeaths().ToString();
-        playerLevel.text = playerStats.Stats.getLevel().ToString();
     }
 
     public void openLoseStatsMenu()
@@ -355,13 +352,10 @@ public class gameManager : MonoBehaviour {
         {
             menuActive.SetActive(false); // Close the current menu
         }
-        menuActive = menuLoseStats; // Set the LoseStatsMenu as the active menu
+        menuActive = menuEndStats; // Set the LoseStatsMenu as the active menu
         menuActive.SetActive(true); // Show it
-        EventSystem.current.SetSelectedGameObject(loseStatsMenuFirst); // Make sure first button is selected
+        EventSystem.current.SetSelectedGameObject(endStatsMenuFirst); // Make sure first button is selected
         statsMenu.statDisplays.updateStats();
-        completionTime.text = playerStats.Stats.getTimeTaken();
-        enemiesKilled.text = playerStats.Stats.getEnemiesKilled().ToString();
-        deaths.text = playerStats.Stats.getDeaths().ToString();
     }
 
     public void youLose() {
@@ -385,6 +379,11 @@ public class gameManager : MonoBehaviour {
 
         // Since text is now active, update it.
         getLivesText().text = getPlayerScript().getLives().ToString();
+        
+        // not being used right now:
+        /*completionTime.text = playerStats.Stats.getTimeTaken();
+        enemiesKilled.text = playerStats.Stats.getEnemiesKilled().ToString();
+        deaths.text = playerStats.Stats.getDeaths().ToString();*/
     }
 
     // Change reticle when aiming at an enemy
@@ -494,7 +493,6 @@ public class gameManager : MonoBehaviour {
         menuActive.SetActive(false);
         menuActive = menuStats;
         menuActive.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(statsMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
     public void nextRoomContinue() {
@@ -638,14 +636,14 @@ public class gameManager : MonoBehaviour {
             menuActive = menuJournal;
             menuActive.SetActive(true);
         }
-        else if (menuActive == menuLoseStats) {
+        else if (menuActive == menuEndStats) {
             menuActive.SetActive(false);
-            menuActive = menuLose;
-            menuActive.SetActive(true);
-        }
-        else if (menuActive == menuWinStats) {
-            menuActive.SetActive(false);
-            menuActive = menuWin;
+            if (hasLost) {
+                menuActive = menuLose;
+            }
+            else if (hasWon) {
+                menuActive = menuWin;
+            }
             menuActive.SetActive(true);
         }
         else if (menuActive == menuConfirmation)
@@ -734,14 +732,15 @@ public class gameManager : MonoBehaviour {
         }
     }
 
-    public bool getWinState()
-    {
+    public bool getWinState() {
         return hasWon;
     }
 
-    public bool getLoseState()
-    {
+    public bool getLoseState() {
         return hasLost;
+    }
+    public void setLoseState(bool lose) {
+        hasLost = lose;
     }
 
     public int getEnemyCountOriginal()

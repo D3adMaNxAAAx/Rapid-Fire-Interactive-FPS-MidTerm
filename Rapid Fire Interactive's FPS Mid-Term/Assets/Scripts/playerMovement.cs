@@ -218,6 +218,7 @@ public class playerMovement : MonoBehaviour, IDamage
     public void spawnPlayer() {
         // Secondary check to make sure the player can only respawn if they have lives.
         if (lives > 0) {
+            gameManager.instance.setLoseState(false);
             controller.enabled = false;
             transform.SetPositionAndRotation(gameManager.instance.getPlayerSpawnPos().transform.position, gameManager.instance.getPlayerSpawnPos().transform.rotation);
             controller.enabled = true;
@@ -545,6 +546,9 @@ public class playerMovement : MonoBehaviour, IDamage
     Queue<GameObject> bleeds = new Queue<GameObject>();
 
     public void takeDamage(float amount) {
+        if (gameManager.instance.getWinState() == true) {
+            return;
+        }
         if (HP > 0) { // Further prevention from additional damage that may trigger things like lives lost multiple times or negative HP values.
             criticalHealthThreshold = 0.1f;
             isCriticalHealth = HP <= HPOrig * criticalHealthThreshold;

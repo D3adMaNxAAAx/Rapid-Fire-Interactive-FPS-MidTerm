@@ -25,6 +25,7 @@ public class statsMenu : MonoBehaviour {
 
     void Awake() {
         statDisplays = this;
+        this.gameObject.SetActive(false);
     }
 
     public void updateStats() {

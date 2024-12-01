@@ -351,7 +351,6 @@ public class enemyAI : MonoBehaviour , IDamage {
     }
 
     public void takeDamage(float _amount) { // Calling our takeDamage method from interface class IDamage
-        Debug.Log("I GOT FUCKED");
         HP -= _amount;
         playerStats.Stats.attack(_amount);
 
