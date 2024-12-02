@@ -2082,7 +2082,7 @@ MonoBehaviour:
   enemyHeadCollider: {fileID: 8907678264042682335}
   viewAngle: 90
   roamDist: 4
-  roamSpeed: 4
+  roamSpeed: 6
   roamTimer: 2
   HP: 13
   faceTargetSpeed: 6
@@ -2125,8 +2125,8 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 6
-  m_Acceleration: 32
+  m_Speed: 10
+  m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 300
   m_StoppingDistance: 6

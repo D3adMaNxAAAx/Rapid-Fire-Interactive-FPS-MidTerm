@@ -486,10 +486,10 @@ MonoBehaviour:
   enemyHeadCollider: {fileID: 334545436835023342}
   viewAngle: 90
   roamDist: 4
-  roamSpeed: 1
+  roamSpeed: 2
   roamTimer: 5
   HP: 14
-  faceTargetSpeed: 4
+  faceTargetSpeed: 8
   dropXP: 4
   coinsHeld: 4
   rangedAttack: {fileID: 1026084026005163015, guid: bfc4bc9247b30854abc43c3ae9da42b8, type: 3}
@@ -529,11 +529,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 4
-  m_Acceleration: 32
+  m_Speed: 6
+  m_Acceleration: 12
   avoidancePriority: 50
   m_AngularSpeed: 250
-  m_StoppingDistance: 12
+  m_StoppingDistance: 10
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
