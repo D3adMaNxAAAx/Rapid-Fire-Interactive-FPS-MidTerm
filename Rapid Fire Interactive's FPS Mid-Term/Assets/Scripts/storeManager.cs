@@ -247,7 +247,7 @@ public class storeManager : MonoBehaviour
         }
     }
 
-    void giveLaserRifle()
+    public void giveLaserRifle()
     {
         // Precautionary check to make sure the player doesn't have a full loadout.
         // Check if they have less than 5 guns

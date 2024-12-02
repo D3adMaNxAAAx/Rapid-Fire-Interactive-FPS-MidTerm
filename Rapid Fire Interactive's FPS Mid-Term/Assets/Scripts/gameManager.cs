@@ -123,6 +123,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject player; // Tracks player object
     [SerializeField] playerMovement playerScript; // Tracks playerController field
     [SerializeField] GameObject playerSpawnPos;
+    [SerializeField] AudioSource bossRoomMusic;
 
     [SerializeField] TMP_Text completionTime;
     [SerializeField] TMP_Text enemiesKilled;
@@ -293,25 +294,19 @@ public class gameManager : MonoBehaviour {
             if (enemyCount <= 0 && bossCount <= 0)
             {
                 StartCoroutine(preWinMenuThings());
-                youWin();
             }
         }
     }
 
+    AudioSource playerAudioLocation;
     public IEnumerator preWinMenuThings() {
         hasWon = true;
-        AudioSource audioSource = getPlayerScript().getAudioLocation();
-        audioSource.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
+        playerAudioLocation = getPlayerScript().getAudioLocation();
+        playerAudioLocation.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;
 
         // Play the short victory clip
-        audioSource.PlayOneShot(audioManager.instance.VictoryA, audioManager.instance.VictoryVol);
-        yield return new WaitForSeconds(audioManager.instance.VictoryA.length);
-
-        // Transition to the longer victory music
-        audioSource.PlayOneShot(audioManager.instance.VictoryMusicA, audioManager.instance.VictoryMusicVol);
-        //audioSource.loop = true; // Loop the longer music if desired
-
-        // Call win menu display
+        playerAudioLocation.PlayOneShot(audioManager.instance.VictoryA, audioManager.instance.VictoryVol);
+        yield return new WaitForSeconds(4);
         youWin();
     }
 
@@ -329,6 +324,9 @@ public class gameManager : MonoBehaviour {
         menuActive = menuWin; // Set Win menu as active
         menuActive.SetActive(true); // Show Win menu
         EventSystem.current.SetSelectedGameObject(winMenuFirst);
+        bossRoomMusic.clip = audioManager.instance.VictoryMusicA; // set in Unity at start to be boss background music
+        bossRoomMusic.volume = audioManager.instance.VictoryMusicVol;
+        bossRoomMusic.Play();
         completionTime.text = playerStats.Stats.getTimeTaken();
         enemiesKilled.text = playerStats.Stats.getEnemiesKilled().ToString();
         deaths.text = playerStats.Stats.getDeaths().ToString();
@@ -493,21 +491,6 @@ public class gameManager : MonoBehaviour {
         menuActive.SetActive(false);
         menuActive = menuStats;
         menuActive.SetActive(true);
-    }
-
-    public void nextRoomContinue() {
-
-        stateUnpause();
-        menuActive = null;
-        bossRoom.instance.startNextRoom();
-        displayBossBar(true);
-
-        // Note: There is a bug where the song will be interrupted if the player hits continue again.
-        if (gameManager.instance.getPlayerScript().getAudioLocation() != audioManager.instance.bossMusic) {
-            gameManager.instance.getPlayerScript().getAudioLocation().Stop();
-            gameManager.instance.getPlayerScript().getAudioLocation().PlayOneShot(audioManager.instance.bossMusic, audioManager.instance.bossMusicVol);
-        }
-            
     }
 
     public void openTerminal()

@@ -95,10 +95,6 @@ public class buttonFunctions : MonoBehaviour {
         gameManager.instance.openTerminalUpgradeMenu();
     }
 
-    public void continueGame() {
-        gameManager.instance.nextRoomContinue();
-    }
-
     public void storeMenu() {
         gameManager.instance.openStoreMenu();
     }
