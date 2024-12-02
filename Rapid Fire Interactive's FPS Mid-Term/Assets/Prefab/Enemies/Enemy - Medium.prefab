@@ -3585,7 +3585,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 73.6, y: 0, z: -39.646847}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2678113550608136610}
@@ -3619,7 +3619,7 @@ MonoBehaviour:
   soundCooldown: 2
   miniBossheadCollider: {fileID: 0}
   enemyHeadCollider: {fileID: 7936292954552834321}
-  viewAngle: 90
+  viewAngle: 115
   roamDist: 6
   roamSpeed: 3
   roamTimer: 2
@@ -3629,7 +3629,7 @@ MonoBehaviour:
   coinsHeld: 2
   rangedAttack: {fileID: 1026084026005163015, guid: 28f2b7d4f3f15154d85487f3e70746fa, type: 3}
   meleeCol: {fileID: 0}
-  range: 10
+  range: 8
   shootRate: 0.25
   damageFlashTimer: 0.5
   projectileType: 12
@@ -3668,7 +3668,7 @@ NavMeshAgent:
   m_Acceleration: 32
   avoidancePriority: 50
   m_AngularSpeed: 300
-  m_StoppingDistance: 4
+  m_StoppingDistance: 5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
