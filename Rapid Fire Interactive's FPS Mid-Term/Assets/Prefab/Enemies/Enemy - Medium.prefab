@@ -3568,6 +3568,7 @@ GameObject:
   - component: {fileID: 7936292954552834321}
   - component: {fileID: 4771770671721860046}
   - component: {fileID: 4285911239322052935}
+  - component: {fileID: 7255567432269830561}
   m_Layer: 0
   m_Name: Enemy - Medium
   m_TagString: Light
@@ -3622,7 +3623,7 @@ MonoBehaviour:
   viewAngle: 115
   roamDist: 6
   roamSpeed: 2
-  roamTimer: 2
+  roamTimer: 3
   HP: 7
   faceTargetSpeed: 8
   dropXP: 2
@@ -3838,6 +3839,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &7255567432269830561
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5246833290263862146}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.5, y: 1.5, z: 4.5}
+  m_Center: {x: 0, y: 0.75, z: -0.25}
 --- !u!1 &5273692185359078910
 GameObject:
   m_ObjectHideFlags: 0

@@ -52,10 +52,11 @@ public class enemyAI : MonoBehaviour , IDamage {
     [Range(1, 180)][SerializeField] int roamTimer;
 
     Vector3 startingPos;
-    bool isRoaming; // Tracks if enemy is roaming 
+    bool isRoaming; // tracks if enemy is roaming 
     float angleToPlayer;
     float stoppingDistOrig;
-    Coroutine aCoRoutine;
+    Coroutine roamCoroutine;
+    Coroutine stuckCoroutine;
     [Header("----- Stats -----")]
     // -- Attributes --
     [Range(1, 300)][SerializeField] float HP; // Health Points Tracker and Modifier Field For Designer
@@ -128,22 +129,30 @@ public class enemyAI : MonoBehaviour , IDamage {
                     seesPlayer = canSeePlayer();
                     if (seesPlayer == false)
                     { // can't see player
-                        if (sawPlayer)
-                        { // but did see player before
+                        if (sawPlayer) { // but did see player before
                             StartCoroutine(turnToPlayer());
                         }
-                        else if (!isRoaming && agent.remainingDistance < .05f && aCoRoutine == null)
-                            aCoRoutine = StartCoroutine(roam());
+                        else if (agent.remainingDistance < .5f && roamCoroutine == null) {
+                            stopRoaming();
+                            roamCoroutine = StartCoroutine(roam());
+                        }
                     }
                 }
                 else if (!playerInRange)
                 {
-                    if (!playerInRange && agent.remainingDistance < .05f && aCoRoutine == null)
-                        aCoRoutine = StartCoroutine(roam());
+                    if (agent.remainingDistance < .5f && roamCoroutine == null) {
+                        stopRoaming();
+                        roamCoroutine = StartCoroutine(roam());
+                    }
                 }
             }
         }
         sawPlayer = seesPlayer;
+        if (isRoaming) {
+            if (agent.remainingDistance <= 0.1) { // destination reached
+                stopRoaming();
+            }
+        }
     }
 
     IEnumerator turnToPlayer() { // actually going to player, rotating wasn't working
@@ -176,10 +185,7 @@ public class enemyAI : MonoBehaviour , IDamage {
                 {
                     lastSeenPlayerPosition = gameManager.instance.getPlayer().transform.position;
                     agent.SetDestination(lastSeenPlayerPosition); // makes enemys go to player
-                    if (agent.remainingDistance <= agent.stoppingDistance)
-                    { // when enemy is within stopping distance of player
-                        faceTarget(); //face player
-                    }
+                    faceTarget(); //face player
                     if (!isShooting) {
                         if (angleToPlayer <= (viewAngle / 2)) { // enemies always shoots and hits you even if not fully rotated to you yet so nerfing view angle for when shooting at player
                             StartCoroutine(shoot());
@@ -198,8 +204,7 @@ public class enemyAI : MonoBehaviour , IDamage {
                         }
                     }
                     //reset ai stopping dist
-                    agent.stoppingDistance = stoppingDistOrig;
-                    agent.speed = OGSpeed;
+                    stopRoaming();
                     return true;
                 }
             }
@@ -241,27 +246,28 @@ public class enemyAI : MonoBehaviour , IDamage {
         }
     }
 
-    //allows enemy to  roam 
     IEnumerator roam() {
-        if (!isDead)
-        {
-            isRoaming = true;
-            yield return new WaitForSeconds(roamTimer); //wait desired time 
-
-            //set agent to reach right on random spot
-            agent.stoppingDistance = 0;
+        if (!isDead) {
+            yield return new WaitForSeconds(roamTimer);
+            agent.stoppingDistance = 0; 
             agent.speed = roamSpeed;
-            Vector3 randomPos = Random.insideUnitSphere * roamDist;
+            Vector3 randomPos = Random.insideUnitSphere * roamDist; //set agent to reach right on random spot
             randomPos += startingPos; //adds random position to start position so that we can circle around the main start position
-
             NavMeshHit hit;
             NavMesh.SamplePosition(randomPos, out hit, roamDist, 1); // make sure position is valid
             agent.SetDestination(hit.position);
-
-            isRoaming = false;
-
-            aCoRoutine = null;
+            isRoaming = true;
         }
+    }
+
+    public void stopRoaming() {
+        isRoaming = false;
+        if (roamCoroutine != null) {
+            StopCoroutine(roamCoroutine);
+        }
+        roamCoroutine = null;
+        agent.stoppingDistance = stoppingDistOrig;
+        agent.speed = OGSpeed;
     }
 
 
@@ -398,7 +404,7 @@ public class enemyAI : MonoBehaviour , IDamage {
                 bleedReady = true;
             }
         }
-        isRoaming = false;
+        stopRoaming();
         if (canPlaySound)
         {
             PlayHitSound();
@@ -442,10 +448,8 @@ public class enemyAI : MonoBehaviour , IDamage {
         Destroy(gameObject);
     }
 
-    public void takeDamage(float amount, Vector3 sourcePosition, StatusEffects effect = null)
+    public void takeDamage(Vector3 sourcePosition, StatusEffects effect = null)
     {
-        takeDamage(amount); // Call the base takeDamage method
-
         if (effect != null)
         {
             ApplyStatusEffect(effect);
