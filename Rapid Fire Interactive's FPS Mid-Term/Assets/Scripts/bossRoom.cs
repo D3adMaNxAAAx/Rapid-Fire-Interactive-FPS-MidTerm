@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class bossRoom : MonoBehaviour, IInteractable
+public class bossRoom : MonoBehaviour
 {
 
     public static bossRoom instance;
@@ -58,11 +58,6 @@ public class bossRoom : MonoBehaviour, IInteractable
     {
         isOpen = true;
     }
-    
-    public void interact()
-    {
-        gameManager.instance.openContinueMenu();
-    }
 
     private void OnTriggerStay(Collider other)
     {
@@ -76,7 +71,6 @@ public class bossRoom : MonoBehaviour, IInteractable
             if (Input.GetButton("Interact"))
             {
                 gameManager.instance.getInteractUI().SetActive(false);
-                interact();
             }
         }
         else

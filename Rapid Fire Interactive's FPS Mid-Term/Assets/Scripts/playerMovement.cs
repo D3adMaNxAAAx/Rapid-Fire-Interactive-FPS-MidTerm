@@ -484,10 +484,6 @@ public class playerMovement : MonoBehaviour, IDamage
             {
                 if (gameManager.instance.getInteractUI().activeInHierarchy)
                     gameManager.instance.getInteractUI().SetActive(false);
-
-                gameManager.instance.openContinueMenu();
-
-
             }
             else if (guns[gunPos].hitEffects != null) { 
                 Instantiate(guns[gunPos].hitEffects, hit.point, Quaternion.identity);

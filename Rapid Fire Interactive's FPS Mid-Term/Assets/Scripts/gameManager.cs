@@ -16,7 +16,6 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-    [SerializeField] GameObject menuContinue;
     [SerializeField] GameObject menuConfirmation;
     [SerializeField] GameObject menuJournal;
     [SerializeField] GameObject menuQuit;
@@ -53,7 +52,6 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject terminalStoreMenuFirst;
     [SerializeField] GameObject upgradeMenuFirst;
     [SerializeField] GameObject terminalUpgradeMenuFirst;
-    [SerializeField] GameObject continueMenuFirst;
     [SerializeField] GameObject loseMenuFirst;
     [SerializeField] GameObject winMenuFirst;
     [SerializeField] GameObject endStatsMenuFirst;
@@ -94,12 +92,6 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject startFailMessage;
     [SerializeField] TMP_Text levelPopUp;
     [SerializeField] GameObject TyEasterEggPopUp;
-  
-
-    // -- Game --
-    [Header("-- Enemy UI --")]
-    [SerializeField] GameObject bossHP;
-    [SerializeField] Image bossHPBar;
 
     //[SerializeField] Image EnemiesRemainingBar;
     [SerializeField] TMP_Text EnemiesRemainingCount;
@@ -264,18 +256,6 @@ public class gameManager : MonoBehaviour {
         return Application.platform;
     }
 
-    public void updateBossBar(Image _bossHealthBar, float bossHP, float _health)
-    {
-        if (bossRoom.instance != null)
-        // Check if the player has entered the boss room
-        {
-            if (bossRoom.instance.getBossFightState())
-            {
-                _bossHealthBar.fillAmount = bossHP / _health;
-            }
-        }
-    }
-
     public void updateGameGoal(int _enemyCount, int _bossCount = 0) {
         enemyCount += _enemyCount;
 
@@ -404,9 +384,6 @@ public class gameManager : MonoBehaviour {
         displayXPTracker(state);
     }
 
-    public void displayBossBar(bool state) {
-        getBossHP().SetActive(state); }
-
     public void displayPlayerHP(bool state) {
         getHPBar().gameObject.SetActive(state);
         getHealthUI().gameObject.SetActive(state); }
@@ -476,15 +453,6 @@ public class gameManager : MonoBehaviour {
         menuActive = menuControls;
         menuActive.SetActive(true);
         EventSystem.current.SetSelectedGameObject(controlsMenuFirst); // Set eventsystem selected game object to the button assigned
-    }
-
-    public void openContinueMenu() {
-        EnemiesRemainingCount.maxVisibleWords = 0;
-        EnemiesRemainingLabel.maxVisibleWords = 0;
-        statePause();
-        menuActive = menuContinue;
-        menuActive.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(continueMenuFirst); // Set eventsystem selected game object to the button assigned
     }
 
     public void openStatsMenu() {
@@ -592,23 +560,6 @@ public class gameManager : MonoBehaviour {
             menuActive = menuOptions;
             menuActive.SetActive(true);
         }
-        else if (menuActive == menuUpgrade)
-        {
-            menuActive.SetActive(false);
-            openContinueMenu();
-        }
-        else if (menuActive == menuStore)
-        {
-            menuActive.SetActive(false);
-            menuActive = menuContinue;
-            menuActive.SetActive(true);
-        }
-        else if (menuActive == menuContinue)
-        {
-            menuActive.SetActive(false);
-            stateUnpause();
-            menuActive = null;
-        }
         else if (menuActive == menuTips) {
             menuActive.SetActive(false);
             menuActive = menuHowTo;
@@ -681,10 +632,6 @@ public class gameManager : MonoBehaviour {
         {
             EventSystem.current.SetSelectedGameObject(optionsMenuFirst); // Set eventsystem selected game object to the button assigned
         } 
-        else if (menuActive == menuContinue)
-        {
-            EventSystem.current.SetSelectedGameObject(continueMenuFirst); // Set eventsystem selected game object to the button assigned
-        }
         else if (menuActive == menuTerminal)
         {
             EventSystem.current.SetSelectedGameObject(terminalMenuFirst); // Set eventsystem selected game object to the button assigned
@@ -842,14 +789,6 @@ public class gameManager : MonoBehaviour {
     public TMP_Text getHealsUI() { return healsLeft; }
 
     public TMP_Text getGrenadesUI() { return grenadesLeft; }
-
-    public void setBossHP(GameObject newBossHP) { bossHP = newBossHP; }
-
-    public GameObject getBossHP() { return bossHP; }
-
-    public void setBossHPBar(Image newBossHPBar) { bossHPBar = newBossHPBar; }
-
-    public Image getBossHPBar() { return bossHPBar; }
 
     public void setStamBar(Image newStamBar) { stamBar = newStamBar; }
 

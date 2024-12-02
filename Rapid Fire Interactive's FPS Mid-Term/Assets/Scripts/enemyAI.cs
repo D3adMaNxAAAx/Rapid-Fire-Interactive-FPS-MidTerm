@@ -409,7 +409,6 @@ public class enemyAI : MonoBehaviour , IDamage {
         }
         // Flash Enemy Red To Indicate Damage Taken
         StartCoroutine(flashColor());
-        gameManager.instance.updateBossBar(gameManager.instance.getBossHPBar(), bossHP, HPOrig);
         if (HP > 0) {
             agent.SetDestination(gameManager.instance.getPlayer().transform.position); // makes enemys go to player
             faceTarget();
