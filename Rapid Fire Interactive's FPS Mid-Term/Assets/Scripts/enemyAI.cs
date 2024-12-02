@@ -60,7 +60,7 @@ public class enemyAI : MonoBehaviour , IDamage {
     // -- Attributes --
     [Range(1, 300)][SerializeField] float HP; // Health Points Tracker and Modifier Field For Designer
 
-    [Range(1, 30)][SerializeField] int faceTargetSpeed; // Sets enemy rotation look speed for turning towards enemy look direction
+    [Range(1, 99)][SerializeField] int faceTargetSpeed; // Sets enemy rotation look speed for turning towards enemy look direction
     [Range(1, 1000)][SerializeField] int dropXP; // How much XP enemy drops
     [SerializeField] int coinsHeld; // amount of coins the enemy drops
     // [Range(0,100)][SerializeField] int rngDropRate; not being used rn
