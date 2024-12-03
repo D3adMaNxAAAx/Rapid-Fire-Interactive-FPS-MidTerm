@@ -625,7 +625,7 @@ GameObject:
   - component: {fileID: 7259665180067259760}
   - component: {fileID: 4607750887814964690}
   - component: {fileID: 8488085976559523053}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Demon Golem
   m_TagString: Demon Golem
   m_Icon: {fileID: 0}
@@ -662,6 +662,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   model: {fileID: 6256356255385996074}
+  ignoreEnemy:
+    serializedVersion: 2
+    m_Bits: 128
   anim: {fileID: 345277249890942319}
   animSpeedTrans: 4
   agent: {fileID: 101420454915926346}
@@ -699,7 +702,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 1
   m_Speed: 10
-  m_Acceleration: 6
+  m_Acceleration: 999
   avoidancePriority: 50
   m_AngularSpeed: 300
   m_StoppingDistance: 3

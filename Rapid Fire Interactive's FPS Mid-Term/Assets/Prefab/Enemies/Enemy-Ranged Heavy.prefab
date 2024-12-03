@@ -472,6 +472,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   model: {fileID: 2259378926301633086}
+  ignoreEnemy:
+    serializedVersion: 2
+    m_Bits: 128
   anim: {fileID: 7549303394707905848}
   animSpeedTrans: 6
   agent: {fileID: 3136025754483489140}
@@ -530,7 +533,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 1
   m_Speed: 6
-  m_Acceleration: 12
+  m_Acceleration: 999
   avoidancePriority: 50
   m_AngularSpeed: 250
   m_StoppingDistance: 10

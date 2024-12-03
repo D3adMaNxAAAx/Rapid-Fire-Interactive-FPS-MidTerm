@@ -2023,7 +2023,7 @@ GameObject:
   - component: {fileID: 5022764578983191653}
   - component: {fileID: 8907678264042682335}
   - component: {fileID: 1614081153655044822}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy - Challenge
   m_TagString: Challenge
   m_Icon: {fileID: 0}
@@ -2068,6 +2068,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   model: {fileID: 4163125456152734801}
+  ignoreEnemy:
+    serializedVersion: 2
+    m_Bits: 128
   anim: {fileID: 8163225788725298743}
   animSpeedTrans: 4
   agent: {fileID: 6391621825747904839}
@@ -2126,7 +2129,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 10
-  m_Acceleration: 8
+  m_Acceleration: 999
   avoidancePriority: 50
   m_AngularSpeed: 300
   m_StoppingDistance: 6

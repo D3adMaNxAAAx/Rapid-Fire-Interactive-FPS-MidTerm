@@ -1879,7 +1879,7 @@ GameObject:
   - component: {fileID: 572825595936647740}
   - component: {fileID: 2951240880570980078}
   - component: {fileID: 7829547784159578904}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy - Boss
   m_TagString: Elder Demon
   m_Icon: {fileID: 0}
@@ -1918,6 +1918,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   model: {fileID: 8308164210745448961}
+  ignoreEnemy:
+    serializedVersion: 2
+    m_Bits: 128
   anim: {fileID: 2998945408075480632}
   animSpeedTrans: 4
   agent: {fileID: 5022875280789059963}
@@ -1932,7 +1935,7 @@ MonoBehaviour:
   enemyHeadCollider: {fileID: 2951240880570980078}
   viewAngle: 115
   roamDist: 15
-  roamSpeed: 15
+  roamSpeed: 7
   roamTimer: 1
   HP: 65
   faceTargetSpeed: 8
@@ -1974,9 +1977,9 @@ NavMeshAgent:
   m_GameObject: {fileID: 7488387531299205362}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 3
-  m_Speed: 25
-  m_Acceleration: 32
+  m_Radius: 2
+  m_Speed: 15
+  m_Acceleration: 999
   avoidancePriority: 50
   m_AngularSpeed: 300
   m_StoppingDistance: 10

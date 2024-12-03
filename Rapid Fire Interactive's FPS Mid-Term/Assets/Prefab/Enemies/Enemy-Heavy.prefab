@@ -472,6 +472,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   model: {fileID: 2259378926301633086}
+  ignoreEnemy:
+    serializedVersion: 2
+    m_Bits: 128
   anim: {fileID: 7549303394707905848}
   animSpeedTrans: 6
   agent: {fileID: 3136025754483489140}
@@ -530,10 +533,10 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 1
   m_Speed: 7.5
-  m_Acceleration: 16
+  m_Acceleration: 999
   avoidancePriority: 50
   m_AngularSpeed: 300
-  m_StoppingDistance: 2.5
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 0
   m_AutoRepath: 1
@@ -2559,6 +2562,26 @@ PrefabInstance:
     - target: {fileID: 631183435811889095, guid: d0b60e5f3af470945a6ee5b1c6791110, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1752535945524665866, guid: d0b60e5f3af470945a6ee5b1c6791110, type: 3}
+      propertyPath: m_Size.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1752535945524665866, guid: d0b60e5f3af470945a6ee5b1c6791110, type: 3}
+      propertyPath: m_Size.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1752535945524665866, guid: d0b60e5f3af470945a6ee5b1c6791110, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1752535945524665866, guid: d0b60e5f3af470945a6ee5b1c6791110, type: 3}
+      propertyPath: m_Center.y
+      value: -0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1752535945524665866, guid: d0b60e5f3af470945a6ee5b1c6791110, type: 3}
+      propertyPath: m_Center.z
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 8753220332070450323, guid: d0b60e5f3af470945a6ee5b1c6791110, type: 3}
       propertyPath: m_Name

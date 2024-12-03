@@ -11,6 +11,7 @@ public class enemyAI : MonoBehaviour , IDamage {
     [Header("----- Components -----")]
     [SerializeField] enemyType type; // Tracks which type of enemy in play
     [SerializeField] Renderer model; // Allows Designer Communication to Model's Renderer
+    [SerializeField] LayerMask ignoreEnemy;
     [SerializeField] Animator anim; //Sets animation animator controller
     [Range(1,20)][SerializeField] int animSpeedTrans;
     [SerializeField] public NavMeshAgent agent; // Allows Designer Communication To NavMeshAgent Component 
@@ -115,7 +116,7 @@ public class enemyAI : MonoBehaviour , IDamage {
     }
 
     // Update is called once per frame
-    void Update() { 
+    void Update() {
         float agentSpeed = agent.velocity.normalized.magnitude; //animation speed we go to 
         float animSpeed = anim.GetFloat("Speed"); //current animation speed
         //smoothly transitioning animation speed over time 
@@ -167,22 +168,14 @@ public class enemyAI : MonoBehaviour , IDamage {
     bool canSeePlayer() {
         // Setting direction of where player is in relation to enemy location when within detection rang
         playerDir = playerMovement.player.getController().transform.position - headPos.position;
-        if (gameObject.CompareTag("Elder Demon")) {
-            playerDir += new Vector3(0, 1, 0);
-        }
-
-        //Creating an angle from our enemy forward direction to player direction in world 
-        angleToPlayer = Vector3.Angle(playerDir, transform.forward);
-
+        angleToPlayer = Vector3.Angle(playerDir, transform.forward); //Creating an angle from our enemy forward direction to player direction in world 
+        //Debug.DrawRay(headPos.position, playerDir, Color.magenta);
         RaycastHit hit; //Tracks ray for enemy line of sight 
-
-        if (!isDead)
-        {
-            if (Physics.Raycast(headPos.position, playerDir, out hit))
-            {
-                //if ray hits player and player is within view cone
-                if (hit.collider.CompareTag("Player") && angleToPlayer <= viewAngle)
-                {
+        if (!isDead) {
+            if (Physics.Raycast(headPos.position, playerDir, out hit, 100, ~ignoreEnemy)) { //if ray hits player and player is within view cone
+                float distance;
+                distance = Vector3.Distance(playerMovement.player.transform.position, transform.position);
+                if (hit.collider.CompareTag("Player") && (angleToPlayer <= viewAngle || distance <= 1)) { // also true if player gets super close to enemy
                     lastSeenPlayerPosition = gameManager.instance.getPlayer().transform.position;
                     agent.SetDestination(lastSeenPlayerPosition); // makes enemys go to player
                     faceTarget(); //face player
@@ -194,8 +187,6 @@ public class enemyAI : MonoBehaviour , IDamage {
                             StartCoroutine(shoot());
                         }
                         else { // when you are right up against the enemy the angle is off
-                            float distance;
-                            distance = Vector3.Distance(playerMovement.player.transform.position, transform.position);
                             if (distance <= 2) {
                                 if (angleToPlayer <= viewAngle) {
                                     StartCoroutine(shoot());
@@ -203,13 +194,12 @@ public class enemyAI : MonoBehaviour , IDamage {
                             }
                         }
                     }
-                    //reset ai stopping dist
                     stopRoaming();
                     return true;
                 }
             }
         }
-        agent.stoppingDistance = 0;
+        agent.stoppingDistance = 0.5f;
         agent.speed = roamSpeed;
         return false;   
     }
@@ -225,22 +215,18 @@ public class enemyAI : MonoBehaviour , IDamage {
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
 
-    // Trigger Enter for inRange method to tell Ai seek player because he is now in range
     private void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger) 
             return;
-        // if our trigger object is a player then player is in range of enemy
         if (other.CompareTag("Player"))
             playerInRange = true;
     }
 
-    // Trigger Exit for inRange method to tell Ai seek player because he is now out range 
     private void OnTriggerExit(Collider other) {
-        // if trigger leaving range radius is tagged as player we know he left and can set player in range to false
         if (other.CompareTag("Player")) {
             playerInRange = false;
-            agent.stoppingDistance = 0;
+            agent.stoppingDistance = 0.5f;
             agent.speed = roamSpeed;
             agent.SetDestination(lastSeenPlayerPosition); // makes the enemy "chase", goes to last location player was scene if the player runs out of his range
         }
@@ -249,7 +235,7 @@ public class enemyAI : MonoBehaviour , IDamage {
     IEnumerator roam() {
         if (!isDead) {
             yield return new WaitForSeconds(roamTimer);
-            agent.stoppingDistance = 0; 
+            agent.stoppingDistance = 0.5f; 
             agent.speed = roamSpeed;
             Vector3 randomPos = Random.insideUnitSphere * roamDist; //set agent to reach right on random spot
             randomPos += startingPos; //adds random position to start position so that we can circle around the main start position
@@ -274,37 +260,35 @@ public class enemyAI : MonoBehaviour , IDamage {
     private projectilePool objectPool; // object pool class instance initialized in start I think, array of object pools
     public ObjectType projectileType; // for object pooling / recycling, ObjectType is enum in damage script, initialized in start by getting damage script and getting enum type
     bool firstShot = true;
+    Quaternion shootAtPos;
 
-    IEnumerator shoot()
-    {
-        // Set shooting to true
+    IEnumerator shoot() {
         isShooting = true;
-        if (gameObject.CompareTag("Heavy") || gameObject.CompareTag("Basic Melee"))
-        {
-            if (agent.remainingDistance <= agent.stoppingDistance + 1)
-            {
+        shootAtPos = rotation;
+        if (gameObject.CompareTag("Heavy") || gameObject.CompareTag("Basic Melee")) {
+            if (agent.remainingDistance <= agent.stoppingDistance + 1) {
                 anim.SetTrigger("Melee");
             }
         }
-
-        else if (canAttack && gameObject.CompareTag("Basic") || gameObject.CompareTag("Light") || gameObject.CompareTag("Elder Demon") || gameObject.CompareTag("Ranged Heavy") || gameObject.CompareTag("Challenge") || (gameObject.CompareTag("Demon Golem")))
-        {
+        else if (canAttack && gameObject.CompareTag("Basic") || gameObject.CompareTag("Light") || gameObject.CompareTag("Ranged Heavy") || gameObject.CompareTag("Challenge") || (gameObject.CompareTag("Demon Golem"))) {
             anim.SetTrigger("Shoot");
             // Demon Golem also has melee he does both at once
         }
-
-    
-        
+        else if (gameObject.CompareTag("Elder Demon")) {
+            anim.SetTrigger("Shoot");
+            playerDir += new Vector3(0, 1, 0);
+            shootAtPos = Quaternion.LookRotation(new Vector3(playerDir.x, playerDir.y, playerDir.z));
+        }
         if (rangedAttack != null) {
             if (firstShot) { // first shot for enemies was being weird so first shot is normal and still put in objectPool
-                Instantiate(rangedAttack, shootPos.position, rotation); // OG method
+                Instantiate(rangedAttack, shootPos.position, shootAtPos); // OG method
                 firstShot = false;
             }
             else {
                 GameObject newProjectile = objectPool.getProjectileFromPool(projectileType); // setting bullet object to newProjectile
                 // if there is a bullet in the correct pool, it sets that to newProjectile. Else it makes a new ones and sets it to newProjectile
                 newProjectile.transform.position = shootPos.position;
-                newProjectile.transform.rotation = rotation;
+                newProjectile.transform.rotation = shootAtPos;
                 newProjectile.GetComponent<Rigidbody>().velocity = (playerDir.normalized) * (rangedAttack.GetComponent<damage>().getAttackSpeed()); // accessing damage script and getting bullet speed
                 newProjectile.SetActive(true); // turning object on (it is set off when added to object pool)
                 rangedAttack.GetComponent<damage>().setCurrentPosAndRange(newProjectile.transform.position, range);

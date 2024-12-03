@@ -3569,7 +3569,7 @@ GameObject:
   - component: {fileID: 4771770671721860046}
   - component: {fileID: 4285911239322052935}
   - component: {fileID: 7255567432269830561}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy - Medium
   m_TagString: Light
   m_Icon: {fileID: 0}
@@ -3608,6 +3608,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   model: {fileID: 1883794642638482411}
+  ignoreEnemy:
+    serializedVersion: 2
+    m_Bits: 128
   anim: {fileID: 7707844220449588976}
   animSpeedTrans: 6
   agent: {fileID: 4533720889381584512}
@@ -3666,7 +3669,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 1.25
   m_Speed: 7.5
-  m_Acceleration: 6
+  m_Acceleration: 999
   avoidancePriority: 50
   m_AngularSpeed: 350
   m_StoppingDistance: 5
