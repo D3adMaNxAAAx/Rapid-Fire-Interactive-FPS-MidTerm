@@ -117,12 +117,10 @@ public class enemyAI : MonoBehaviour , IDamage {
 
     // Update is called once per frame
     void Update() {
-        float agentSpeed = agent.velocity.normalized.magnitude; //animation speed we go to 
-        float animSpeed = anim.GetFloat("Speed"); //current animation speed
-        //smoothly transitioning animation speed over time 
-        anim.SetFloat("Speed", Mathf.Lerp(animSpeed, agentSpeed, Time.deltaTime * animSpeedTrans));
-
         if (!isDead) {
+            float agentSpeed = agent.velocity.normalized.magnitude; //animation speed we go to 
+            float animSpeed = anim.GetFloat("Speed"); //current animation speed
+            anim.SetFloat("Speed", Mathf.Lerp(animSpeed, agentSpeed, Time.deltaTime * animSpeedTrans)); //smoothly transitioning animation speed over time 
             if (playerMovement.player != null)
             {
                 if (playerInRange)
@@ -139,8 +137,7 @@ public class enemyAI : MonoBehaviour , IDamage {
                         }
                     }
                 }
-                else if (!playerInRange)
-                {
+                else {
                     if (agent.remainingDistance < .5f && roamCoroutine == null) {
                         stopRoaming();
                         roamCoroutine = StartCoroutine(roam());
@@ -150,7 +147,7 @@ public class enemyAI : MonoBehaviour , IDamage {
         }
         sawPlayer = seesPlayer;
         if (isRoaming) {
-            if (agent.remainingDistance <= 0.1) { // destination reached
+            if (agent.remainingDistance <= 0.5) { // destination reached
                 stopRoaming();
             }
         }
@@ -199,7 +196,7 @@ public class enemyAI : MonoBehaviour , IDamage {
                 }
             }
         }
-        agent.stoppingDistance = 0.5f;
+        agent.stoppingDistance = 0;
         agent.speed = roamSpeed;
         return false;   
     }
@@ -226,7 +223,7 @@ public class enemyAI : MonoBehaviour , IDamage {
     private void OnTriggerExit(Collider other) {
         if (other.CompareTag("Player")) {
             playerInRange = false;
-            agent.stoppingDistance = 0.5f;
+            agent.stoppingDistance = 0;
             agent.speed = roamSpeed;
             agent.SetDestination(lastSeenPlayerPosition); // makes the enemy "chase", goes to last location player was scene if the player runs out of his range
         }
@@ -235,7 +232,7 @@ public class enemyAI : MonoBehaviour , IDamage {
     IEnumerator roam() {
         if (!isDead) {
             yield return new WaitForSeconds(roamTimer);
-            agent.stoppingDistance = 0.5f; 
+            agent.stoppingDistance = 0; 
             agent.speed = roamSpeed;
             Vector3 randomPos = Random.insideUnitSphere * roamDist; //set agent to reach right on random spot
             randomPos += startingPos; //adds random position to start position so that we can circle around the main start position

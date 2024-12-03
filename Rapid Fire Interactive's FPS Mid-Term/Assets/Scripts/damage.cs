@@ -94,7 +94,7 @@ public class damage : MonoBehaviour {
         // if it is an object that takes damage we apply damage
         if (dmgObject != null) {
             dmgObject.takeDamage(damageAmount);
-            if (type == damageType.melee) {
+            if (type == damageType.melee) { // to make sure player doesn't get hit twice
                 this.gameObject.GetComponent<BoxCollider>().enabled = false;
             }
             if (projectileType == ObjectType.MassiveDreadShot) { // applying burn to Demon Golem Ranged attacks
