@@ -116,8 +116,7 @@ public class CameraMovement : MonoBehaviour
         }
     }
 
-    void HandleLeaning()
-    {
+    void HandleLeaning() {
         float targetLeanAngle = 0f;
         Vector3 targetOffSet = OrigCameraPos; //orig camera start
 
@@ -135,6 +134,9 @@ public class CameraMovement : MonoBehaviour
             targetLeanAngle = -GetLeanAngle(); // lean right
             targetOffSet += Vector3.right * LeanOffSet; //off set camera lean right
             leanDirection = Vector3.right;
+        }
+        else {
+            return; // no peeking
         }
         RaycastHit hit;
         if (Physics.Raycast(transform.position, transform.TransformDirection(leanDirection), out hit, LeanOffSet))
