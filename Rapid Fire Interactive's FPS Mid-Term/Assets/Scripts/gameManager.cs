@@ -109,6 +109,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] TMP_Text idBadgeLvlWarning;
     [SerializeField] TMP_Text pwrLvlWarning;
     [SerializeField] TMP_Text repairWarning;
+    [SerializeField] GameObject journalTip;
 
     // -- Objects --
     [Header("-- Game Components --")]
@@ -168,48 +169,38 @@ public class gameManager : MonoBehaviour {
 
     // Update is called once per frame
     void Update() { 
-
-        if (menuActive != menuLoadout)
-        {
-            // Check if the player is playing on a platform that supports ESC.
-            if (Input.GetButtonDown("Cancel") && menuActive == null && getPlatform() != RuntimePlatform.WebGLPlayer)
-            { // When ESC clicked
+        if (menuActive != menuLoadout) {
+            if (Input.GetButtonDown("Cancel") && menuActive == null && getPlatform() != RuntimePlatform.WebGLPlayer) { //Check if player is playing on platform that supports ESC (which is "cancel")
                 scopeZoomOut();
-                if (menuActive == null)
-                {
+                if (menuActive == null) {
                     // Turn off the interact UI if paused
-                    if (getInteractUI().activeInHierarchy)
+                    if (getInteractUI().activeInHierarchy) {
                         getInteractUI().SetActive(false);
-
+                    }
                     statePause();
                     menuActive = menuPause; // Set the pause menu as active menu
                     menuActive.SetActive(getPauseStatus()); // Show active menu
                     EventSystem.current.SetSelectedGameObject(pauseMenuFirst); // Set eventsystem selected game object to the button assigned
                 }
-                else if (menuActive == menuPause)
-                {
+                else if (menuActive == menuPause) {
                     stateUnpause();
                 }
             } 
             else if (Input.GetButtonDown("webGL_Cancel") && menuActive == null && getPlatform() == RuntimePlatform.WebGLPlayer) {
                 scopeZoomOut();
-                if (menuActive == null)
-                {
-                    // Turn off the interact UI if paused
-                    if (getInteractUI().activeInHierarchy)
+                if (menuActive == null) { // Turn off the interact UI if paused
+                    if (getInteractUI().activeInHierarchy) {
                         getInteractUI().SetActive(false);
-
+                    }
                     statePause();
                     menuActive = menuPause; // Set the pause menu as active menu
                     menuActive.SetActive(getPauseStatus()); // Show active menu
                     EventSystem.current.SetSelectedGameObject(pauseMenuFirst); // Set eventsystem selected game object to the button assigned
                 }
-                else if (menuActive == menuPause)
-                {
+                else if (menuActive == menuPause) {
                     stateUnpause();
                 }
             }
-
         }
         else if (menuActive == menuLoadout)
         {
@@ -543,6 +534,8 @@ public class gameManager : MonoBehaviour {
             loadout.instance.setMenuOpen();
             timerTracker.SetActive(true);
             displayUI(true);
+            playerJournal.Journal.openJournal();
+            playerJournal.Journal.menuObj();
         }
         else {
             startFailMessage.SetActive(true);
@@ -639,9 +632,14 @@ public class gameManager : MonoBehaviour {
 
     }
 
-    public void hidePopups(GameObject _triggeringObject)
-    {
-        // Method dedicated to hiding popups whenever another is triggered.
+    public void displayTabHint() {
+        journalTip.SetActive(true);
+        StartCoroutine(closeTabHint());
+    }
+
+    IEnumerator closeTabHint() {
+        yield return new WaitForSeconds(4);
+        journalTip.SetActive(false);
     }
 
     public void scopeZoomIn() {

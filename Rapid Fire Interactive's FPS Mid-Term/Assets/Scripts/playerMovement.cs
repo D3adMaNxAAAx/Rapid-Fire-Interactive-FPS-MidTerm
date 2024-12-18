@@ -177,10 +177,9 @@ public class playerMovement : MonoBehaviour, IDamage
                 StartCoroutine(healing());  // recursive method
                 readyToHeal = false;  // stop healing
             }
-
-            if (guns.Count != 0)
+            if (guns.Count != 0) {
                 selectGun();
-
+            }
             if (Input.GetButtonDown("ThrowGrenade") && grenades.Count > 0) {
                 throwGrenade();
             }
@@ -191,22 +190,18 @@ public class playerMovement : MonoBehaviour, IDamage
                 healCoolDown -= Time.deltaTime;
             }
         }
-      
-        if (!isCrouching)
-        {
+        if (!isCrouching) {
             Camera.main.transform.localPosition = new Vector3(0, 0.9996f, 0);
             //StartCoroutine(handleCameraPos());
         }
-        else
-        {
+        else {
             Camera.main.transform.localPosition = new Vector3(0, 0.5f, 0);
         }
 
-        sprint();
-        // Check if sprinting -- Drain stamina as the player runs
-        if (isSprinting && !isDraining)
+        sprint(); // Check if sprinting -- Drain stamina as the player runs
+        if (isSprinting && !isDraining) {
             StartCoroutine(staminaDrain());
-
+        }
         if (isLaser) { // laser sight
             RaycastHit hit;
             Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range, ~ignoreLayer);

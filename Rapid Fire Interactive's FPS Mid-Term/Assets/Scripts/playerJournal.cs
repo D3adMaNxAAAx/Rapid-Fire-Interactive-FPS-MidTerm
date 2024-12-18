@@ -5,8 +5,10 @@ using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class playerJournal :  MonoBehaviour
-{
+public class playerJournal :  MonoBehaviour {
+
+    public static playerJournal Journal; // singleton
+
     [SerializeField] Canvas journal;
     
     [SerializeField] GameObject menuActive;
@@ -62,27 +64,24 @@ public class playerJournal :  MonoBehaviour
     [SerializeField] TMP_Text currentMoney;
 
     bool isOpen;
+    bool firstTime = true;
     
-
     // Unused Variables
     //int enemyCountOrig = 0;
-
     //bool docIsOpen;
     //bool objOpen;
     //bool itemsOpen;
     //bool statsOpen;
     //bool achieveOpen;
 
-    private void Start()
-    {
-        
+    private void Start() {
+        Journal = this;
         journal.enabled = false;
         isOpen = false;
     }
     // Update is called once per frame
-    void Update()
-    {
-       toggleJournal();
+    void Update() {
+       toggleJournal(); // opening journal if correct key is pressed
        currentMoneyCounter();
 
        if (_menuStats.gameObject.activeInHierarchy)
@@ -148,6 +147,7 @@ public class playerJournal :  MonoBehaviour
             Cursor.lockState = CursorLockMode.Confined;
             journal.enabled = true;
             isOpen = true;
+            menuObj();
             
         }
     }
@@ -162,6 +162,10 @@ public class playerJournal :  MonoBehaviour
             journal.enabled = false;
             gameManager.instance.displayUI(true);
             isOpen = false;
+            if (firstTime) {
+                gameManager.instance.displayTabHint();
+                firstTime = false;
+            }
         }
     }
     public void menuObj()
