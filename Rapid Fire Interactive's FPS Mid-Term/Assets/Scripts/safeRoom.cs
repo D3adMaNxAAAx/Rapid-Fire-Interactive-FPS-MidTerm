@@ -2,15 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class safeRoom : MonoBehaviour, IInteractable
-{
-    // Using bossRoom as a reference
+public class safeRoom : MonoBehaviour, IInteractable {
 
-    // Member Fields
-    // Singleton
-    public static safeRoom instance;
-
-    // Door Variables
+    [SerializeField] int roomNum;
     [Header("-- Door Variables --")]
     [SerializeField] GameObject safeSpawnPos;
     [SerializeField] GameObject badgeScanner;
@@ -26,17 +20,17 @@ public class safeRoom : MonoBehaviour, IInteractable
     Vector3 openPos;
     Vector3 closePos;
 
-    // Checks / Bools
     bool isSafe;
     bool isOpen;
+    int badgesNeeded;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        instance = this;
         closePos = activeDoor.transform.position; // Grab door position on load to set as close position
         openPos = new Vector3(closePos.x + doorMoveX, closePos.y + doorMoveY, closePos.z + doorMoveZ);
+        badgesNeeded = 3 * roomNum;
     }
 
     // Update is called once per frame
@@ -62,7 +56,7 @@ public class safeRoom : MonoBehaviour, IInteractable
             if (!gameManager.instance.getInteractUI().activeInHierarchy)
                 gameManager.instance.getInteractUI().SetActive(true);
 
-            if (Input.GetButton("Interact") && gameManager.instance.getPlayerScript().getSafeAccess() && playerStats.Stats.getBadgesFound() >= 3)
+            if (Input.GetButton("Interact") && gameManager.instance.getPlayerScript().getSafeAccess() && playerStats.Stats.getBadgesFound() >= badgesNeeded)
             {
                 interact();
                 gameManager.instance.getInteractUI().SetActive(false);
@@ -71,7 +65,7 @@ public class safeRoom : MonoBehaviour, IInteractable
             {
                 StartCoroutine(flashPowerWarning());
             } 
-            else if (Input.GetButton("Interact") && playerStats.Stats.getBadgesFound() < 3)
+            else if (Input.GetButton("Interact") && playerStats.Stats.getBadgesFound() < badgesNeeded)
             {
                 StartCoroutine(flashIDWarning());
             }
@@ -118,16 +112,17 @@ public class safeRoom : MonoBehaviour, IInteractable
     public IEnumerator flashPowerWarning()
     {
         gameManager.instance.getIDBadgeWarning().gameObject.SetActive(true);
-        gameManager.instance.getIDBadgeWarning().text = "Power Level 1 needed!";
-        yield return new WaitForSeconds(0.75f);
+        gameManager.instance.getIDBadgeWarning().text = "SafeRoom " + roomNum + ": Power Level 1 needed!";
+        yield return new WaitForSeconds(2.5f);
         gameManager.instance.getIDBadgeWarning().gameObject.SetActive(false);
     }
 
     public IEnumerator flashIDWarning()
     {
         gameManager.instance.getIDBadgeWarning().gameObject.SetActive(true);
-        gameManager.instance.getIDBadgeWarning().text = "3 ID Badges Needed!";
-        yield return new WaitForSeconds(0.75f);
+        
+        gameManager.instance.getIDBadgeWarning().text = "SafeRoom " + roomNum + ": " + badgesNeeded + " ID Badges Needed!";
+        yield return new WaitForSeconds(2.5f);
         gameManager.instance.getIDBadgeWarning().gameObject.SetActive(false);
     }
 
