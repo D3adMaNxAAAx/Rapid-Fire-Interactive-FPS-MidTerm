@@ -119,28 +119,21 @@ public class playerJournal :  MonoBehaviour {
         headShots.text = playerStats.Stats.getHeadShots().ToString("F0");
     }
 
-    void toggleJournal()
-    {
-        if (Input.GetButtonDown("OpenJournal") && gameManager.instance.getMenuActive() == null && !isOpen)
-        {
-            if (gameManager.instance.getInteractUI().activeInHierarchy)
-            {
+    void toggleJournal() {
+        if (Input.GetButtonDown("OpenJournal") && gameManager.instance.getMenuActive() == null && !isOpen) {
+            if (gameManager.instance.getInteractUI().activeInHierarchy) {
                 gameManager.instance.getInteractUI().SetActive(false);
             }
-
-            gameManager.instance.setMenuActive(journal.gameObject);
             openJournal();
         }
-        else if (Input.GetButtonDown("OpenJournal") && isOpen)
-        {
+        else if (Input.GetButtonDown("OpenJournal") && isOpen) {
             closeJournal();
         }
     }
 
-    public void openJournal()
-    {
-        if (!isOpen)
-        {
+    public void openJournal() {
+        gameManager.instance.setMenuActive(journal.gameObject);
+        if (!isOpen) {
             gameManager.instance.displayUI(false);
             gameManager.instance.statePause();
             Cursor.visible = true;

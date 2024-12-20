@@ -429,6 +429,14 @@ public class enemyAI : MonoBehaviour , IDamage {
         Destroy(gameObject);
     }
 
+    public void bossHeal() {
+        float healAmount = HPOrig / 2;
+        HP += healAmount;
+        if (HP > HPOrig) {
+            HP = HPOrig;
+        }
+    }
+
     public void takeDamage(Vector3 sourcePosition, StatusEffects effect = null)
     {
         if (effect != null)

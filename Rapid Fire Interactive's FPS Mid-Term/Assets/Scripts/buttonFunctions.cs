@@ -198,9 +198,14 @@ public class buttonFunctions : MonoBehaviour {
         storeManager.instance.onLaserRiflePurchase();
     }
 
-    public void Respawn()
-    {
+    public void Respawn() {
         playerMovement.player.spawnPlayer();
+        if (GameObject.FindWithTag("Demon Golem") != false) {
+            GameObject.FindWithTag("Demon Golem").GetComponent<enemyAI>().bossHeal();
+        }
+        else if (GameObject.FindWithTag("Elder Demon") != false) {
+            GameObject.FindWithTag("Elder Demon").GetComponent<enemyAI>().bossHeal();
+        }
         gameManager.instance.stateUnpause();
     }
 

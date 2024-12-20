@@ -45,7 +45,7 @@ public class playerMovement : MonoBehaviour, IDamage
     bool isSniper = false;
     bool isLaser = false;
     bool isShotgun = false;
-
+    float reloadTime = 1.5f;
     [SerializeField] float damage;
     [SerializeField] float fireRate;
     [SerializeField] int range;
@@ -107,7 +107,6 @@ public class playerMovement : MonoBehaviour, IDamage
     int gunPos = 0; // Weapon selected
     int speedOrig;  // Original Speed
     int startingLives;
-    float reloadCooldown = 1.0f; // Time before the player can shoot after reload
 
     bool shieldOn = false;
     float shieldHP = 25;
@@ -405,8 +404,8 @@ public class playerMovement : MonoBehaviour, IDamage
         }
     }
 
-    void reload()
-    {
+    void reload() {
+        aud.PlayOneShot(audioManager.instance.audReload, audioManager.instance.audReloadVol);
         StartCoroutine(doReloadCooldown());
         // Check if there's enough spare ammo to fill a mag
         if (guns[gunPos].ammoMax - (guns[gunPos].ammoMag - guns[gunPos].ammoCur) >= 0)
@@ -423,16 +422,15 @@ public class playerMovement : MonoBehaviour, IDamage
             guns[gunPos].ammoMax = 0;
         }
 
-        // Play reload sound
-        aud.PlayOneShot(audioManager.instance.audReload, audioManager.instance.audReloadVol);
-
         // Update the UI for confirmation
         updatePlayerUI();
     }
 
     IEnumerator doReloadCooldown() {
         isReloading = true;
-        yield return new WaitForSeconds(reloadCooldown);
+        yield return new WaitForSeconds(reloadTime - 0.25f);
+        aud.PlayOneShot(audioManager.instance.audReload, audioManager.instance.audReloadVol);
+        yield return new WaitForSeconds(0.25f);
         isReloading = false;
     }
 
@@ -1130,10 +1128,11 @@ public class playerMovement : MonoBehaviour, IDamage
         float damTemp = guns[gunPos].damage * damageUpgradeMod;
         damage = damTemp;
         range = guns[gunPos].range;
-        fireRate = getCurGun().fireRate;
-        isSniper = getCurGun().isSniper;
-        isLaser = getCurGun().isLaser;
-        isShotgun = getCurGun().isShotgun;
+        fireRate = guns[gunPos].fireRate;
+        reloadTime = guns[gunPos].reloadTime;
+        isSniper = guns[gunPos].isSniper;
+        isLaser = guns[gunPos].isLaser;
+        isShotgun = guns[gunPos].isShotgun;
         
         if (isLaser) {
             laserSight.enabled = true;
@@ -1163,6 +1162,7 @@ public class playerMovement : MonoBehaviour, IDamage
         float damTemp = _gun.damage * damageUpgradeMod; //reason I did this is because we can't supply a float value to an int.
         damage = damTemp;
         fireRate = _gun.fireRate;
+        reloadTime = _gun.reloadTime;
         range = _gun.range;
         isSniper = _gun.isSniper;
         isLaser = _gun.isLaser;
