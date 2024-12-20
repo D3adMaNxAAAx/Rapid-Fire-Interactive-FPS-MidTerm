@@ -13,7 +13,6 @@ public class chests : MonoBehaviour, IInteractable
     [SerializeField] collectablePickup attackBuff;
     [SerializeField] GrenadeStats grenade;
     [SerializeField] HealStats heal;
-    [SerializeField] int coins;
     [SerializeField] int ammo;
     [SerializeField] int grenades;
     [SerializeField] int heals;
@@ -59,7 +58,8 @@ public class chests : MonoBehaviour, IInteractable
     public void giveLoot()
     {
         // Give player loot
-        gameManager.instance.getPlayerScript().setCoins(coins);
+        gameManager.instance.getPlayerScript().setCoins(5);
+        playerStats.Stats.gotMoney(5);
         gameManager.instance.getPlayerScript().addAmmo(ammo);
         gameManager.instance.getPlayerScript().addToGrenades(grenade);
         if (heals != 0)
