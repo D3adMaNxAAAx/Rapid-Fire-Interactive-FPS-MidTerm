@@ -113,6 +113,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
     // Checks
     bool leveledUp = false;
+    bool isDashing;
     bool isSprinting;
     bool isShooting;
     bool isStepping;
@@ -537,6 +538,9 @@ public class playerMovement : MonoBehaviour, IDamage
     public void takeDamage(float amount) {
         if (gameManager.instance.getWinState() == true) {
             return;
+        }
+        if (isDashing) {
+            amount = amount / 2;
         }
         if (HP > 0) { // Further prevention from additional damage that may trigger things like lives lost multiple times or negative HP values.
             criticalHealthThreshold = 0.1f;
@@ -1208,10 +1212,12 @@ public class playerMovement : MonoBehaviour, IDamage
                 time1W = Time.time;
                 isTapW = false;
                 if (onDashCooldown == false && time1W - time2W < 0.2f) { // time that both key pressed need to be done within
+                    isDashing = true;
                     for (int i = 1; i <= 4; i++) {
                         controller.Move(transform.forward * 1.5f);
                         yield return new WaitForSeconds(0.025f);
                     }
+                    isDashing = false;
                     StartCoroutine(dashCooldown()); // can't dash again for x seconds
                 }
             }
@@ -1229,10 +1235,12 @@ public class playerMovement : MonoBehaviour, IDamage
                 time1A = Time.time;
                 isTapA = false;
                 if (onDashCooldown == false && time1A - time2A < 0.2f) { // time that both key pressed need to be done within
+                    isDashing = true;
                     for (int i = 1; i <= 4; i++) {
                         controller.Move(-transform.right * 1.5f); // negative right = left
                         yield return new WaitForSeconds(0.025f);
                     }
+                    isDashing = false;
                     StartCoroutine(dashCooldown()); // can't dash again for x seconds
                 }
             }
@@ -1250,10 +1258,12 @@ public class playerMovement : MonoBehaviour, IDamage
                 time1S = Time.time;
                 isTapS = false;
                 if (onDashCooldown == false && time1S - time2S < 0.2f) { // time that both key pressed need to be done within
+                    isDashing = true;
                     for (int i = 1; i <= 4; i++) {
                         controller.Move(-transform.forward * 1.5f); // negative forward = backwards
                         yield return new WaitForSeconds(0.025f);
                     }
+                    isDashing = false;
                     StartCoroutine(dashCooldown()); // can't dash again for x seconds
                 }
             }
@@ -1271,10 +1281,12 @@ public class playerMovement : MonoBehaviour, IDamage
                 time1D = Time.time;
                 isTapD = false;
                 if (onDashCooldown == false && time1D - time2D < 0.2f) { // time that both key pressed need to be done within
+                    isDashing = true;
                     for (int i = 1; i <= 4; i++) {
                         controller.Move(transform.right * 1.5f);
                         yield return new WaitForSeconds(0.025f);
                     }
+                    isDashing = false;
                     StartCoroutine(dashCooldown()); // can't dash again for x seconds
                 }
             }

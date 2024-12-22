@@ -83,7 +83,7 @@ public class elevator : MonoBehaviour, IInteractable
         {
             if (!killObjective)
             {
-                if (true) // this needs to be set to whatever the amount of power we need
+                if (powerAmount >= requiredPower && playerStats.Stats.getBadgesFound() >= 9) // this needs to be set to whatever the amount of power we need
                 {
                     isDoor = true;
                 }
