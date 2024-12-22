@@ -14,14 +14,14 @@ public class lightFlicker : MonoBehaviour, IInteractable
     [SerializeField] GameObject lightSys = null;
     [SerializeField] GameObject powerSys = null;
     [SerializeField] Light[] lights = null;
+    [SerializeField] bool level2;
 
     // Power Variables
-    int pwrLvl;
+    [SerializeField] int pwrLvl;
 
     // Light Variables
     Light _light; // This was previously named light which was the same name of a variable it was inheriting from.
     float lightIntensity;
-    float[] lightsIntensity;
     int lightCount;
 
     // Random # Light Variables
@@ -42,6 +42,11 @@ public class lightFlicker : MonoBehaviour, IInteractable
             _light = this.gameObject.GetComponentInChildren<Light>();
             if (_light != null)
                 lightIntensity = _light.intensity;
+            if (level2 == false) {
+                for (int i = 0; i < lightCount - 1; ++i) {
+                    lights[i].range = 35;
+                }
+            }
         }
         else if (lightSys != null)
         { 
@@ -68,10 +73,10 @@ public class lightFlicker : MonoBehaviour, IInteractable
             else
                 StopCoroutine(lightAction());
         }
-        else if (powerSys != null && isOn == true)
-        {
+        else if (powerSys != null && isOn == true) {
             powerStages();
         }
+        powerStages();
     }
 
     public void flickerLight()
@@ -167,12 +172,36 @@ public class lightFlicker : MonoBehaviour, IInteractable
         return result;
     }
 
-    void powerStages()
-    {
-        if (powerSys != null)
-        {
-            if (pwrLvl == 1)
-            {
+    void powerStages() {
+        if (powerSys != null) {
+            if (pwrLvl == 1) {
+                if (level2 == false) {
+                    for (int i = 0; i < lightCount - 1; ++i) {
+                        lights[i].intensity = 1.5f;
+                    }
+                }
+                else {
+                    for (int i = 0; i < lightCount - 1; ++i) {
+                        lights[i].intensity = 0.5f;
+                    }
+                }
+                setRandFlickSpd(UnityEngine.Random.Range(0.2f, 1.5f));
+                if (!getWait())
+                    StartCoroutine(getNewNumber());
+                flickerLight();
+                setFlicker(true);
+            }
+            if (pwrLvl == 2) {
+                if (level2 == false) {
+                    for (int i = 0; i < lightCount - 1; ++i) {
+                        lights[i].intensity = 2.5f;
+                    }
+                }
+                else {
+                    for (int i = 0; i < lightCount - 1; ++i) {
+                        lights[i].intensity = 0.75f;
+                    }
+                }
                 setRandFlickSpd(UnityEngine.Random.Range(0.2f, 1.5f));
                 if (!getWait())
                     StartCoroutine(getNewNumber());
@@ -180,23 +209,21 @@ public class lightFlicker : MonoBehaviour, IInteractable
                 setFlicker(true);
             }
 
-            if (pwrLvl == 2)
-            {
-                setRandFlickSpd(UnityEngine.Random.Range(0.2f, 1.5f));
-                if (!getWait())
-                    StartCoroutine(getNewNumber());
-                flickerLight();
-                setFlicker(true);
-            }
-
-            if (pwrLvl == 3)
-            {
+            if (pwrLvl == 3) {
                 // Copied pwr lvl 1 code just for an indicator that it's actually working.
                 // Feel free to change this later.
                 setFlicker(false);
-                for (int i = 0; i < lightCount - 1; ++i)
-                {
-                    lights[i].enabled = true;
+                if (level2 == false) {
+                    for (int i = 0; i < lightCount - 1; ++i) {
+                        lights[i].intensity = 3.5f;
+                        lights[i].enabled = true;
+                    }
+                }
+                else {
+                    for (int i = 0; i < lightCount - 1; ++i) {
+                        lights[i].intensity = 1.25f;
+                        lights[i].enabled = true;
+                    }
                 }
             }
 
@@ -264,8 +291,6 @@ public class lightFlicker : MonoBehaviour, IInteractable
             for (int i = 0; i < lights.Count(); ++i)
             {
                 lights[i].enabled = true;
-
-
             }
             yield return new WaitForSeconds(randFlickSpeed);
             for (int i = 0; i < lights.Count(); ++i)
