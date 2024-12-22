@@ -9,6 +9,7 @@ public class CameraMovement : MonoBehaviour
 {
     public static CameraMovement state; // singleton
 
+    [SerializeField] Light flashLight;
     //Sensitivity settings 
     [SerializeField] Slider sensitivitySlider;
     
@@ -34,15 +35,24 @@ public class CameraMovement : MonoBehaviour
     bool sniperZoom = false;
     Camera cam;
     float rotX;
+    float OGflashlightRange;
 
     // Unused Variables
     //bool isAiming;
+
+    public void extendFlashlightRange() {
+        flashLight.range = 100;
+    }
+
+    public void resetFlashlight() {
+        flashLight.range = OGflashlightRange;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         state = this;
-
+        OGflashlightRange = flashLight.range;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 

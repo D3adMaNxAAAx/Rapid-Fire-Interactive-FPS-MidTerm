@@ -83,7 +83,7 @@ public class elevator : MonoBehaviour, IInteractable
         {
             if (!killObjective)
             {
-                if (powerAmount >= requiredPower && playerStats.Stats.getBadgesFound() >= 9) // this needs to be set to whatever the amount of power we need
+                if (true) // this needs to be set to whatever the amount of power we need
                 {
                     isDoor = true;
                 }
@@ -156,9 +156,14 @@ public class elevator : MonoBehaviour, IInteractable
     }
     IEnumerator nextScene()
     {
-        if (!movingScene && moveToScene)
-        {
+        if (!movingScene && moveToScene) {
             movingScene = true;
+            if (SceneManager.GetActiveScene().buildIndex == 1) {
+                CameraMovement.state.extendFlashlightRange();
+            }
+            else if (SceneManager.GetActiveScene().buildIndex == 2) {
+                CameraMovement.state.resetFlashlight();
+            }
             yield return new WaitForSeconds(3f);
             screen.loadScene(SceneManager.GetActiveScene().buildIndex + 1);
             projectilePool.thePool.recreatePools();

@@ -32,9 +32,6 @@ public class loadingScreen : MonoBehaviour
             keepSettings.gameSettings.getUIobj().SetActive(false);
         }
         StartCoroutine(loadSceneAsync(index));
-       
-            //lightFlicker.setFoundPower(false); 
-       
     }
 
     IEnumerator loadSceneAsync(int index)

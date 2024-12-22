@@ -20,8 +20,7 @@ public class buttonFunctions : MonoBehaviour {
         }
     }
 
-    public void confirmRestart()
-    {
+    public void confirmRestart() {
         if (playerStats.Stats != null)
             playerStats.Stats.Reset();
 
