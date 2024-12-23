@@ -46,6 +46,8 @@ public class playerMovement : MonoBehaviour, IDamage
     bool isLaser = false;
     bool isShotgun = false;
     float reloadTime = 1.5f;
+    int healsMax = 10;
+    int grenadesMax = 5;
     [SerializeField] float damage;
     [SerializeField] float fireRate;
     [SerializeField] int range;
@@ -1093,16 +1095,27 @@ public class playerMovement : MonoBehaviour, IDamage
             return false;
     }
 
-    public void addToHeals(HealStats newHeal) {
-        heals.Add(newHeal);
-        gameManager.instance.getHealsUI().text = heals.Count.ToString();
+    public bool addToHeals(HealStats newHeal) {
+        if (heals.Count < healsMax) {
+            heals.Add(newHeal);
+            gameManager.instance.getHealsUI().text = heals.Count.ToString();
+            return true;
+        }
+        // else, did not add
+        return false;
     }
 
-    public void addToGrenades(GrenadeStats newGrenade) {
-        grenades.Add(newGrenade);
-        gameManager.instance.getGrenadesUI().text = grenades.Count.ToString();
+    public bool addToGrenades(GrenadeStats newGrenade) {
+        if (grenades.Count < grenadesMax) {
+            grenades.Add(newGrenade);
+            gameManager.instance.getGrenadesUI().text = grenades.Count.ToString();
+            return true;
+        }
+        // else, did not add
+        return false;
 
-    }public void removeFromHeals() {
+    }
+    public void removeFromHeals() {
         heals.Clear();
         gameManager.instance.getHealsUI().text = heals.Count.ToString();
     }

@@ -88,7 +88,8 @@ public class gameManager : MonoBehaviour {
     [SerializeField] TMP_Text timerText;
     [SerializeField] Button respawnButton;
     [SerializeField] TMP_Text livesText;
-    [SerializeField] GameObject interactUI; // this makes the timer run regardless if its hidden or not
+    [SerializeField] GameObject interactUI;
+    [SerializeField] GameObject pickupFailUI;
     [SerializeField] GameObject startFailMessage;
     [SerializeField] TMP_Text levelPopUp;
     [SerializeField] GameObject TyEasterEggPopUp;
@@ -844,6 +845,8 @@ public class gameManager : MonoBehaviour {
 
     public void setAmmoReserveText(TMP_Text _ammoReserveText)
     { ammoReserveText = _ammoReserveText; }
+
+    public GameObject getPickupFailUI() { return pickupFailUI; }
 
     public GameObject getInteractUI() { return interactUI; }
 

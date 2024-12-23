@@ -10,14 +10,29 @@ public class itemPickup : MonoBehaviour { // handles pickups for grenades and he
     private void OnTriggerEnter(Collider other) {
         if (other.CompareTag("Player")) {
             if (healPotion != null) {
-                gameManager.instance.getPlayerScript().addToHeals(healPotion);
-                Destroy(gameObject);
+                if (gameManager.instance.getPlayerScript().addToHeals(healPotion)) { // returns true if successfully added
+                    playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.itemPickupA, audioManager.instance.itemPickupVol);
+                    Destroy(gameObject);
+                }
+                else {
+                    gameManager.instance.getPickupFailUI().SetActive(true);
+                }
             }
             else if (grenade != null) {
-                gameManager.instance.getPlayerScript().addToGrenades(grenade);
-                Destroy(gameObject);
+                if (gameManager.instance.getPlayerScript().addToGrenades(grenade)) { // returns true if successfully added
+                    playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.itemPickupA, audioManager.instance.itemPickupVol);
+                    Destroy(gameObject);
+                }
+                else {
+                    gameManager.instance.getPickupFailUI().SetActive(true);
+                }
             }
-            playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.itemPickupA, audioManager.instance.itemPickupVol);
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (other.CompareTag("Player")) {
+            gameManager.instance.getPickupFailUI().SetActive(false);
         }
     }
 }
