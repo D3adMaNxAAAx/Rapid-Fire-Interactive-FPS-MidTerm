@@ -43,8 +43,7 @@ public class buttonFunctions : MonoBehaviour {
         screen.loadScene(1);
     }
 
-    public void cancel()
-    {
+    public void cancel() {
         back();
     }
 
