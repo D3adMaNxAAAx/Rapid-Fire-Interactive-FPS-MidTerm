@@ -72,48 +72,36 @@ public class elevator : MonoBehaviour, IInteractable
         powerAmount = amount;
     }
 
-    public void interact()
-    {
-        if (elevNextLevel != null)
-        {
+    public void interact() {
+        if (elevNextLevel != null) {
             elevCallButton.GetComponent<elevator>().disableDoorBool();
             StartCoroutine(nextScene());
         }
-        else if (elevCallButton != null)
-        {
-            if (!killObjective)
-            {
-                if (powerAmount >= requiredPower && playerStats.Stats.getBadgesFound() >= 9) // this needs to be set to whatever the amount of power we need
-                {
+        else if (elevCallButton != null) {
+            if (!killObjective) {
+                if (powerAmount >= requiredPower && playerStats.Stats.getBadgesFound() >= 9) { // powerAmount >= requiredPower && playerStats.Stats.getBadgesFound() >= 9
                     isDoor = true;
                 }
-                else if (powerAmount < 3)
-                {
-                    if (!uIIsPopping && obj1 != null)
-                    {
+                else if (powerAmount < 3) {
+                    if (!uIIsPopping && obj1 != null) {
                         objStorage = obj1;
                         if (!uIIsPopping)
                             StartCoroutine(popUIStuff());
                     }
                 }
-                else
-                {
-                    if (!uIIsPopping && obj2 != null)
-                    {
+                else {
+                    if (!uIIsPopping && obj2 != null) {
                         objStorage = obj2;
                         if (!uIIsPopping)
                             StartCoroutine(popUIStuff());
                     }
                 }
             }
-            else
-            {
-                if (gameManager.instance.getEnemyCount() <= 0)
-                {
+            else {
+                if (gameManager.instance.getEnemyCount() <= 0) {
                     isDoor = true;
                 }
-                else
-                {
+                else {
                     objStorage = obj1;
                     if (!uIIsPopping)
                         StartCoroutine(popUIStuff());
