@@ -222,7 +222,7 @@ public class upgradeMenu : MonoBehaviour {
             else
                 t_staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
 
-            playerMovement.player.setStamina(stamina);
+            playerMovement.player.setOGStamina(stamina);
             playerMovement.player.updatePlayerUI();
         }
     }

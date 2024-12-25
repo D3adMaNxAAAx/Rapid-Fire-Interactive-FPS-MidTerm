@@ -101,13 +101,13 @@ public class playerMovement : MonoBehaviour, IDamage
     int jumpCounter;
 
     // Trackers
-    float HPOrig; // HP
+    float HPOrig; 
     float damageBuffMult = 1;
-    int playerXP; // XP
-    int staminaOrig; // Stamina
-    int playerLevel; // Level
+    int playerXP;
+    int staminaOrig;
+    int playerLevel;
     int gunPos = 0; // Weapon selected
-    int speedOrig;  // Original Speed
+    int speedOrig; 
     int startingLives;
 
     bool shieldOn = false;
@@ -693,7 +693,7 @@ public class playerMovement : MonoBehaviour, IDamage
     IEnumerator noDamageTime() { // time till healing (if no damage was taken)
         float currentHP = HP;
         yield return new WaitForSeconds(3);
-        if (currentHP == HP) { // PLAYER CAN START HEALING (SEE UPDATE())
+        if (currentHP >= HP) { // PLAYER CAN START HEALING (SEE UPDATE())
             stopHealing = false;
             readyToHeal = true;
         }
@@ -857,8 +857,7 @@ public class playerMovement : MonoBehaviour, IDamage
     }
 
     // Recover stamina as player walks
-    IEnumerator staminaRecover()
-    {
+    IEnumerator staminaRecover() {
         isRecovering = true;
         stamina++;
         updatePlayerUI();
@@ -908,8 +907,7 @@ public class playerMovement : MonoBehaviour, IDamage
         }
     }
 
-    public void toggleSprintOn()
-    {
+    public void toggleSprintOn() {
         toggleSprint = !toggleSprint;
 
         speedOrig = (int) speed;
@@ -919,8 +917,7 @@ public class playerMovement : MonoBehaviour, IDamage
         isSprinting = true;
         staminaDrain();
 
-        if (stamina == 0)
-        {
+        if (stamina == 0) {
                 speed = speedOrig;
                 isSprinting = false;
                 staminaRecover();
@@ -1333,6 +1330,9 @@ public class playerMovement : MonoBehaviour, IDamage
 
     public int getStaminaOrig() {
         return staminaOrig;}
+    public void setOGStamina(int newStam) {
+        staminaOrig = newStam;
+    }
 
     public int getXP() {
         return playerXP;}
