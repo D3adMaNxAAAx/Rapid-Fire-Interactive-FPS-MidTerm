@@ -677,7 +677,7 @@ Camera:
   m_Depth: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 4096
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -844,6 +844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flashLight: {fileID: 909507776872094603}
+  weaponRenderer: {fileID: 3038742841614261465}
   sensitivitySlider: {fileID: 0}
   sens: 300
   lockVertMin: -90
@@ -851,7 +852,7 @@ MonoBehaviour:
   invertY: 0
   normalFOV: 70
   aimingFOV: 50
-  zoomSpeed: 60
+  zoomSpeed: 150
   snapZoom: 0
   leanAngle: 30
   leanSpeed: 10
@@ -907,7 +908,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4095
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1153,7 +1154,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2855197159387468398, guid: 36ccb6e377814d4458df474f62636da3, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 3230314709329561812, guid: 36ccb6e377814d4458df474f62636da3, type: 3}
       propertyPath: m_LocalScale.y

@@ -10,6 +10,7 @@ public class CameraMovement : MonoBehaviour
     public static CameraMovement state; // singleton
 
     [SerializeField] Light flashLight;
+    [SerializeField] GameObject weaponRenderer;
     //Sensitivity settings 
     [SerializeField] Slider sensitivitySlider;
     
@@ -102,6 +103,7 @@ public class CameraMovement : MonoBehaviour
                     else {
                         //if snap zoom not enabled, smooth zoom;
                         cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, aimingFOV, zoomSpeed * Time.deltaTime);
+                        weaponRenderer.transform.localPosition = new Vector3(0, 0, 0.35f);
                     }
                 }
                 else { // sniper zoom
@@ -120,6 +122,7 @@ public class CameraMovement : MonoBehaviour
             else {
                 //smooth transition back to normal FoV
                 cam.fieldOfView = Mathf.MoveTowards(cam.fieldOfView, normalFOV, zoomSpeed * Time.deltaTime);
+                weaponRenderer.transform.localPosition = new Vector3(0, 0, 0);
             }
             sens = startingSens;
             gameManager.instance.scopeZoomOut(); // handles showing scope, gun model, camera zoom

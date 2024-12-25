@@ -23599,7 +23599,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: F
+  m_text: E
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -70734,6 +70734,16 @@ PrefabInstance:
     - target: {fileID: 7250185784040170518, guid: e371d4cd388b92842a011bb6c79b0cc8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7938955020517669059, guid: e371d4cd388b92842a011bb6c79b0cc8, type: 3}
+      propertyPath: m_text
+      value: "Use the mouse to look around\n\nUse WASD to move your character, hold
+        shift to sprint\n\nDouble tap a movement key to dash in that direction\n\nUse
+        Space to jump, ctrl to crouch\n\nUse right to click to zoom / focus your
+        weapon \n\nUse left click to shoot your weapon, R to reload\n\nUse the scroll
+        wheel or 1-5 keys to switch weapons\n\nHit E to interact with things (pickup
+        item, open door)\n\nHit F to use a health potion, G to throw a grenade\n\nHit
+        Escape to pause, tab to open player journal"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

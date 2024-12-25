@@ -2759,6 +2759,7 @@ MonoBehaviour:
   audReload: {fileID: 0}
   audChestOpen: {fileID: 0}
   fartEgg: {fileID: 0}
+  audPowerUp: {fileID: 0}
   audButtonHover: {fileID: 8300000, guid: 5a41da056cd6147d39093be3f10a2ed5, type: 3}
   audButtonClick: {fileID: 0}
   menuMusicVol: 0
@@ -2773,6 +2774,7 @@ MonoBehaviour:
   audHealVol: 0
   audReloadVol: 0
   audChestOpenVol: 0
+  audPowerUpVol: 0
   audButtonHoverVol: 0
   audButtonClickVol: 0
 --- !u!4 &1849315704 stripped
@@ -3551,7 +3553,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1116426012624218424
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9085,11 +9087,11 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Use the mouse to look around\n\nUse WASD to move your character, hold
     shift to sprint\n\nDouble tap a movement key to dash in that direction\n\nUse
-    Space to jump, ctrl to crouch\n\nUse Q and E to peak around things\n\nUse right
-    to click to zoom / focus your weapon \n\nUse left click to shoot your weapon,
-    R to reload\n\nUse the scroll wheel or 1-5 keys to switch weapons\n\nHit F to
-    interact with things (pickup item, open door)\n\nHit X to use a health potion,
-    G to throw a grenade\n\nHit Escape to pause, tab to open player journal\n\n"
+    Space to jump, ctrl to crouch\n\nUse right to click to zoom / focus your weapon
+    \n\nUse left click to shoot your weapon, R to reload\n\nUse the scroll wheel
+    or 1-5 keys to switch weapons\n\nHit E to interact with things (pickup item,
+    open door)\n\nHit F to use a health potion, G to throw a grenade\n\nHit Escape
+    to pause, tab to open player journal\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

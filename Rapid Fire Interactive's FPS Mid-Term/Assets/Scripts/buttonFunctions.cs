@@ -41,6 +41,7 @@ public class buttonFunctions : MonoBehaviour {
         gameManager.instance.stateUnpause();
         SceneManager.LoadScene(stateIndex, LoadSceneMode.Single);
         //screen.loadScene(1);
+        /// screen.loadScene(1); hard lock freezes the game when you try to do it after the first scene / level
     }
 
     public void cancel() {

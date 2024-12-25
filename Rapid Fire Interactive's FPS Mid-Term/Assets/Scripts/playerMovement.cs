@@ -1060,7 +1060,7 @@ public class playerMovement : MonoBehaviour, IDamage
         Destroy(grenadeInstance);
     }
 
-    IEnumerator HealPlayer() { // x
+    IEnumerator HealPlayer() { // f
         if (HP != HPOrig) {
             isHealing = true;
 
