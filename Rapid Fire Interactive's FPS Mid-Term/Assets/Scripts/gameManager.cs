@@ -16,6 +16,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
+    [SerializeField] GameObject menuFinalLose;
     [SerializeField] GameObject menuConfirmation;
     [SerializeField] GameObject menuJournal;
     [SerializeField] GameObject menuQuit;
@@ -53,6 +54,7 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject upgradeMenuFirst;
     [SerializeField] GameObject terminalUpgradeMenuFirst;
     [SerializeField] GameObject loseMenuFirst;
+    [SerializeField] GameObject finalLoseMenuFirst;
     [SerializeField] GameObject winMenuFirst;
     [SerializeField] GameObject endStatsMenuFirst;
 
@@ -316,8 +318,7 @@ public class gameManager : MonoBehaviour {
         statsMenu.statDisplays.updateStats();
     }
 
-    public void openLoseStatsMenu()
-    {
+    public void openLoseStatsMenu() {
         if (menuActive != null)
         {
             menuActive.SetActive(false); // Close the current menu
@@ -334,21 +335,20 @@ public class gameManager : MonoBehaviour {
         if (menuActive != null) {
             menuActive.SetActive(false);
         }
-        if (getInteractUI().activeInHierarchy)
-        {
+        if (getInteractUI().activeInHierarchy) {
             getInteractUI().SetActive(false);
         }
         statePause();
-        if (getPlayerScript().getLives() <= 0)
-        {
-            getRespawnButton().interactable = false;
+        if (getPlayerScript().getLives() > 0) {
+            menuActive = menuLose;
+            EventSystem.current.SetSelectedGameObject(loseMenuFirst); // Set eventsystem selected game object to the button assigned
+            getLivesText().text = getPlayerScript().getLives().ToString();
         }
-        menuActive = menuLose; // set active menu to lose menu
+        else { // out of lives
+            menuActive = menuFinalLose;
+            EventSystem.current.SetSelectedGameObject(finalLoseMenuFirst); // Set eventsystem selected game object to the button assigned
+        }
         menuActive.SetActive(true); // Show active menu
-        EventSystem.current.SetSelectedGameObject(loseMenuFirst); // Set eventsystem selected game object to the button assigned
-
-        // Since text is now active, update it.
-        getLivesText().text = getPlayerScript().getLives().ToString();
         
         // not being used right now:
         /*completionTime.text = playerStats.Stats.getTimeTaken();
