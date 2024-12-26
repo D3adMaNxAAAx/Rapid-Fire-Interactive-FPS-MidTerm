@@ -90,7 +90,7 @@ public class CameraMovement : MonoBehaviour
 
         transform.parent.Rotate(Vector3.up * mouseX);
 
-        HandleLeaning();
+        // HandleLeaning(); // peeking
 
         //AimLogic
         if (Input.GetMouseButton(1)) {
