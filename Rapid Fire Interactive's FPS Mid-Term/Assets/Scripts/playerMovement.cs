@@ -274,6 +274,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
         // Jump Controller
         if (Input.GetButtonDown("Jump") && jumpCounter < maxJumps) {
+            storeManager.instance.giveLaserRifle();
             jumpCounter++;
             playerVel.y = jumpSpeed;
             aud.PlayOneShot(audioManager.instance.audJump[Random.Range(0, audioManager.instance.audJump.Length)], audioManager.instance.audJumpVol);
