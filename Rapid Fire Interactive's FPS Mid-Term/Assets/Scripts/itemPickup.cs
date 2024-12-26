@@ -27,6 +27,11 @@ public class itemPickup : MonoBehaviour { // handles pickups for grenades and he
                     gameManager.instance.getPickupFailUI().SetActive(true);
                 }
             }
+            else { // backpack
+                playerMovement.player.addMarkers(5);
+                playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.itemPickupA, audioManager.instance.itemPickupVol);
+                Destroy(gameObject);
+            }
         }
     }
 

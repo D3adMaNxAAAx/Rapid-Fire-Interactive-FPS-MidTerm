@@ -70436,6 +70436,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tips Menu
       objectReference: {fileID: 0}
+    - target: {fileID: 3538202882839562712, guid: d775e1859ae756e408fbb8170173effc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3823505283160263270, guid: d775e1859ae756e408fbb8170173effc, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -70515,6 +70519,22 @@ PrefabInstance:
     - target: {fileID: 3823505283160263270, guid: d775e1859ae756e408fbb8170173effc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6456899507167161327, guid: d775e1859ae756e408fbb8170173effc, type: 3}
+      propertyPath: m_text
+      value: "Choose your loadout wisely. You can get more guns during the game,
+        but not the ones you don't select. \nHide when you are low on health. Your
+        health will slowly regenerate up to half health as long as you aren't taking
+        damage.\nThere are optional lost documents to find, which will further explain
+        how you got into this situation.\nFind guns and power ups in the warehouse,
+        as well as coins and XP from enemies to use in the shop and upgrade menu.\nThere
+        are 3 levels to the warehouse power, each requiring 3 power objects. Level
+        1 have the lights start to turn on. Level 2 the lights brighten and the store
+        menu becomes available. In level 1, you can place down red markers (if you
+        have them) to help keep track of where you have been.\nPower Ups:\nAttack:
+        Damage increased by 1.5x for 10 seconds\nHealth: Health regenerates 6 HP
+        a second for 5 seconds\nStamina: Stamina does not drain for 5 seconds\nShield:
+        Temporary extra health (25) for 10 seconds"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -70741,8 +70761,8 @@ PrefabInstance:
         shift to sprint\n\nDouble tap a movement key to dash in that direction\n\nUse
         Space to jump, ctrl to crouch\n\nUse right to click to zoom / focus your
         weapon \n\nUse left click to shoot your weapon, R to reload\n\nUse the scroll
-        wheel or 1-5 keys to switch weapons\n\nHit E to interact with things (pickup
-        item, open door)\n\nHit F to use a health potion, G to throw a grenade\n\nHit
+        wheel or 1-5 keys to switch weapons\n\nHit E to interact with things, P to
+        place marker\n\nHit F to use a health potion, G to throw a grenade\n\nHit
         Escape to pause, tab to open player journal"
       objectReference: {fileID: 0}
     m_RemovedComponents: []

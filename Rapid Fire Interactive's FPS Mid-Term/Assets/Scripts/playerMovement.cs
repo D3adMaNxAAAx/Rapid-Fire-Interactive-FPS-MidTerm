@@ -41,6 +41,8 @@ public class playerMovement : MonoBehaviour, IDamage
     [SerializeField] GameObject shotFlash;
     [SerializeField] LineRenderer laserSight;
     private GunInventoryManager gunInventoryManager;
+    [SerializeField] int markers;
+    [SerializeField] GameObject Marker;
 
     bool isSniper = false;
     bool isLaser = false;
@@ -174,6 +176,7 @@ public class playerMovement : MonoBehaviour, IDamage
             movement();
             HandleCrouch();
             DashAll(); // at bottom of file, only does anything if specific key is pressed
+            useMarker(); // at bottom of file, only does anything if specific key is pressed
 
             if (readyToHeal) {  // HEALING STARTS HERE, READY TO HEAL DETERMINATION STARTS IN TAKEDAMAGE()
                 StartCoroutine(healing());  // recursive method
@@ -266,7 +269,6 @@ public class playerMovement : MonoBehaviour, IDamage
         // Movement Controller
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
         controller.Move(moveDir * speed * Time.deltaTime);
-       
 
         // Stamina Recovery
         if (stamina < staminaOrig && !isSprinting && !isRecovering)
@@ -274,7 +276,6 @@ public class playerMovement : MonoBehaviour, IDamage
 
         // Jump Controller
         if (Input.GetButtonDown("Jump") && jumpCounter < maxJumps) {
-            storeManager.instance.giveLaserRifle();
             jumpCounter++;
             playerVel.y = jumpSpeed;
             aud.PlayOneShot(audioManager.instance.audJump[Random.Range(0, audioManager.instance.audJump.Length)], audioManager.instance.audJumpVol);
@@ -1197,6 +1198,14 @@ public class playerMovement : MonoBehaviour, IDamage
         FindObjectOfType<GunInventoryManager>().UpdateGunInventoryUI();
     }
 
+    public void useMarker() {
+        if (Input.GetButtonDown("PlaceMarker")) {
+            if (markers > 0 && isCrouching == false && jumpCounter == 0) {
+                Instantiate(Marker, new Vector3(transform.position.x, transform.position.y - 0.65f, transform.position.z), Quaternion.Euler(90, 0, 0));
+            }
+        }
+    }
+
     public void DashAll() {
         StartCoroutine(DashW());
         StartCoroutine(DashA());
@@ -1388,6 +1397,10 @@ public class playerMovement : MonoBehaviour, IDamage
     }
 
     // Setters
+    public void addMarkers(int newMarkers) {
+        markers += newMarkers;
+    }
+
     public void setHP(float newHP) {
         HP = newHP;
     }
