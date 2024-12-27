@@ -32,6 +32,11 @@ public class collectablePickup : MonoBehaviour {
                 Destroy(gameObject);
                 return;
             }
+            else if (type == ObjectType.shieldBuff) {
+                if (gameManager.instance.getPlayerScript().shieldBuff() == false) { // applying shield buff
+                    return; // don't destroy powerup because it wasn't used
+                }
+            }
             PlayPickupSound(pickUpA, audioManager.instance.itemPickupVol);
             if (type == ObjectType.secret) {
                 playerStats.Stats.collectableFound();
@@ -42,11 +47,8 @@ public class collectablePickup : MonoBehaviour {
             else if (type == ObjectType.attackBuff) {
                 gameManager.instance.getPlayerScript().callBuff(1, buffIcon); // 10 seconds of 1.5x damage
             }
-            else if (type == ObjectType.shieldBuff) {
-                gameManager.instance.getPlayerScript().callBuff(3, buffIcon); // 10 seconds of 25 extra health (shield)
-            }
             else if (type == ObjectType.staminaBuff) {
-                gameManager.instance.getPlayerScript().callBuff(4, buffIcon); // 10 seconds of 1.5x damage
+                gameManager.instance.getPlayerScript().callBuff(3, buffIcon); // 10 seconds of 1.5x damage
             }
         }
         else {

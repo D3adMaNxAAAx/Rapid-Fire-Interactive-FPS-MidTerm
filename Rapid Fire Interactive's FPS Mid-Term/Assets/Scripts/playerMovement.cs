@@ -113,7 +113,7 @@ public class playerMovement : MonoBehaviour, IDamage
     int startingLives;
 
     bool shieldOn = false;
-    float shieldHP = 25;
+    float shieldHP = 0;
 
     // Checks
     bool leveledUp = false;
@@ -741,9 +741,6 @@ public class playerMovement : MonoBehaviour, IDamage
                 StartCoroutine(healBuff(1));
             }
             else if (buff == 3) {
-                StartCoroutine(shieldBuff(1));
-            }
-            else if (buff == 4) {
                 StartCoroutine(staminaBuff(1));
             }
         }
@@ -757,9 +754,6 @@ public class playerMovement : MonoBehaviour, IDamage
                 StartCoroutine(healBuff(2));
             }
             else if (buff == 3) {
-                StartCoroutine(shieldBuff(2));
-            }
-            else if (buff == 4) {
                 StartCoroutine(staminaBuff(2));
             }
         }
@@ -793,23 +787,24 @@ public class playerMovement : MonoBehaviour, IDamage
         }
     }
 
-    IEnumerator shieldBuff(int slot) {
+    public bool shieldBuff() {
+        if (shieldHP == 50) {
+            return false; // can't add shield
+        } // else
+        shieldHP += 25;
+        if (shieldHP > 50) {
+            shieldHP = 50;
+        }
         gameManager.instance.getShieldBar().SetActive(true);
+        gameManager.instance.getShieldText().text = shieldHP.ToString("F0");
+        gameManager.instance.getShieldBarImage().fillAmount = shieldHP / 50;
         shieldOn = true;
-        yield return new WaitForSeconds(10);
-        setShieldOff();
-        if (slot == 1) {
-            buffActive = false;
-            gameManager.instance.getBuffUI().SetActive(false);
-        }
-        else {
-            gameManager.instance.getBuffUI2().SetActive(false);
-        }
+        return true;
     }
 
     public void setShieldOff() {
         shieldOn = false;
-        shieldHP = 50;
+        shieldHP = 0;
         gameManager.instance.getShieldBar().SetActive(false);
     }
 
@@ -872,7 +867,7 @@ public class playerMovement : MonoBehaviour, IDamage
         gameManager.instance.getHPText().text = HP.ToString("F0");
         if (shieldOn) {
             gameManager.instance.getShieldText().text = shieldHP.ToString("F0");
-            gameManager.instance.getShieldBarImage().fillAmount = shieldHP / 25;
+            gameManager.instance.getShieldBarImage().fillAmount = shieldHP / 50;
         }
         gameManager.instance.getStamBar().fillAmount = (float)stamina / staminaOrig;
         gameManager.instance.getStamText().text = stamina.ToString("F0");

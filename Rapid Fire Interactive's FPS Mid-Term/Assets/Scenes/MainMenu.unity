@@ -2749,6 +2749,7 @@ MonoBehaviour:
   itemPickupA: {fileID: 0}
   coinPickupA: {fileID: 0}
   docPickupA: {fileID: 0}
+  placeA: {fileID: 0}
   audEnemySteps: []
   audStepVol: 0
   audJumpVol: 0
@@ -2770,6 +2771,7 @@ MonoBehaviour:
   itemPickupVol: 0
   coinPickupVol: 0
   docPickupVol: 0
+  placeVol: 0
   audEnemyStepVol: 0
   audHealVol: 0
   audReloadVol: 0
@@ -7923,7 +7925,7 @@ MonoBehaviour:
     markers (if you have them) to help keep track of where you have been.\nPower
     Ups:\nAttack: Damage increased by 1.5x for 10 seconds\nHealth: Health regenerates
     6 HP a second for 5 seconds\nStamina: Stamina does not drain for 5 seconds\nShield:
-    Temporary extra health (25) for 10 seconds"
+    Temporary extra health (25)"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
