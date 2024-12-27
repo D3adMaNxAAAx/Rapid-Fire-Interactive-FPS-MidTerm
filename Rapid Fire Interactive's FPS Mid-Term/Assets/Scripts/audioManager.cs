@@ -23,6 +23,7 @@ public class audioManager : MonoBehaviour
     [SerializeField] public AudioClip itemPickupA;
     [SerializeField] public AudioClip coinPickupA;
     [SerializeField] public AudioClip docPickupA;
+    [SerializeField] public AudioClip placeA;
 
     [Header("-- Enemy Sounds --")]
     [SerializeField] public AudioClip[] audEnemySteps;
@@ -58,6 +59,7 @@ public class audioManager : MonoBehaviour
     [Range(0, 1)] [SerializeField] public float itemPickupVol;
     [Range(0, 1)] [SerializeField] public float coinPickupVol;
     [Range(0, 1)][SerializeField] public float docPickupVol;
+    [Range(0, 1)][SerializeField] public float placeVol;
 
     [Header("-- Enemy Volume --")]
     [Range(0, 1)] [SerializeField] public float audEnemyStepVol;

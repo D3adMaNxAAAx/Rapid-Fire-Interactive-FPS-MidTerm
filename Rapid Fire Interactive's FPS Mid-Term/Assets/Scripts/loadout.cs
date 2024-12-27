@@ -116,8 +116,8 @@ public class loadout : MonoBehaviour {
 
         playerMovement.player.getGunList().Clear();
 
-        playerMovement.player.getGunStats(HandCannon);
         playerMovement.player.getGunStats(AR);
+        playerMovement.player.getGunStats(HandCannon);
 
         playerMovement.player.addToGrenades(Gernade1);
         playerMovement.player.addToHeals(Health1);

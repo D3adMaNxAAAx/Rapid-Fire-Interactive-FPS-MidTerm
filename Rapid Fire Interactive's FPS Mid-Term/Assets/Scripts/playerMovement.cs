@@ -868,31 +868,25 @@ public class playerMovement : MonoBehaviour, IDamage
     }
 
     public void updatePlayerUI() { // Update information on the UI
-        // Health Info
         gameManager.instance.getHPBar().fillAmount = HP / HPOrig;
         gameManager.instance.getHPText().text = HP.ToString("F0");
         if (shieldOn) {
             gameManager.instance.getShieldText().text = shieldHP.ToString("F0");
             gameManager.instance.getShieldBarImage().fillAmount = shieldHP / 25;
         }
-        // Stamina Info
         gameManager.instance.getStamBar().fillAmount = (float)stamina / staminaOrig;
         gameManager.instance.getStamText().text = stamina.ToString("F0");
-        // Attack Info
-        if (guns.Count > 0)
-        {
+        if (guns.Count > 0) {
             gameManager.instance.getAmmoBar().fillAmount = (float)getCurGun().ammoCur / getCurGun().ammoMag;
             gameManager.instance.getAmmoText().text = getAmmo().ToString("F0") + " / " + getAmmoMag().ToString("F0");
             gameManager.instance.getAmmoReserveText().text = getAmmoMax().ToString("F0");
         }
-        // XP Info
         gameManager.instance.getXPBar().fillAmount = (float)playerXP / playerXPMax;
         gameManager.instance.getXPText().text = playerXP.ToString("F0") + " / " + playerXPMax.ToString("F0");
+        gameManager.instance.getMarkersUI().text = markers.ToString("F0");
     }
     
-    // Tracks the player's xp and levels them up and gives them a skill point
-    public void levelTracker()
-    {
+    public void levelTracker() { // Tracks the player's xp and levels them up and gives them a skill point
         // Check if player XP meets requirement to level up (XP Max)
         if (playerXP >= playerXPMax && playerLevel < 50)
         {
@@ -1140,7 +1134,7 @@ public class playerMovement : MonoBehaviour, IDamage
         
     }
 
-    void changeGun() {
+    public void changeGun() {
         float damTemp = guns[gunPos].damage * damageUpgradeMod;
         damage = damTemp;
         range = guns[gunPos].range;
@@ -1201,7 +1195,10 @@ public class playerMovement : MonoBehaviour, IDamage
     public void useMarker() {
         if (Input.GetButtonDown("PlaceMarker")) {
             if (markers > 0 && isCrouching == false && jumpCounter == 0) {
+                markers--;
                 Instantiate(Marker, new Vector3(transform.position.x, transform.position.y - 0.65f, transform.position.z), Quaternion.Euler(90, 0, 0));
+                gameManager.instance.getMarkersUI().text = markers.ToString("F0");
+                aud.PlayOneShot(audioManager.instance.placeA, audioManager.instance.placeVol);
             }
         }
     }
@@ -1399,6 +1396,7 @@ public class playerMovement : MonoBehaviour, IDamage
     // Setters
     public void addMarkers(int newMarkers) {
         markers += newMarkers;
+        gameManager.instance.getMarkersUI().text = markers.ToString("F0");
     }
 
     public void setHP(float newHP) {
@@ -1446,9 +1444,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
     public gunStats getCurGun() {
         return guns[gunPos];}
-
-    public void setCurrGun(int _gunPos)
-    {
+    public void setCurrGun(int _gunPos) {
         gunPos = _gunPos;
         changeGun();
     }

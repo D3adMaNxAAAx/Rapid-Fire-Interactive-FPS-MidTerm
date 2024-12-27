@@ -73,8 +73,12 @@ public class gameManager : MonoBehaviour {
     [SerializeField] Image ammoTrackerBar;
     [SerializeField] TMP_Text ammoText; // This text will include the current ammo loaded & the magazine size.
     [SerializeField] TMP_Text ammoReserveText; // This text will show the remaining ammo the player has in reserve. (NOT the capacity)
-    [SerializeField] TMP_Text healsLeft; // used in playerMovement addToHeals
-    [SerializeField] TMP_Text grenadesLeft; // used in playerMovement addToGrenades
+    [SerializeField] GameObject healsUI;
+    [SerializeField] GameObject grenadesUI;
+    [SerializeField] GameObject markersUI;
+    [SerializeField] TMP_Text healsLeft;
+    [SerializeField] TMP_Text grenadesLeft;
+    [SerializeField] TMP_Text markersLeft;
     [SerializeField] Image playerReticle;
     [SerializeField] TMP_Text levelTracker;
     [SerializeField] GameObject sniperScope;
@@ -367,33 +371,33 @@ public class gameManager : MonoBehaviour {
             playerReticle.rectTransform.sizeDelta = reticleSizeOrig;
         }
     }
-    public void displayUI(bool state)
-    {
+    public void displayUI(bool state) {
         displayPlayerHP(state);
         displayAmmoUI(state);
         displayEnemyCount(state);
         displayPlayerStam(state);
         displayXPTracker(state);
+        displayItemUIs(state);
     }
-
     public void displayPlayerHP(bool state) {
         getHPBar().gameObject.SetActive(state);
         getHealthUI().gameObject.SetActive(state); }
-
     public void displayAmmoUI(bool state) {
         getAmmoUI().gameObject.SetActive(state); }
-
     public void displayPlayerStam(bool state) {
         getStamBar().gameObject.SetActive(state);
         getStamUI().gameObject.SetActive(state); }
-
     public void displayXPTracker(bool state) {
         getXPBar().gameObject.SetActive(state);
         getXpUI().gameObject.SetActive(state); }
-
     public void displayEnemyCount(bool state) {
         getEnemyRemainCount().gameObject.SetActive(state);
         getEnemyRemainLabel().gameObject.SetActive(state); }
+    public void displayItemUIs(bool state) {
+        healsUI.SetActive(state);
+        grenadesUI.gameObject.SetActive(state);
+        markersUI.gameObject.SetActive(state);
+    }
 
     /// each menu needs another GameObject var nameMenuFirst for arrow key support in the menus, drag the first button in that menu into this slot in gameManager
     public void openSettingsMenu() {
@@ -537,6 +541,7 @@ public class gameManager : MonoBehaviour {
             displayUI(true);
             playerJournal.Journal.openJournal();
             playerJournal.Journal.menuObj();
+            playerMovement.player.setCurrGun(0);
         }
         else {
             startFailMessage.SetActive(true);
@@ -786,8 +791,8 @@ public class gameManager : MonoBehaviour {
     public Image getXPBar() { return XPBar; }
 
     public TMP_Text getHealsUI() { return healsLeft; }
-
     public TMP_Text getGrenadesUI() { return grenadesLeft; }
+    public TMP_Text getMarkersUI() { return markersLeft; }
 
     public void setStamBar(Image newStamBar) { stamBar = newStamBar; }
 
