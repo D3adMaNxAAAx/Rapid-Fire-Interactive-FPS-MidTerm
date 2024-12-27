@@ -19,21 +19,21 @@ public class collectablePickup : MonoBehaviour {
     private void OnTriggerEnter(Collider otherObject) {
         if (otherObject.CompareTag("Player")) {
             if (type == ObjectType.coinDrop) {
-                gameManager.instance.getPlayerScript().setCoins(2); // Add coins to player amount
+                playerMovement.player.setCoins(2); // Add coins to player amount
                 playerStats.Stats.gotMoney(2); // each coin pickup is 2 coins
                 playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.coinPickupA, audioManager.instance.coinPickupVol);
                 Destroy(gameObject);
                 return;
             }
             else if (type == ObjectType.coinPickup) {
-                gameManager.instance.getPlayerScript().setCoins(1);
+                playerMovement.player.setCoins(1);
                 playerStats.Stats.gotMoney(1);
                 playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.coinPickupA, audioManager.instance.coinPickupVol);
                 Destroy(gameObject);
                 return;
             }
             else if (type == ObjectType.shieldBuff) {
-                if (gameManager.instance.getPlayerScript().shieldBuff() == false) { // applying shield buff
+                if (playerMovement.player.shieldBuff() == false) { // applying shield buff
                     return; // don't destroy powerup because it wasn't used
                 }
             }
@@ -42,13 +42,13 @@ public class collectablePickup : MonoBehaviour {
                 playerStats.Stats.collectableFound();
             }
             else if (type == ObjectType.healBuff) {
-                gameManager.instance.getPlayerScript().callBuff(2, buffIcon); // 5 seconds of 10 hp per second
+                playerMovement.player.callBuff(2, buffIcon); // 5 seconds of 10 hp per second
             }
             else if (type == ObjectType.attackBuff) {
-                gameManager.instance.getPlayerScript().callBuff(1, buffIcon); // 10 seconds of 1.5x damage
+                playerMovement.player.callBuff(1, buffIcon); // 10 seconds of 1.5x damage
             }
             else if (type == ObjectType.staminaBuff) {
-                gameManager.instance.getPlayerScript().callBuff(3, buffIcon); // 10 seconds of 1.5x damage
+                playerMovement.player.callBuff(3, buffIcon); // 10 seconds of 1.5x damage
             }
         }
         else {
