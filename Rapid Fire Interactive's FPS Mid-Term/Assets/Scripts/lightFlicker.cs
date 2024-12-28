@@ -9,19 +9,18 @@ using UnityEngine;
 public class lightFlicker : MonoBehaviour, IInteractable
 {
     // Serialized Member Fields used for particular 
-    [SerializeField] bool doFlicker = false;
     [Range(1, 100)] [SerializeField] float percentFlicker;
     [SerializeField] GameObject lightSys = null;
     [SerializeField] GameObject powerSys = null;
     [SerializeField] Light[] lights = null;
     [SerializeField] bool level2;
+    [SerializeField] bool testing = false;
 
     // Power Variables
     [SerializeField] int pwrLvl;
 
     // Light Variables
     Light _light; // This was previously named light which was the same name of a variable it was inheriting from.
-    float lightIntensity;
     int lightCount;
 
     // Random # Light Variables
@@ -32,233 +31,176 @@ public class lightFlicker : MonoBehaviour, IInteractable
     static bool foundPower = false;
     bool isFlickering = false;
     bool waitBool = false;    
-    bool isOn;
+    // bool isOn;
     bool safeAccess;
 
-    private void Awake()
-    {
-        if (lightSys == null)
-        {
+    private void Awake() {
+        if (lightSys == null) {
             _light = this.gameObject.GetComponentInChildren<Light>();
-            if (_light != null)
-                lightIntensity = _light.intensity;
-            if (level2 == false) {
-                for (int i = 0; i < lightCount - 1; ++i) {
-                    lights[i].range = 35;
-                }
-            }
         }
-        else if (lightSys != null)
-        { 
+        else if (lightSys != null) { 
             lights = lightSys.gameObject.GetComponentsInChildren<Light>();
             lightCount = lights.Count();
 
-            for (int i = 0; i < lightCount - 1; ++i)
-            {
-                lights[i].enabled = false;
+            for (int i = 0; i < lightCount - 1; ++i) {
+                if (level2 == false) {
+                    lights[i].range = 20;
+                }
+                lights[i].intensity = 0;
+                lights[i].enabled = false; // starting all lights off
             }
         }
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        if (powerSys == null)
-        {
+    void Update() {
+        if (powerSys == null) {
             randFlickSpeed = UnityEngine.Random.Range(0.2f, 1.5f);
-            if (!waitBool)
+            if (!waitBool) {
                 StartCoroutine(getNewNumber());
-            if (pwrLvl < 3)
+            }
+            /*if (pwrLvl < 3)
                 flickerLight();
             else
-                StopCoroutine(lightAction());
-        }
-        else if (powerSys != null && isOn == true) {
+                StopCoroutine(lightAction());*/
+            flickerLight();
+        } /// below for testing:
+        else if (testing) {
             powerStages();
+            testing = false;
         }
-        powerStages();
+        /*else if (isOn == true && pwrLvl != 1) { /// adjust 
+            powerStages();
+        }*/
+        /*else {
+            powerStages();
+        }*/
     }
 
-    public void flickerLight()
-    {
-        if(doFlicker && !isFlickering)
-        {
-            if(randNum <= percentFlicker)
-            {
+    public void flickerLight() {
+        if(!isFlickering && (_light.intensity != 0 && _light.intensity != 1.25f)) { // 1.25 is power level 3 intensity, so no flicker
+            if(randNum <= percentFlicker) {
                 StartCoroutine(lightAction());
             }
         }
     }
 
-    public bool getWait()
-    { return waitBool; }
-
-    public void setRandFlickSpd(float randSpd)
-    { randFlickSpeed = randSpd; }
-
-    public void setFlicker(bool flicker)
-    { doFlicker = flicker; }
-
-    public void interact()
-    {
-        int calcPwrLvl = (int)Math.Floor((double)gameManager.instance.getPowerItems() / 3);
-
-        // Only fire off this method if the player has found enough for the next power level
-        if (calcPwrLvl > playerStats.Stats.getPWRLevel())
-        {
-            // Set pwrLvl to new pwrLvl
-            pwrLvl = calcPwrLvl;
-            playerStats.Stats.pwrLevel(calcPwrLvl);
-
-            // Play Audio
-            audioManager.instance.PlaySound(audioManager.instance.audPowerUp, audioManager.instance.audPowerUpVol);
-
-            // Show the power popup
-            StartCoroutine(flashPowerPopup());
-
-        } else
-        {
-            if (calcPwrLvl < 3)
-                StartCoroutine(flashRepair(remainingItems()));
+    IEnumerator lightAction() {
+        if (lightSys == null) {
+            isFlickering = true;
+            _light.enabled = true;
+            yield return new WaitForSeconds(randFlickSpeed);
+            _light.enabled = false;
+            yield return new WaitForSeconds(0.5f);
+            isFlickering = false;
         }
-
-        // Need to do powerStages to update booleans and the power stage.
-        if (powerSys != null)
-            powerStages();
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        // If interact menu isn't on, turn it on.
-        if (lightSys != null && pwrLvl < 3)
-        {
-            if (!gameManager.instance.getInteractUI().activeInHierarchy)
-                gameManager.instance.getInteractUI().SetActive(true);
-
-            if (other.CompareTag("Player"))
-            {
-                if (Input.GetButton("Interact")) { interact(); }
-            }
-        }
-        else
-        {
-            if (gameManager.instance.getInteractUI().activeInHierarchy)
-                gameManager.instance.getInteractUI().SetActive(false);
-        }
-    }
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        { foundPower = true; }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-            // Turn off the interact UI if the player isn't within range
-            if (gameManager.instance.getInteractUI().activeInHierarchy)
-                gameManager.instance.getInteractUI().SetActive(false);
-    }
-
-    int remainingItems()
-    {
-        int result = 0;
-
-        if (gameManager.instance.getPowerItems() != 0)
-            // Use the modulo since it's not 0.
-            result = 3 - (gameManager.instance.getPowerItems() % 3);
-        else
-            result = 3;
-        
-        return result;
     }
 
     void powerStages() {
         if (powerSys != null) {
             if (pwrLvl == 1) {
-                if (level2 == false) {
-                    for (int i = 0; i < lightCount - 1; ++i) {
-                        lights[i].intensity = 1.5f;
-                    }
+                for (int i = 0; i < lightCount - 1; ++i) {
+                    lights[i].enabled = true;
+                    lights[i].intensity = 0.5f;
                 }
-                else {
-                    for (int i = 0; i < lightCount - 1; ++i) {
-                        lights[i].intensity = 0.5f;
-                    }
-                }
-                setRandFlickSpd(UnityEngine.Random.Range(0.2f, 1.5f));
                 if (!getWait())
                     StartCoroutine(getNewNumber());
-                flickerLight();
-                setFlicker(true);
             }
-            if (pwrLvl == 2) {
-                if (level2 == false) {
-                    for (int i = 0; i < lightCount - 1; ++i) {
-                        lights[i].intensity = 2.5f;
-                    }
+            else if (pwrLvl == 2) {
+                for (int i = 0; i < lightCount - 1; ++i) {
+                    lights[i].intensity = 0.75f;
                 }
-                else {
-                    for (int i = 0; i < lightCount - 1; ++i) {
-                        lights[i].intensity = 0.75f;
-                    }
-                }
-                setRandFlickSpd(UnityEngine.Random.Range(0.2f, 1.5f));
                 if (!getWait())
                     StartCoroutine(getNewNumber());
-                flickerLight();
-                setFlicker(true);
             }
-
-            if (pwrLvl == 3) {
-                // Copied pwr lvl 1 code just for an indicator that it's actually working.
-                // Feel free to change this later.
-                setFlicker(false);
-                if (level2 == false) {
-                    for (int i = 0; i < lightCount - 1; ++i) {
-                        lights[i].intensity = 3.5f;
-                        lights[i].enabled = true;
-                    }
-                }
-                else {
-                    for (int i = 0; i < lightCount - 1; ++i) {
-                        lights[i].intensity = 1.25f;
-                        lights[i].enabled = true;
-                    }
+            else if (pwrLvl == 3) {
+                for (int i = 0; i < lightCount - 1; ++i) {
+                    lights[i].intensity = 1.25f;
+                    lights[i].enabled = true;
                 }
             }
 
-            // Check the power level and update things accordingly.
-            if (pwrLvl >= 1) 
-            {
-                // Grant access to the safe
-                if (!gameManager.instance.getPlayerScript().getSafeAccess())
+            if (pwrLvl >= 1) {
+                if (!gameManager.instance.getPlayerScript().getSafeAccess()) { // Grant access to the safe
                     gameManager.instance.getPlayerScript().setSafeAccess(true);
-
-                //if (!safeRoom.instance.getSafeAccess())
-                //    safeRoom.instance.setSafeAccess(true);
-
-                // Things will now turn on like the safe room door.
-                isOn = true;
+                }
+                //if (!safeRoom.instance.getSafeAccess()) { safeRoom.instance.setSafeAccess(true); }
+                // isOn = true; // Things will now turn on like the safe room door.
             }
         }
     }
 
-    public IEnumerator getNewNumber()
-    {
+    public IEnumerator getNewNumber() {
         waitBool = true;
         randNum = UnityEngine.Random.Range(0f, 100f);
         yield return new WaitForSeconds(1f);
         waitBool = false;
     }
 
-    public IEnumerator flashRepair(int _remainingItems)
-    {
+    public void interact() {
+        int calcPwrLvl = (int)Math.Floor((double)gameManager.instance.getPowerItems() / 3);
+        if (calcPwrLvl > playerStats.Stats.getPWRLevel()) { // Only fire off this method if the player has found enough for the next power level
+            pwrLvl = calcPwrLvl;             // Set pwrLvl to new pwrLvl
+            playerStats.Stats.pwrLevel(calcPwrLvl);
+            audioManager.instance.PlaySound(audioManager.instance.audPowerUp, audioManager.instance.audPowerUpVol);
+            StartCoroutine(flashPowerPopup());
+
+        } 
+        else {
+            if (calcPwrLvl < 3) {
+                StartCoroutine(flashRepair(remainingItems()));
+            }
+        }
+        if (powerSys != null) {
+            powerStages();
+        }
+    }
+
+    private void OnTriggerStay(Collider other) {
+        if (lightSys != null && pwrLvl < 3) {
+            if (!gameManager.instance.getInteractUI().activeInHierarchy) {
+                gameManager.instance.getInteractUI().SetActive(true);
+            }
+            if (other.CompareTag("Player")) {
+                if (Input.GetButton("Interact")) { interact(); }
+            }
+        }
+        else {
+            if (gameManager.instance.getInteractUI().activeInHierarchy) {
+                gameManager.instance.getInteractUI().SetActive(false);
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.CompareTag("Player")) { 
+            foundPower = true; 
+        }
+    }
+
+    private void OnTriggerExit(Collider other) {
+        if (gameManager.instance.getInteractUI().activeInHierarchy) {
+            gameManager.instance.getInteractUI().SetActive(false);
+        }
+    }
+
+    int remainingItems() {
+        int result = 0;
+        if (gameManager.instance.getPowerItems() != 0) {
+            result = 3 - (gameManager.instance.getPowerItems() % 3);
+        }
+        else {
+            result = 3;
+        }
+        return result;
+    }
+
+    public IEnumerator flashRepair(int _remainingItems) {
         gameManager.instance.getRepairWarning().gameObject.SetActive(true);
-        if (_remainingItems == 1)
-        {
+        if (_remainingItems == 1) {
             gameManager.instance.getRepairWarning().text = _remainingItems.ToString("F0") + " Repair Item needed until next power level!";
-        } else
-        {
+        } 
+        else {
             gameManager.instance.getRepairWarning().text = _remainingItems.ToString("F0") + " Repair Items needed until next power level!";
 
         }
@@ -266,50 +208,16 @@ public class lightFlicker : MonoBehaviour, IInteractable
         gameManager.instance.getRepairWarning().gameObject.SetActive(false);
     }
 
-    public IEnumerator flashPowerPopup()
-    {
+    public IEnumerator flashPowerPopup() {
         gameManager.instance.getPowerLevelPopup().SetActive(true);
         gameManager.instance.getPowerLevelText().text = "Level " + pwrLvl.ToString();
         yield return new WaitForSeconds(3f);
         gameManager.instance.getPowerLevelPopup().SetActive(false);
     }
 
-    IEnumerator lightAction()
-    {
-        if (lightSys == null && doFlicker)
-        {
-            isFlickering = true;
-            _light.intensity = 0f;
-            yield return new WaitForSeconds(randFlickSpeed);
-            _light.intensity = lightIntensity;
-            yield return new WaitForSeconds(0.5f);
-            isFlickering = false;
-        }
-        else
-        {
-            isFlickering = true;
-            for (int i = 0; i < lights.Count(); ++i)
-            {
-                lights[i].enabled = true;
-            }
-            yield return new WaitForSeconds(randFlickSpeed);
-            for (int i = 0; i < lights.Count(); ++i)
-            {
-                lights[i].enabled = false;
-            }
-            yield return new WaitForSeconds(0.5f);
-            isFlickering = false;
-        }
-    }
-
-    // Getters
-    static public bool getFoundPower()
-    { return foundPower; }
-    static public void setFoundPower(bool _state)
-    {
-        foundPower = _state;
-    }
-
-    // Setters
+    public bool getWait() { return waitBool; }
+    public void setRandFlickSpd(float randSpd) { randFlickSpeed = randSpd; }
+    static public bool getFoundPower() { return foundPower; }
+    static public void setFoundPower(bool _state) { foundPower = _state; }
     public bool getSafeAccess() { return safeAccess; }
 }
