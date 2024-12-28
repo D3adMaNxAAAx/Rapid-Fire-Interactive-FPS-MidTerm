@@ -46,7 +46,9 @@ public class lightFlicker : MonoBehaviour, IInteractable
                 if (level2 == false) {
                     lights[i].range = 20;
                 }
-                lights[i].intensity = 0;
+                if (lights[i].type != LightType.Spot) { // don't change spotlight intensity
+                    lights[i].intensity = 0;
+                }
                 lights[i].enabled = false; // starting all lights off
             }
         }
@@ -59,22 +61,12 @@ public class lightFlicker : MonoBehaviour, IInteractable
             if (!waitBool) {
                 StartCoroutine(getNewNumber());
             }
-            /*if (pwrLvl < 3)
-                flickerLight();
-            else
-                StopCoroutine(lightAction());*/
             flickerLight();
         } /// below for testing:
         else if (testing) {
             powerStages();
             testing = false;
         }
-        /*else if (isOn == true && pwrLvl != 1) { /// adjust 
-            powerStages();
-        }*/
-        /*else {
-            powerStages();
-        }*/
     }
 
     public void flickerLight() {
@@ -101,21 +93,27 @@ public class lightFlicker : MonoBehaviour, IInteractable
             if (pwrLvl == 1) {
                 for (int i = 0; i < lightCount - 1; ++i) {
                     lights[i].enabled = true;
-                    lights[i].intensity = 0.5f;
+                    if (lights[i].type != LightType.Spot) { // don't change spotlight intensity
+                        lights[i].intensity = 0.5f;
+                    }
                 }
                 if (!getWait())
                     StartCoroutine(getNewNumber());
             }
             else if (pwrLvl == 2) {
                 for (int i = 0; i < lightCount - 1; ++i) {
-                    lights[i].intensity = 0.75f;
+                    if (lights[i].type != LightType.Spot) { // don't change spotlight intensity
+                        lights[i].intensity = 0.75f;
+                    }
                 }
                 if (!getWait())
                     StartCoroutine(getNewNumber());
             }
             else if (pwrLvl == 3) {
                 for (int i = 0; i < lightCount - 1; ++i) {
-                    lights[i].intensity = 1.25f;
+                    if (lights[i].type != LightType.Spot) { // don't change spotlight intensity
+                        lights[i].intensity = 1.25f;
+                    }
                     lights[i].enabled = true;
                 }
             }

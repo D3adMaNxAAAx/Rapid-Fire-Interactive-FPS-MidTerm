@@ -177,7 +177,7 @@ public class gameManager : MonoBehaviour {
     // Update is called once per frame
     void Update() { 
         if (menuActive != menuLoadout) {
-            if (Input.GetButtonDown("Cancel") && menuActive == null && getPlatform() != RuntimePlatform.WebGLPlayer) { //Check if player is playing on platform that supports ESC (which is "cancel")
+            if (Input.GetButtonDown("Cancel") && getPlatform() != RuntimePlatform.WebGLPlayer) { //Check if player is playing on platform that supports ESC (which is "cancel")
                 scopeZoomOut();
                 if (menuActive == null) {
                     // Turn off the interact UI if paused

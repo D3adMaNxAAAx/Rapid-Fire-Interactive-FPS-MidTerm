@@ -24,7 +24,7 @@ public class playerMovement : MonoBehaviour, IDamage
     // Player modifiers
     // -- Attributes --
     [Header("-- Player Attributes --")]
-    [SerializeField] float HP;
+    [SerializeField] float HP = 100;
     [SerializeField] float speed;
     [SerializeField] int stamina;
     [SerializeField] int coins;
@@ -168,6 +168,7 @@ public class playerMovement : MonoBehaviour, IDamage
 
         gunInventoryManager = FindObjectOfType<GunInventoryManager>();
         objectPool = FindObjectOfType<projectilePool>();
+        HP = 100; // no clue why but all of a sudden whens starting from level 2 in editor the health was resetting to 0 and causing error
     }
 
     // Update is called once per frame
@@ -669,9 +670,12 @@ public class playerMovement : MonoBehaviour, IDamage
             }
         }
         if (buff == false) {
+            float currHP = HP;
             if ((HP / HPOrig) > .5) { // only heals to half HP
-                HP = (HPOrig / 2); // if HP goes over half, reset to half
                 readyToHeal = false; // HEALING OVER
+                 if (((currHP - 3) / HPOrig) <= .5) { // accounting for bug where you use heal potion to go over half while healing over time and then resets your hp to half
+                    HP = (HPOrig / 2); // if HP goes over half, reset to half
+                 }
             }
             else {
                 StartCoroutine(healing()); // KEEP HEALING IF NOT AT HALF HP (RECURSION)
@@ -695,7 +699,7 @@ public class playerMovement : MonoBehaviour, IDamage
     IEnumerator noDamageTime() { // time till healing (if no damage was taken)
         float currentHP = HP;
         yield return new WaitForSeconds(3);
-        if (currentHP >= HP) { // PLAYER CAN START HEALING (SEE UPDATE())
+        if (currentHP <= HP) { // PLAYER CAN START HEALING (SEE UPDATE())
             stopHealing = false;
             readyToHeal = true;
         }
