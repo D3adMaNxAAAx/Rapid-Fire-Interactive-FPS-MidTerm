@@ -91,16 +91,16 @@ public class playerJournal :  MonoBehaviour {
     }
 
     void currentMoneyCounter() {
-        currentMoney.text = gameManager.instance.getPlayerScript().getCoins().ToString("F0");
+        currentMoney.text = playerMovement.player.getCoins().ToString("F0");
     }
 
     void updateJournalStats() {
 
-        healthStat.text = gameManager.instance.getPlayerScript().getHPOrig().ToString("F0");
-        stamStat.text = gameManager.instance.getPlayerScript().getStaminaOrig().ToString("F0");
-        speedStat.text = gameManager.instance.getPlayerScript().getSpeed().ToString("F0");
-        dmgStat.text = gameManager.instance.getPlayerScript().getDamage().ToString("F0");
-        xpStat.text = gameManager.instance.getPlayerScript().getXP().ToString("F0");
+        healthStat.text = playerMovement.player.getHPOrig().ToString("F0");
+        stamStat.text = playerMovement.player.getStaminaOrig().ToString("F0");
+        speedStat.text = playerMovement.player.getSpeed().ToString("F0");
+        dmgStat.text = playerMovement.player.getDamage().ToString("F0");
+        xpStat.text = playerMovement.player.getXP().ToString("F0");
         repairToolHeld.text = playerStats.Stats.getPowerObjects().ToString("F0");
         lostDocsHeld.text = playerStats.Stats.getNotesFound().ToString("F0");
         idBadgesHeld.text = playerStats.Stats.getBadgesFound().ToString("F0");

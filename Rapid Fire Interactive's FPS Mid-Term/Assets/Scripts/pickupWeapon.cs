@@ -34,7 +34,7 @@ public class pickupWeapon : MonoBehaviour
     {
         isPickedUp = true;
         playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.itemPickupA, audioManager.instance.itemPickupVol);
-        gameManager.instance.getPlayerScript().getGunStats(gun);
+        playerMovement.player.getGunStats(gun);
 
         // Hide interact menu
         if (gameManager.instance.getInteractUI().activeInHierarchy)

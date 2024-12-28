@@ -19,7 +19,7 @@ public class GunInventoryManager : MonoBehaviour
 
     public void UpdateGunInventoryUI()
     {
-            List<gunStats> guns = gameManager.instance.getPlayerScript().getGunList();
+            List<gunStats> guns = playerMovement.player.getGunList();
      
             for (int i = 0; i < guns.Count; i++)
             {
@@ -30,24 +30,24 @@ public class GunInventoryManager : MonoBehaviour
     public void hotkeyelection()
     {
         if (Input.GetButtonDown("Hotkey1"))
-        { gameManager.instance.getPlayerScript().setCurrGun(0); }
+        { playerMovement.player.setCurrGun(0); }
         if (Input.GetButtonDown("Hotkey2"))
-        { gameManager.instance.getPlayerScript().setCurrGun(1); }
+        { playerMovement.player.setCurrGun(1); }
         if (Input.GetButtonDown("Hotkey3"))
-        { gameManager.instance.getPlayerScript().setCurrGun(2); }
+        { playerMovement.player.setCurrGun(2); }
         if (Input.GetButtonDown("Hotkey4"))
-        { gameManager.instance.getPlayerScript().setCurrGun(3); }
+        { playerMovement.player.setCurrGun(3); }
         if (Input.GetButtonDown("Hotkey5"))
-        { gameManager.instance.getPlayerScript().setCurrGun(4); }
+        { playerMovement.player.setCurrGun(4); }
         if (Input.GetButtonDown("Hotkey6"))
-        { gameManager.instance.getPlayerScript().setCurrGun(5); }
+        { playerMovement.player.setCurrGun(5); }
         if (Input.GetButtonDown("Hotkey7"))
-        { gameManager.instance.getPlayerScript().setCurrGun(6); }
+        { playerMovement.player.setCurrGun(6); }
         if (Input.GetButtonDown("Hotkey8"))
-        { gameManager.instance.getPlayerScript().setCurrGun(7); }
+        { playerMovement.player.setCurrGun(7); }
         if (Input.GetButtonDown("Hotkey9"))
-        { gameManager.instance.getPlayerScript().setCurrGun(8); }
+        { playerMovement.player.setCurrGun(8); }
         if (Input.GetButtonDown("Hotkey10"))
-        { gameManager.instance.getPlayerScript().setCurrGun(9); }
+        { playerMovement.player.setCurrGun(9); }
     }
 }

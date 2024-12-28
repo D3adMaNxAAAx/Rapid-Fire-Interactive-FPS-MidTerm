@@ -58,15 +58,15 @@ public class chests : MonoBehaviour, IInteractable
     public void giveLoot()
     {
         // Give player loot
-        gameManager.instance.getPlayerScript().setCoins(5);
+        playerMovement.player.setCoins(5);
         playerStats.Stats.gotMoney(5);
-        gameManager.instance.getPlayerScript().addAmmo(ammo);
-        gameManager.instance.getPlayerScript().addToGrenades(grenade);
+        playerMovement.player.addAmmo(ammo);
+        playerMovement.player.addToGrenades(grenade);
         if (heals != 0)
         {
             for (int i = 0; i < heals; i++)
             {
-                gameManager.instance.getPlayerScript().addToHeals(heal);
+                playerMovement.player.addToHeals(heal);
             }
         }
 
@@ -74,7 +74,7 @@ public class chests : MonoBehaviour, IInteractable
         Instantiate(powerUp, new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z), Quaternion.identity);
         
         // Update UI
-        gameManager.instance.getPlayerScript().updatePlayerUI();
+        playerMovement.player.updatePlayerUI();
     }
 
     // Method for triggering the chest to open

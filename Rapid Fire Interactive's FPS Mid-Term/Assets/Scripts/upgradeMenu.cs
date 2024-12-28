@@ -99,7 +99,7 @@ public class upgradeMenu : MonoBehaviour {
         bool _state;
 
         // Check if the player has enough to make the purchase
-        if (gameManager.instance.getPlayerScript().getSkillPoints() >= _cost)
+        if (playerMovement.player.getSkillPoints() >= _cost)
             _state = true; // Player can afford the purchase, return true
         else _state = false;
 
@@ -110,7 +110,7 @@ public class upgradeMenu : MonoBehaviour {
     {
         // Designated function just in case transactions may be more deliberate
         // Method is called if canAfford returns true so player can afford something
-        gameManager.instance.getPlayerScript().setSkillPoints(gameManager.instance.getPlayerScript().getSkillPoints() - _cost);
+        playerMovement.player.setSkillPoints(playerMovement.player.getSkillPoints() - _cost);
         playerStats.Stats.upgraded();
 
         // Update Skill Points text

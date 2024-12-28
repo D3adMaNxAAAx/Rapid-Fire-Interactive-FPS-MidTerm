@@ -76,7 +76,7 @@ public class SlownessEffect : StatusEffects
 
         private IEnumerator InflictBurn(GameObject target)
         {
-            while (timer < duration && gameManager.instance.getPlayerScript().getHP() != 0)
+            while (timer < duration && playerMovement.player.getHP() != 0)
             {
                 if (target.TryGetComponent(out IDamage damageable))
                 {
@@ -151,7 +151,7 @@ public class ToxicEffect : StatusEffects
 
         private IEnumerator InflictBleed(GameObject target)
         {
-            while (timer < duration && gameManager.instance.getPlayerScript().getHP() != 0)
+            while (timer < duration && playerMovement.player.getHP() != 0)
             {
                 if (target.TryGetComponent(out IDamage damageable))
                 {

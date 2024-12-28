@@ -96,7 +96,7 @@ public class CameraMovement : MonoBehaviour
         if (Input.GetMouseButton(1)) {
             if (gameManager.instance.getPauseStatus() == false) {
                 //isAiming = true;
-                if (gameManager.instance.getPlayerScript().getIsSniper() == false) {
+                if (playerMovement.player.getIsSniper() == false) {
                     if (snapZoom) {
                         cam.fieldOfView = aimingFOV; //if snap Zoom Enabled zoom instantly
                     }

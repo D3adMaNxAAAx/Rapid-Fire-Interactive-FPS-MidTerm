@@ -56,12 +56,12 @@ public class safeRoom : MonoBehaviour, IInteractable {
             if (!gameManager.instance.getInteractUI().activeInHierarchy)
                 gameManager.instance.getInteractUI().SetActive(true);
 
-            if (Input.GetButton("Interact") && gameManager.instance.getPlayerScript().getSafeAccess() && playerStats.Stats.getBadgesFound() >= badgesNeeded)
+            if (Input.GetButton("Interact") && playerMovement.player.getSafeAccess() && playerStats.Stats.getBadgesFound() >= badgesNeeded)
             {
                 interact();
                 gameManager.instance.getInteractUI().SetActive(false);
             } 
-            else if (Input.GetButton("Interact") && !gameManager.instance.getPlayerScript().getSafeAccess())
+            else if (Input.GetButton("Interact") && !playerMovement.player.getSafeAccess())
             {
                 StartCoroutine(flashPowerWarning());
             } 

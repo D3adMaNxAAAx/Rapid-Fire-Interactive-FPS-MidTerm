@@ -13,7 +13,7 @@ public class itemPickup : MonoBehaviour { // handles pickups for grenades and he
             if (Input.GetButton("Interact")) {
                 if (healPotion != null) {
                     gameManager.instance.getInteractUI().SetActive(false);
-                    if (gameManager.instance.getPlayerScript().addToHeals(healPotion)) { // returns true if successfully added
+                    if (playerMovement.player.addToHeals(healPotion)) { // returns true if successfully added
                         playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.itemPickupA, audioManager.instance.itemPickupVol);
                         Destroy(gameObject);
                     }
@@ -23,7 +23,7 @@ public class itemPickup : MonoBehaviour { // handles pickups for grenades and he
                 }
                 else if (grenade != null) {
                     gameManager.instance.getInteractUI().SetActive(false);
-                    if (gameManager.instance.getPlayerScript().addToGrenades(grenade)) { // returns true if successfully added
+                    if (playerMovement.player.addToGrenades(grenade)) { // returns true if successfully added
                         playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.itemPickupA, audioManager.instance.itemPickupVol);
                         Destroy(gameObject);
                     }

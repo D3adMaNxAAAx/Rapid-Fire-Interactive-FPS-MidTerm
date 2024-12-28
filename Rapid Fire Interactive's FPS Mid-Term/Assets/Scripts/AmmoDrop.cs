@@ -30,7 +30,7 @@ public class AmmoDrop : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            gameManager.instance.getPlayerScript().addAmmo(ammoRefillPercent);
+            playerMovement.player.addAmmo(ammoRefillPercent);
             playerMovement.player.getAudioLocation().PlayOneShot(audioManager.instance.coinPickupA, audioManager.instance.coinPickupVol);
             Destroy(ammoDrop);
         }

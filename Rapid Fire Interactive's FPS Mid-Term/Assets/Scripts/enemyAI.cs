@@ -346,7 +346,7 @@ public class enemyAI : MonoBehaviour , IDamage {
         if (HP <= 0 && !isDead) { /// death code
             isDead = true;
             playerStats.Stats.enemyKilled();
-            gameManager.instance.getPlayerScript().setXP(getEnemyXP()); // setXP will ADD the amount given.
+            playerMovement.player.setXP(getEnemyXP()); // setXP will ADD the amount given.
             playerStats.Stats.gotXP(getEnemyXP());
             playerMovement.player.updatePlayerUI();
             Instantiate(bloodPool, new Vector3(model.transform.position.x, 0.25f, model.transform.position.z), Quaternion.identity);
