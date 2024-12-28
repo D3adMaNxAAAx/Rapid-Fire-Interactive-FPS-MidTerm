@@ -7,6 +7,8 @@ using UnityEngine.AI;
 
 public class enemyAI : MonoBehaviour , IDamage {
 
+    /// you will need to get enemy script instance via .GetComponent somehow (if you need it) - Ty
+
     [SerializeField] enum enemyType { basic, challenge, boss } // Allows selection of enemy type
     [Header("----- Components -----")]
     [SerializeField] enemyType type; // Tracks which type of enemy in play

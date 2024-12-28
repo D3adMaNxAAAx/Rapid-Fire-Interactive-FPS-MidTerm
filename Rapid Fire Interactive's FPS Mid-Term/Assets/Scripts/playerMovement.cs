@@ -257,26 +257,26 @@ public class playerMovement : MonoBehaviour, IDamage
         }
     }
 
-    // Player Movement Controls
-    void movement()
-    {
-        // Check to see if the player is on the ground to zero out y velocity and zero out the jump counter
-        if (controller.isGrounded)
-        {
+    void movement() {
+        if (controller.isGrounded) { // Check to see if the player is on the ground to zero out y velocity and zero out the jump counter
             playerVel = Vector3.zero;
             jumpCounter = 0;
         }
-        
-        // Movement Controller
-        moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
-        controller.Move(moveDir * speed * Time.deltaTime);
 
-        // Stamina Recovery
-        if (stamina < staminaOrig && !isSprinting && !isRecovering)
+        float moveSpeed = speed;
+        moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward; // getting user input from Unity input system, accounting for direction being faced
+        if (Input.GetAxis("Vertical") == 0) { // moving sideways
+            moveSpeed = (speed / 4) * 3;
+        }
+        else if (Input.GetAxis("Vertical") < 0) { // moving backwards
+            moveSpeed = (speed / 2) + 1;
+        }
+        controller.Move(moveDir * moveSpeed * Time.deltaTime);
+
+        if (stamina < staminaOrig && !isSprinting && !isRecovering) {
             StartCoroutine(staminaRecover());
-
-        // Jump Controller
-        if (Input.GetButtonDown("Jump") && jumpCounter < maxJumps) {
+        }
+        if (Input.GetButtonDown("Jump") && jumpCounter < maxJumps) { // Jump Controller
             jumpCounter++;
             playerVel.y = jumpSpeed;
             aud.PlayOneShot(audioManager.instance.audJump[Random.Range(0, audioManager.instance.audJump.Length)], audioManager.instance.audJumpVol);
