@@ -6,8 +6,13 @@ using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.SceneManagement;
 
-public class playerMovement : MonoBehaviour, IDamage
-{
+#if UNITY_EDITOR
+    [DefaultExecutionOrder(-5)]
+#else
+[DefaultExecutionOrder(5)]
+#endif
+
+public class playerMovement : MonoBehaviour, IDamage {
 
     public static playerMovement player; // singleton
 
