@@ -77,7 +77,9 @@ public class gameManager : MonoBehaviour {
     [SerializeField] GameObject grenadesUI;
     [SerializeField] GameObject markersUI;
     [SerializeField] TMP_Text healsLeft;
+    [SerializeField] TMP_Text healsMaxUI;
     [SerializeField] TMP_Text grenadesLeft;
+    [SerializeField] TMP_Text grenadesMaxUI;
     [SerializeField] TMP_Text markersLeft;
     [SerializeField] Image playerReticle;
     [SerializeField] TMP_Text levelTracker;
@@ -470,7 +472,7 @@ public class gameManager : MonoBehaviour {
         EventSystem.current.SetSelectedGameObject(terminalMenuFirst);
     }
 
-    public void openUpgradeMenu() {
+    /*public void openUpgradeMenu() {
         if (menuActive != null) {
             menuActive.SetActive(false);
         }
@@ -478,12 +480,11 @@ public class gameManager : MonoBehaviour {
         menuActive.SetActive(true);
         upgradeMenu.upgradeUI.setVars();
         EventSystem.current.SetSelectedGameObject(upgradeMenuFirst); // Set eventsystem selected game object to the button assigned
-    }
+    }*/
 
     public void openTerminalUpgradeMenu()
     {
-        if (playerStats.Stats.getPWRLevel() == 3)
-        {
+        if (true) { /// playerStats.Stats.getPWRLevel() == 3
             if (menuActive != null)
             {
                 menuActive.SetActive(false);
@@ -505,7 +506,7 @@ public class gameManager : MonoBehaviour {
 
     }
 
-    public void openStoreMenu() {
+    /*public void openStoreMenu() {
         if (menuActive != null)
         {
             menuActive.SetActive(false);
@@ -516,7 +517,7 @@ public class gameManager : MonoBehaviour {
         menuActive = menuStore;
         menuActive.SetActive(true);
         EventSystem.current.SetSelectedGameObject(storeMenuFirst); // Set eventsystem selected game object to the button assigned
-    }
+    }*/
 
     public void openTerminalStoreMenu()
     {
@@ -842,10 +843,15 @@ public class gameManager : MonoBehaviour {
     public void setPowerItems(int _items)
     { powerItems += _items; }
 
-    public void resetPwrItems()
-    {
+    public void resetPwrItems() {
         powerItems = 0;
     }
+
+    public void setGHMaxesUI(int maxHeals, int maxGrenades) {
+        healsMaxUI.text = maxHeals.ToString();
+        grenadesMaxUI.text = maxGrenades.ToString();
+    }
+
     public TMP_Text getAmmoReserveText() { return ammoReserveText; }
 
     public void setAmmoReserveText(TMP_Text _ammoReserveText)

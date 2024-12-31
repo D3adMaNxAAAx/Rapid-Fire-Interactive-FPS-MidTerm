@@ -10,18 +10,16 @@ public class storeManager : MonoBehaviour {
     public static storeManager instance; // Singleton
 
     // Store Text
-    [Header("-- Store Information --")]
+    /*[Header("-- Store Information --")]
     [SerializeField] TMP_Text healthText;
     [SerializeField] TMP_Text ammoText;
     [SerializeField] TMP_Text healthCostText;
     [SerializeField] TMP_Text ammoCostText;
     [SerializeField] TMP_Text laserRifleCostText;
     [SerializeField] TMP_Text playerCoinsText;
-    [SerializeField] TMP_Text transactionStatus;
+    [SerializeField] TMP_Text transactionStatus;*/
 
     [Header("-- Terminal Store Information --")]
-    [SerializeField] TMP_Text t_healthText;
-    [SerializeField] TMP_Text t_ammoText;
     [SerializeField] TMP_Text t_healthCostText;
     [SerializeField] TMP_Text t_ammoCostText;
     [SerializeField] TMP_Text t_laserRifleCostText;
@@ -33,20 +31,24 @@ public class storeManager : MonoBehaviour {
 
     // Store Costs
     [Header("-- Store Modifiers --")]
-    [SerializeField] float flashMod;
     [SerializeField] int healthCost;
     [SerializeField] int ammoCost;
+    [SerializeField] int shieldCost;
     [SerializeField] int laserRifleCost;
+    [SerializeField] int inventoryCost;
+    int inventoryCostV2;
 
     Color healthColorOrig;
     Color ammoColorOrig;
     bool terminal;
+    int InventoryVersion = 0;
 
     // Start is called before the first frame update
     void Start() {
         instance = this;
-        healthColorOrig = healthCostText.color; // Remember the original color of the text
-        ammoColorOrig = ammoCostText.color; // Remember the original color of the text
+        healthColorOrig = t_healthCostText.color; // Remember the original color of the text
+        ammoColorOrig = t_ammoCostText.color; // Remember the original color of the text
+        inventoryCostV2 = inventoryCost * 2;
     }
 
     public void setTerminalStatus(bool _state) {
@@ -76,6 +78,36 @@ public class storeManager : MonoBehaviour {
         }
     }
 
+    public void onInventoryUpgrade() {
+        if (InventoryVersion == 0) {
+            if (canAfford(inventoryCost)) {
+                makeTransaction(inventoryCost);
+                playerMovement.player.inventoryUpgrade(false);
+                InventoryVersion = 1;
+            }
+        }
+        else if (InventoryVersion == 1) { // second inventory upgrade
+            if (canAfford(inventoryCostV2)) {
+                makeTransaction(inventoryCostV2);
+                playerMovement.player.inventoryUpgrade(true);
+                InventoryVersion = 2;
+            }
+        }
+        else {
+            /// fail - max
+        }
+    }
+
+    public void onShieldPurchase() {
+        if (canAfford(shieldCost) && playerMovement.player.getShieldHP() != 50) { 
+            makeTransaction(shieldCost);
+            playerMovement.player.shieldBuff();
+        }
+        else {
+            /// fail
+        }
+    }
+
     public void onLaserRiflePurchase() {
         bool hasLaserRifle = false;
         foreach (gunStats gun in playerMovement.player.getGunList()) { // Check if player can afford the laser rifle & doesn't already have it
@@ -102,14 +134,14 @@ public class storeManager : MonoBehaviour {
         return _state;
     }
 
-    void makeTransaction(int _cost) { /// Designated function just in case transactions may be more deliberate, Method is called if canAfford returns true so player can afford something
+    void makeTransaction(int _cost) { // Designated function just in case transactions may be more deliberate
         playerMovement.player.setCoins(-_cost);
         playerStats.Stats.purchased();
     }
 
     IEnumerator displayTransactionStatus(bool status) {
         if (!terminal) {
-            transactionStatus.gameObject.SetActive(true);
+            /*transactionStatus.gameObject.SetActive(true);
             if (status) {
                 transactionStatus.text = "Purchase Successful!";
                 transactionStatus.color = Color.green;
@@ -124,7 +156,7 @@ public class storeManager : MonoBehaviour {
                 transactionStatus.color = Color.red;
             }
             yield return new WaitForSeconds(2f);
-            transactionStatus.gameObject.SetActive(false);
+            transactionStatus.gameObject.SetActive(false);*/
         } 
         else {
             t_transactionStatus.gameObject.SetActive(true);
@@ -178,7 +210,7 @@ public class storeManager : MonoBehaviour {
     // UI Display methods
     void updateCoinsDisplay() {
         if (!terminal) {
-            playerCoinsText.text = playerMovement.player.getCoins().ToString("F0");
+            // playerCoinsText.text = playerMovement.player.getCoins().ToString("F0");
         }
         else {
             t_playerCoinsText.text = playerMovement.player.getCoins().ToString("F0");
@@ -187,7 +219,7 @@ public class storeManager : MonoBehaviour {
 
     void updateHealthDisplay() {
         if (!terminal) {
-            healthText.text = playerMovement.player.getHP().ToString("F0") + " >> " + playerMovement.player.getHPOrig().ToString("F0");
+            /*healthText.text = playerMovement.player.getHP().ToString("F0") + " >> " + playerMovement.player.getHPOrig().ToString("F0");
             healthCostText.text = "Cost: " + healthCost.ToString();
             if (healthCost == 1) { // Append Coin or Coins at the end
                 healthCostText.text += " coin";
@@ -200,10 +232,9 @@ public class storeManager : MonoBehaviour {
             }
             else {
                 healthCostText.color = Color.red;
-            }
+            }*/
         }
         else {
-            t_healthText.text = playerMovement.player.getHP().ToString("F0") + " >> " + playerMovement.player.getHPOrig().ToString("F0");
             t_healthCostText.text = "Cost: " + healthCost.ToString();
             if (healthCost == 1) { // Append Coin or Coins at the end
                 t_healthCostText.text += " coin";
@@ -220,7 +251,7 @@ public class storeManager : MonoBehaviour {
 
     void updateAmmoDisplay() {
         if (!terminal) {
-            if (playerMovement.player.hasGun()) {
+            /*if (playerMovement.player.hasGun()) {
                 ammoText.text = "Refills all ammo!";
                 ammoCostText.text = "Cost: " + ammoCost.ToString();
                 if (ammoCost == 1) { // Append Coin or Coins at the end
@@ -240,11 +271,10 @@ public class storeManager : MonoBehaviour {
                 ammoCostText.text = "Cost: N/A";
                 ammoText.color = Color.red;
                 ammoCostText.color = Color.red;
-            }
+            }*/
         }
         else {
             if (playerMovement.player.hasGun()) {
-                t_ammoText.text = "Refills all ammo!";
                 t_ammoCostText.text = "Cost: " + ammoCost.ToString();
                 if (ammoCost == 1) { // Append Coin or Coins at the end
                     t_ammoCostText.text += " coin";
@@ -257,19 +287,12 @@ public class storeManager : MonoBehaviour {
                 else
                     t_ammoCostText.color = Color.red;
             }
-            else { // Edge case
-                ammoCost = 0;
-                t_ammoText.text = "No Weapon";
-                t_ammoCostText.text = "Cost: N/A";
-                t_ammoText.color = Color.red;
-                t_ammoCostText.color = Color.red;
-            }
         }
     }
 
     void updateLaserRifleDisplay() {
         if (!terminal) {
-            laserRifleCostText.text = "Cost: " + laserRifleCost.ToString("F0");
+            /*laserRifleCostText.text = "Cost: " + laserRifleCost.ToString("F0");
             if (laserRifleCost == 1)
                 laserRifleCostText.text += " coin";
             else
@@ -277,7 +300,7 @@ public class storeManager : MonoBehaviour {
             if (canAfford(laserRifleCost))
                 laserRifleCostText.color = Color.green;
             else
-                laserRifleCostText.color = Color.red;
+                laserRifleCostText.color = Color.red;*/
         }
         else {
             t_laserRifleCostText.text = "Cost: " + laserRifleCost.ToString("F0");

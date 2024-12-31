@@ -53,8 +53,8 @@ public class playerMovement : MonoBehaviour, IDamage {
     bool isLaser = false;
     bool isShotgun = false;
     float reloadTime = 1.5f;
-    int healsMax = 10;
-    int grenadesMax = 5;
+    int healsMax = 5;
+    int grenadesMax = 3;
     [SerializeField] float damage;
     [SerializeField] float fireRate;
     [SerializeField] int range;
@@ -1325,6 +1325,18 @@ public class playerMovement : MonoBehaviour, IDamage {
         onDashCooldown = false;
     }
 
+    public void inventoryUpgrade(bool V2) {
+        if (V2 == false) { // first upgrade
+            healsMax = 10;
+            grenadesMax = 5;
+        }
+        else {
+            healsMax = 15;
+            grenadesMax = 8;
+        }
+        gameManager.instance.setGHMaxesUI(healsMax, grenadesMax);
+    }
+
     // -- GETTERS --
     public CharacterController getController() {
         return controller;
@@ -1334,6 +1346,9 @@ public class playerMovement : MonoBehaviour, IDamage {
 
     public float getHPOrig() {
         return HPOrig;}
+
+    public float getShieldHP() {
+        return shieldHP; }
 
     public int getStamina() {
         return stamina;}

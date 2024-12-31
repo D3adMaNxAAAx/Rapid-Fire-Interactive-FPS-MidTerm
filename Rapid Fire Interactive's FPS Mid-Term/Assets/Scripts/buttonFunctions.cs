@@ -85,18 +85,18 @@ public class buttonFunctions : MonoBehaviour {
         gameManager.instance.openSettingsMenu();
     }
 
-    public void onUpgradeMenu() {
+    /*public void onUpgradeMenu() {
         gameManager.instance.openUpgradeMenu();
-    }
+    }*/
 
     public void onTerminalUpgradeMenu()
     {
         gameManager.instance.openTerminalUpgradeMenu();
     }
 
-    public void storeMenu() {
+    /*public void storeMenu() {
         gameManager.instance.openStoreMenu();
-    }
+    }*/
 
     public void onTerminalStoreMenu()
     {

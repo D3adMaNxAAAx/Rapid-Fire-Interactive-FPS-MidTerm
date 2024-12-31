@@ -41,8 +41,7 @@ public class terminals : MonoBehaviour
 
         // Unlock Upgrade Menu
         if (playerStats.Stats != null)
-            if (playerStats.Stats.getPWRLevel() == 3 && isOn)
-            {
+            if (true) { /// playerStats.Stats.getPWRLevel() == 3 && isOn
                 if (!terminalUpgrade.activeInHierarchy)
                 {
                     terminalUpgrade.SetActive(true);
@@ -69,8 +68,7 @@ public class terminals : MonoBehaviour
                 gameManager.instance.getInteractUI().SetActive(true);
 
             if (Input.GetButton("Interact"))
-                if (playerStats.Stats.getPWRLevel() >= 2)
-                {
+                if (true) { /// playerStats.Stats.getPWRLevel() >= 2
                     // turn off interact menu
                     if (gameManager.instance.getInteractUI().activeInHierarchy)
                         gameManager.instance.getInteractUI().SetActive(false);

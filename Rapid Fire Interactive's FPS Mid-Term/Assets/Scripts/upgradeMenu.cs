@@ -10,7 +10,7 @@ public class upgradeMenu : MonoBehaviour {
     public static upgradeMenu upgradeUI; // singleton
 
     [Header("-- Store Components --")]
-    [SerializeField] TMP_Text playerSkillPoints;
+    /*[SerializeField] TMP_Text playerSkillPoints;
     [SerializeField] TMP_Text healthRankText;
     [SerializeField] TMP_Text healthUpgradeText;
     [SerializeField] TMP_Text damageRankText;
@@ -18,7 +18,7 @@ public class upgradeMenu : MonoBehaviour {
     [SerializeField] TMP_Text speedRankText;
     [SerializeField] TMP_Text speedUpgradeText;
     [SerializeField] TMP_Text staminaRankText;
-    [SerializeField] TMP_Text staminaUpgradeText;
+    [SerializeField] TMP_Text staminaUpgradeText;*/
 
     [Header("-- Terminal Store Components --")]
     [SerializeField] TMP_Text t_playerSkillPoints;
@@ -52,7 +52,7 @@ public class upgradeMenu : MonoBehaviour {
         upgradeUI = this;
     }
 
-    public void setVars() { // wouldn't work in start
+    /*public void setVars() { // wouldn't work in start
         HPOrig = playerMovement.player.getHPOrig();
         speed = playerMovement.player.getNormOGSpeed();
         stamina = playerMovement.player.getStaminaOrig();
@@ -70,7 +70,7 @@ public class upgradeMenu : MonoBehaviour {
         staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
         playerSkillPoints.text = playerMovement.player.getSkillPoints().ToString();
         terminal = false;
-    }
+    }*/
 
     public void setTVars()
     {
@@ -114,8 +114,9 @@ public class upgradeMenu : MonoBehaviour {
         playerStats.Stats.upgraded();
 
         // Update Skill Points text
-        if (!terminal)
-            playerSkillPoints.text = playerMovement.player.getSkillPoints().ToString();
+        if (!terminal) {
+            //playerSkillPoints.text = playerMovement.player.getSkillPoints().ToString();
+        }
         else
             t_playerSkillPoints.text = playerMovement.player.getSkillPoints().ToString();
 
@@ -130,16 +131,18 @@ public class upgradeMenu : MonoBehaviour {
             healthRank++;
 
             // Health Rank Text
-            if (!terminal)
-                healthRankText.text = healthRank.ToString();
+            if (!terminal) {
+                //healthRankText.text = healthRank.ToString();
+            }
             else
                 t_healthRankText.text = healthRank.ToString();
             
             HPOrig = HPOrig + 10;
-            
+
             // Health Display
-            if (!terminal)
-                healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 5).ToString();
+            if (!terminal) {
+                //healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 5).ToString();
+            }
             else
                 t_healthUpgradeText.text = HPOrig.ToString() + " >> " + (HPOrig + 5).ToString();
 
@@ -158,16 +161,18 @@ public class upgradeMenu : MonoBehaviour {
             damageRank++;
 
             // Damage Rank Text
-            if (!terminal)
-                damageRankText.text = damageRank.ToString();
+            if (!terminal) {
+                //damageRankText.text = damageRank.ToString();
+            }
             else
                 t_damageRankText.text = damageRank.ToString();
 
             damageMod += 0.1f;
 
             // Damage Display
-            if (!terminal)
-                damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.1f).ToString();
+            if (!terminal) {
+                //damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.1f).ToString();
+            }
             else
                 t_damageUpgradeText.text = damageMod.ToString() + " >> " + (damageMod + 0.1f).ToString();
             
@@ -177,22 +182,23 @@ public class upgradeMenu : MonoBehaviour {
     }
 
     public void onSpeedUpgrade() {
-        if (canAfford(speedUpgradeCost) && speedRank < 5)
-        {
+        if (canAfford(speedUpgradeCost) && speedRank < 5) {
             makeTransaction(speedUpgradeCost);
             speedRank++;
-            
+
             // Speed Rank Text
-            if (!terminal)
-                speedRankText.text = speedRank.ToString();
+            if (!terminal) {
+                //speedRankText.text = speedRank.ToString();
+            }
             else
                 t_speedRankText.text = speedRank.ToString();
 
             speed = speed + 0.5f;
 
             // Speed Display
-            if (!terminal)
-                speedUpgradeText.text = speed.ToString() + " >> " + (speed + 0.5f).ToString();
+            if (!terminal) {
+                //speedUpgradeText.text = speed.ToString() + " >> " + (speed + 0.5f).ToString();
+            }
             else
                 t_speedUpgradeText.text = speed.ToString() + " >> " + (speed + 0.5f).ToString();
 
@@ -207,18 +213,20 @@ public class upgradeMenu : MonoBehaviour {
         {
             makeTransaction(staminaUpgradeCost);
             staminaRank++;
-            
+
             // Stamina Rank Text
-            if (!terminal)
-                staminaRankText.text = staminaRank.ToString();
+            if (!terminal) {
+                //staminaRankText.text = staminaRank.ToString();
+            }
             else
                 t_staminaRankText.text = staminaRank.ToString();
 
             stamina = stamina + 5;
 
             // Stamina Display
-            if (!terminal)
-                staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
+            if (!terminal) {
+                // staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
+            }
             else
                 t_staminaUpgradeText.text = stamina.ToString() + " >> " + (stamina + 5).ToString();
 
