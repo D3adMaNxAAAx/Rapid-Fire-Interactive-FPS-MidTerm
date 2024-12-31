@@ -114,7 +114,7 @@ public class playerMovement : MonoBehaviour, IDamage {
     int staminaOrig;
     int playerLevel;
     int gunPos = 0; // Weapon selected
-    int speedOrig; 
+    float speedOrig; 
     int startingLives;
 
     bool shieldOn = false;
@@ -164,7 +164,7 @@ public class playerMovement : MonoBehaviour, IDamage {
         HPOrig = HP;
         staminaOrig = stamina;
         startingLives = lives;
-        speedOrig = (int)speed;
+        speedOrig = speed;
         updatePlayerUI();
         if (gameManager.instance.getPlayerSpawnPos() != null) {
             spawnPlayer();
@@ -282,6 +282,7 @@ public class playerMovement : MonoBehaviour, IDamage {
             StartCoroutine(staminaRecover());
         }
         if (Input.GetButtonDown("Jump") && jumpCounter < maxJumps) { // Jump Controller
+            /// test methods here - ty
             jumpCounter++;
             playerVel.y = jumpSpeed;
             aud.PlayOneShot(audioManager.instance.audJump[Random.Range(0, audioManager.instance.audJump.Length)], audioManager.instance.audJumpVol);
@@ -459,12 +460,12 @@ public class playerMovement : MonoBehaviour, IDamage {
 
             if (dmg != null) {
                 if (hit.collider != hit.collider.GetComponent<enemyAI>().getMiniBossHeadCollider() && hit.collider != hit.collider.GetComponent<enemyAI>().getEnemyHeadCollider()) {
-                    dmg.takeDamage((damage * damageBuffMult));
+                    dmg.takeDamage(damage * damageBuffMult * damageUpgradeMod);
                     hit.collider.GetComponent<enemyAI>().showBleed(hit.point, bloodSpew2); // will display blood spew if conditions are met in enemyAI
                 }
 
                 else { // headshot
-                    dmg.takeDamage((damage * damageBuffMult) * headShotMult);
+                    dmg.takeDamage(damage * damageBuffMult * damageUpgradeMod * headShotMult);
                     aud.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;  // Ensure correct mixer group
                     aud.PlayOneShot(audioManager.instance.headShotA, 0.5f);
 
@@ -910,7 +911,7 @@ public class playerMovement : MonoBehaviour, IDamage {
     public void toggleSprintOn() {
         toggleSprint = !toggleSprint;
 
-        speedOrig = (int) speed;
+        speedOrig = speed;
 
      
         speed *= speedMod;
@@ -1139,8 +1140,7 @@ public class playerMovement : MonoBehaviour, IDamage {
     }
 
     public void changeGun() {
-        float damTemp = guns[gunPos].damage * damageUpgradeMod;
-        damage = damTemp;
+        damage = guns[gunPos].damage;
         range = guns[gunPos].range;
         fireRate = guns[gunPos].fireRate;
         reloadTime = guns[gunPos].reloadTime;
@@ -1173,8 +1173,7 @@ public class playerMovement : MonoBehaviour, IDamage {
         gunPos = guns.Count - 1;
         updatePlayerUI();
 
-        float damTemp = _gun.damage * damageUpgradeMod; //reason I did this is because we can't supply a float value to an int.
-        damage = damTemp;
+        damage = _gun.damage;
         fireRate = _gun.fireRate;
         reloadTime = _gun.reloadTime;
         range = _gun.range;
@@ -1372,6 +1371,10 @@ public class playerMovement : MonoBehaviour, IDamage {
     public float getSpeed() {
         return speed;}
 
+    public float getNormOGSpeed() {
+        return speedOrig;
+    }
+
     public int getCoins() {
         return coins;}
 
@@ -1457,6 +1460,10 @@ public class playerMovement : MonoBehaviour, IDamage {
 
     public void setSpeed(float newSpeed) {
         speed = newSpeed;}
+
+    public void setNormOGSpeed(float newSpeed) {
+        speedOrig = newSpeed;
+    }
 
     public void setStamina(int newStamina) {
         stamina = newStamina;}

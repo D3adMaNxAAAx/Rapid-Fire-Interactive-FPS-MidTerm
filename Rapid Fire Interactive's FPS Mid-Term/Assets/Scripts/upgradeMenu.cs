@@ -54,7 +54,7 @@ public class upgradeMenu : MonoBehaviour {
 
     public void setVars() { // wouldn't work in start
         HPOrig = playerMovement.player.getHPOrig();
-        speed = playerMovement.player.getSpeed();
+        speed = playerMovement.player.getNormOGSpeed();
         stamina = playerMovement.player.getStaminaOrig();
 
         // Rank Display
@@ -75,7 +75,7 @@ public class upgradeMenu : MonoBehaviour {
     public void setTVars()
     {
         HPOrig = playerMovement.player.getHPOrig();
-        speed = playerMovement.player.getSpeed();
+        speed = playerMovement.player.getNormOGSpeed();
         stamina = playerMovement.player.getStaminaOrig();
 
         // Rank Display
@@ -125,7 +125,7 @@ public class upgradeMenu : MonoBehaviour {
     // The methods will check if the player can afford them based on the costs of Skill Points, using the transaction methods.
     public void onHealthUpgrade() {
 
-        if (canAfford(healthUpgradeCost)) {
+        if (canAfford(healthUpgradeCost) && healthRank < 5) {
             makeTransaction(healthUpgradeCost);
             healthRank++;
 
@@ -153,8 +153,7 @@ public class upgradeMenu : MonoBehaviour {
     }
 
     public void onDamageUpgrade() {
-        if (canAfford(damageUpgradeCost))
-        {
+        if (canAfford(damageUpgradeCost) && damageRank < 5) {
             makeTransaction(damageUpgradeCost);
             damageRank++;
 
@@ -178,7 +177,7 @@ public class upgradeMenu : MonoBehaviour {
     }
 
     public void onSpeedUpgrade() {
-        if (canAfford(speedUpgradeCost))
+        if (canAfford(speedUpgradeCost) && speedRank < 5)
         {
             makeTransaction(speedUpgradeCost);
             speedRank++;
@@ -198,12 +197,13 @@ public class upgradeMenu : MonoBehaviour {
                 t_speedUpgradeText.text = speed.ToString() + " >> " + (speed + 0.5f).ToString();
 
             playerMovement.player.setSpeed(speed);
+            playerMovement.player.setNormOGSpeed(speed);
             playerMovement.player.updatePlayerUI();
         }
     }
 
     public void onStaminaUpgrade() {
-        if (canAfford(staminaUpgradeCost))
+        if (canAfford(staminaUpgradeCost) && staminaRank < 5)
         {
             makeTransaction(staminaUpgradeCost);
             staminaRank++;
