@@ -6,8 +6,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class terminals : MonoBehaviour
-{
+public class terminals : MonoBehaviour {
+
+    /// there is only one terminal, it moves to level 2 with the player
+
     [SerializeField] Light terminalScreenLight;
     [SerializeField] GameObject terminal;
     [SerializeField] GameObject terminalUpgrade;
@@ -17,8 +19,7 @@ public class terminals : MonoBehaviour
     bool isMoved;
 
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         if(gameObject.CompareTag("Do Not Destroy"))
         DontDestroyOnLoad(gameObject);
        

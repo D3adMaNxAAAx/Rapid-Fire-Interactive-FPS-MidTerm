@@ -170,32 +170,34 @@ public class buttonFunctions : MonoBehaviour {
     public void healthUpgrade() {
         upgradeMenu.upgradeUI.onHealthUpgrade();
     }
-
     public void damageUpgrade() {
         upgradeMenu.upgradeUI.onDamageUpgrade();
     }
-
     public void speedUpgrade() {
         upgradeMenu.upgradeUI.onSpeedUpgrade();
     }
-
     public void staminaUpgrade() {
         upgradeMenu.upgradeUI.onStaminaUpgrade();
     }
 
+    // Store Menu Buttons:
     public void healthPurchase() {
         storeManager.instance.onHealthPurchase();
     }
-
-    public void ammoPurchase()
-    {
+    public void ammoPurchase() {
         storeManager.instance.onAmmoPurchase();
     }
-
-    public void laserRiflePurchase()
-    {
+    public void laserRiflePurchase() {
         storeManager.instance.onLaserRiflePurchase();
     }
+    public void shieldPurchase() {
+        storeManager.instance.onShieldPurchase();
+    }
+
+    public void inventoryUpgradePurchase() {
+        storeManager.instance.onInventoryUpgrade();
+    }
+    //
 
     public void Respawn() {
         playerMovement.player.spawnPlayer();

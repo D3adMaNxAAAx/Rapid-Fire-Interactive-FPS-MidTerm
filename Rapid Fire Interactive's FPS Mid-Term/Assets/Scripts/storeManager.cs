@@ -22,6 +22,8 @@ public class storeManager : MonoBehaviour {
     [Header("-- Terminal Store Information --")]
     [SerializeField] TMP_Text t_healthCostText;
     [SerializeField] TMP_Text t_ammoCostText;
+    [SerializeField] TMP_Text shieldCostText;
+    [SerializeField] TMP_Text inventoryCostText;
     [SerializeField] TMP_Text t_laserRifleCostText;
     [SerializeField] TMP_Text t_playerCoinsText;
     [SerializeField] TMP_Text t_transactionStatus;
@@ -60,13 +62,22 @@ public class storeManager : MonoBehaviour {
         updateHealthDisplay();
         updateAmmoDisplay();
         updateLaserRifleDisplay();
+        updateShieldDisplay();
+        updateInventoryUpgradeDisplay(InventoryVersion);
     }
 
     // Buy Button Methods
     public void onHealthPurchase() {
-        if (canAfford(healthCost) && playerMovement.player.getHP() < playerMovement.player.getHPOrig()) { // Check if player can afford health & isn't at max HP
+        if (canAfford(healthCost) == false) {
+            StartCoroutine(displayTransactionStatus(false));
+        }
+        else if ((playerMovement.player.getHP() < playerMovement.player.getHPOrig()) == false) {
+            StartCoroutine(displayTransactionStatus(false, "HP already at Max!"));
+        }
+        else { // success
             makeTransaction(healthCost);
             giveHealth();
+            StartCoroutine(displayTransactionStatus(true));
         }
     }
 
@@ -76,6 +87,7 @@ public class storeManager : MonoBehaviour {
             makeTransaction(ammoCost);
             giveAmmo();
         }
+        /// update and remember to add transaction status
     }
 
     public void onInventoryUpgrade() {
@@ -83,28 +95,46 @@ public class storeManager : MonoBehaviour {
             if (canAfford(inventoryCost)) {
                 makeTransaction(inventoryCost);
                 playerMovement.player.inventoryUpgrade(false);
+                StartCoroutine(displayTransactionStatus(true));
                 InventoryVersion = 1;
+                updateInventoryUpgradeDisplay(InventoryVersion);
+                updateCoinsDisplay();
+            }
+            else { // fail
+                StartCoroutine(displayTransactionStatus(false));
             }
         }
         else if (InventoryVersion == 1) { // second inventory upgrade
             if (canAfford(inventoryCostV2)) {
                 makeTransaction(inventoryCostV2);
                 playerMovement.player.inventoryUpgrade(true);
+                StartCoroutine(displayTransactionStatus(true));
                 InventoryVersion = 2;
+                updateInventoryUpgradeDisplay(InventoryVersion);
+                updateCoinsDisplay();
+            }
+            else { // fail
+                StartCoroutine(displayTransactionStatus(false));
             }
         }
         else {
-            /// fail - max
+            StartCoroutine(displayTransactionStatus(false, "Max upgrades already purchased"));
         }
     }
 
     public void onShieldPurchase() {
-        if (canAfford(shieldCost) && playerMovement.player.getShieldHP() != 50) { 
+        if (canAfford(shieldCost) == false) {
+            StartCoroutine(displayTransactionStatus(false));
+        }
+        else if (playerMovement.player.getShieldHP() == 50) {
+            StartCoroutine(displayTransactionStatus(false, "Shield already maxed out"));
+        }
+        else { // success
             makeTransaction(shieldCost);
             playerMovement.player.shieldBuff();
-        }
-        else {
-            /// fail
+            StartCoroutine(displayTransactionStatus(true));
+            updateShieldDisplay();
+            updateCoinsDisplay();
         }
     }
 
@@ -116,9 +146,16 @@ public class storeManager : MonoBehaviour {
                 break;
             }
         }
-        if (canAfford(laserRifleCost) && !hasLaserRifle) {
+        if (canAfford(laserRifleCost) == false) {
+            StartCoroutine(displayTransactionStatus(false));
+        }
+        else if (hasLaserRifle) {
+            StartCoroutine(displayTransactionStatus(false, "Error: Laser Rifle already purchased"));
+        }
+        else { // success
             makeTransaction(laserRifleCost);
             giveLaserRifle();
+            StartCoroutine(displayTransactionStatus(true));
         }
     }
 
@@ -139,7 +176,7 @@ public class storeManager : MonoBehaviour {
         playerStats.Stats.purchased();
     }
 
-    IEnumerator displayTransactionStatus(bool status) {
+    IEnumerator displayTransactionStatus(bool success, string failMessage = "Not enough coins!") {
         if (!terminal) {
             /*transactionStatus.gameObject.SetActive(true);
             if (status) {
@@ -160,20 +197,15 @@ public class storeManager : MonoBehaviour {
         } 
         else {
             t_transactionStatus.gameObject.SetActive(true);
-            if (status) {
+            if (success) {
                 t_transactionStatus.text = "Purchase Successful!";
                 t_transactionStatus.color = Color.green;
             }
             else {
-                if (!canAfford(healthCost)) {
-                    t_transactionStatus.text = "Not enough coins!";
-                }
-                else if (playerMovement.player.getHP() == playerMovement.player.getHPOrig()) {
-                    t_transactionStatus.text = "Already full!";
-                }
+                t_transactionStatus.text = failMessage;
                 t_transactionStatus.color = Color.red;
             }
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSecondsRealtime(1.5f);
             t_transactionStatus.gameObject.SetActive(false);
         }
     }
@@ -181,7 +213,8 @@ public class storeManager : MonoBehaviour {
     void giveHealth() {
         playerMovement.player.setHP(playerMovement.player.getHPOrig()); // Heal the player to full as per their purchase & update the UI
         playerMovement.player.updatePlayerUI();
-        updateStoreUI();
+        updateHealthDisplay();
+        updateCoinsDisplay();
     }
     
     void giveAmmo() { /// didn't seem to give ammo to all guns?
@@ -192,7 +225,8 @@ public class storeManager : MonoBehaviour {
                 gun.ammoMax = gun.ammoOrig;
             }
             playerMovement.player.updatePlayerUI();
-            updateStoreUI();
+            updateAmmoDisplay();
+            updateCoinsDisplay();
         }
     }
 
@@ -204,7 +238,8 @@ public class storeManager : MonoBehaviour {
             playerMovement.player.getGunList()[playerMovement.player.getGunList().Count - 1] = laserRifle;
         }
         playerMovement.player.updatePlayerUI();
-        updateStoreUI();
+        updateLaserRifleDisplay();
+        updateCoinsDisplay();
     }
 
     // UI Display methods
@@ -235,13 +270,8 @@ public class storeManager : MonoBehaviour {
             }*/
         }
         else {
-            t_healthCostText.text = "Cost: " + healthCost.ToString();
-            if (healthCost == 1) { // Append Coin or Coins at the end
-                t_healthCostText.text += " coin";
-            }
-            else {
-                t_healthCostText.text += " coins";
-            }
+            t_healthCostText.text = healthCost.ToString();
+            t_healthCostText.text += " coins";
             if (canAfford(healthCost))
                 t_healthCostText.color = Color.green;
             else
@@ -275,13 +305,8 @@ public class storeManager : MonoBehaviour {
         }
         else {
             if (playerMovement.player.hasGun()) {
-                t_ammoCostText.text = "Cost: " + ammoCost.ToString();
-                if (ammoCost == 1) { // Append Coin or Coins at the end
-                    t_ammoCostText.text += " coin";
-                }
-                else {
-                    t_ammoCostText.text += " coins";
-                }
+                t_ammoCostText.text = ammoCost.ToString();
+                t_ammoCostText.text += " coins";
                 if (canAfford(ammoCost))
                     t_ammoCostText.color = Color.green;
                 else
@@ -303,15 +328,41 @@ public class storeManager : MonoBehaviour {
                 laserRifleCostText.color = Color.red;*/
         }
         else {
-            t_laserRifleCostText.text = "Cost: " + laserRifleCost.ToString("F0");
-            if (laserRifleCost == 1)
-                t_laserRifleCostText.text += " coin";
-            else
-                t_laserRifleCostText.text += " coins";
+            t_laserRifleCostText.text = laserRifleCost.ToString("F0");
+            t_laserRifleCostText.text += " coins";
             if (canAfford(laserRifleCost))
                 t_laserRifleCostText.color = Color.green;
             else
                 t_laserRifleCostText.color = Color.red;
+        }
+    }
+
+    void updateShieldDisplay() {
+        shieldCostText.text = shieldCost.ToString("F0");
+        shieldCostText.text += " coins";
+        if (canAfford(laserRifleCost)) {
+            shieldCostText.color = Color.green;
+        }
+        else {
+            shieldCostText.color = Color.red;
+        }
+    }
+
+    void updateInventoryUpgradeDisplay(int upgradeV ) {
+        int cost = 0;
+        if (upgradeV == 0) {
+            cost = inventoryCost;
+        }
+        else {
+            cost = inventoryCostV2;
+        }
+        inventoryCostText.text = cost.ToString("F0");
+        inventoryCostText.text += " coins";
+        if (canAfford(cost)) {
+            inventoryCostText.color = Color.green;
+        }
+        else {
+            inventoryCostText.color = Color.red;
         }
     }
 }
