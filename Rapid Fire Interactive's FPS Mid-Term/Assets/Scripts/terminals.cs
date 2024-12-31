@@ -41,7 +41,7 @@ public class terminals : MonoBehaviour
 
         // Unlock Upgrade Menu
         if (playerStats.Stats != null)
-            if (true) { /// playerStats.Stats.getPWRLevel() == 3 && isOn
+            if (playerStats.Stats.getPWRLevel() == 3 && isOn) {
                 if (!terminalUpgrade.activeInHierarchy)
                 {
                     terminalUpgrade.SetActive(true);

@@ -484,7 +484,7 @@ public class gameManager : MonoBehaviour {
 
     public void openTerminalUpgradeMenu()
     {
-        if (true) { /// playerStats.Stats.getPWRLevel() == 3
+        if (playerStats.Stats.getPWRLevel() == 3) {
             if (menuActive != null)
             {
                 menuActive.SetActive(false);
