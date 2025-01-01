@@ -4,20 +4,18 @@ using UnityEngine;
 
 [CreateAssetMenu]
 
-public class gunStats : ScriptableObject
-{
+public class gunStats : ScriptableObject {
     // -- Gun Attributes --
     public GameObject gunModel;
     public GameObject projectile;
+    public ObjectType weaponName;
+    public enum ObjectType { AR, Pistol, SMG, Shotgun, Sniper, LaserRifle, HandCannon } // DON"T select anything on this one in Unity
     public float damage;
     public float fireRate;
     public float reloadTime;
     public int range;
     public int ammoCur, ammoMag, ammoMax, ammoOrig;
-    public bool isSniper;
     public bool isAutomatic;
-    public bool isLaser;
-    public bool isShotgun;
 
     // -- Gun Visuals --
     public ParticleSystem hitEffects;

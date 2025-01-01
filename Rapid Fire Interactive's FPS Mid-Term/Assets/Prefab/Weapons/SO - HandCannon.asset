@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunModel: {fileID: 1325081442419833414, guid: 2fcd5495193ec6849b834367ff32fcfa, type: 3}
   projectile: {fileID: 1026084026005163015, guid: 21e626d4ed38c2c49bf95ad164f9c757, type: 3}
+  weaponName: 6
   damage: 4
   fireRate: 1.25
   reloadTime: 0.5
@@ -22,10 +23,7 @@ MonoBehaviour:
   ammoMag: 10
   ammoMax: 50
   ammoOrig: 50
-  isSniper: 0
   isAutomatic: 0
-  isLaser: 0
-  isShotgun: 0
   hitEffects: {fileID: 2955623459812423941, guid: f5507a8c6a22c404ab324980c4e8a11b, type: 3}
   shootSound:
   - {fileID: 8300000, guid: 77b48069d79c20743a02842750c53ec7, type: 3}

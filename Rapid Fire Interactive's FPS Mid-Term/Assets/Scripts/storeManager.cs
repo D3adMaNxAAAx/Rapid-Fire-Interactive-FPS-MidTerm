@@ -30,6 +30,12 @@ public class storeManager : MonoBehaviour {
     [SerializeField] TMP_Text t_laserRifleCostText;
     [SerializeField] TMP_Text t_playerCoinsText;
     [SerializeField] TMP_Text t_transactionStatus;
+    [SerializeField] TMP_Text ARAmmoCostText;
+    [SerializeField] TMP_Text SMGAmmoCostText;
+    [SerializeField] TMP_Text PistolAmmoCostText;
+    [SerializeField] TMP_Text SniperAmmoCostText;
+    [SerializeField] TMP_Text ShotgunAmmoCostText;
+    [SerializeField] TMP_Text HandCannonAmmoCostText;
 
     [Header("-- Store Weapons / Items --")]
     [SerializeField] gunStats laserRifle; //
@@ -48,6 +54,12 @@ public class storeManager : MonoBehaviour {
     int inventoryCostV2;
     int OGHealCost;
     int OGGrenadeCost;
+    int ARPos = -1;
+    int PistolPos = -1;
+    int SniperPos = -1;
+    int ShotgunPos = -1;
+    int SMGPos = -1;
+    int HandCannonPos = -1;
 
     Color healthColorOrig;
     Color ammoColorOrig;
@@ -75,13 +87,13 @@ public class storeManager : MonoBehaviour {
         updateHealthDisplay();
         updateHealPotionDisplay();
         updateGrenadeDisplay();
-        updateAmmoDisplay();
+        updateAmmoDisplays();
         updateLaserRifleDisplay();
         updateShieldDisplay();
         updateInventoryUpgradeDisplay(InventoryVersion);
     }
 
-    // Buy Button Methods
+    // Buy Button Methods (except ammo ones are at the bottom)
     public void onHealthPurchase() {
         resetCoroutine();
         if (canAfford(healthCost) == false) {
@@ -131,15 +143,6 @@ public class storeManager : MonoBehaviour {
             updateCoinsDisplay();
             feedbackTimer = StartCoroutine(displayTransactionStatus(true));
         }
-    }
-
-    public void onAmmoPurchase() {
-        resetCoroutine();
-        if (canAfford(ammoCost) && (playerMovement.player.getCurGun().ammoMax < playerMovement.player.getCurGun().ammoOrig || playerMovement.player.getCurGun().ammoCur < playerMovement.player.getCurGun().ammoMag)) {
-            makeTransaction(ammoCost);
-            giveAmmo();
-        }
-        /// update and remember to add transaction status
     }
 
     public void onInventoryUpgrade() {
@@ -196,7 +199,7 @@ public class storeManager : MonoBehaviour {
         resetCoroutine();
         bool hasLaserRifle = false;
         foreach (gunStats gun in playerMovement.player.getGunList()) { // Check if player can afford the laser rifle & doesn't already have it
-            if (gun.isLaser) {
+            if (gun.weaponName == gunStats.ObjectType.LaserRifle) {
                 hasLaserRifle = true;
                 break;
             }
@@ -259,17 +262,11 @@ public class storeManager : MonoBehaviour {
         updateCoinsDisplay();
     }
     
-    void giveAmmo() { /// didn't seem to give ammo to all guns?
-        if (playerMovement.player.hasGun()) { // Precautionary check if the player has a gun
-            // Range-based loop that will go through the players gun inventory and give max ammo.
-            foreach (gunStats gun in playerMovement.player.getGunList()) { // Give the player max ammo as per their purchase & update the UI
-                gun.ammoCur = gun.ammoMag;
-                gun.ammoMax = gun.ammoOrig;
-            }
-            playerMovement.player.updatePlayerUI();
-            updateAmmoDisplay();
-            updateCoinsDisplay();
-        }
+    void giveAmmo(int gunPosition) {
+        playerMovement.player.getSpecificGun(gunPosition).ammoCur = playerMovement.player.getSpecificGun(gunPosition).ammoMag;
+        playerMovement.player.getSpecificGun(gunPosition).ammoMax = playerMovement.player.getSpecificGun(gunPosition).ammoOrig;
+        playerMovement.player.updatePlayerUI();
+        updateCoinsDisplay();
     }
 
     public void giveLaserRifle() {
@@ -321,17 +318,6 @@ public class storeManager : MonoBehaviour {
             grenadeCostText.color = Color.red;
     }
 
-    void updateAmmoDisplay() {
-        if (playerMovement.player.hasGun()) {
-            t_ammoCostText.text = ammoCost.ToString();
-            t_ammoCostText.text += " coins";
-            if (canAfford(ammoCost))
-                t_ammoCostText.color = Color.green;
-            else
-                t_ammoCostText.color = Color.red;
-        }
-    }
-
     void updateLaserRifleDisplay() {
         t_laserRifleCostText.text = laserRifleCost.ToString("F0");
         t_laserRifleCostText.text += " coins";
@@ -352,7 +338,7 @@ public class storeManager : MonoBehaviour {
         }
     }
 
-    void updateInventoryUpgradeDisplay(int upgradeV ) {
+    void updateInventoryUpgradeDisplay(int upgradeV) {
         int cost = 0;
         if (upgradeV == 0) {
             cost = inventoryCost;
@@ -367,6 +353,185 @@ public class storeManager : MonoBehaviour {
         }
         else {
             inventoryCostText.color = Color.red;
+        }
+    }
+
+
+
+
+    void updateAmmoDisplays(string ammo = "") { // if not name is passed in, all buttons will be updated
+        if (ammo == "AR" || ammo == "") {
+            ARAmmoCostText.text = ammoCost.ToString("F0");
+            ARAmmoCostText.text += " coins";
+            if (canAfford(ammoCost)) {
+                ARAmmoCostText.color = Color.green;
+            }
+            else {
+                ARAmmoCostText.color = Color.red;
+            }
+        }
+        if (ammo == "HandCannon" || ammo == "") {
+            HandCannonAmmoCostText.text = ammoCost.ToString("F0");
+            HandCannonAmmoCostText.text += " coins";
+            if (canAfford(ammoCost)) {
+                HandCannonAmmoCostText.color = Color.green;
+            }
+            else {
+                HandCannonAmmoCostText.color = Color.red;
+            }
+        }
+        if (ammo == "Shotgun" || ammo == "") {
+            ShotgunAmmoCostText.text = ammoCost.ToString("F0");
+            ShotgunAmmoCostText.text += " coins";
+            if (canAfford(ammoCost)) {
+                ShotgunAmmoCostText.color = Color.green;
+            }
+            else {
+                ShotgunAmmoCostText.color = Color.red;
+            }
+        }
+        if (ammo == "Sniper" || ammo == "") {
+            SniperAmmoCostText.text = ammoCost.ToString("F0");
+            SniperAmmoCostText.text += " coins";
+            if (canAfford(ammoCost)) {
+                SniperAmmoCostText.color = Color.green;
+            }
+            else {
+                SniperAmmoCostText.color = Color.red;
+            }
+        }
+        if (ammo == "Pistol" || ammo == "") {
+            PistolAmmoCostText.text = ammoCost.ToString("F0");
+            PistolAmmoCostText.text += " coins";
+            if (canAfford(ammoCost)) {
+                PistolAmmoCostText.color = Color.green;
+            }
+            else {
+                PistolAmmoCostText.color = Color.red;
+            }
+        }
+        if (ammo == "SMG" || ammo == "") {
+            SMGAmmoCostText.text = ammoCost.ToString("F0");
+            SMGAmmoCostText.text += " coins";
+            if (canAfford(ammoCost)) {
+                SMGAmmoCostText.color = Color.green;
+            }
+            else {
+                SMGAmmoCostText.color = Color.red;
+            }
+        }
+    }
+
+
+    public void onAmmoPurchase(string ammo) {
+        resetCoroutine();
+        if (canAfford(ammoCost) == false) {
+            feedbackTimer = StartCoroutine(displayTransactionStatus(false));
+        }
+        else if (ammo == "AR") {
+            if (ARPos == -1) {
+                feedbackTimer = StartCoroutine(displayTransactionStatus(false, "You don't have this gun"));
+            }
+            else if (playerMovement.player.getSpecificGun(ARPos).ammoMax == playerMovement.player.getSpecificGun(ARPos).ammoOrig && playerMovement.player.getSpecificGun(ARPos).ammoCur == playerMovement.player.getSpecificGun(ARPos).ammoMag) {
+                feedbackTimer = StartCoroutine(displayTransactionStatus(false, "Ammo already full"));
+            }
+            else { // success
+                makeTransaction(ammoCost);
+                giveAmmo(ARPos);
+                updateAmmoDisplays(ammo);
+                feedbackTimer = StartCoroutine(displayTransactionStatus(true));
+            }
+        }
+        else if (ammo == "HandCannon") {
+            if (HandCannonPos == -1) {
+                feedbackTimer = StartCoroutine(displayTransactionStatus(false, "You don't have this gun"));
+            }
+            else if (playerMovement.player.getSpecificGun(HandCannonPos).ammoMax == playerMovement.player.getSpecificGun(HandCannonPos).ammoOrig && playerMovement.player.getSpecificGun(HandCannonPos).ammoCur == playerMovement.player.getSpecificGun(HandCannonPos).ammoMag) {
+                feedbackTimer = StartCoroutine(displayTransactionStatus(false, "Ammo already full"));
+            }
+            else { // success
+                makeTransaction(ammoCost);
+                giveAmmo(HandCannonPos);
+                updateAmmoDisplays(ammo);
+                feedbackTimer = StartCoroutine(displayTransactionStatus(true));
+            }
+        }
+        else if (ammo == "Pistol") {
+            if (PistolPos == -1) {
+                feedbackTimer = StartCoroutine(displayTransactionStatus(false, "You don't have this gun"));
+            }
+            else if (playerMovement.player.getSpecificGun(PistolPos).ammoMax == playerMovement.player.getSpecificGun(PistolPos).ammoOrig && playerMovement.player.getSpecificGun(PistolPos).ammoCur == playerMovement.player.getSpecificGun(PistolPos).ammoMag) {
+                feedbackTimer = StartCoroutine(displayTransactionStatus(false, "Ammo already full"));
+            }
+            else { // success
+                makeTransaction(ammoCost);
+                giveAmmo(PistolPos);
+                updateAmmoDisplays(ammo);
+                feedbackTimer = StartCoroutine(displayTransactionStatus(true));
+            }
+        }
+        else if (ammo == "Shotgun") {
+            if (ShotgunPos == -1) {
+                feedbackTimer = StartCoroutine(displayTransactionStatus(false, "You don't have this gun"));
+            }
+            else if (playerMovement.player.getSpecificGun(ShotgunPos).ammoMax == playerMovement.player.getSpecificGun(ShotgunPos).ammoOrig && playerMovement.player.getSpecificGun(ShotgunPos).ammoCur == playerMovement.player.getSpecificGun(ShotgunPos).ammoMag) {
+                feedbackTimer = StartCoroutine(displayTransactionStatus(false, "Ammo already full"));
+            }
+            else { // success
+                makeTransaction(ammoCost);
+                giveAmmo(ShotgunPos);
+                updateAmmoDisplays(ammo);
+                feedbackTimer = StartCoroutine(displayTransactionStatus(true));
+            }
+        }
+        else if (ammo == "Sniper") {
+            if (SniperPos == -1) {
+                feedbackTimer = StartCoroutine(displayTransactionStatus(false, "You don't have this gun"));
+            }
+            else if (playerMovement.player.getSpecificGun(SniperPos).ammoMax == playerMovement.player.getSpecificGun(SniperPos).ammoOrig && playerMovement.player.getSpecificGun(SniperPos).ammoCur == playerMovement.player.getSpecificGun(SniperPos).ammoMag) {
+                feedbackTimer = StartCoroutine(displayTransactionStatus(false, "Ammo already full"));
+            }
+            else { // success
+                makeTransaction(ammoCost);
+                giveAmmo(SniperPos);
+                updateAmmoDisplays(ammo);
+                feedbackTimer = StartCoroutine(displayTransactionStatus(true));
+            }
+        }
+        else if (ammo == "SMG") {
+            if (SMGPos == -1) {
+                feedbackTimer = StartCoroutine(displayTransactionStatus(false, "You don't have this gun"));
+            }
+            else if (playerMovement.player.getSpecificGun(SMGPos).ammoMax == playerMovement.player.getSpecificGun(SMGPos).ammoOrig && playerMovement.player.getSpecificGun(SMGPos).ammoCur == playerMovement.player.getSpecificGun(SMGPos).ammoMag) {
+                feedbackTimer = StartCoroutine(displayTransactionStatus(false, "Ammo already full"));
+            }
+            else { // success
+                makeTransaction(ammoCost);
+                giveAmmo(SMGPos);
+                updateAmmoDisplays(ammo);
+                feedbackTimer = StartCoroutine(displayTransactionStatus(true));
+            }
+        }
+    }
+
+    public void setGunPos(int pos, gunStats.ObjectType weapon) {
+        if (weapon == gunStats.ObjectType.AR) {
+            ARPos = pos;
+        }
+        else if (weapon == gunStats.ObjectType.HandCannon) {
+            HandCannonPos = pos;
+        }
+        else if (weapon == gunStats.ObjectType.Shotgun) {
+            ShotgunPos = pos;
+        }
+        else if (weapon == gunStats.ObjectType.Sniper) {
+            SniperPos = pos;
+        }
+        else if (weapon == gunStats.ObjectType.Pistol) {
+            PistolPos = pos;
+        }
+        else if (weapon == gunStats.ObjectType.SMG) {
+            SMGPos = pos;
         }
     }
 }

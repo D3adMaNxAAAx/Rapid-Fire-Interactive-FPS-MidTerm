@@ -190,8 +190,8 @@ public class buttonFunctions : MonoBehaviour {
     public void grenadePurchase() {
         storeManager.instance.onGrenadePurchase();
     }
-    public void ammoPurchase() {
-        storeManager.instance.onAmmoPurchase();
+    public void ammoPurchase(string ammo) {
+        storeManager.instance.onAmmoPurchase(ammo);
     }
     public void laserRiflePurchase() {
         storeManager.instance.onLaserRiflePurchase();

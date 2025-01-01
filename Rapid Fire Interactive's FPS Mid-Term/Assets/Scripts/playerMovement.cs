@@ -49,9 +49,6 @@ public class playerMovement : MonoBehaviour, IDamage {
     [SerializeField] int markers;
     [SerializeField] GameObject Marker;
 
-    bool isSniper = false;
-    bool isLaser = false;
-    bool isShotgun = false;
     float reloadTime = 1.5f;
     int healsMax = 5;
     int grenadesMax = 3;
@@ -213,11 +210,13 @@ public class playerMovement : MonoBehaviour, IDamage {
         if (isSprinting && !isDraining) {
             StartCoroutine(staminaDrain());
         }
-        if (isLaser) { // laser sight
-            RaycastHit hit;
-            Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range, ~ignoreLayer);
-            laserSight.SetPosition(0, shotFlash.transform.position); // first param in "index", 0 is line start
-            laserSight.SetPosition(1, hit.point); // first param in "index", 1 is line end
+        if (hasGun()) { // preventing error when starting game
+            if (guns[gunPos].weaponName == gunStats.ObjectType.LaserRifle) { // laser sight
+                RaycastHit hit;
+                Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, range, ~ignoreLayer);
+                laserSight.SetPosition(0, shotFlash.transform.position); // first param in "index", 0 is line start
+                laserSight.SetPosition(1, hit.point); // first param in "index", 1 is line end
+            }
         }
     }
 
@@ -463,7 +462,6 @@ public class playerMovement : MonoBehaviour, IDamage {
                     dmg.takeDamage(damage * damageBuffMult * damageUpgradeMod);
                     hit.collider.GetComponent<enemyAI>().showBleed(hit.point, bloodSpew2); // will display blood spew if conditions are met in enemyAI
                 }
-
                 else { // headshot
                     dmg.takeDamage(damage * damageBuffMult * damageUpgradeMod * headShotMult);
                     aud.outputAudioMixerGroup = audioManager.instance.SFXMixerGroup;  // Ensure correct mixer group
@@ -473,13 +471,9 @@ public class playerMovement : MonoBehaviour, IDamage {
                    
                 }
                
-                if (guns[gunPos].isSniper || guns[gunPos].isShotgun)
-                {
-                    // Get the source position (where the shot is coming from)
-                    Vector3 sourcePosition = transform.position;
-
-                    // Apply knockback using the enemy's takeDamage method with the sourcePosition
-                    dmg.takeDamage(sourcePosition);
+                if (guns[gunPos].weaponName == gunStats.ObjectType.Shotgun || guns[gunPos].weaponName == gunStats.ObjectType.Sniper) {
+                    Vector3 sourcePosition = transform.position; // Get the source position (where the shot is coming from)
+                    dmg.takeDamage(sourcePosition); // Apply knockback using the enemy's takeDamage method with the sourcePosition
                 }
 
                 if (guns[gunPos].hitEffects != null)
@@ -1144,11 +1138,7 @@ public class playerMovement : MonoBehaviour, IDamage {
         range = guns[gunPos].range;
         fireRate = guns[gunPos].fireRate;
         reloadTime = guns[gunPos].reloadTime;
-        isSniper = guns[gunPos].isSniper;
-        isLaser = guns[gunPos].isLaser;
-        isShotgun = guns[gunPos].isShotgun;
-        
-        if (isLaser) {
+        if (guns[gunPos].weaponName == gunStats.ObjectType.LaserRifle) {
             laserSight.enabled = true;
         }
         else {
@@ -1165,8 +1155,7 @@ public class playerMovement : MonoBehaviour, IDamage {
     public int getCurrGunIndex()
     { return gunPos; }
 
-    public void getGunStats(gunStats _gun)
-    {
+    public void getGunStats(gunStats _gun) {
         _gun.ammoCur = _gun.ammoMag; // Set the current to the magazine size.
         _gun.ammoMax = _gun.ammoOrig; // Set the max to the original gun ammo capacity.
         guns.Add(_gun);
@@ -1177,10 +1166,7 @@ public class playerMovement : MonoBehaviour, IDamage {
         fireRate = _gun.fireRate;
         reloadTime = _gun.reloadTime;
         range = _gun.range;
-        isSniper = _gun.isSniper;
-        isLaser = _gun.isLaser;
-        isShotgun = _gun.isShotgun;
-        if (isLaser) {
+        if (guns[gunPos].weaponName == gunStats.ObjectType.LaserRifle) {
             laserSight.enabled = true;
         }
         else {
@@ -1193,6 +1179,7 @@ public class playerMovement : MonoBehaviour, IDamage {
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = _gun.gunModel.GetComponent<MeshRenderer>().sharedMaterial;
 
         FindObjectOfType<GunInventoryManager>().UpdateGunInventoryUI();
+        storeManager.instance.setGunPos(gunPos, guns[gunPos].weaponName);
     }
 
     public void useMarker() {
@@ -1370,6 +1357,10 @@ public class playerMovement : MonoBehaviour, IDamage {
     public int getXP() {
         return playerXP;}
 
+    public gunStats getCurGun() {
+        return guns[gunPos];}
+    public gunStats getSpecificGun(int pos) {
+        return guns[pos];}
     public int getAmmo() {
         return getCurGun().ammoCur;}
     public int getAmmoMag() {
@@ -1380,7 +1371,12 @@ public class playerMovement : MonoBehaviour, IDamage {
         return getCurGun().ammoOrig;}
 
     public bool getIsSniper() {
-        return isSniper;}
+        bool isSniper = false;
+        if (guns[gunPos].weaponName == gunStats.ObjectType.Sniper) {
+            isSniper = true;
+        }
+        return isSniper;
+    }
 
     public GameObject getGunModel() {
         return gunModel;}
@@ -1412,10 +1408,6 @@ public class playerMovement : MonoBehaviour, IDamage {
 
     public int getPlayerLevel() {
         return playerLevel;
-    }
-
-    public gunStats getCurGun() {
-        return guns[gunPos];
     }
 
     public int getSkillPoints() { return skillPoints; }
