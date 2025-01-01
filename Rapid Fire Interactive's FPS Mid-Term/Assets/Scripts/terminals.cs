@@ -69,7 +69,7 @@ public class terminals : MonoBehaviour {
                 gameManager.instance.getInteractUI().SetActive(true);
 
             if (Input.GetButton("Interact"))
-                if (true) { /// playerStats.Stats.getPWRLevel() >= 2
+                if (playerStats.Stats.getPWRLevel() >= 2) {
                     // turn off interact menu
                     if (gameManager.instance.getInteractUI().activeInHierarchy)
                         gameManager.instance.getInteractUI().SetActive(false);
