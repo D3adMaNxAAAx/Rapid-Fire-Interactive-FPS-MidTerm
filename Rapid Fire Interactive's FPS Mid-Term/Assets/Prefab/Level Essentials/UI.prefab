@@ -29911,6 +29911,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   t_healthCostText: {fileID: 7185591915539410231}
+  healPotionCostText: {fileID: 6777059468971002675}
+  grenadeCostText: {fileID: 5376629767358183683}
   t_ammoCostText: {fileID: 2193141255579379959}
   shieldCostText: {fileID: 1952726924802724480}
   inventoryCostText: {fileID: 5831635948504246578}
@@ -29918,9 +29920,13 @@ MonoBehaviour:
   t_playerCoinsText: {fileID: 1319884379404865091}
   t_transactionStatus: {fileID: 5636195139840269282}
   laserRifle: {fileID: 11400000, guid: d77e8821a19279b4ebb59567f51c8d8b, type: 2}
+  grenade: {fileID: 11400000, guid: 97ba14f077da2264bb4743fc5222a169, type: 2}
+  healPotion: {fileID: 11400000, guid: 7d2ff14a4acf2534e8a6cf9d3343a2c3, type: 2}
   healthCost: 10
   ammoCost: 10
   shieldCost: 25
+  healPotionCost: 10
+  grenadeCost: 10
   laserRifleCost: 100
   inventoryCost: 25
 --- !u!1 &4970854999398518357
@@ -57161,6 +57167,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shield Cost Text
       objectReference: {fileID: 0}
+    - target: {fileID: 2536898027420653367, guid: 43b20bd5995b4bd498f20bf76c092eb1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4219171108711184052}
+    - target: {fileID: 2536898027420653367, guid: 43b20bd5995b4bd498f20bf76c092eb1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 4219171108711184052}
+    - target: {fileID: 2536898027420653367, guid: 43b20bd5995b4bd498f20bf76c092eb1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: grenadePurchase
+      objectReference: {fileID: 0}
     - target: {fileID: 3261507283380902088, guid: 43b20bd5995b4bd498f20bf76c092eb1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -57261,6 +57279,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4531096206732911290, guid: 43b20bd5995b4bd498f20bf76c092eb1, type: 3}
+      propertyPath: m_Name
+      value: Grenade Cost Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 7747133744154336895, guid: 43b20bd5995b4bd498f20bf76c092eb1, type: 3}
+      propertyPath: m_Name
+      value: Potion Cost Text
+      objectReference: {fileID: 0}
     - target: {fileID: 8457580805108048669, guid: 43b20bd5995b4bd498f20bf76c092eb1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -57272,6 +57298,18 @@ PrefabInstance:
     - target: {fileID: 8457580805108048669, guid: 43b20bd5995b4bd498f20bf76c092eb1, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: inventoryUpgradePurchase
+      objectReference: {fileID: 0}
+    - target: {fileID: 8708502213272334136, guid: 43b20bd5995b4bd498f20bf76c092eb1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 4219171108711184052}
+    - target: {fileID: 8708502213272334136, guid: 43b20bd5995b4bd498f20bf76c092eb1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 4219171108711184052}
+    - target: {fileID: 8708502213272334136, guid: 43b20bd5995b4bd498f20bf76c092eb1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: healPotionPurchase
       objectReference: {fileID: 0}
     - target: {fileID: 9073019383080312067, guid: 43b20bd5995b4bd498f20bf76c092eb1, type: 3}
       propertyPath: m_Name
@@ -57324,6 +57362,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5376629767358183683 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8770379855543642467, guid: 43b20bd5995b4bd498f20bf76c092eb1, type: 3}
+  m_PrefabInstance: {fileID: 3687047642191712352}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5636195139840269282 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 9015309070444333954, guid: 43b20bd5995b4bd498f20bf76c092eb1, type: 3}
@@ -57343,6 +57392,17 @@ GameObject:
 --- !u!114 &5831635948504246578 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7189196037556877650, guid: 43b20bd5995b4bd498f20bf76c092eb1, type: 3}
+  m_PrefabInstance: {fileID: 3687047642191712352}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6777059468971002675 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7865525640461654867, guid: 43b20bd5995b4bd498f20bf76c092eb1, type: 3}
   m_PrefabInstance: {fileID: 3687047642191712352}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}

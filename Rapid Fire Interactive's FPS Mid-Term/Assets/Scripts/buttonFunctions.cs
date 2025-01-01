@@ -184,6 +184,12 @@ public class buttonFunctions : MonoBehaviour {
     public void healthPurchase() {
         storeManager.instance.onHealthPurchase();
     }
+    public void healPotionPurchase() {
+        storeManager.instance.onHealPotionPurchase();
+    }
+    public void grenadePurchase() {
+        storeManager.instance.onGrenadePurchase();
+    }
     public void ammoPurchase() {
         storeManager.instance.onAmmoPurchase();
     }
@@ -193,11 +199,10 @@ public class buttonFunctions : MonoBehaviour {
     public void shieldPurchase() {
         storeManager.instance.onShieldPurchase();
     }
-
     public void inventoryUpgradePurchase() {
         storeManager.instance.onInventoryUpgrade();
     }
-    //
+    // end store buttons
 
     public void Respawn() {
         playerMovement.player.spawnPlayer();

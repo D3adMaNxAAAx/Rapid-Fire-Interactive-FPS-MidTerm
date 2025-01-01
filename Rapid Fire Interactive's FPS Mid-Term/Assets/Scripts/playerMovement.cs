@@ -1350,30 +1350,32 @@ public class playerMovement : MonoBehaviour, IDamage {
     public float getShieldHP() {
         return shieldHP; }
 
+    public int getHealsCount() {
+        return heals.Count; }
+    public int getHealsMax() {
+        return healsMax; }
+    public int getGrenadesCount() {
+        return grenades.Count; }
+    public int getGrenadesMax() {
+        return grenadesMax; }
+
     public int getStamina() {
         return stamina;}
 
     public int getStaminaOrig() {
         return staminaOrig;}
     public void setOGStamina(int newStam) {
-        staminaOrig = newStam;
-    }
+        staminaOrig = newStam; }
 
     public int getXP() {
         return playerXP;}
 
     public int getAmmo() {
         return getCurGun().ammoCur;}
-
-    public int getAmmoMag()
-    {
+    public int getAmmoMag() {
         return getCurGun().ammoMag;}
-
-    public int getAmmoMax()
-    {
-        return getCurGun().ammoMax;
-    }
-
+    public int getAmmoMax() {
+        return getCurGun().ammoMax; }
     public int getAmmoOrig() {
         return getCurGun().ammoOrig;}
 
@@ -1385,17 +1387,14 @@ public class playerMovement : MonoBehaviour, IDamage {
 
     public float getSpeed() {
         return speed;}
-
     public float getNormOGSpeed() {
-        return speedOrig;
-    }
+        return speedOrig; }
 
     public int getCoins() {
         return coins;}
 
     public float getDamage() {
         return damage;}
-
     public float getDamageMod() {
         return damageUpgradeMod;}
 
@@ -1405,15 +1404,23 @@ public class playerMovement : MonoBehaviour, IDamage {
     public List<gunStats> getGunList()
     { return guns; }
 
-    public AudioSource getAudioLocation()
-    {
-        return aud;
+    public AudioSource getAudioLocation() {
+        return aud; }
+
+    public bool getSafeAccess() {
+        return safeAccess; }
+
+    public int getPlayerLevel() {
+        return playerLevel;
     }
 
-    public bool getSafeAccess()
-    {
-        return safeAccess;
+    public gunStats getCurGun() {
+        return guns[gunPos];
     }
+
+    public int getSkillPoints() { return skillPoints; }
+    public bool getLeveledUp() {
+        return leveledUp; }
 
     // Setters
     public void addMarkers(int newMarkers) {
@@ -1428,50 +1435,33 @@ public class playerMovement : MonoBehaviour, IDamage {
         HPOrig = newHPOrig;
     }
     public void setAmmo(int newAmmo) {
-        // Check if the player has a gun
         if (guns != null || guns.Count != 0)
             getCurGun().ammoCur = newAmmo;
-
-        // Update the UI to show it's been changed
         updatePlayerUI();
     }
 
-    public void setAmmoMag(int newAmmoMag)
-    {
-        // Check if the player has a gun
+    public void setAmmoMag(int newAmmoMag) {
         if (guns != null || guns.Count != 0)
             getCurGun().ammoMag = newAmmoMag;
-
         updatePlayerUI();
     }
 
-    public void setAmmoMax(int newAmmoMax)
-    {
-        // Check if the player has a gun
+    public void setAmmoMax(int newAmmoMax) {
         if (guns != null || guns.Count != 0)
             getCurGun().ammoMax = newAmmoMax;
         updatePlayerUI();
     }
 
     public void setAmmoOrig(int newAmmoOrig) {
-        // Check if the player has a gun
         if (guns != null || guns.Count != 0)
             getCurGun().ammoOrig = newAmmoOrig;
-
         updatePlayerUI();
     }
 
-    public int getPlayerLevel() {
-        return playerLevel;}
-
-    public gunStats getCurGun() {
-        return guns[gunPos];}
     public void setCurrGun(int _gunPos) {
         gunPos = _gunPos;
         changeGun();
     }
-
-    public int getSkillPoints() { return skillPoints; }
 
     public void setSpeed(float newSpeed) {
         speed = newSpeed;}
@@ -1515,11 +1505,6 @@ public class playerMovement : MonoBehaviour, IDamage {
     public void setSprintBool(bool value)
     {
         toggleSprint = value;
-    }
-
-    public bool getLeveledUp()
-    {
-        return leveledUp;
     }
 
     public void setLeveledUp(bool _state)

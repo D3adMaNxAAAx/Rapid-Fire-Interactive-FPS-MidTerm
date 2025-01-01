@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +22,8 @@ public class storeManager : MonoBehaviour {
 
     [Header("-- Terminal Store Information --")]
     [SerializeField] TMP_Text t_healthCostText;
+    [SerializeField] TMP_Text healPotionCostText;
+    [SerializeField] TMP_Text grenadeCostText;
     [SerializeField] TMP_Text t_ammoCostText;
     [SerializeField] TMP_Text shieldCostText;
     [SerializeField] TMP_Text inventoryCostText;
@@ -28,22 +31,30 @@ public class storeManager : MonoBehaviour {
     [SerializeField] TMP_Text t_playerCoinsText;
     [SerializeField] TMP_Text t_transactionStatus;
 
-    [Header("-- Store Weapons --")]
-    [SerializeField] gunStats laserRifle; // This might be able to be made as a generalized weapon to sell variable
+    [Header("-- Store Weapons / Items --")]
+    [SerializeField] gunStats laserRifle; //
+    [SerializeField] GrenadeStats grenade;
+    [SerializeField] HealStats healPotion;
 
     // Store Costs
     [Header("-- Store Modifiers --")]
     [SerializeField] int healthCost;
     [SerializeField] int ammoCost;
     [SerializeField] int shieldCost;
+    [SerializeField] int healPotionCost;
+    [SerializeField] int grenadeCost;
     [SerializeField] int laserRifleCost;
     [SerializeField] int inventoryCost;
     int inventoryCostV2;
+    int OGHealCost;
+    int OGGrenadeCost;
 
     Color healthColorOrig;
     Color ammoColorOrig;
     bool terminal;
     int InventoryVersion = 0;
+
+    Coroutine feedbackTimer = null;
 
     // Start is called before the first frame update
     void Start() {
@@ -51,6 +62,8 @@ public class storeManager : MonoBehaviour {
         healthColorOrig = t_healthCostText.color; // Remember the original color of the text
         ammoColorOrig = t_ammoCostText.color; // Remember the original color of the text
         inventoryCostV2 = inventoryCost * 2;
+        OGHealCost = healPotionCost;
+        OGGrenadeCost = grenadeCost;
     }
 
     public void setTerminalStatus(bool _state) {
@@ -60,6 +73,8 @@ public class storeManager : MonoBehaviour {
     public void updateStoreUI() { // Public methods for external store functions - these will call internal store functions as necessary, Update the store UI as the player interacts with it
         updateCoinsDisplay();
         updateHealthDisplay();
+        updateHealPotionDisplay();
+        updateGrenadeDisplay();
         updateAmmoDisplay();
         updateLaserRifleDisplay();
         updateShieldDisplay();
@@ -68,21 +83,58 @@ public class storeManager : MonoBehaviour {
 
     // Buy Button Methods
     public void onHealthPurchase() {
+        resetCoroutine();
         if (canAfford(healthCost) == false) {
-            StartCoroutine(displayTransactionStatus(false));
+            feedbackTimer = StartCoroutine(displayTransactionStatus(false));
         }
         else if ((playerMovement.player.getHP() < playerMovement.player.getHPOrig()) == false) {
-            StartCoroutine(displayTransactionStatus(false, "HP already at Max!"));
+            feedbackTimer = StartCoroutine(displayTransactionStatus(false, "HP already at Max!"));
         }
         else { // success
             makeTransaction(healthCost);
             giveHealth();
-            StartCoroutine(displayTransactionStatus(true));
+            feedbackTimer = StartCoroutine(displayTransactionStatus(true));
+        }
+    }
+
+    public void onHealPotionPurchase() {
+        resetCoroutine();
+        if (canAfford(healPotionCost) == false) {
+            feedbackTimer = StartCoroutine(displayTransactionStatus(false));
+        }
+        else if ((playerMovement.player.getHealsCount() < playerMovement.player.getHealsMax()) == false) {
+            feedbackTimer = StartCoroutine(displayTransactionStatus(false, "Inventory Full!"));
+        }
+        else { // success
+            makeTransaction(healPotionCost);
+            playerMovement.player.addToHeals(healPotion);
+            healPotionCost += 5;
+            updateHealPotionDisplay();
+            updateCoinsDisplay();
+            feedbackTimer = StartCoroutine(displayTransactionStatus(true));
+        }
+    }
+
+    public void onGrenadePurchase() {
+        resetCoroutine();
+        if (canAfford(grenadeCost) == false) {
+            feedbackTimer = StartCoroutine(displayTransactionStatus(false));
+        }
+        else if ((playerMovement.player.getGrenadesCount() < playerMovement.player.getGrenadesMax()) == false) {
+            feedbackTimer = StartCoroutine(displayTransactionStatus(false, "Inventory Full!"));
+        }
+        else { // success
+            makeTransaction(grenadeCost);
+            playerMovement.player.addToGrenades(grenade);
+            grenadeCost += 5;
+            updateGrenadeDisplay();
+            updateCoinsDisplay();
+            feedbackTimer = StartCoroutine(displayTransactionStatus(true));
         }
     }
 
     public void onAmmoPurchase() {
-        // Check if player can afford ammo & isn't already at max ammo
+        resetCoroutine();
         if (canAfford(ammoCost) && (playerMovement.player.getCurGun().ammoMax < playerMovement.player.getCurGun().ammoOrig || playerMovement.player.getCurGun().ammoCur < playerMovement.player.getCurGun().ammoMag)) {
             makeTransaction(ammoCost);
             giveAmmo();
@@ -91,54 +143,57 @@ public class storeManager : MonoBehaviour {
     }
 
     public void onInventoryUpgrade() {
+        resetCoroutine();
         if (InventoryVersion == 0) {
             if (canAfford(inventoryCost)) {
                 makeTransaction(inventoryCost);
                 playerMovement.player.inventoryUpgrade(false);
-                StartCoroutine(displayTransactionStatus(true));
+                feedbackTimer = StartCoroutine(displayTransactionStatus(true));
                 InventoryVersion = 1;
                 updateInventoryUpgradeDisplay(InventoryVersion);
                 updateCoinsDisplay();
             }
             else { // fail
-                StartCoroutine(displayTransactionStatus(false));
+                feedbackTimer = StartCoroutine(displayTransactionStatus(false));
             }
         }
         else if (InventoryVersion == 1) { // second inventory upgrade
             if (canAfford(inventoryCostV2)) {
                 makeTransaction(inventoryCostV2);
                 playerMovement.player.inventoryUpgrade(true);
-                StartCoroutine(displayTransactionStatus(true));
+                feedbackTimer = StartCoroutine(displayTransactionStatus(true));
                 InventoryVersion = 2;
                 updateInventoryUpgradeDisplay(InventoryVersion);
                 updateCoinsDisplay();
             }
             else { // fail
-                StartCoroutine(displayTransactionStatus(false));
+                feedbackTimer = StartCoroutine(displayTransactionStatus(false));
             }
         }
         else {
-            StartCoroutine(displayTransactionStatus(false, "Max upgrades already purchased"));
+            feedbackTimer = StartCoroutine(displayTransactionStatus(false, "Max upgrades already purchased"));
         }
     }
 
     public void onShieldPurchase() {
+        resetCoroutine();
         if (canAfford(shieldCost) == false) {
-            StartCoroutine(displayTransactionStatus(false));
+            feedbackTimer = StartCoroutine(displayTransactionStatus(false));
         }
         else if (playerMovement.player.getShieldHP() == 50) {
-            StartCoroutine(displayTransactionStatus(false, "Shield already maxed out"));
+            feedbackTimer = StartCoroutine(displayTransactionStatus(false, "Shield already maxed out"));
         }
         else { // success
             makeTransaction(shieldCost);
             playerMovement.player.shieldBuff();
-            StartCoroutine(displayTransactionStatus(true));
+            feedbackTimer = StartCoroutine(displayTransactionStatus(true));
             updateShieldDisplay();
             updateCoinsDisplay();
         }
     }
 
     public void onLaserRiflePurchase() {
+        resetCoroutine();
         bool hasLaserRifle = false;
         foreach (gunStats gun in playerMovement.player.getGunList()) { // Check if player can afford the laser rifle & doesn't already have it
             if (gun.isLaser) {
@@ -147,15 +202,15 @@ public class storeManager : MonoBehaviour {
             }
         }
         if (canAfford(laserRifleCost) == false) {
-            StartCoroutine(displayTransactionStatus(false));
+            feedbackTimer = StartCoroutine(displayTransactionStatus(false));
         }
         else if (hasLaserRifle) {
-            StartCoroutine(displayTransactionStatus(false, "Error: Laser Rifle already purchased"));
+            feedbackTimer = StartCoroutine(displayTransactionStatus(false, "Error: Laser Rifle already purchased"));
         }
         else { // success
             makeTransaction(laserRifleCost);
             giveLaserRifle();
-            StartCoroutine(displayTransactionStatus(true));
+            feedbackTimer = StartCoroutine(displayTransactionStatus(true));
         }
     }
 
@@ -177,36 +232,23 @@ public class storeManager : MonoBehaviour {
     }
 
     IEnumerator displayTransactionStatus(bool success, string failMessage = "Not enough coins!") {
-        if (!terminal) {
-            /*transactionStatus.gameObject.SetActive(true);
-            if (status) {
-                transactionStatus.text = "Purchase Successful!";
-                transactionStatus.color = Color.green;
-            }
-            else {
-                if (!canAfford(healthCost)) {
-                    transactionStatus.text = "Not enough coins!";
-                }
-                else if (playerMovement.player.getHP() == playerMovement.player.getHPOrig()) {
-                    transactionStatus.text = "Already full!";
-                }
-                transactionStatus.color = Color.red;
-            }
-            yield return new WaitForSeconds(2f);
-            transactionStatus.gameObject.SetActive(false);*/
-        } 
+        t_transactionStatus.gameObject.SetActive(true);
+        if (success) {
+            t_transactionStatus.text = "Purchase Successful!";
+            t_transactionStatus.color = Color.green;
+        }
         else {
-            t_transactionStatus.gameObject.SetActive(true);
-            if (success) {
-                t_transactionStatus.text = "Purchase Successful!";
-                t_transactionStatus.color = Color.green;
-            }
-            else {
-                t_transactionStatus.text = failMessage;
-                t_transactionStatus.color = Color.red;
-            }
-            yield return new WaitForSecondsRealtime(1.5f);
-            t_transactionStatus.gameObject.SetActive(false);
+            t_transactionStatus.text = failMessage;
+            t_transactionStatus.color = Color.red;
+        }
+        yield return new WaitForSecondsRealtime(1.5f);
+        t_transactionStatus.gameObject.SetActive(false);
+    }
+
+    public void resetCoroutine() {
+        if (feedbackTimer != null) {
+            StopCoroutine(feedbackTimer);
+            feedbackTimer = null;
         }
     }
 
@@ -253,88 +295,50 @@ public class storeManager : MonoBehaviour {
     }
 
     void updateHealthDisplay() {
-        if (!terminal) {
-            /*healthText.text = playerMovement.player.getHP().ToString("F0") + " >> " + playerMovement.player.getHPOrig().ToString("F0");
-            healthCostText.text = "Cost: " + healthCost.ToString();
-            if (healthCost == 1) { // Append Coin or Coins at the end
-                healthCostText.text += " coin";
-            }
-            else {
-                healthCostText.text += " coins";
-            }
-            if (canAfford(healthCost)) {
-                healthCostText.color = Color.green;
-            }
-            else {
-                healthCostText.color = Color.red;
-            }*/
-        }
-        else {
-            t_healthCostText.text = healthCost.ToString();
-            t_healthCostText.text += " coins";
-            if (canAfford(healthCost))
-                t_healthCostText.color = Color.green;
-            else
-                t_healthCostText.color = Color.red;
-        }
+        t_healthCostText.text = healthCost.ToString();
+        t_healthCostText.text += " coins";
+        if (canAfford(healthCost))
+            t_healthCostText.color = Color.green;
+        else
+            t_healthCostText.color = Color.red;
+    }
+
+    void updateHealPotionDisplay() {
+        healPotionCostText.text = healPotionCost.ToString();
+        healPotionCostText.text += " coins";
+        if (canAfford(healPotionCost))
+            healPotionCostText.color = Color.green;
+        else
+            healPotionCostText.color = Color.red;
+    }
+
+    void updateGrenadeDisplay() {
+        grenadeCostText.text = grenadeCost.ToString();
+        grenadeCostText.text += " coins";
+        if (canAfford(grenadeCost))
+            grenadeCostText.color = Color.green;
+        else
+            grenadeCostText.color = Color.red;
     }
 
     void updateAmmoDisplay() {
-        if (!terminal) {
-            /*if (playerMovement.player.hasGun()) {
-                ammoText.text = "Refills all ammo!";
-                ammoCostText.text = "Cost: " + ammoCost.ToString();
-                if (ammoCost == 1) { // Append Coin or Coins at the end
-                    ammoCostText.text += " coin";
-                }
-                else {
-                    ammoCostText.text += " coins";
-                }
-                if (canAfford(ammoCost))
-                    ammoCostText.color = Color.green;
-                else
-                    ammoCostText.color = Color.red;
-            }
-            else { // Edge case
-                ammoCost = 0;
-                ammoText.text = "No Weapon";
-                ammoCostText.text = "Cost: N/A";
-                ammoText.color = Color.red;
-                ammoCostText.color = Color.red;
-            }*/
-        }
-        else {
-            if (playerMovement.player.hasGun()) {
-                t_ammoCostText.text = ammoCost.ToString();
-                t_ammoCostText.text += " coins";
-                if (canAfford(ammoCost))
-                    t_ammoCostText.color = Color.green;
-                else
-                    t_ammoCostText.color = Color.red;
-            }
+        if (playerMovement.player.hasGun()) {
+            t_ammoCostText.text = ammoCost.ToString();
+            t_ammoCostText.text += " coins";
+            if (canAfford(ammoCost))
+                t_ammoCostText.color = Color.green;
+            else
+                t_ammoCostText.color = Color.red;
         }
     }
 
     void updateLaserRifleDisplay() {
-        if (!terminal) {
-            /*laserRifleCostText.text = "Cost: " + laserRifleCost.ToString("F0");
-            if (laserRifleCost == 1)
-                laserRifleCostText.text += " coin";
-            else
-                laserRifleCostText.text += " coins";
-            if (canAfford(laserRifleCost))
-                laserRifleCostText.color = Color.green;
-            else
-                laserRifleCostText.color = Color.red;*/
-        }
-        else {
-            t_laserRifleCostText.text = laserRifleCost.ToString("F0");
-            t_laserRifleCostText.text += " coins";
-            if (canAfford(laserRifleCost))
-                t_laserRifleCostText.color = Color.green;
-            else
-                t_laserRifleCostText.color = Color.red;
-        }
+        t_laserRifleCostText.text = laserRifleCost.ToString("F0");
+        t_laserRifleCostText.text += " coins";
+        if (canAfford(laserRifleCost))
+            t_laserRifleCostText.color = Color.green;
+        else
+            t_laserRifleCostText.color = Color.red;
     }
 
     void updateShieldDisplay() {
