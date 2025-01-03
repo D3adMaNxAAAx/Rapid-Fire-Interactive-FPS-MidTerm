@@ -1,26 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class playerSpawnSetter : MonoBehaviour
-{
+public class playerSpawnSetter : MonoBehaviour {
+
+    [SerializeField] bool boss = false;
+
     // Start is called before the first frame update
-    private void Awake()
-    {
+    private void Awake() {
         gameManager.instance.setEnemyCount(0);
     }
-    void Start()
-    {
-        if (gameManager.instance != null)
-        {
-            gameManager.instance.setPlayerSpawnPos(this.gameObject);
-            playerMovement.player.spawnPlayer();
+
+    void Start() {
+        if (gameManager.instance != null) {
+            
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+        if (boss) {
+            if (gameManager.instance.getPauseStatus() == true) { // for if player spawns out of bounds in boss level, this should hopefully be a work around
+                if (Input.GetKey("s") && Input.GetKey("p") && Input.GetKey("a") && Input.GetKey("w") && Input.GetKey("n")) { 
+                    setInitialSpawn();
+                }
+            }
+        }
     }
+
+    public void setInitialSpawn() {
+        gameManager.instance.setPlayerSpawnPos(this.gameObject);
+        playerMovement.player.spawnPlayer();
+    }
+
 }
