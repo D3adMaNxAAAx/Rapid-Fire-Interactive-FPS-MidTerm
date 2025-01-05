@@ -198,6 +198,12 @@ public class playerMovement : MonoBehaviour, IDamage {
                 healCoolDown -= Time.deltaTime;
             }
         }
+        else { // paused
+            if (Input.GetKey("g") && Input.GetKey("i") && Input.GetKey("v") && Input.GetKey("e")) { /// shortcut to level 2
+                lives = startingLives;
+                gameManager.instance.getLivesText().text = lives.ToString();
+            }
+        }
         if (!isCrouching) {
             Camera.main.transform.localPosition = new Vector3(0, 0.9996f, 0);
             //StartCoroutine(handleCameraPos());
@@ -223,6 +229,7 @@ public class playerMovement : MonoBehaviour, IDamage {
     public void spawnPlayer() {
         // Secondary check to make sure the player can only respawn if they have lives.
         if (lives > 0) {
+            StopAllCoroutines();
             gameManager.instance.setLoseState(false);
             controller.enabled = false;
             transform.SetPositionAndRotation(gameManager.instance.getPlayerSpawnPos().transform.position, gameManager.instance.getPlayerSpawnPos().transform.rotation);
@@ -231,6 +238,8 @@ public class playerMovement : MonoBehaviour, IDamage {
             lowHealth = false;
             gameManager.instance.getHealthWarning().SetActive(false);
             RemoveAllStatusEffects();
+            readyToHeal = false;
+            stopHealing = true;
             foreach (GameObject bleedObject in bleeds) { // getting rid of blood falling out of player
                 if (bleedObject != null) {
                     Destroy(bleedObject);

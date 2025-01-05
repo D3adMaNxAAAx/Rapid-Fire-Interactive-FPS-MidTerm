@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8416129699702736019}
   m_Layer: 0
-  m_Name: BloodSpew2
+  m_Name: BloodSpew
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 6536126591274331052}
   serializedVersion: 2
   m_LocalRotation: {x: -0.019480035, y: -0.6520719, z: 0.41389173, w: 0.6349146}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.1, y: 0, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -319,7 +319,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.035
+      scalar: 0.04
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -636,7 +636,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 1
     gravitySource: 0
-    maxNumParticles: 999
+    maxNumParticles: 100
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 1

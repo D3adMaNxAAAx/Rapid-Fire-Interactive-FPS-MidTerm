@@ -14,7 +14,7 @@ public class playerSpawnSetter : MonoBehaviour {
 
     void Start() {
         if (gameManager.instance != null) {
-            
+            setInitialSpawn();
         }
     }
 

@@ -10,6 +10,11 @@ public class gameManager : MonoBehaviour {
 
     public static gameManager instance; // singleton
 
+    /// cheats: 
+    // hold down: "skip" in loadout menu to go to level 2
+    // boss scene only, hold down: "spawn" while paused to reset to scene's starting spawn
+    // hold down: "give" while death menu open to reset lives back to 3
+
     // -- Menus --
     [Header("-- Menus --")]
     [SerializeField] GameObject menuActive; // this will change depending on what menu is showing in the game
