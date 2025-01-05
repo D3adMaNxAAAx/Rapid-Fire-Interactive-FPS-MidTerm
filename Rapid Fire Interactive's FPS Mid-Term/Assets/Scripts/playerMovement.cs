@@ -673,18 +673,17 @@ public class playerMovement : MonoBehaviour, IDamage {
             float currHP = HP;
             if ((HP / HPOrig) > .5) { // only heals to half HP
                 readyToHeal = false; // HEALING OVER
-                 if (((currHP - 3) / HPOrig) <= .5) { // accounting for bug where you use heal potion to go over half while healing over time and then resets your hp to half
+                stopHealing = true;
+                if (((currHP - 3) / HPOrig) <= .5) { // accounting for bug where you use heal potion to go over half while healing over time and then resets your hp to half
                     HP = (HPOrig / 2); // if HP goes over half, reset to half
-                 }
+                }
             }
             else {
                 StartCoroutine(healing()); // KEEP HEALING IF NOT AT HALF HP (RECURSION)
             }
         }
-        else {
-            if (HP >= HPOrig) {
-                HP = HPOrig;
-            }
+        if (HP > HPOrig) {
+            HP = HPOrig;
         }
     }
 
@@ -705,6 +704,7 @@ public class playerMovement : MonoBehaviour, IDamage {
         }
         else { // player did not go 3 seconds without taking damage, do not heal
             readyToHeal = false;
+            stopHealing = true;
         }
     }
 
@@ -1218,7 +1218,7 @@ public class playerMovement : MonoBehaviour, IDamage {
             if (isTapW == true) {
                 time1W = Time.time;
                 isTapW = false;
-                if (onDashCooldown == false && time1W - time2W < 0.2f) { // time that both key pressed need to be done within
+                if (onDashCooldown == false && time1W - time2W < 0.2f && isDashing == false) { // time that both key pressed need to be done within
                     isDashing = true;
                     for (int i = 1; i <= 4; i++) {
                         controller.Move(transform.forward * 1.5f);
@@ -1241,7 +1241,7 @@ public class playerMovement : MonoBehaviour, IDamage {
             if (isTapA == true) {
                 time1A = Time.time;
                 isTapA = false;
-                if (onDashCooldown == false && time1A - time2A < 0.2f) { // time that both key pressed need to be done within
+                if (onDashCooldown == false && time1A - time2A < 0.2f && isDashing == false) { // time that both key pressed need to be done within
                     isDashing = true;
                     for (int i = 1; i <= 4; i++) {
                         controller.Move(-transform.right * 1.5f); // negative right = left
@@ -1264,7 +1264,7 @@ public class playerMovement : MonoBehaviour, IDamage {
             if (isTapS == true) {
                 time1S = Time.time;
                 isTapS = false;
-                if (onDashCooldown == false && time1S - time2S < 0.2f) { // time that both key pressed need to be done within
+                if (onDashCooldown == false && time1S - time2S < 0.2f && isDashing == false) { // time that both key pressed need to be done within
                     isDashing = true;
                     for (int i = 1; i <= 4; i++) {
                         controller.Move(-transform.forward * 1.5f); // negative forward = backwards
@@ -1287,7 +1287,7 @@ public class playerMovement : MonoBehaviour, IDamage {
             if (isTapD == true) {
                 time1D = Time.time;
                 isTapD = false;
-                if (onDashCooldown == false && time1D - time2D < 0.2f) { // time that both key pressed need to be done within
+                if (onDashCooldown == false && time1D - time2D < 0.2f && isDashing == false) { // time that both key pressed need to be done within
                     isDashing = true;
                     for (int i = 1; i <= 4; i++) {
                         controller.Move(transform.right * 1.5f);
@@ -1308,7 +1308,7 @@ public class playerMovement : MonoBehaviour, IDamage {
 
     IEnumerator dashCooldown() {
         onDashCooldown = true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(3);
         onDashCooldown = false;
     }
 
