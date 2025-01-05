@@ -236,6 +236,8 @@ public class playerMovement : MonoBehaviour, IDamage {
             controller.enabled = true;
             HP = HPOrig;
             lowHealth = false;
+            gameManager.instance.getHealIndicator().SetActive(false);
+            gameManager.instance.getDmgFlash().SetActive(false);
             gameManager.instance.getHealthWarning().SetActive(false);
             RemoveAllStatusEffects();
             readyToHeal = false;
@@ -707,7 +709,8 @@ public class playerMovement : MonoBehaviour, IDamage {
     IEnumerator noDamageTime() { // time till healing (if no damage was taken)
         float currentHP = HP;
         yield return new WaitForSeconds(3);
-        if (currentHP <= HP) { // PLAYER CAN START HEALING (SEE UPDATE())
+        if (currentHP == HP) { // PLAYER CAN START HEALING (SEE UPDATE())
+            /// heal potion will cancel heal over time
             stopHealing = false;
             readyToHeal = true;
         }
@@ -720,9 +723,9 @@ public class playerMovement : MonoBehaviour, IDamage {
     // Damage Flash Timer
     IEnumerator damageFlash()
     {
-        gameManager.instance.getDmgFlash().SetActive(true); //gameManager
+        gameManager.instance.getDmgFlash().SetActive(true);
         yield return new WaitForSeconds(dmgFlashTimer);
-        gameManager.instance.getDmgFlash().SetActive(false); //gameManager
+        gameManager.instance.getDmgFlash().SetActive(false);
     }
 
     IEnumerator healIndicator() {
