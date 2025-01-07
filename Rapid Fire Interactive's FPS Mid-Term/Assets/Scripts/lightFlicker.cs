@@ -44,7 +44,7 @@ public class lightFlicker : MonoBehaviour, IInteractable
 
             for (int i = 0; i < lightCount - 1; ++i) {
                 if (level2 == false) {
-                    lights[i].range = 20;
+                    lights[i].range = 15;
                 }
                 if (lights[i].type != LightType.Spot) { // don't change spotlight intensity
                     lights[i].intensity = 0;
