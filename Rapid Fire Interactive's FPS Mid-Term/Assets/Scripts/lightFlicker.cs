@@ -12,12 +12,13 @@ public class lightFlicker : MonoBehaviour, IInteractable
     [Range(1, 100)] [SerializeField] float percentFlicker;
     [SerializeField] GameObject lightSys = null;
     [SerializeField] GameObject powerSys = null;
+    [SerializeField] GameObject redLight = null;
     [SerializeField] Light[] lights = null;
     [SerializeField] bool level2;
     [SerializeField] bool testing = false;
-
-    // Power Variables
     [SerializeField] int pwrLvl;
+
+    Light[] redLights;
 
     // Light Variables
     Light _light; // This was previously named light which was the same name of a variable it was inheriting from.
@@ -115,6 +116,14 @@ public class lightFlicker : MonoBehaviour, IInteractable
                         lights[i].intensity = 1.25f;
                     }
                     lights[i].enabled = true;
+                }
+                if (redLight != null) {
+                    redLights = redLight.gameObject.GetComponentsInChildren<Light>();
+                    int redCount = redLights.Count();
+
+                    for (int i = 0; i < redCount - 1; ++i) {
+                        redLights[i].enabled = false;
+                    }
                 }
             }
 
