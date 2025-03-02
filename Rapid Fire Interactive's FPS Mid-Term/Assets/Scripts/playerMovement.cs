@@ -242,6 +242,7 @@ public class playerMovement : MonoBehaviour, IDamage {
             RemoveAllStatusEffects();
             readyToHeal = false;
             stopHealing = true;
+            isShooting = false;
             foreach (GameObject bleedObject in bleeds) { // getting rid of blood falling out of player
                 if (bleedObject != null) {
                     Destroy(bleedObject);
